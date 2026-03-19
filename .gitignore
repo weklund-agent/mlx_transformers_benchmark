@@ -80,4 +80,4 @@ venv.bak/
 .vscode
 
 # Local model files (too large for git)
-models/
+/models/
