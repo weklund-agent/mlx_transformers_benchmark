@@ -51,17 +51,13 @@ def get_lmstudio_version() -> Dict:
 
 
 def get_ollama_version() -> Dict:
-    """Get the current ollama version."""
-    output = check_output(["ollama", "--version"], text=True)
-
-    # output should be in the form "ollama version is X.Y.Z"
-    expected_prefix = "ollama version is "
-    if not output.startswith(expected_prefix):
-        raise ValueError(f"Unexpected output from 'ollama --version': {output}")
-
-    ollama_version = output.split(expected_prefix)[-1].strip()
-
-    return dict(
-        ollama_version=ollama_version,
-        # TODO can we determine anything about the llama.cpp engine?
-    )
+    try:
+        output = check_output(["ollama", "--version"], text=True).strip()
+        if output.startswith("ollama version is "):
+            version = output.split("ollama version is ", 1)[1].strip()
+            return {"ollama_version": version}
+        else:
+            # Handle warning or other output
+            return {"ollama_version": "not running"}
+    except Exception:
+        return {"ollama_version": "not installed / unavailable"}

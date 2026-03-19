@@ -1,4 +1,5 @@
 import gc
+from pathlib import Path
 
 import mlx
 import mlx.core as mx
@@ -24,7 +25,8 @@ class MlxLlmBenchmark(BaseLLMBenchmark):
 
         mx.set_default_device(self._device)
 
-        verbose_download_model(self.model_id)
+        if not Path(self.model_id).exists():
+            verbose_download_model(self.model_id)
         model, tokenizer = mlx_lm.load(self.model_id)
         self.model: mlx.nn.Module = model
         self.tokenizer: mlx_lm.tokenizer_utils.TokenizerWrapper = tokenizer
@@ -36,9 +38,11 @@ class MlxLlmBenchmark(BaseLLMBenchmark):
             prompt,
             add_generation_prompt=True,
             tokenize=True,
-            return_dict=True,
             return_tensors="mlx",
         )
+        # transformers >=5.x returns mx.array directly instead of a dict
+        if isinstance(model_input, mx.array):
+            return model_input[0]
         return model_input.input_ids[0]
 
     def run_once(self, prompt: str) -> LlmBenchmarkMeasurement:

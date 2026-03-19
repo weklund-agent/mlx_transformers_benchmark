@@ -18,6 +18,15 @@ from mtb.llm_benchmarks.models.qwen import (
     Qwen3_8B_it,
     Qwen3_14B_it,
 )
+from mtb.llm_benchmarks.models.qwen35 import (
+    Qwen3p5_0p8B,
+    Qwen3p5_2B,
+    Qwen3p5_4B,
+    Qwen3p5_9B,
+    Qwen3p5_27B,
+    Qwen3p5_35B_A3B,
+    Qwen3p5_27B_Claude_Opus_Distilled,
+)
 
 MODEL_SPECS = [
     # deepseek
@@ -37,4 +46,12 @@ MODEL_SPECS = [
     Qwen3_0p6B_it,
     Qwen3_8B_it,
     Qwen3_14B_it,
+    # qwen 3.5
+    Qwen3p5_0p8B,
+    Qwen3p5_2B,
+    Qwen3p5_4B,
+    Qwen3p5_9B,
+    Qwen3p5_27B,
+    Qwen3p5_35B_A3B,
+    Qwen3p5_27B_Claude_Opus_Distilled,
 ]

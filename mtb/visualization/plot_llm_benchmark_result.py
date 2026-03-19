@@ -36,6 +36,13 @@ def show_llm_benchmark_data(
     for framework in frameworks:
         add_category_to_colormap(framework)
 
+    std_columns = [
+        "prompt_tps_std",
+        "generation_tps_std",
+        "prompt_time_sec_std",
+        "generation_time_sec_std",
+        "peak_memory_gib_std",
+    ]
     metrics_of_interest = [
         "prompt_tps",
         "generation_tps",
@@ -73,6 +80,12 @@ def show_llm_benchmark_data(
                 & (measurements["batch_size"] == batch_size)
             ]
 
+            # Add std columns with default 0.0 for older data without them
+            for col_name in std_columns:
+                if col_name not in filtered_data.columns:
+                    filtered_data = filtered_data.copy()
+                    filtered_data[col_name] = 0.0
+
             if do_average_measurements:
                 filtered_data = filtered_data[
                     [
@@ -81,6 +94,7 @@ def show_llm_benchmark_data(
                         "num_prompt_tokens",
                     ]
                     + metrics_of_interest
+                    + std_columns
                 ]
                 filtered_data = (
                     filtered_data.groupby(
@@ -109,7 +123,7 @@ def show_llm_benchmark_data(
                         category_orders={"framework_backend": frameworks},
                         color_discrete_map=color_map,
                         symbol_map=symbol_map,
-                        custom_data=["batch_size"] + metrics_of_interest,
+                        custom_data=["batch_size"] + metrics_of_interest + std_columns,
                         title=f"dtype: {dtype}, batch_size: {batch_size}",
                     )
                     for trace in scatter["data"]:
@@ -202,16 +216,20 @@ def show_llm_benchmark_data(
         annotation["font"] = dict(size=14)
 
     # Add a hover template, already shows framework_backend by default
+    # customdata indices: [0]=batch_size, [1]=prompt_tps, [2]=generation_tps,
+    # [3]=prompt_time_sec, [4]=generation_time_sec, [5]=total_time_sec,
+    # [6]=peak_memory_gib, [7]=prompt_tps_std, [8]=generation_tps_std,
+    # [9]=prompt_time_sec_std, [10]=generation_time_sec_std, [11]=peak_memory_gib_std
     fig.update_traces(
         hovertemplate=(
             "<b>Batch size:</b>              %{customdata[0]:>9.0f}<br>"
             "<b>Num prompt tokens:</b>       %{x:>9.0f}<br>"
-            "<b>Prompt speed (tokens/s):</b> %{customdata[1]:>9.4f}<br>"
-            "<b>Gen. speed (tokens/s):</b>   %{customdata[2]:>9.4f}<br>"
-            "<b>Prompt time (s):</b>         %{customdata[3]:>9.4f}<br>"
-            "<b>Gen. time (s):</b>           %{customdata[4]:>9.4f}<br>"
+            "<b>Prompt speed (tokens/s):</b> %{customdata[1]:>9.2f} ± %{customdata[7]:.2f}<br>"
+            "<b>Gen. speed (tokens/s):</b>   %{customdata[2]:>9.2f} ± %{customdata[8]:.2f}<br>"
+            "<b>Prompt time (s):</b>         %{customdata[3]:>9.4f} ± %{customdata[9]:.4f}<br>"
+            "<b>Gen. time (s):</b>           %{customdata[4]:>9.4f} ± %{customdata[10]:.4f}<br>"
             "<b>Total time (s):</b>          %{customdata[5]:>9.4f}<br>"
-            "<b>Peak memory (GiB):</b>       %{customdata[6]:>9.4f}<br>"
+            "<b>Peak memory (GiB):</b>       %{customdata[6]:>9.4f} ± %{customdata[11]:.4f}<br>"
         ),
         mode="markers",
     )

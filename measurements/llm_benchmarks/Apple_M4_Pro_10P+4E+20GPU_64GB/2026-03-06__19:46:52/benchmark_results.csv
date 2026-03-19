@@ -1,0 +1,2 @@
+name,framework,backend,batch_size,dtype,num_prompt_tokens,num_generated_tokens,prompt_tps,prompt_tps_std,prompt_time_sec,prompt_time_sec_std,generation_tps,generation_tps_std,generation_time_sec,generation_time_sec_std,peak_memory_gib,peak_memory_gib_std
+qwen-3.5-0.8b,mlx,metal,1,int4,64,100.0,2003.1766414324354,34.6045867149644,0.03195879150007386,0.0005520835002243984,282.9251064411834,0.5641595003753821,0.353451833500003,0.0007047914987197423,0.60763744,9.999999994736442e-09

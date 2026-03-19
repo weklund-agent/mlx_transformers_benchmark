@@ -60,10 +60,15 @@ def run_benchmark(
         "num_prompt_tokens",
         "num_generated_tokens",
         "prompt_tps",  # tokens/sec for processing the prompt
+        "prompt_tps_std",
         "prompt_time_sec",  # total time needed to parse prompt, init kv cache
+        "prompt_time_sec_std",
         "generation_tps",  # tokens/sec for generation
+        "generation_tps_std",
         "generation_time_sec",  # total time needed for generation, excl. prompting
+        "generation_time_sec_std",
         "peak_memory_gib",  # peak memory usage in GiB
+        "peak_memory_gib_std",
     ]
 
     benchmark: BaseLLMBenchmark = create_benchmark(
@@ -205,7 +210,7 @@ def run_benchmark_for_framework(
                     desc.format(warmup_it=num_warmup_iterations, it=iteration + 1)
                 )
 
-            # Save the (averaged) measurements
+            # Save the (averaged) measurements with standard deviations
             measurement = dict(
                 name=benchmark.name,
                 framework=benchmark.framework,
@@ -217,6 +222,7 @@ def run_benchmark_for_framework(
             for metric_name in container.keys:
                 if metric_name not in measurement:
                     measurement[metric_name] = container.get_mean(metric_name)
+                    measurement[f"{metric_name}_std"] = container.get_std(metric_name)
 
             all_measurements.append(measurement)
 

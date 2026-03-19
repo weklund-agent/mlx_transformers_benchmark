@@ -78,3 +78,6 @@ venv.bak/
 
 # IDE settings
 .vscode
+
+# Local model files (too large for git)
+models/

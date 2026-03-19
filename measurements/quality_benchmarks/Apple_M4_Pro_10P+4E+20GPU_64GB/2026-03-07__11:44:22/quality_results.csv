@@ -1,0 +1,590 @@
+model,framework,backend,dtype,category,problem,pass_count,num_runs,passed,sample_response
+qwen-3.5-4b,mlx,metal,int4,math,modular_arithmetic,3,3,True,"Here's a thinking process that leads to the solution:
+
+1.  **Analyze the Request:**
+    *   **Problem:** Find the remainder when $2^{100}$ is divided by 7.
+    *   **Method:** Show work step by step.
+    *   **Hint:** Look for a pattern in powers of 2 modulo 7.
+
+2.  **Initial Calculation (Modular Arithmetic):**
+    *   I need to calculate $2^{100} \pmod{7}$.
+    *   Let's compute the first few powers of 2 modulo 7 to find the pattern.
+
+3.  **Step-by-Step Calculation:**
+    *   $2^1 \equiv 2 \pmo"
+qwen-3.5-4b,mlx,metal,int4,math,inclusion_exclusion,3,3,True,"Here's a thinking process that leads to the solution:
+
+1.  **Understand the Goal:** The objective is to find the count of integers between 1 and 1000 (inclusive) that are divisible by 2, 3, or 5. I need to use the Principle of Inclusion-Exclusion (PIE).
+
+2.  **Define the Sets:**
+    *   Let $S$ be the set of integers $\{1, 2, ..., 1000\}$. The size of $S$ is $|S| = 1000$.
+    *   Let $A$ be the set of integers in $S$ divisible by 2.
+    *   Let $B$ be the set of integers in $S$ divisible by 3.
+ "
+qwen-3.5-4b,mlx,metal,int4,math,bouncing_ball,3,3,True,"Here's a thinking process that leads to the solution:
+
+1.  **Analyze the Problem:**
+    *   Initial condition: A ball is dropped from a height of $h_0 = 10$ meters.
+    *   Bounce ratio: Each bounce reaches $3/4$ of the previous height.
+    *   Goal: Find the total distance traveled ($D$) before coming to rest.
+    *   Constraint: Use geometric series.
+
+2.  **Break Down the Motion:**
+    *   **Drop 1:** The ball falls from 10m. Distance = $10$.
+    *   **Bounce 1:** The ball hits the ground and "
+qwen-3.5-4b,mlx,metal,int4,coding,markdown_to_html,3,3,True,"The user wants me to create a Python function that converts a subset of Markdown to HTML. I need to handle:
+1. Bold (**) → <strong>text</strong>
+2. Italic (*) → <em>text</em>
+3. Code (`) → <code>text</code>
+4. Links [text](url) → <a href=""url"">text</a>
+
+I need to handle edge cases like:
+- Nested formatting
+- Multiple occurrences per line
+- Escaped characters
+
+Let me think about the implementation:
+
+1. For links, I need to be careful with the pattern matching
+2. For nested formatting, I need to h"
+qwen-3.5-4b,mlx,metal,int4,coding,data_pipeline,3,3,True,"Let me break down the requirements:
+
+1. Parse CSV string with columns: date, product, region, amount, quantity
+2. Filter rows where:
+   - amount > 100
+   - region is 'North' or 'West'
+   - quantity >= 5
+3. Group by product
+4. For each product, compute:
+   - total_amount (sum of amounts)
+   - avg_amount (average of amounts)
+   - count (number of rows)
+5. Sort by total_amount descending
+6. Return as JSON string
+
+I need to use only the csv module and standard library (no pandas).
+
+Let me write a co"
+qwen-3.5-4b,mlx,metal,int4,coding,retry_decorator,3,3,True,"The user wants me to create a Python decorator that implements retry logic with exponential backoff. Let me break down the requirements:
+
+1. `max_attempts` - number of times to retry (default 3)
+2. `backoff_base` - base for exponential backoff (default 2)
+3. `exceptions` - tuple of exceptions to catch (default Exception)
+4. Log each attempt
+5. Return a Result dataclass with fields: success, value, attempts, error
+
+I'll need to:
+1. Define a Result dataclass
+2. Create the decorator
+3. Show usage w"
+qwen-3.5-4b,mlx,metal,int4,reasoning,einstein_riddle,3,3,True,"Here's a thinking process that leads to the solution of the logic puzzle:
+
+1.  **Analyze the Request:**
+    *   **Goal:** Solve a logic puzzle involving 5 houses, 5 people (implied by the classic ""Einstein's Riddle"" structure, though the names aren't explicitly listed as a set, the clues imply Brit, Swede, Dane, German, Norwegian), 5 colors, and 5 drinks.
+    *   **Setup:** 5 houses in a row, numbered 1 to 5 (Left to Right).
+    *   **Constraints:** 8 specific clues provided.
+    *   **Output:**"
+qwen-3.5-4b,mlx,metal,int4,reasoning,three_urns,3,3,True,"Here's a thinking process that leads to the solution:
+
+1.  **Understand the Goal:** The objective is to calculate the probability that the *second* ball drawn is red, given a specific sequence of events involving two urns (A, B, C) and a conditional selection process.
+
+2.  **Analyze the Setup:**
+    *   **Urn A:** 3 Red ($R_A$), 2 Blue ($B_A$). Total = 5.
+    *   **Urn B:** 1 Red ($R_B$), 4 Blue ($B_B$). Total = 5.
+    *   **Urn C:** 4 Red ($R_C$), 1 Blue ($B_C$). Total = 5.
+    *   **Process:**"
+qwen-3.5-4b,mlx,metal,int4,reasoning,topological_sort,3,3,True,"Here's a thinking process that leads to the suggested solution:
+
+1.  **Understand the Goal:** The objective is to find *all* valid topological orderings of a given set of 5 nodes (A, B, C, D, E) based on a specific set of dependencies. I need to show the reasoning by tracking in-degrees at each step.
+
+2.  **Analyze the Dependencies:**
+    *   $A \rightarrow B$ (A must come before B)
+    *   $B \rightarrow C$ (B must come before C)
+    *   $A \rightarrow D$ (A must come before D)
+    *   $D \righ"
+qwen-3.5-4b,mlx,metal,int4,instruction_following,constrained_factorial,3,3,True,"Let me create a Python function that computes the factorial of a non-negative integer while following all the constraints:
+
+1. Every variable name must be exactly 4 characters long
+2. No loops - use recursion only
+3. Exactly 3 type hints
+4. Must correctly compute factorial
+
+Let me think about the variable names (all 4 characters):
+- numb (number)
+- fact (factorial)
+- base (base case)
+- resu (result)
+- iter (iteration)
+- val (value)
+- arg (argument)
+- ret (return)
+- etc.
+
+For type hints, I need e"
+qwen-3.5-4b,mlx,metal,int4,instruction_following,library_schema,3,3,True,"The user wants me to create a JSON Schema for a library management system with three entity types: Book, Author, and Loan. Let me break down the requirements:
+
+1. Each entity must have a unique 'id' field
+2. Cross-references must use the referenced entity's id
+3. Include 'required' fields and 'type' constraints for every property
+4. Output valid JSON Schema (draft 2020-12 or later)
+
+Let me design the schema:
+
+**Book entity:**
+- id (string, required, unique)
+- title (string, required)
+- isbn (str"
+qwen-3.5-4b,mlx,metal,int4,instruction_following,adversarial_transform,3,3,True,"Thinking Process:
+
+1.  **Analyze the Request:**
+    *   Input sentence: ""The quick brown fox jumps over the lazy dog""
+    *   Task: Perform three sequential transformations.
+    *   Step 1: Translate to French.
+    *   Step 2: Reverse each word individually (keep word order, reverse letters within words).
+    *   Step 3: Wrap each reversed word in an XML tag: `<word original=""french_word"">reversed_word</word>`.
+    *   Output requirement: Show the output of each step clearly.
+
+2.  **Step 1: Tran"
+qwen-3.5-4b,mlx,metal,int4,writing,multi_doc_summary,3,3,True,"Thinking Process:
+
+1.  **Analyze the Request:**
+    *   Task: Summarize three provided paragraphs into a single cohesive summary.
+    *   Constraint 1: Cover ALL three topics (Quantum computing, Climate change, Gene therapy).
+    *   Constraint 2: Length must be 3-5 sentences.
+    *   Input: Three paragraphs describing advancements/challenges in these fields.
+
+2.  **Analyze the Input Paragraphs:**
+    *   *Paragraph 1 (Quantum Computing):* Uses superposition/entanglement. Qubits vs classical bit"
+qwen-3.5-4b,mlx,metal,int4,writing,structured_meeting_notes,3,3,True,"Thinking Process:
+
+1.  **Analyze the Request:**
+    *   **Task:** Write meeting notes for a fictional product team standup.
+    *   **Constraint 1:** YAML frontmatter with specific fields (`date`, `attendees` (list), `meeting_type`).
+    *   **Constraint 2:** A `## Discussion` section with exactly 3 bullet points.
+    *   **Constraint 3:** A `## Decisions` section with exactly 2 bullet points.
+    *   **Constraint 4:** A `## Action Items` section with exactly 3 items, each assigned to a specific"
+qwen-3.5-4b,mlx,metal,int4,writing,tone_rewrite,3,3,True,"Thinking Process:
+
+1.  **Analyze the Request:**
+    *   **Task:** Rewrite a technical paragraph for a non-technical audience.
+    *   **Constraint 1:** Maximum 3 sentences.
+    *   **Constraint 2:** Preserve all key facts.
+    *   **Constraint 3:** Avoid jargon.
+    *   **Source Text:** ""Deep neural networks utilize backpropagation with stochastic gradient descent to minimize the cross-entropy loss function across training epochs. The model's accuracy on the validation set plateaued at 94.3% aft"
+qwen-3.5-4b,mlx,metal,int4,writing,contradiction_detection,3,3,True,"Thinking Process:
+
+1.  **Analyze the Request:**
+    *   Task: Read two notes about the Apollo 11 mission and identify factual contradictions.
+    *   Input: Note 1 and Note 2.
+    *   Output: Determine if contradictions exist, explain precisely what conflicts, and state the actual facts.
+
+2.  **Analyze Note 1:**
+    *   Claim 1: Apollo 11 landed on July 20, 1969. (Fact check: True, July 20, 1969).
+    *   Claim 2: Neil Armstrong and Buzz Aldrin spent approximately 2.5 hours walking on the lunar "
+qwen-3.5-27b,mlx,metal,int4,math,modular_arithmetic,3,3,True,"Thinking Process:
+
+1.  **Analyze the Request:**
+    *   Task: Find the remainder when $2^{100}$ is divided by 7.
+    *   Constraint: Show work step by step.
+    *   Hint: Look for a pattern in powers of 2 mod 7.
+
+2.  **Identify the Mathematical Concept:**
+    *   This is a modular arithmetic problem.
+    *   Specifically, it involves finding $2^{100} \pmod{7}$.
+    *   The hint suggests looking for a cycle or pattern in the powers of 2 modulo 7.
+
+3.  **Step-by-Step Execution:**
+
+    *   **Step 1"
+qwen-3.5-27b,mlx,metal,int4,math,inclusion_exclusion,3,3,True,"Here's a thinking process that leads to the solution:
+
+1.  **Understand the Goal:** The objective is to count how many integers between 1 and 1000 (inclusive) are divisible by 2, 3, or 5. I need to use the Principle of Inclusion-Exclusion (PIE) and explicitly show each term.
+
+2.  **Define the Sets:**
+    *   Let $S = \{1, 2, 3, \dots, 1000\}$. The size of $S$ is $N = 1000$.
+    *   Let $A$ be the set of integers in $S$ divisible by 2.
+    *   Let $B$ be the set of integers in $S$ divisible by 3."
+qwen-3.5-27b,mlx,metal,int4,math,bouncing_ball,3,3,True,"Here's a thinking process that leads to the solution:
+
+1.  **Understand the Goal:** The objective is to calculate the total distance traveled by a ball dropped from a height of 10 meters, given that it rebounds to $3/4$ of the previous height after each bounce, continuing infinitely until it comes to rest. The solution must use geometric series.
+
+2.  **Analyze the Motion:**
+    *   **Initial Drop:** The ball falls from height $h_0 = 10$ meters.
+        *   Distance traveled: $10$ meters (down).
+"
+qwen-3.5-27b,mlx,metal,int4,coding,markdown_to_html,3,3,True,"This is a good challenge. I need to create a function that converts Markdown to HTML with specific formatting rules. Let me think about the requirements:
+
+1. **bold** → <strong>bold</strong>
+2. *italic* → <em>italic</em>
+3. `code` → <code>code</code>
+4. [link text](url) → <a href=""url"">link text</a>
+
+Key considerations:
+- Handle nested formatting (e.g., **bold *italic* text**)
+- Handle multiple occurrences per line
+- Handle escaped characters (e.g., \* should not be converted)
+- Order of process"
+qwen-3.5-27b,mlx,metal,int4,coding,data_pipeline,3,3,True,"Let me break down the requirements:
+
+1. Parse CSV string with columns: date, product, region, amount, quantity
+2. Filter rows where:
+   - amount > 100
+   - region is 'North' or 'West'
+   - quantity >= 5
+3. Group remaining rows by product
+4. For each product, compute:
+   - total_amount (sum of amounts)
+   - avg_amount (average of amounts)
+   - count (number of rows)
+5. Sort products by total_amount descending
+6. Return as JSON string
+
+I need to use only the csv module and standard library (no pan"
+qwen-3.5-27b,mlx,metal,int4,coding,retry_decorator,3,3,True,"The user wants me to create a Python decorator with the following requirements:
+1. Retry up to max_attempts times
+2. Use exponential backoff (backoff_base ** attempt seconds)
+3. Only catch specific exceptions
+4. Log each attempt
+5. Return a Result dataclass with success, value, attempts, and error fields
+
+I need to:
+1. Create a Result dataclass
+2. Create the retry decorator
+3. Show usage with an intermittently failing function
+
+Let me write this step by step:
+
+```python
+from dataclasses import d"
+qwen-3.5-27b,mlx,metal,int4,reasoning,einstein_riddle,3,3,True,"Here's a thinking process that leads to the solution:
+
+1.  **Analyze the Request:**
+    *   **Task:** Solve a logic puzzle (Einstein's Riddle/Zebra Puzzle variant).
+    *   **Setup:** 5 houses in a row, numbered 1-5 (left to right).
+    *   **Attributes:** Nationality, House Color, Drink. (Note: The classic puzzle usually includes Pets and Cigarettes, but this specific prompt only lists Nationality, Color, and Drink. I need to stick strictly to the constraints provided, even if some information "
+qwen-3.5-27b,mlx,metal,int4,reasoning,three_urns,3,3,True,"Here's a thinking process that leads to the solution:
+
+1.  **Understand the Goal:** The objective is to calculate the probability that the *second* ball drawn is red, given a specific two-step process involving three urns (A, B, and C). I need to use the Law of Total Probability and show the work.
+
+2.  **Analyze the Setup:**
+    *   **Urn A:** 3 Red ($R_A$), 2 Blue ($B_A$). Total = 5 balls.
+    *   **Urn B:** 1 Red ($R_B$), 4 Blue ($B_B$). Total = 5 balls.
+    *   **Urn C:** 4 Red ($R_C$), 1 Blu"
+qwen-3.5-27b,mlx,metal,int4,reasoning,topological_sort,3,3,True,"Let me analyze this dependency graph step by step.
+
+The dependencies are:
+- A → B (A must come before B)
+- B → C (B must come before C)
+- A → D (A must come before D)
+- D → C (D must come before C)
+- C → E (C must come before E)
+
+So the graph structure is:
+- A has no incoming edges (in-degree = 0)
+- B has incoming edge from A (in-degree = 1)
+- D has incoming edge from A (in-degree = 1)
+- C has incoming edges from B and D (in-degree = 2)
+- E has incoming edge from C (in-degree = 1)
+
+Let me verify"
+qwen-3.5-27b,mlx,metal,int4,instruction_following,constrained_factorial,3,3,True,"Thinking Process:
+
+1.  **Analyze the Request:**
+    *   Task: Write a Python function to compute the factorial of a non-negative integer.
+    *   Constraint 1: Every variable name must be exactly 4 characters long.
+    *   Constraint 2: No loops (`for` or `while`), use recursion only.
+    *   Constraint 3: Include exactly 3 type hints in the code.
+    *   Constraint 4: The function must correctly compute factorial (e.g., `factorial(5) = 120`).
+    *   Output: Show the complete function.
+
+2.  **D"
+qwen-3.5-27b,mlx,metal,int4,instruction_following,library_schema,3,3,True,"The user wants me to create a JSON Schema for a library management system with three entity types: Book, Author, and Loan. Let me break down the requirements:
+
+1. Each entity needs a unique 'id' field
+2. Cross-references must use the referenced entity's id
+3. Include 'required' fields and 'type' constraints for every property
+4. Output valid JSON Schema (draft 2020-12 or later)
+
+Let me create a comprehensive JSON Schema that includes all three entity types. I'll structure it as a schema that can"
+qwen-3.5-27b,mlx,metal,int4,instruction_following,adversarial_transform,3,3,True,"Thinking Process:
+
+1.  **Analyze the Request:**
+    *   Input sentence: ""The quick brown fox jumps over the lazy dog""
+    *   Task: Perform three transformations in sequence.
+    *   Step 1: Translate to French.
+    *   Step 2: Reverse each word individually (keep word order).
+    *   Step 3: Wrap each reversed word in an XML tag `<word original=""french_word"">reversed_word</word>`.
+    *   Output requirement: Show the output of each step clearly.
+
+2.  **Step 1: Translate to French.**
+    *   Sou"
+qwen-3.5-27b,mlx,metal,int4,writing,multi_doc_summary,3,3,True,"Thinking Process:
+
+1.  **Analyze the Request:**
+    *   **Task:** Summarize three provided paragraphs into a single cohesive summary.
+    *   **Constraint 1:** Cover ALL three topics (Quantum computing, Climate change, Gene therapy).
+    *   **Constraint 2:** Length must be 3-5 sentences.
+    *   **Input:** Three distinct paragraphs about different scientific/technological topics.
+
+2.  **Analyze the Input Paragraphs:**
+    *   **Paragraph 1 (Quantum Computing):** Focuses on quantum mechanics (su"
+qwen-3.5-27b,mlx,metal,int4,writing,structured_meeting_notes,3,3,True,"Thinking Process:
+
+1.  **Analyze the Request:**
+    *   **Task:** Write meeting notes for a fictional product team standup.
+    *   **Format:** Markdown.
+    *   **Constraints:**
+        1.  YAML frontmatter with specific fields: `date`, `attendees` (list), `meeting_type`.
+        2.  A `## Discussion` section with exactly 3 bullet points.
+        3.  A `## Decisions` section with exactly 2 bullet points.
+        4.  A `## Action Items` section with exactly 3 items, each assigned to a specific p"
+qwen-3.5-27b,mlx,metal,int4,writing,tone_rewrite,0,3,False,"Thinking Process:
+
+1.  **Analyze the Request:**
+    *   **Task:** Rewrite a technical paragraph for a non-technical audience.
+    *   **Constraint 1:** 3 sentences or fewer.
+    *   **Constraint 2:** Preserve all key facts.
+    *   **Constraint 3:** Avoid jargon.
+    *   **Input Text:** 'Deep neural networks utilize backpropagation with stochastic gradient descent to minimize the cross-entropy loss function across training epochs. The model's accuracy on the validation set plateaued at 94.3% aft"
+qwen-3.5-27b,mlx,metal,int4,writing,contradiction_detection,3,3,True,"Thinking Process:
+
+1.  **Analyze the Request:**
+    *   Input: Two notes about the Apollo 11 mission.
+    *   Task: Identify factual contradictions between them.
+    *   Output: Explain precisely what conflicts exist and state the actual facts.
+
+2.  **Analyze Note 1:**
+    *   Claim 1: Apollo 11 landed on the Moon on July 20, 1969.
+    *   Claim 2: Neil Armstrong and Buzz Aldrin spent approximately 2.5 hours walking on the lunar surface during their EVA (Extravehicular Activity).
+    *   Claim 3"
+qwen-3.5-27b-claude-opus-distilled,mlx,metal,int4,math,modular_arithmetic,3,3,True,"I need to find the remainder when 2^100 is divided by 7.
+
+Let me look for a pattern in powers of 2 modulo 7:
+
+2^1 = 2 ≡ 2 (mod 7)
+2^2 = 4 ≡ 4 (mod 7)
+2^3 = 8 ≡ 1 (mod 7)
+2^4 = 16 ≡ 2 (mod 7)
+2^5 = 32 ≡ 4 (mod 7)
+2^6 = 64 ≡ 1 (mod 7)
+
+So the pattern repeats every 3 powers: 2, 4, 1, 2, 4, 1, ...
+
+The cycle length is 3.
+
+To find 2^100 mod 7, I need to find what position 100 is in the cycle.
+
+100 ÷ 3 = 33 remainder 1
+
+So 2^100 ≡ 2^1 ≡ 2 (mod 7)
+
+Let me verify this another way using Fermat's Little T"
+qwen-3.5-27b-claude-opus-distilled,mlx,metal,int4,math,inclusion_exclusion,3,3,True,"I need to find how many integers from 1 to 1000 are divisible by 2, 3, or 5.
+
+Let me define:
+- A = set of integers from 1 to 1000 divisible by 2
+- B = set of integers from 1 to 1000 divisible by 3
+- C = set of integers from 1 to 1000 divisible by 5
+
+Using the inclusion-exclusion principle:
+|A ∪ B ∪ C| = |A| + |B| + |C| - |A ∩ B| - |A ∩ C| - |B ∩ C| + |A ∩ B ∩ C|
+
+Let me calculate each term:
+
+|A| = number of integers from 1 to 1000 divisible by 2
+= floor(1000/2) = 500
+
+|B| = number of integers fr"
+qwen-3.5-27b-claude-opus-distilled,mlx,metal,int4,math,bouncing_ball,3,3,True,"Let me work through this problem step by step.
+
+**Understanding the problem:**
+- Ball dropped from 10 meters
+- Each bounce reaches 3/4 of the previous height
+- Need total distance traveled (down + up for each bounce)
+
+**Breaking down the motion:**
+
+1. **First drop:** Ball falls 10 meters (down only)
+
+2. **First bounce:** 
+   - Ball rises to 10 × (3/4) = 7.5 meters (up)
+   - Ball falls 7.5 meters (down)
+
+3. **Second bounce:**
+   - Ball rises to 7.5 × (3/4) = 10 × (3/4)² = 5.625 meters (up)
+   - B"
+qwen-3.5-27b-claude-opus-distilled,mlx,metal,int4,coding,markdown_to_html,3,3,True,"Let me think about how to approach this coding problem.
+
+Problem: Write a Python function `markdown_to_html(text)` that converts a subset of Markdown to HTML. It must handle:
+  1. **bold** → <strong>bold</strong>
+  2. *italic* → <em>italic</em>
+  3. `code` → <code>code</code>
+  4. [link text](url) → <a href=""url"">link text</a>
+
+Handle edge cases: nested formatting, multiple occurrences per line, and escaped characters. Provide test cases.
+
+Approach: Regex-based with careful ordering
+
+Key conside"
+qwen-3.5-27b-claude-opus-distilled,mlx,metal,int4,coding,data_pipeline,0,3,False,"Let me think about how to approach this coding problem.
+
+Problem: Write a Python function `process_sales(csv_text)` that takes a CSV string with columns: date, product, region, amount, quantity.
+
+The function must:
+1. Filter to rows where amount > 100 AND region is 'North' or 'West' AND quantity >= 5
+2. Group remaining rows by product
+3. For each product, compute: total_amount, avg_amount, count
+4. Sort products by total_amount descending
+5. Return the result as a JSON string
+
+Do not use pandas "
+qwen-3.5-27b-claude-opus-distilled,mlx,metal,int4,coding,retry_decorator,3,3,True,"Let me think about how to approach this coding problem.
+
+Problem: Write a Python decorator `retry(max_attempts=3, backoff_base=2, exceptions=(Exception,))` that:
+1. Retries the decorated function up to `max_attempts` times
+2. Uses exponential backoff: wait `backoff_base ** attempt` seconds between retries
+3. Only catches exceptions in the `exceptions` tuple
+4. Logs each attempt (print is fine)
+5. Returns a Result dataclass with fields: success (bool), value (any), attempts (int), error (Optional"
+qwen-3.5-27b-claude-opus-distilled,mlx,metal,int4,reasoning,einstein_riddle,3,3,True,"Let me work through this logic puzzle step by step.
+
+**Setting up the grid:**
+- 5 houses numbered 1-5 (left to right)
+- Each house has: a nationality, a color, and a drink
+
+**Given constraints:**
+1. Brit → red house
+2. Swede → milk
+3. Green house is immediately left of white house
+4. Dane → tea
+5. Green house → coffee
+6. Norwegian → house 1
+7. Norwegian is next to blue house
+8. German → house 3
+
+**Step 1: Fill in the directly given information**
+
+From constraint 6: Norwegian lives in house 1
+Fro"
+qwen-3.5-27b-claude-opus-distilled,mlx,metal,int4,reasoning,three_urns,3,3,True,"Let me work through this problem step by step.
+
+First, I need to understand what's being asked: There are three urns:
+  Urn A contains 3 red balls and 2 blue balls.
+  Urn B contains 1 red ball and 4 blue balls.
+  Urn C contains 4 red balls and 1 blue ball.
+
+You draw one ball from Urn A. If it is red, you then draw from Urn B. If it is blue, you then draw from Urn C.
+
+What is the probability that the second ball drawn is red? Show your work using the law of total probabi
+
+Key values given: 3, 2, "
+qwen-3.5-27b-claude-opus-distilled,mlx,metal,int4,reasoning,topological_sort,3,3,True,"Let me work through this problem step by step.
+
+First, I need to understand what's being asked: Given this dependency graph:
+  A → B (A must come before B)
+  B → C
+  A → D
+  D → C
+  C → E
+
+List ALL valid topological orderings of these 5 nodes. Show your reasoning by tracking in-degrees at each step.
+
+Key values given: 5
+
+My approach:
+1. Calculate initial in-degrees
+
+For each node, count how many edges point TO it:
+- A: 0 (no incoming edges)
+- B: 1 (from A)
+- C: 2 (from B and D)
+- D: 1 (from A)
+-"
+qwen-3.5-27b-claude-opus-distilled,mlx,metal,int4,instruction_following,constrained_factorial,3,3,True,"Let me think about how to approach this coding problem.
+
+Problem: Write a Python function that computes the factorial of a non-negative integer. You MUST follow ALL of these constraints simultaneously:
+
+1. Every variable name must be exactly 4 characters long (e.g., 'numb', 'rslt')
+2. You must NOT use any loops (for or while) — use recursion only
+3. Include exactly 3 type hints in your code
+4. The function must correctly compute factorial (e.g., factorial(5) = 120)
+
+Show the complete function.
+
+"
+qwen-3.5-27b-claude-opus-distilled,mlx,metal,int4,instruction_following,library_schema,3,3,True,"Let me think about how to approach this coding problem.
+
+Problem: Generate a JSON Schema for a library management system with three entity types:
+
+1. **Book**: title, isbn, publication_year, author_id (reference to Author)
+2. **Author**: name, birth_year, nationality, book_ids (list of Book references)
+3. **Loan**: book_id (reference to Book), borrower_name, due_date, returned (boolean)
+
+Requirements:
+- Each entity must have a unique 'id' field
+- Cross-references must use the referenced entity's"
+qwen-3.5-27b-claude-opus-distilled,mlx,metal,int4,instruction_following,adversarial_transform,3,3,True,"Let me work through this step by step.
+
+**Step 1: Translate to French**
+
+The sentence ""The quick brown fox jumps over the lazy dog"" in French is:
+""Le rapide renard brun saute par-dessus le chien paresseux""
+
+Let me verify this translation:
+- The = Le
+- quick = rapide
+- brown = brun
+- fox = renard
+- jumps = saute
+- over = par-dessus
+- the = le
+- lazy = paresseux
+- dog = chien
+
+**Step 2: Reverse each word individually**
+
+Now I'll reverse the letters in each word while keeping word order:
+
+- Le → eL"
+qwen-3.5-27b-claude-opus-distilled,mlx,metal,int4,writing,multi_doc_summary,3,3,True,"Let me analyze the three paragraphs to identify the key topics:
+
+Paragraph 1: Quantum computing - discusses qubits, superposition, entanglement, and applications in cryptography and drug discovery.
+
+Paragraph 2: Climate change - covers temperature rise (1.2°C), accelerating emissions, and IPCC warnings about 1.5°C tipping points.
+
+Paragraph 3: Gene therapy - focuses on CRISPR-Cas9, clinical trial successes for sickle cell disease and cancers, and barriers like off-target edits and cost.
+
+I need "
+qwen-3.5-27b-claude-opus-distilled,mlx,metal,int4,writing,structured_meeting_notes,3,3,True,"Let me think about how to approach this coding problem.
+
+Problem: Write meeting notes for a fictional product team standup. The notes MUST include:
+
+1. YAML frontmatter with fields: date, attendees (list), meeting_type
+2. A '## Discussion' section with 3 bullet points
+3. A '## Decisions' section with 2 bullet points
+4. A '## Action Items' section with 3 items, each assigned to a specific person using @name format
+
+Use proper Markdown formatting throughout.
+
+Approach: 1. YAML Frontmatter
+- Use tr"
+qwen-3.5-27b-claude-opus-distilled,mlx,metal,int4,writing,tone_rewrite,0,3,False,"Let me analyze the original technical paragraph and identify the key facts:
+
+1. A machine learning model (deep neural network) was trained
+2. It uses a specific training method (backpropagation with stochastic gradient descent)
+3. It minimizes a loss function (cross-entropy)
+4. Training happens in epochs
+5. The model achieved 94.3% accuracy on validation data
+6. This accuracy plateaued (stopped improving)
+7. Hyperparameter tuning was done on learning rate and batch size
+8. Adam optimizer was use"
+qwen-3.5-27b-claude-opus-distilled,mlx,metal,int4,writing,contradiction_detection,3,3,True,"Let me carefully analyze both notes for potential contradictions.
+
+**Note 1 claims:**
+- Apollo 11 landed on the Moon on July 20, 1969
+- Neil Armstrong and Buzz Aldrin spent approximately 2.5 hours walking on the lunar surface during their EVA
+- They collected rock samples and deployed scientific instruments
+
+**Note 2 claims:**
+- Armstrong and Aldrin remained on the lunar surface for approximately 21.5 hours in total after landing
+- They collected 47.5 pounds of lunar samples during their moonwal"

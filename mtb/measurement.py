@@ -77,6 +77,14 @@ class Measurements:
                 f"Key {key} not found in measurements, must be one of {list(self._measurements.keys())}"
             )
 
+    def get_std(self, key: str) -> float:
+        if key in self._measurements:
+            return np.std(self._measurements[key])
+        else:
+            raise KeyError(
+                f"Key {key} not found in measurements, must be one of {list(self._measurements.keys())}"
+            )
+
     def get_means(self) -> Dict[str, float]:
         return {key: self.get_mean(key) for key in self._measurements}
 

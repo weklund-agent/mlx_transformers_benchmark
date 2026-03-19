@@ -1,0 +1,371 @@
+model,framework,backend,dtype,category,problem,pass_count,num_runs,passed,sample_response
+qwen-3.5-4b,mlx,metal,int4,coding,lru_cache,3,3,True,"The user wants me to implement an LRU (Least Recently Used) cache in Python from scratch without using collections.OrderedDict. I need to:
+
+1. Support get(key) - return value or None if not found
+2. Support put(key, value) - add/update value, evict LRU if full
+3. Both operations should be O(1) time complexity
+4. Configurable capacity
+5. Evict the least recently used item when full
+
+To achieve O(1) for both operations, I'll need:
+- A hash map (dictionary) for O(1) lookups
+- A doubly-linked list t"
+qwen-3.5-4b,mlx,metal,int4,coding,flatten_nested,3,3,True,"The user wants me to write a Python function that flattens arbitrarily nested lists. Key requirements:
+1. Take a nested list and return a flat list
+2. Handle mixed types (strings should not be iterated into characters)
+3. Recursively process nested lists
+
+The main challenge is distinguishing between lists and other types (like strings). In Python, we need to check if an element is a list (or other iterable types that we want to flatten).
+
+Here's my approach:
+1. Use recursion to traverse the list"
+qwen-3.5-4b,mlx,metal,int4,coding,longest_palindrome_substring,3,3,True,"This is a classic dynamic programming problem. I need to find the longest palindromic substring in a given string.
+
+There are several approaches:
+1. Dynamic Programming - O(n²) time, O(n²) space
+2. Expand around center - O(n²) time, O(1) space
+3. Manacher's algorithm - O(n) time, O(n) space
+
+Since the requirement is O(n²) or better, I'll provide the expand around center approach as it's more space-efficient and easier to understand.
+
+Let me write a comprehensive solution with explanation:
+
+```py"
+qwen-3.5-4b,mlx,metal,int4,coding,calculator,3,3,True,"This is a classic expression evaluation problem. I need to implement a calculator that:
+1. Handles +, -, *, / operators
+2. Respects operator precedence (* and / before + and -)
+3. Handles nested parentheses
+4. Works with non-negative integers
+
+There are several approaches to solve this:
+
+1. **Two-pass approach**: First tokenize the expression, then evaluate
+2. **Shunting-yard algorithm**: Convert to postfix notation, then evaluate
+3. **Recursive descent parser**: Build a parser that handles prec"
+qwen-3.5-4b,mlx,metal,int4,coding,buggy_merge_sort,3,3,True,"Let me analyze this merge sort implementation carefully.
+
+The basic structure looks correct:
+1. Base case: if len(arr) <= 1, return arr
+2. Split array into left and right halves
+3. Recursively sort both halves
+4. Merge the sorted halves
+
+Let me trace through the logic:
+- `mid = len(arr) // 2` - this splits the array
+- `left = merge_sort(arr[:mid])` - recursive call on left half
+- `right = merge_sort(arr[mid:])` - recursive call on right half
+- `return merge(left, right)` - merge the results
+
+Wai"
+qwen-3.5-4b,mlx,metal,int4,reasoning,compound_interest,3,3,True,"Here's a thinking process that leads to the suggested solution:
+
+1.  **Analyze the Request:**
+    *   **Principal ($P$):** $10,000
+    *   **Annual Interest Rate ($r$):** 5% (or 0.05)
+    *   **Compounding Frequency ($n$):** Quarterly (4 times a year)
+    *   **Time ($t$):** 3 years
+    *   **Goal:** Calculate the Final Amount ($A$).
+    *   **Requirement:** Show work step by step.
+
+2.  **Identify the Formula:**
+    *   The standard formula for compound interest is:
+        $$A = P \left(1 + \fr"
+qwen-3.5-4b,mlx,metal,int4,reasoning,circular_seating,3,3,True,"Here's a thinking process that leads to the solution:
+
+1.  **Understand the Goal:** The objective is to find the number of ways to seat 6 people around a circular table such that two specific people (Alice and Bob) do *not* sit next to each other.
+
+2.  **Identify the Constraints:**
+    *   Total people ($n$) = 6.
+    *   Arrangement type = Circular permutation.
+    *   Restriction: Alice and Bob cannot be adjacent.
+
+3.  **Determine the Method:**
+    *   Direct counting (counting valid arrangemen"
+qwen-3.5-4b,mlx,metal,int4,reasoning,logic_puzzle,0,3,False,"Here's a thinking process that leads to the solution:
+
+1.  **Analyze the Request:**
+    *   **Characters:** Three people (A, B, C).
+    *   **Types:** Truth-teller (T) or Liar (L).
+    *   **Statements:**
+        *   A: ""B is a liar.""
+        *   B: ""C is a liar.""
+        *   C: ""A and B are both liars.""
+    *   **Goal:** Determine the truthfulness status of A, B, and C.
+    *   **Method:** Prove the answer by checking all cases.
+
+2.  **Define the Logic:**
+    *   If a person is a Truth-teller ("
+qwen-3.5-4b,mlx,metal,int4,reasoning,bayes_theorem,3,3,True,"Here's a thinking process that leads to the suggested solution:
+
+1.  **Understand the Goal:** The objective is to calculate the probability that a person actually has a rare disease given that they tested positive, using Bayes' Theorem.
+
+2.  **Identify the Given Information:**
+    *   **Prevalence (Prior Probability):** The disease affects 1% of the population.
+    *   **Sensitivity (True Positive Rate):** The probability of testing positive given the person has the disease is 95%.
+    *   **Spe"
+qwen-3.5-4b,mlx,metal,int4,reasoning,proof_bug,3,3,True,"Here's a thinking process that leads to the explanation of the error in the ""proof"":
+
+1.  **Analyze the Request:**
+    *   **Task:** Identify the error in a specific mathematical ""proof"" claiming $1 = 2$.
+    *   **Input:** A step-by-step derivation starting with $a = b$ and ending with $2 = 1$.
+    *   **Goal:** Pinpoint the specific step where the logic breaks down and explain *why* it's invalid.
+
+2.  **Analyze the ""Proof"":**
+    *   Step 1: Let $a = b$.
+    *   Step 2: $a^2 = ab$. (Multiplyin"
+qwen-3.5-27b,mlx,metal,int4,coding,lru_cache,3,3,True,"I need to implement an LRU cache from scratch with O(1) time complexity for both get and put operations. To achieve this, I'll need to use:
+
+1. A hash map (dictionary) for O(1) key lookup
+2. A doubly linked list to maintain the order of usage (most recently used at one end, least recently used at the other)
+
+The key insight is:
+- Hash map stores key -> node mapping for O(1) access
+- Doubly linked list maintains the order of usage
+- When we access a key, we move it to the front (most recently use"
+qwen-3.5-27b,mlx,metal,int4,coding,flatten_nested,3,3,True,"The user wants me to write a Python function that flattens an arbitrarily nested list. The key requirements are:
+
+1. Take a nested list as input
+2. Return a flat list with all values
+3. Handle mixed types - strings should NOT be iterated into characters (so ""abc"" should remain as ""abc"", not become ['a', 'b', 'c'])
+
+Let me think about the approach:
+
+1. I need to recursively traverse the nested structure
+2. For each element, check if it's a list (or other iterable)
+3. If it's a list, recursively f"
+qwen-3.5-27b,mlx,metal,int4,coding,longest_palindrome_substring,3,3,True,"The user wants me to write a Python function that finds the longest palindromic substring in a given string. They want O(n^2) or better time complexity.
+
+There are several approaches to solve this problem:
+
+1. **Brute Force**: Check all substrings - O(n^3)
+2. **Expand Around Center**: For each possible center, expand outward - O(n^2)
+3. **Dynamic Programming**: Use a 2D table to store palindrome information - O(n^2)
+4. **Manacher's Algorithm**: O(n) - most efficient but more complex
+
+Since they "
+qwen-3.5-27b,mlx,metal,int4,coding,calculator,3,3,True,"This is a classic problem that requires implementing a calculator with proper operator precedence and parentheses handling. I'll need to:
+
+1. Parse the expression
+2. Handle operator precedence (* and / before + and -)
+3. Handle nested parentheses
+4. Support non-negative integers
+
+There are several approaches:
+1. Use two stacks (one for operands, one for operators)
+2. Convert to postfix notation (Reverse Polish Notation) and evaluate
+3. Use recursion to handle parentheses
+
+I'll implement a soluti"
+qwen-3.5-27b,mlx,metal,int4,coding,buggy_merge_sort,3,3,True,"Let me analyze this merge sort implementation to find the bug.
+
+The merge_sort function looks correct:
+- Base case: if array has 0 or 1 elements, return it
+- Split array in half
+- Recursively sort both halves
+- Merge the sorted halves
+
+The merge function is where the issue likely is. Let me trace through what happens:
+
+1. It creates an empty result list
+2. It compares elements from left and right arrays
+3. It appends the smaller element to result
+4. It increments the appropriate index
+
+The probl"
+qwen-3.5-27b,mlx,metal,int4,reasoning,compound_interest,3,3,True,"Here's a thinking process that leads to the suggested solution:
+
+1.  **Analyze the Request:**
+    *   **Principal ($P$):** $10,000
+    *   **Annual Interest Rate ($r$):** 5% (or 0.05)
+    *   **Compounding Frequency ($n$):** Quarterly (4 times a year)
+    *   **Time ($t$):** 3 years
+    *   **Goal:** Calculate the final amount ($A$) and show the work step-by-step.
+
+2.  **Identify the Formula:**
+    *   Since the interest is compounded, I need the Compound Interest Formula:
+        $$A = P \left("
+qwen-3.5-27b,mlx,metal,int4,reasoning,circular_seating,3,3,True,"Here's a thinking process that leads to the solution:
+
+1.  **Understand the Goal:** The objective is to calculate the number of distinct seating arrangements for 6 people around a circular table, subject to the constraint that two specific people (Alice and Bob) cannot sit next to each other.
+
+2.  **Identify the Key Concepts:**
+    *   **Circular Permutation:** Arranging $n$ distinct objects around a circle. The formula is $(n-1)!$. This is because rotations of the same arrangement are considere"
+qwen-3.5-27b,mlx,metal,int4,reasoning,logic_puzzle,0,3,False,"Here's a thinking process that leads to the solution:
+
+1.  **Analyze the Request:**
+    *   **Characters:** A, B, C.
+    *   **Types:** Truth-teller (T) or Liar (L).
+    *   **Statements:**
+        *   A: ""B is a liar.""
+        *   B: ""C is a liar.""
+        *   C: ""A and B are both liars.""
+    *   **Goal:** Determine who is T and who is L.
+    *   **Requirement:** Prove the answer by checking all cases.
+
+2.  **Define the Logic:**
+    *   If a person is a Truth-teller (T), their statement is True"
+qwen-3.5-27b,mlx,metal,int4,reasoning,bayes_theorem,3,3,True,"Here's a thinking process that leads to the suggested solution:
+
+1.  **Understand the Goal:** The user wants to calculate the probability that a person actually has a rare disease given that they tested positive. I need to use Bayes' theorem and show the work.
+
+2.  **Identify the Given Information:**
+    *   Prevalence of the disease (Prior Probability): $P(\text{Disease}) = 1\% = 0.01$.
+    *   Sensitivity (True Positive Rate): $P(\text{Positive} \mid \text{Disease}) = 95\% = 0.95$.
+    *   Spe"
+qwen-3.5-27b,mlx,metal,int4,reasoning,proof_bug,3,3,True,"Thinking Process:
+
+1.  **Analyze the Request:** The user is asking me to identify the error in a classic mathematical ""proof"" that leads to the false conclusion $1 = 2$. The proof is provided step-by-step.
+
+2.  **Analyze the Proof:**
+    *   Step 1: Let $a = b$. (Assumption)
+    *   Step 2: Then $a^2 = ab$. (Multiplication by $a$)
+    *   Step 3: $a^2 - b^2 = ab - b^2$. (Subtraction of $b^2$ from both sides)
+    *   Step 4: $(a + b)(a - b) = b(a - b)$. (Factorization)
+    *   Step 5: $a + b = b$"
+qwen-3.5-27b-claude-opus-distilled,mlx,metal,int4,coding,lru_cache,3,3,True,"Let me think about how to approach this coding problem.
+
+Problem: Implement an LRU (Least Recently Used) cache in Python from scratch. It should support get(key) and put(key, value) operations, both in O(1) time. The cache should have a configurable capacity and evict the least recently used item when full. Do not use collections.OrderedDict — implement the underlying data structure yourself.
+
+Approach: Hash Map + Doubly Linked List
+
+Let me implement this solution.
+</think>
+
+# LRU Cache Implemen"
+qwen-3.5-27b-claude-opus-distilled,mlx,metal,int4,coding,flatten_nested,3,3,True,"Let me think about how to approach this coding problem.
+
+Problem: Write a Python function `flatten(lst)` that takes an arbitrarily nested list and returns a flat list of all values. For example:
+  flatten([1, [2, [3, 4], 5], [6, 7]]) -> [1, 2, 3, 4, 5, 6, 7]
+  flatten([[1, 2], [[3]], [4, [5, [6]]]]) -> [1, 2, 3, 4, 5, 6]
+Handle mixed types (strings should not be iterated into characters).
+
+Approach: Recursive approach with type checking
+
+Let me implement this solution.
+</think>
+
+# Flattening Nes"
+qwen-3.5-27b-claude-opus-distilled,mlx,metal,int4,coding,longest_palindrome_substring,3,3,True,"Let me think about how to approach this coding problem.
+
+Problem: Write a Python function that finds the longest palindromic substring in a given string. For example, given 'babad', return 'bab' or 'aba'. Given 'cbbd', return 'bb'. Your solution should be O(n^2) or better.
+
+Approach: Expand Around Center
+
+Let me implement this solution.
+</think>
+
+# Longest Palindromic Substring
+
+## Approach: Expand Around Center
+
+I'll use the ""expand around center"" technique, which is O(n²) time and O(1) space.
+"
+qwen-3.5-27b-claude-opus-distilled,mlx,metal,int4,coding,calculator,3,3,True,"Let me think about how to approach this coding problem.
+
+Problem: Implement a basic calculator in Python that evaluates a string expression containing +, -, *, /, parentheses, and non-negative integers. It must respect operator precedence (* and / before + and -) and handle nested parentheses. For example:
+  calculate(""2 + 3 * 4"") -> 14
+  calculate(""(2 + 3) * 4"") -> 20
+  calculate(""10 + 2 * (3 + 4)"") -> 24
+
+Approach: Recursive Descent Parser
+
+Let me implement this solution.
+</think>
+
+# Basic Cal"
+qwen-3.5-27b-claude-opus-distilled,mlx,metal,int4,coding,buggy_merge_sort,3,3,True,"Let me analyze this merge sort implementation carefully.
+
+The merge_sort function looks correct:
+- Base case: returns array if length <= 1
+- Splits array at midpoint
+- Recursively sorts both halves
+- Merges the sorted halves
+
+The merge function is where the problem lies. Let me trace through it:
+
+```python
+def merge(left, right):
+    result = []
+    i = j = 0
+    while i < len(left) and j < len(right):
+        if left[i] < right[j]:
+            result.append(left[i])
+            i += 1
+        e"
+qwen-3.5-27b-claude-opus-distilled,mlx,metal,int4,reasoning,compound_interest,3,3,True,"Let me work through this compound interest problem step by step.
+
+**Given information:**
+- Principal (P) = $10,000
+- Annual interest rate (r) = 5% = 0.05
+- Compounded quarterly (n = 4 times per year)
+- Time (t) = 3 years
+
+**Compound Interest Formula:**
+A = P(1 + r/n)^(nt)
+
+Where:
+- A = final amount
+- P = principal
+- r = annual interest rate (as decimal)
+- n = number of compounding periods per year
+- t = time in years
+
+**Step 1: Identify all values**
+- P = $10,000
+- r = 0.05
+- n = 4 (quarterly me"
+qwen-3.5-27b-claude-opus-distilled,mlx,metal,int4,reasoning,circular_seating,3,3,True,"Let me work through this problem step by step.
+
+**Step 1: Find the total number of ways to seat 6 people around a circular table**
+
+For circular arrangements, we fix one person's position to account for rotational symmetry. With n people, the number of distinct circular arrangements is (n-1)!.
+
+For 6 people: (6-1)! = 5! = 120 ways
+
+**Step 2: Find the number of ways where Alice and Bob DO sit next to each other**
+
+I'll use the ""treat as one unit"" method:
+- Treat Alice and Bob as a single unit (si"
+qwen-3.5-27b-claude-opus-distilled,mlx,metal,int4,reasoning,logic_puzzle,0,3,False,"Let me analyze this logic puzzle systematically.
+
+**Setup:**
+- Three people: A, B, C
+- Each is either a truth-teller (T) or liar (L)
+- 2³ = 8 possible combinations
+
+**Statements:**
+- A: ""B is a liar""
+- B: ""C is a liar""
+- C: ""A and B are both liars""
+
+**Method:** Check all 8 cases for consistency.
+
+**Case 1: A=T, B=T, C=T**
+- A says ""B is a liar"" → B is T, so A's statement is FALSE → A should be L, but A=T ✗
+
+**Case 2: A=T, B=T, C=L**
+- A says ""B is a liar"" → B is T, so A's statement is FALSE → A "
+qwen-3.5-27b-claude-opus-distilled,mlx,metal,int4,reasoning,bayes_theorem,3,3,True,"Let me work through this problem step by step.
+
+First, I need to understand what's being asked: A rare disease affects 1% of the population. A diagnostic test has a 95% true positive rate (sensitivity) and a 95% true negative rate (specificity), meaning it has a 5% false positive rate. If a randomly selected person tests positive, what is the probability they actually have the disease? Show your work using Bayes' theorem.
+
+Key values given: 1, 95, 95, 5
+
+Working through the calculation: Here is "
+qwen-3.5-27b-claude-opus-distilled,mlx,metal,int4,reasoning,proof_bug,3,3,True,"Let me analyze this classic mathematical fallacy step by step.
+
+Starting with the given information:
+- Let a = b (this is our initial assumption)
+
+Step 1: a² = ab
+- Since a = b, multiplying both sides by a gives a² = ab ✓ Valid
+
+Step 2: a² - b² = ab - b²
+- Subtracting b² from both sides of a² = ab ✓ Valid
+
+Step 3: (a + b)(a - b) = b(a - b)
+- Left side: a² - b² = (a + b)(a - b) ✓ Valid (difference of squares)
+- Right side: ab - b² = b(a - b) ✓ Valid (factoring out b)
+
+Step 4: a + b = b
+- This ste"
