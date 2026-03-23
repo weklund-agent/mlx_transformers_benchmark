@@ -1,3 +1,8 @@
+from mtb.llm_benchmarks.models.nemotron import (
+    Nemotron3_Nano_4B,
+    Nemotron_Nano_9B_v2,
+    Nemotron_Cascade2_30B_A3B,
+)
 from mtb.llm_benchmarks.models.deepseek import (
     Deepseek_R1_0528_Qwen3_8B,
     Deepseek_R1_Distill_Qwen_7B,
@@ -46,6 +51,10 @@ MODEL_SPECS = [
     Qwen3_0p6B_it,
     Qwen3_8B_it,
     Qwen3_14B_it,
+    # nemotron
+    Nemotron3_Nano_4B,
+    Nemotron_Nano_9B_v2,
+    Nemotron_Cascade2_30B_A3B,
     # qwen 3.5
     Qwen3p5_0p8B,
     Qwen3p5_2B,

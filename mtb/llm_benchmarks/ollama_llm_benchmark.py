@@ -63,11 +63,12 @@ class OllamaLlmBenchmark(BaseLLMBenchmark):
             ),
         )
 
-        # ollama returns time in nanoseconds
-        prompt_time_sec = response.prompt_eval_duration / 1e9
-        generation_time_sec = response.eval_duration / 1e9
-        num_prompt_tokens = response.prompt_eval_count
-        num_generated_tokens = response.eval_count
+        # ollama returns time in nanoseconds; when the prompt is cached
+        # from a previous call, prompt_eval_count/duration may be None
+        prompt_time_sec = (response.prompt_eval_duration or 0) / 1e9
+        generation_time_sec = (response.eval_duration or 0) / 1e9
+        num_prompt_tokens = response.prompt_eval_count or 0
+        num_generated_tokens = response.eval_count or 0
 
         print(
             prompt_time_sec,
@@ -77,11 +78,11 @@ class OllamaLlmBenchmark(BaseLLMBenchmark):
         )
 
         return LlmBenchmarkMeasurement(
-            response=response.message,
+            response=response.message.content,
             prompt_time_sec=prompt_time_sec,
-            prompt_tps=num_prompt_tokens / prompt_time_sec,
+            prompt_tps=num_prompt_tokens / prompt_time_sec if prompt_time_sec > 0 else 0,
             generation_time_sec=generation_time_sec,
-            generation_tps=num_generated_tokens / generation_time_sec,
+            generation_tps=num_generated_tokens / generation_time_sec if generation_time_sec > 0 else 0,
             num_prompt_tokens=num_prompt_tokens,
             num_generated_tokens=num_generated_tokens,
             peak_memory_gib=0,  # placeholder, ollama does not provide this

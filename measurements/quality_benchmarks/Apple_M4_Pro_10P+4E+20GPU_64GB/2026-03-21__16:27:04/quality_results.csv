@@ -1,0 +1,167 @@
+model,framework,backend,dtype,category,problem,pass_count,num_runs,passed,avg_generation_time_sec,avg_generation_tps,avg_tokens_generated,sample_response
+nemotron-nano-9b-v2,mlx,metal,int4,coding,fizzbuzz,3,3,True,10.96,46.7,512.0,"Okay, I need to write a Python function that prints FizzBuzz for numbers from 1 to 100. Let me think about how to approach this.
+
+First, the FizzBuzz problem is a common programming task. The rules are: for each number from 1 to 100, if it's divisible by 3, print 'Fizz'; if divisible by 5, print 'Buzz'; if divisible by both 3 and 5 (which is 15), print 'FizzBuzz'; otherwise, print the number itself.
+
+So the function should loop through each number in the range 1 to 100 inclusive. For each number"
+nemotron-nano-9b-v2,mlx,metal,int4,coding,reverse_string,3,3,True,10.93,46.8,512.0,"Okay, I need to write a function to reverse a string in Python, and show at least two different approaches. Let me think about how to approach this.
+
+First, what's a string in Python? It's an immutable sequence of characters. So reversing it would create a new string. The goal is to take the input string and return it in reverse order.
+
+Approach 1: Using slicing. Oh right, Python has a nice slicing syntax. For example, s[::-1] would reverse the string. That's a straightforward one-liner. So the "
+nemotron-nano-9b-v2,mlx,metal,int4,coding,fibonacci,3,3,True,11.02,46.4,512.0,"Okay, I need to write a function that returns the first 10 Fibonacci numbers as a list. Let me think about how the Fibonacci sequence works. The first two numbers are 0 and 1, right? Then each subsequent number is the sum of the previous two. Wait, sometimes people start with 0 and 1, sometimes with 1 and 1. Oh, the problem says the first 10, so I should clarify the starting point.
+
+Wait, the standard Fibonacci sequence usually starts with 0 and 1. So the first 10 numbers would be 0, 1, 1, 2, 3,"
+nemotron-nano-9b-v2,mlx,metal,int4,coding,binary_search,3,3,True,11.49,44.6,512.0,"Okay, I need to implement binary search in Python. Let's see, binary search works on a sorted list by repeatedly dividing the search interval in half. The goal is to find the target value and return its index, or -1 if it's not present.
+
+First, I should set up the initial pointers. The left pointer starts at 0, and the right pointer at the end of the list, which is len(list) - 1. Then, while the left is less than or equal to right, we calculate the middle index. Middle is usually (left + right) "
+nemotron-nano-9b-v2,mlx,metal,int4,coding,palindrome,3,3,True,11.57,44.3,512.0,"Okay, I need to write a Python function to check if a string is a palindrome. The requirements are to ignore case and non-alphanumeric characters. Hmm, let's think about what a palindrome is. A palindrome reads the same forwards and backwards. But here, we have to process the string first by removing non-alphanumeric characters and making it all lowercase (or uppercase) to ignore case.
+
+First step: process the input string. Remove all characters that are not letters or numbers. So, for each char"
+nemotron-nano-9b-v2,mlx,metal,int4,reasoning,train_problem,3,3,True,11.88,44.1,524.0,"Okay, let's see. There are two trains, 200 km apart, moving towards each other. Train A is going at 60 km/h, and Train B at 40 km/h. I need to find out how long until they meet. Hmm, okay.
+
+First, I remember that when two objects are moving towards each other, their relative speed is the sum of their individual speeds. So, maybe I should add the speeds of Train A and Train B together. Let me check that. If they're moving towards each other, their closing speed would be 60 + 40, which is 100 km/h"
+nemotron-nano-9b-v2,mlx,metal,int4,reasoning,coin_probability,3,3,True,23.11,44.3,1024.0,"Okay, so I need to find the probability of getting at least 2 heads when flipping a fair coin 3 times. Let me think about how to approach this. 
+
+First, since it's a fair coin, each flip has a 50% chance of landing heads (H) or tails (T). The problem is asking for the probability of getting at least 2 heads. That means we need to consider the scenarios where we get exactly 2 heads or exactly 3 heads. 
+
+Let me recall that when dealing with probabilities of multiple events, especially with coins, "
+nemotron-nano-9b-v2,mlx,metal,int4,reasoning,workers_problem,3,3,True,16.74,44.9,752.0,"Okay, let's see. The problem is: If 5 workers can build a wall in 10 days, how long would it take 10 workers to build the same wall? Hmm, this seems like a work-rate problem. I remember that these kinds of problems often involve figuring out how much work is done and then adjusting the number of workers to find the time.
+
+First, I need to figure out the total amount of work required to build the wall. Since work is usually measured in worker-days, maybe I can calculate that. If 5 workers take 10"
+nemotron-nano-9b-v2,mlx,metal,int4,reasoning,age_problem,3,3,True,23.11,44.3,1024.0,"Okay, let's see. The problem says Tom is twice as old as Jerry right now. And in 5 years, Tom will be 1.5 times as old as Jerry. I need to find their current ages. Hmm, age problems can sometimes be tricky, but I think setting up equations should work here.
+
+First, let me assign variables to their current ages. Let me call Jerry's current age J. Then, since Tom is twice as old as Jerry, Tom's current age would be 2J. That makes sense.
+
+Now, in 5 years, both of their ages will increase by 5. So J"
+nemotron-nano-9b-v2,mlx,metal,int4,reasoning,sequence_pattern,3,3,True,12.6,45.9,579.0,"Okay, let's see. The sequence given is 2, 6, 12, 20, 30, and I need to find the next number. Hmm, let me start by looking at the differences between consecutive terms. 
+
+First, from 2 to 6, that's an increase of 4. Then from 6 to 12, that's an increase of 6. Next, 12 to 20 is an increase of 8, and then 20 to 30 is an increase of 10. So the differences between the terms are 4, 6, 8, 10. That seems like an arithmetic sequence where each difference increases by 2 each time. 
+
+If that pattern contin"
+nemotron-nano-9b-v2,mlx,metal,int4,instruction_following,json_output,3,3,True,3.96,45.2,179.0,"Okay, the user wants a JSON object with specific keys: name, age, and hobbies. Let me start by creating a fictional name. Maybe ""Alex"" sounds good. For age, I'll pick a reasonable number, like 28. Hobbies should be a list. Let me think of some common hobbies. Reading, hiking, and photography are good options. Now, I need to structure this into JSON. Make sure the syntax is correct, with commas separating the key-value pairs and the list enclosed in square brackets. Double-check that there are no"
+nemotron-nano-9b-v2,mlx,metal,int4,instruction_following,numbered_list,3,3,True,7.87,44.1,347.0,"Okay, the user wants me to list five benefits of regular exercise in a numbered list. Let me start by recalling the main advantages. First, physical health is a big one—exercise improves cardiovascular health, strengthens muscles, and helps with weight management. That's a solid first point.
+
+Next, mental health benefits are important too. Exercise reduces stress and anxiety, and can boost mood through endorphin release. That's a good second point. 
+
+Third, maybe something about energy levels. R"
+nemotron-nano-9b-v2,mlx,metal,int4,instruction_following,word_constraint,3,3,True,4.25,44.8,190.0,"Okay, the user wants a definition of machine learning in 50 words or fewer. Let me start by recalling the basic concept. Machine learning is a subset of AI where systems learn from data. Need to mention algorithms improving with experience. Should keep it concise.
+
+Wait, the user might be a student or someone new to the topic. They need a clear, succinct explanation. Avoid jargon. Make sure it's under 50 words. Let me check the word count. ""Machine learning is a subset of AI where algorithms lea"
+nemotron-nano-9b-v2,mlx,metal,int4,instruction_following,code_with_comments,3,3,True,22.9,44.7,1024.0,"Okay, I need to write a Python function to calculate the area of a circle. Let me start by recalling the formula for the area of a circle. The area is π multiplied by the radius squared. So the formula is A = πr².
+
+First, I should define the function. The function should take the radius as an input parameter. Let me name the function something like calculate_circle_area. The parameter will be radius.
+
+Next, I need to handle the value of π. In Python, I can use math.pi from the math module, which"
+nemotron-nano-9b-v2,mlx,metal,int4,instruction_following,direct_answer,3,3,True,1.23,47.1,58.0,"Okay, the user is asking for the capital of France. Let me make sure I know the correct answer. The capital of France is Paris. I should just state that directly without any extra information. No need for explanations or additional details. Just the answer.
+</think>
+
+Paris
+"
+nemotron-nano-9b-v2,mlx,metal,int4,coding,lru_cache,3,3,True,46.09,44.5,2048.0,"Okay, I need to implement an LRU cache in Python from scratch. The requirements are that get and put operations should be O(1) time, and I can't use OrderedDict. Hmm, right, OrderedDict has a built-in way to maintain order, but since I can't use that, I need to create my own data structure.
+
+First, I remember that an LRU cache needs to keep track of the order in which items are accessed. The least recently used item is the one that was accessed the longest time ago. So every time an item is acce"
+nemotron-nano-9b-v2,mlx,metal,int4,coding,flatten_nested,3,3,True,22.4,45.7,1024.0,"Okay, I need to write a Python function called flatten that takes a nested list and returns a flat list. The examples show that it should handle multiple levels of nesting. Also, strings shouldn't be split into characters. Hmm.
+
+So, the main challenge is to iterate through each element in the input list. For each element, check if it's a list. If it is, then recursively flatten it. If not, add it to the result. But wait, what about other iterable types like tuples or strings? The problem says to"
+nemotron-nano-9b-v2,mlx,metal,int4,coding,longest_palindrome_substring,3,3,True,46.24,44.3,2048.0,"Okay, I need to write a Python function to find the longest palindromic substring in a given string. The examples given are 'babad' which can return 'bab' or 'aba', and 'cbbd' which returns 'bb'. The solution should be O(n²) or better. Hmm, let's think about how to approach this.
+
+First, I remember that a palindrome is a string that reads the same backward as forward. The longest palindromic substring could be of even or odd length. For example, 'bb' is even length, 'aba' is odd. So maybe I shou"
+nemotron-nano-9b-v2,mlx,metal,int4,coding,calculator,3,3,True,46.16,44.4,2048.0,"Okay, I need to create a basic calculator in Python that can handle expressions with +, -, *, /, parentheses, and non-negative integers. The key points are respecting operator precedence (so * and / come before + and -) and handling nested parentheses. Let's think about how to approach this.
+
+First, the problem is similar to evaluating mathematical expressions, which usually involves parsing the string and applying the correct order of operations. Since there are parentheses, which can change th"
+nemotron-nano-9b-v2,mlx,metal,int4,coding,buggy_merge_sort,3,3,True,14.67,45.8,672.0,"Okay, let's look at this merge sort implementation. The user says there's a bug. Hmm. Let me think about how merge sort works. The merge_sort function splits the array into left and right halves, recursively sorts them, and then merges them. The merge function combines two sorted arrays into one.
+
+Wait, the problem might be in the merge function. Let me check the merge function. Oh right! After the while loop, there's a possibility that one of the left or right arrays still has elements left. Th"
+nemotron-nano-9b-v2,mlx,metal,int4,reasoning,compound_interest,0,3,False,45.45,45.1,2048.0,"Okay, so I need to figure out the final amount after investing $10,000 at a 5% annual interest rate, compounded quarterly for 3 years. Hmm, let me recall the formula for compound interest. I think it's A = P(1 + r/n)^(nt), right? Where A is the amount of money accumulated after n years, including interest. P is the principal amount, which is $10,000 here. The annual interest rate is 5%, so r would be 0.05. Since it's compounded quarterly, n should be 4, because there are 4 quarters in a year. Th"
+nemotron-nano-9b-v2,mlx,metal,int4,reasoning,circular_seating,3,3,True,46.3,44.3,2048.0,"Okay, so I need to figure out how many ways 6 people can be seated around a circular table with the condition that Alice and Bob don't sit next to each other. Hmm, circular permutations can be a bit tricky because rotations are considered the same arrangement. Let me start by recalling some basics.
+
+First, for circular arrangements of n people, the number of distinct seating arrangements is (n-1)! because fixing one person's position removes the rotational symmetry. So for 6 people, it would be "
+nemotron-nano-9b-v2,mlx,metal,int4,reasoning,logic_puzzle,3,3,True,45.65,44.9,2048.0,"Okay, let's see. We have three people: A, B, and C. Each is either a truth-teller or a liar. Their statements are:
+
+- A says: 'B is a liar.'
+- B says: 'C is a liar.'
+- C says: 'A and B are both liars.'
+
+We need to figure out who is telling the truth and who is lying. The problem says to check all cases, so maybe I should consider all possible combinations of truth-tellers and liars among A, B, and C. Since each can be either, there are 2^3 = 8 possible cases. Let me list them out.
+
+Case 1: All a"
+nemotron-nano-9b-v2,mlx,metal,int4,reasoning,bayes_theorem,3,3,True,28.73,45.5,1305.0,"Okay, so I need to find the probability that a person actually has the rare disease given that they tested positive. The disease affects 1% of the population, which means the prior probability of having the disease is 0.01. The test has a 95% true positive rate (sensitivity), so if someone has the disease, there's a 95% chance the test will correctly identify it. Similarly, the true negative rate is 95%, meaning the false positive rate is 5%. 
+
+Hmm, Bayes' theorem is the way to go here. Let me r"
+nemotron-nano-9b-v2,mlx,metal,int4,reasoning,proof_bug,3,3,True,16.72,43.8,732.0,"Okay, let's see. The user provided a 'proof' that 1 equals 2, and they want to find the error in it. Alright, I need to go through each step carefully.
+
+Starting with the first line: Let a = b. That's fine, just an assumption. Then they say a² = ab. Well, if a equals b, then substituting b for a in ab would give a², so that step is correct.
+
+Next step: a² - b² = ab - b². Subtracting b² from both sides of the previous equation. That seems valid algebraically. Then they factor the left side as (a "
+nemotron-nano-9b-v2,mlx,metal,int4,math,modular_arithmetic,3,3,True,32.97,45.0,1483.0,"Okay, so I need to find the remainder when 2^100 is divided by 7. Hmm, the hint says to look for a pattern in powers of 2 modulo 7. Alright, let me start by calculating the first few powers of 2 and see what their remainders are when divided by 7. Maybe there's a repeating cycle or something.
+
+Starting with 2^1: that's 2. Divided by 7, the remainder is 2.
+
+2^2 is 4. Divided by 7, remainder is 4.
+
+2^3 is 8. 8 divided by 7 is 1 with a remainder of 1.
+
+2^4 is 16. 16 divided by 7 is 2 with a remaind"
+nemotron-nano-9b-v2,mlx,metal,int4,math,inclusion_exclusion,3,3,True,46.25,44.3,2048.0,"Okay, so I need to find how many integers from 1 to 1000 are divisible by 2, 3, or 5. The problem says to use the inclusion-exclusion principle. Hmm, inclusion-exclusion is a method to calculate the size of the union of multiple sets by adding the sizes of the individual sets, subtracting the sizes of all possible intersections of two sets, adding back in the sizes of all possible intersections of three sets, and so on. 
+
+First, let me recall the formula for inclusion-exclusion for three sets. I"
+nemotron-nano-9b-v2,mlx,metal,int4,math,bouncing_ball,3,3,True,45.55,45.0,2048.0,"Okay, so I need to figure out the total distance a ball travels when it's dropped from 10 meters and each bounce it rebounds to 3/4 of the previous height. The question says to use geometric series, so I should remember how that works. Let me start by visualizing the problem.
+
+First, the ball is dropped from 10 meters. That's the initial drop. Then it hits the ground and bounces back up to 3/4 of 10 meters, which is 7.5 meters. Then it falls back down 7.5 meters, bounces again to 3/4 of 7.5, whi"
+nemotron-nano-9b-v2,mlx,metal,int4,coding,markdown_to_html,3,3,True,46.18,44.4,2048.0,"Okay, I need to write a Python function called markdown_to_html that converts certain Markdown elements to HTML. The requirements are to handle bold, italic, code, and links. Also, edge cases like nested formatting, multiple occurrences in a line, and escaped characters. Hmm.
+
+First, let's think about each of the Markdown syntaxes. For bold, it's **text**, so I need to find pairs of double asterisks. Similarly, italic is *text* with single asterisks. Code is `text` with backticks. Links are [tex"
+nemotron-nano-9b-v2,mlx,metal,int4,coding,data_pipeline,3,3,True,45.41,45.1,2048.0,"Okay, I need to write a Python function called process_sales that takes a CSV string and processes it according to the given requirements. Let me think through each step carefully.
+
+First, the input is a CSV string with columns: date, product, region, amount, quantity. So I need to parse this CSV string. Since I can't use pandas, I'll use the csv module. The csv module's reader can handle splitting the lines into rows. But since the input is a string, I should split it into lines first. Wait, th"
+nemotron-nano-9b-v2,mlx,metal,int4,coding,retry_decorator,3,3,True,46.16,44.4,2048.0,"Okay, I need to create a Python decorator called retry with specific parameters. Let me start by understanding the requirements.
+
+First, the decorator should retry the decorated function up to max_attempts times. So, for example, if max_attempts is 3, it will try once, then retry twice more if it fails. Each attempt is counted, including the first one.
+
+Second, exponential backoff. The wait time between retries should be backoff_base raised to the power of the attempt number. Wait, the problem s"
+nemotron-nano-9b-v2,mlx,metal,int4,reasoning,einstein_riddle,3,3,True,91.82,44.6,4096.0,"Okay, let's tackle this logic puzzle step by step. There are 5 houses in a row, numbered 1 to 5 from left to right. We need to assign each person (Brit, Swede, Dane, Norwegian, German) to a house, along with their house color and drink. The constraints are given, so I'll go through each one and see how they fit together.
+
+First, let's list out all the constraints again to keep them clear:
+
+1. Brit lives in the red house.
+2. Swede drinks milk.
+3. Green house is immediately left of white house.
+4."
+nemotron-nano-9b-v2,mlx,metal,int4,reasoning,three_urns,3,3,True,31.97,45.1,1440.0,"Okay, let's see. I need to find the probability that the second ball drawn is red. The problem involves three urns and conditional probabilities based on the first draw. Hmm, the law of total probability should be useful here. Let me recall that the law of total probability states that if we have mutually exclusive and exhaustive events, the probability of an event can be calculated by summing the probabilities of the event occurring given each of those events, multiplied by the probability of e"
+nemotron-nano-9b-v2,mlx,metal,int4,reasoning,topological_sort,3,3,True,45.85,44.7,2048.0,"Okay, let's see. I need to find all valid topological orderings for the given dependency graph. The nodes are A, B, C, D, E. The edges are A→B, B→C, A→D, D→C, and C→E. 
+
+First, I should recall that a topological sort is an ordering of nodes where for every directed edge from node X to Y, X comes before Y in the ordering. So, the dependencies must be respected. 
+
+The first step in topological sorting is to calculate the in-degree of each node. The in-degree is the number of edges coming into the "
+nemotron-nano-9b-v2,mlx,metal,int4,instruction_following,constrained_factorial,3,3,True,21.53,46.0,990.0,"Okay, I need to write a Python function that computes the factorial of a non-negative integer. Let's see the constraints. First, every variable name must be exactly 4 characters long. So variables like 'numb' or 'rslt' are allowed. That's a bit tricky but manageable.
+
+Second, I can't use any loops. So recursion is the way to go. The base case for recursion in factorial is when the number is 0 or 1, returning 1. Otherwise, multiply the number by factorial of number-1.
+
+Third, exactly three type h"
+nemotron-nano-9b-v2,mlx,metal,int4,instruction_following,library_schema,3,3,True,46.57,44.0,2048.0,"Okay, I need to create a JSON Schema for a library management system with three entities: Book, Author, and Loan. Let me start by recalling the requirements. Each entity must have a unique 'id' field. So, for each of the three types, I'll add an 'id' property that's a string or number. The problem doesn't specify the type, but usually, IDs are strings or integers. Maybe I'll go with string for flexibility.
+
+Next, cross-references must use the referenced entity's id. That means in Book, author_id"
+nemotron-nano-9b-v2,mlx,metal,int4,instruction_following,adversarial_transform,3,3,True,21.6,46.2,997.0,"Okay, let's tackle this problem step by step. The user wants three transformations on the sentence ""The quick brown fox jumps over the lazy dog"". 
+
+First, Step 1 is translating the sentence to French. I need to make sure the translation is accurate. The original sentence is a well-known pangram in English. Translating it to French should maintain that structure. The French translation would be ""Le renard brun rapide saute par-dessus le chien paresseux"". Let me double-check that. Yes, ""The quick "
+nemotron-nano-9b-v2,mlx,metal,int4,writing,multi_doc_summary,3,3,True,11.04,43.5,480.0,"Okay, the user wants a summary of three paragraphs into one cohesive summary covering all three topics. Let me start by understanding each paragraph.
+
+First paragraph is about quantum computing, explaining how qubits work with superposition and entanglement, and their applications in cryptography and drug discovery. 
+
+Second paragraph discusses climate change, mentioning the temperature rise, carbon emissions, and the IPCC's warning about tipping points at 1.5°C. 
+
+Third paragraph is on gene the"
+nemotron-nano-9b-v2,mlx,metal,int4,writing,structured_meeting_notes,3,3,True,20.55,43.8,901.0,"Okay, the user wants me to create meeting notes for a fictional product team standup. Let me start by understanding the requirements. They specified a YAML frontmatter with date, attendees list, and meeting_type. Then sections for Discussion, Decisions, and Action Items with specific formatting.
+
+First, I need to make sure the YAML is correctly formatted. The date should be in a standard format like YYYY-MM-DD. Attendees should be a list of names. Meeting_type could be something like ""Product Te"
+nemotron-nano-9b-v2,mlx,metal,int4,writing,tone_rewrite,3,3,True,11.6,46.1,535.0,"Okay, let's tackle this query. The user wants to rewrite a technical paragraph for a non-technical audience. The key points are to keep it in three sentences or fewer, preserve all key facts, and avoid jargon.
+
+First, I need to understand the original paragraph. It talks about deep neural networks using backpropagation and stochastic gradient descent to minimize cross-entropy loss. Then, after tuning hyperparameters like learning rate and batch size, the model's accuracy hit 94.3% on the validat"
+nemotron-nano-9b-v2,mlx,metal,int4,writing,contradiction_detection,3,3,True,20.18,44.1,890.0,"Okay, let's tackle this problem. The user wants to know if there are any factual contradictions between the two notes about the Apollo 11 mission. 
+
+First, I need to read both notes carefully. 
+
+Note 1 says that Armstrong and Aldrin spent approximately 2.5 hours walking on the lunar surface during their EVA. They collected samples and deployed instruments.
+
+Note 2 states that they remained on the lunar surface for about 21.5 hours in total after landing, collecting 47.5 pounds of samples during "

@@ -17,6 +17,9 @@ run-llm-benchmarks:
 run-qwen35-benchmarks:
 	uv run python scripts/run_llm_benchmarks.py --num_iterations 20 --run_only_benchmarks '["qwen-3.5-0.8b","qwen-3.5-2b","qwen-3.5-4b","qwen-3.5-9b","qwen-3.5-27b","qwen-3.5-35b-a3b"]'
 
+run-nemotron-benchmarks:
+	uv run python scripts/run_llm_benchmarks.py --num_iterations 20 --run_only_benchmarks '["nemotron-3-nano-4b"]'
+
 run-quality-benchmarks:
 	uv run python scripts/run_quality_benchmarks.py --run_only_benchmarks '["qwen-3.5-0.8b","qwen-3.5-2b","qwen-3.5-4b","qwen-3.5-9b","qwen-3.5-27b","qwen-3.5-35b-a3b"]' --num_runs 3
 
@@ -42,6 +45,11 @@ test:
 
 ## Targets for downloading and converting models
 
+# HuggingFace source models for Nemotron
+HF_NEMOTRON_MODELS = \
+	nvidia/NVIDIA-Nemotron-3-Nano-4B-BF16 \
+	nvidia/Nemotron-Cascade-2-30B-A3B
+
 # HuggingFace source models for Qwen 3.5
 HF_QWEN35_MODELS = \
 	Qwen/Qwen3.5-0.8B \
@@ -57,13 +65,18 @@ download-models:
 	@echo "Downloading Qwen 3.5 source models from HuggingFace..."
 	@for model in $(HF_QWEN35_MODELS); do \
 		echo "\n=== Downloading $$model ==="; \
-		huggingface-cli download $$model || echo "WARNING: Failed to download $$model"; \
+		uv run hf download $$model || echo "WARNING: Failed to download $$model"; \
+	done
+	@echo "Downloading Nemotron source models from HuggingFace..."
+	@for model in $(HF_NEMOTRON_MODELS); do \
+		echo "\n=== Downloading $$model ==="; \
+		uv run hf download $$model || echo "WARNING: Failed to download $$model"; \
 	done
 	@echo "\nAll downloads complete. Run 'make convert-models' to convert to MLX."
 
 # Convert all downloaded models to MLX quantized formats
 # Creates models/ directory with int4, int8, and bf16 variants
-convert-models: convert-qwen35-small convert-qwen35-medium convert-qwen35-large convert-qwen35-distilled
+convert-models: convert-qwen35-small convert-qwen35-medium convert-qwen35-large convert-qwen35-distilled convert-nemotron
 	@echo "\nAll conversions complete. Models are in ./models/"
 
 # Small models (0.8B): int4 + int8 only
@@ -95,6 +108,15 @@ convert-qwen35-large:
 	@echo "Converting Qwen3.5-35B-A3B..."
 	uv run python -m mlx_lm.convert --hf-path Qwen/Qwen3.5-35B-A3B -q --q-bits 4 --mlx-path models/Qwen3.5-35B-A3B-4bit
 	uv run python -m mlx_lm.convert --hf-path Qwen/Qwen3.5-35B-A3B -q --q-bits 8 --mlx-path models/Qwen3.5-35B-A3B-8bit
+
+# Nemotron models
+convert-nemotron:
+	@echo "Converting Nemotron-3-Nano-4B..."
+	uv run python -m mlx_lm.convert --hf-path nvidia/NVIDIA-Nemotron-3-Nano-4B-BF16 -q --q-bits 4 --mlx-path models/Nemotron-3-Nano-4B-4bit
+	uv run python -m mlx_lm.convert --hf-path nvidia/NVIDIA-Nemotron-3-Nano-4B-BF16 -q --q-bits 8 --mlx-path models/Nemotron-3-Nano-4B-8bit
+	@echo "Converting Nemotron-Cascade-2-30B-A3B..."
+	uv run python -m mlx_lm.convert --hf-path nvidia/Nemotron-Cascade-2-30B-A3B -q --q-bits 4 --mlx-path models/Nemotron-Cascade-2-30B-A3B-4bit
+	uv run python -m mlx_lm.convert --hf-path nvidia/Nemotron-Cascade-2-30B-A3B -q --q-bits 8 --mlx-path models/Nemotron-Cascade-2-30B-A3B-8bit
 
 # Distilled model: int4 only
 convert-qwen35-distilled:

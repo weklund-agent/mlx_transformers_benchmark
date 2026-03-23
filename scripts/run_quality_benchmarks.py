@@ -35,6 +35,7 @@ def main(
     *,
     run_only_benchmarks: Optional[Iterable[str]] = None,
     run_mlx_metal: bool = True,
+    run_ollama_metal: bool = False,
 ):
     """Run quality evaluation benchmarks.
 
@@ -78,7 +79,7 @@ def main(
         run_mlx_cpu=False,
         run_lmstudio_metal=False,
         run_lmstudio_mlx=False,
-        run_ollama_metal=False,
+        run_ollama_metal=run_ollama_metal,
     )
 
     output_dir = create_benchmark_output_dir(

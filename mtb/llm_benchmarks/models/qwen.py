@@ -123,6 +123,7 @@ Qwen3_0p6B_it = ModelSpec(
     name="qwen-3-0.6b-it",
     num_params=int(6e8),
     prompt_formatter=format_qwen_prompt,
+    thinking=True,
     model_ids={
         "mlx": {
             "int4": "mlx-community/Qwen3-0.6B-4bit",
@@ -143,6 +144,7 @@ Qwen3_8B_it = ModelSpec(
     name="qwen-3-8B-it",
     num_params=int(8e9),
     prompt_formatter=format_qwen_prompt,
+    thinking=True,
     model_ids={
         "mlx": {
             "int4": "mlx-community/Qwen3-8B-4bit",
@@ -163,6 +165,7 @@ Qwen3_14B_it = ModelSpec(
     name="qwen-3-14B-it",
     num_params=int(14e9),
     prompt_formatter=format_qwen_prompt,
+    thinking=True,
     model_ids={
         "mlx": {
             "int4": "mlx-community/Qwen3-14B-4bit",

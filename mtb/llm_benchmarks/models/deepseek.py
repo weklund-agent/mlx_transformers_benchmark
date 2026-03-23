@@ -21,6 +21,7 @@ Deepseek_R1_Distill_Qwen_7B = ModelSpec(
     name="Deepseek-R1-Distill-7B",
     num_params=int(7e9),
     prompt_formatter=format_deepseek_prompt,
+    thinking=True,
     model_ids={
         "mlx": {
             "int4": "mlx-community/DeepSeek-R1-Distill-Qwen-7B-4bit",
@@ -42,6 +43,7 @@ Deepseek_R1_0528_Qwen3_8B = ModelSpec(
     name="Deepseek-R1-0528_Qwen3-8B",
     num_params=int(13e9),
     prompt_formatter=format_deepseek_prompt,
+    thinking=True,
     model_ids={
         "mlx": {
             "int4": "mlx-community/DeepSeek-R1-0528-Qwen3-8B-4bit",

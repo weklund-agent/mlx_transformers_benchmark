@@ -133,6 +133,7 @@ def create_benchmark(
         backend=backend,
         dtype=dtype,
         max_num_tokens=max_num_tokens,
+        thinking=model_spec.thinking,
     )
     return benchmark
 

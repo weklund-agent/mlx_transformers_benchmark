@@ -32,6 +32,7 @@ Qwen3p5_0p8B = ModelSpec(
     name="qwen-3.5-0.8b",
     num_params=int(8e8),
     prompt_formatter=format_qwen35_prompt,
+    thinking=True,
     model_ids={
         "mlx": {
             "int4": "models/Qwen3.5-0.8B-4bit",
@@ -45,6 +46,7 @@ Qwen3p5_2B = ModelSpec(
     name="qwen-3.5-2b",
     num_params=int(2e9),
     prompt_formatter=format_qwen35_prompt,
+    thinking=True,
     model_ids={
         "mlx": {
             "int4": "models/Qwen3.5-2B-4bit",
@@ -59,6 +61,7 @@ Qwen3p5_4B = ModelSpec(
     name="qwen-3.5-4b",
     num_params=int(4e9),
     prompt_formatter=format_qwen35_prompt,
+    thinking=True,
     model_ids={
         "mlx": {
             "int4": "models/Qwen3.5-4B-4bit",
@@ -73,6 +76,7 @@ Qwen3p5_9B = ModelSpec(
     name="qwen-3.5-9b",
     num_params=int(9e9),
     prompt_formatter=format_qwen35_prompt,
+    thinking=True,
     model_ids={
         "mlx": {
             "int4": "models/Qwen3.5-9B-4bit",
@@ -87,6 +91,7 @@ Qwen3p5_27B = ModelSpec(
     name="qwen-3.5-27b",
     num_params=int(27e9),
     prompt_formatter=format_qwen35_prompt,
+    thinking=True,
     model_ids={
         "mlx": {
             "int4": "models/Qwen3.5-27B-4bit",
@@ -100,6 +105,7 @@ Qwen3p5_35B_A3B = ModelSpec(
     name="qwen-3.5-35b-a3b",
     num_params=int(35e9),
     prompt_formatter=format_qwen35_prompt,
+    thinking=True,
     model_ids={
         "mlx": {
             "int4": "models/Qwen3.5-35B-A3B-4bit",
@@ -113,6 +119,7 @@ Qwen3p5_27B_Claude_Opus_Distilled = ModelSpec(
     name="qwen-3.5-27b-claude-opus-distilled",
     num_params=int(27e9),
     prompt_formatter=format_qwen35_prompt,
+    thinking=True,
     model_ids={
         "mlx": {
             "int4": "models/Qwen3.5-27B-Claude-Opus-Distilled-4bit",

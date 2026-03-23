@@ -35,12 +35,18 @@ class TorchLlmBenchmark(BaseLLMBenchmark):
     def format_and_tokenize_prompt(self, prompt: str) -> torch.Tensor:
         prompt = self.prompt_formatter(prompt)
 
-        model_input = self.tokenizer.apply_chat_template(
-            prompt,
+        kwargs = dict(
             add_generation_prompt=True,
             tokenize=True,
             return_dict=True,
             return_tensors="pt",
+        )
+        if self.thinking:
+            kwargs["enable_thinking"] = True
+
+        model_input = self.tokenizer.apply_chat_template(
+            prompt,
+            **kwargs,
         )
         return model_input.input_ids[0]
 
