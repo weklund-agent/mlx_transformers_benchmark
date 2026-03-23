@@ -13,6 +13,10 @@ from mtb.llm_benchmarks.models.gemma import (
     Gemma3_4B_it,
     Gemma3_4B_it_QAT,
     Gemma3_12B_it_QAT,
+    Gemma3_27B_it,
+)
+from mtb.llm_benchmarks.models.llama import (
+    Llama3p3_70B_it,
 )
 from mtb.llm_benchmarks.models.qwen import (
     Qwen2p5_0p5B_it,
@@ -22,6 +26,7 @@ from mtb.llm_benchmarks.models.qwen import (
     Qwen3_0p6B_it,
     Qwen3_8B_it,
     Qwen3_14B_it,
+    Qwen3_32B_it,
 )
 from mtb.llm_benchmarks.models.qwen35 import (
     Qwen3p5_0p8B,
@@ -63,4 +68,8 @@ MODEL_SPECS = [
     Qwen3p5_27B,
     Qwen3p5_35B_A3B,
     Qwen3p5_27B_Claude_Opus_Distilled,
+    # --- 128GB+ only models ---
+    Gemma3_27B_it,
+    Qwen3_32B_it,
+    Llama3p3_70B_it,
 ]

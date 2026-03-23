@@ -8,6 +8,7 @@ __all__ = [
     "Gemma3_1B_it_QAT",
     "Gemma3_4B_it_QAT",
     "Gemma3_12B_it_QAT",
+    "Gemma3_27B_it",
 ]
 
 
@@ -146,6 +147,22 @@ Gemma3_12B_it_QAT = ModelSpec(
         },
         "ollama": {
             "int4": "gemma3:12b-it-qat",
+        },
+    },
+)
+
+
+# --- 128GB+ models (require >=128GB unified memory) ---
+
+Gemma3_27B_it = ModelSpec(
+    name="gemma-3-27b-it",
+    num_params=27e9,
+    prompt_formatter=format_gemma_prompt,
+    model_ids={
+        "mlx": {
+            "int4": "mlx-community/gemma-3-27b-it-4bit",
+            "int8": "mlx-community/gemma-3-27b-it-8bit",
+            "bfloat16": "mlx-community/gemma-3-27b-it-bf16",
         },
     },
 )

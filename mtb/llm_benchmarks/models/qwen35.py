@@ -96,6 +96,7 @@ Qwen3p5_27B = ModelSpec(
         "mlx": {
             "int4": "models/Qwen3.5-27B-4bit",
             "int8": "models/Qwen3.5-27B-8bit",
+            "bfloat16": "models/Qwen3.5-27B-bf16",
         },
     },
 )
@@ -123,6 +124,7 @@ Qwen3p5_27B_Claude_Opus_Distilled = ModelSpec(
     model_ids={
         "mlx": {
             "int4": "models/Qwen3.5-27B-Claude-Opus-Distilled-4bit",
+            "int8": "models/Qwen3.5-27B-Claude-Opus-Distilled-8bit",
         },
     },
 )

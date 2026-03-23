@@ -1,0 +1,2676 @@
+model,framework,backend,dtype,category,problem,pass_count,num_runs,passed,avg_generation_time_sec,avg_generation_tps,avg_tokens_generated,sample_response
+qwen-3.5-27b,mlx,metal,int4,math,modular_arithmetic,3,3,True,98.37,20.9,2048.0,"Thinking Process:
+
+1.  **Analyze the Request:**
+    *   Task: Find the remainder when $2^{100}$ is divided by 7.
+    *   Constraint: Show work step by step.
+    *   Hint: Look for a pattern in powers of 2 mod 7.
+
+2.  **Identify the Mathematical Concept:**
+    *   This is a modular arithmetic problem.
+    *   Specifically, it involves finding $2^{100} \pmod{7}$.
+    *   The hint suggests looking for a cycle or pattern in the powers of 2 modulo 7.
+
+3.  **Step-by-Step Execution:**
+
+    *   **Step 1"
+qwen-3.5-27b,mlx,metal,int4,math,inclusion_exclusion,3,3,True,84.99,24.1,2048.0,"Here's a thinking process that leads to the solution:
+
+1.  **Understand the Goal:** The objective is to count how many integers between 1 and 1000 (inclusive) are divisible by 2, 3, or 5. I need to use the Principle of Inclusion-Exclusion (PIE) and explicitly show each term.
+
+2.  **Define the Sets:**
+    *   Let $S = \{1, 2, 3, \dots, 1000\}$. The size of $S$ is $N = 1000$.
+    *   Let $A$ be the set of integers in $S$ divisible by 2.
+    *   Let $B$ be the set of integers in $S$ divisible by 3."
+qwen-3.5-27b,mlx,metal,int4,math,bouncing_ball,3,3,True,84.66,24.2,2048.0,"Here's a thinking process that leads to the solution:
+
+1.  **Understand the Goal:** The objective is to calculate the total distance traveled by a ball dropped from a height of 10 meters, given that it rebounds to $3/4$ of the previous height after each bounce, continuing infinitely until it comes to rest. The solution must use geometric series.
+
+2.  **Analyze the Motion:**
+    *   **Initial Drop:** The ball falls from height $h_0 = 10$ meters.
+        *   Distance traveled: $10$ meters (down).
+"
+qwen-3.5-27b,mlx,metal,int4,coding,markdown_to_html,3,3,True,85.08,24.1,2048.0,"This is a good challenge. I need to create a function that converts Markdown to HTML with specific formatting rules. Let me think about the requirements:
+
+1. **bold** → <strong>bold</strong>
+2. *italic* → <em>italic</em>
+3. `code` → <code>code</code>
+4. [link text](url) → <a href=""url"">link text</a>
+
+Key considerations:
+- Handle nested formatting (e.g., **bold *italic* text**)
+- Handle multiple occurrences per line
+- Handle escaped characters (e.g., \* should not be converted)
+- Order of process"
+qwen-3.5-27b,mlx,metal,int4,coding,data_pipeline,3,3,True,71.12,24.2,1719.0,"Let me break down the requirements:
+
+1. Parse CSV string with columns: date, product, region, amount, quantity
+2. Filter rows where:
+   - amount > 100
+   - region is 'North' or 'West'
+   - quantity >= 5
+3. Group remaining rows by product
+4. For each product, compute:
+   - total_amount (sum of amounts)
+   - avg_amount (average of amounts)
+   - count (number of rows)
+5. Sort products by total_amount descending
+6. Return as JSON string
+
+I need to use only the csv module and standard library (no pan"
+qwen-3.5-27b,mlx,metal,int4,coding,retry_decorator,3,3,True,68.7,24.1,1656.0,"The user wants me to create a Python decorator with the following requirements:
+1. Retry up to max_attempts times
+2. Use exponential backoff (backoff_base ** attempt seconds)
+3. Only catch specific exceptions
+4. Log each attempt
+5. Return a Result dataclass with success, value, attempts, and error fields
+
+I need to:
+1. Create a Result dataclass
+2. Create the retry decorator
+3. Show usage with an intermittently failing function
+
+Let me write this step by step:
+
+```python
+from dataclasses import d"
+qwen-3.5-27b,mlx,metal,int4,reasoning,einstein_riddle,3,3,True,171.15,23.9,4096.0,"Here's a thinking process that leads to the solution:
+
+1.  **Analyze the Request:**
+    *   **Task:** Solve a logic puzzle (Einstein's Riddle/Zebra Puzzle variant).
+    *   **Setup:** 5 houses in a row, numbered 1-5 (left to right).
+    *   **Attributes:** Nationality, House Color, Drink. (Note: The classic puzzle usually includes Pets and Cigarettes, but this specific prompt only lists Nationality, Color, and Drink. I need to stick strictly to the constraints provided, even if some information "
+qwen-3.5-27b,mlx,metal,int4,reasoning,three_urns,3,3,True,84.75,24.2,2048.0,"Here's a thinking process that leads to the solution:
+
+1.  **Understand the Goal:** The objective is to calculate the probability that the *second* ball drawn is red, given a specific two-step process involving three urns (A, B, and C). I need to use the Law of Total Probability and show the work.
+
+2.  **Analyze the Setup:**
+    *   **Urn A:** 3 Red ($R_A$), 2 Blue ($B_A$). Total = 5 balls.
+    *   **Urn B:** 1 Red ($R_B$), 4 Blue ($B_B$). Total = 5 balls.
+    *   **Urn C:** 4 Red ($R_C$), 1 Blu"
+qwen-3.5-27b,mlx,metal,int4,reasoning,topological_sort,3,3,True,84.71,24.2,2048.0,"Let me analyze this dependency graph step by step.
+
+The dependencies are:
+- A → B (A must come before B)
+- B → C (B must come before C)
+- A → D (A must come before D)
+- D → C (D must come before C)
+- C → E (C must come before E)
+
+So the graph structure is:
+- A has no incoming edges (in-degree = 0)
+- B has incoming edge from A (in-degree = 1)
+- D has incoming edge from A (in-degree = 1)
+- C has incoming edges from B and D (in-degree = 2)
+- E has incoming edge from C (in-degree = 1)
+
+Let me verify"
+qwen-3.5-27b,mlx,metal,int4,instruction_following,constrained_factorial,3,3,True,84.78,24.2,2048.0,"Thinking Process:
+
+1.  **Analyze the Request:**
+    *   Task: Write a Python function to compute the factorial of a non-negative integer.
+    *   Constraint 1: Every variable name must be exactly 4 characters long.
+    *   Constraint 2: No loops (`for` or `while`), use recursion only.
+    *   Constraint 3: Include exactly 3 type hints in the code.
+    *   Constraint 4: The function must correctly compute factorial (e.g., `factorial(5) = 120`).
+    *   Output: Show the complete function.
+
+2.  **D"
+qwen-3.5-27b,mlx,metal,int4,instruction_following,library_schema,3,3,True,49.82,24.3,1209.0,"The user wants me to create a JSON Schema for a library management system with three entity types: Book, Author, and Loan. Let me break down the requirements:
+
+1. Each entity needs a unique 'id' field
+2. Cross-references must use the referenced entity's id
+3. Include 'required' fields and 'type' constraints for every property
+4. Output valid JSON Schema (draft 2020-12 or later)
+
+Let me create a comprehensive JSON Schema that includes all three entity types. I'll structure it as a schema that can"
+qwen-3.5-27b,mlx,metal,int4,instruction_following,adversarial_transform,3,3,True,84.9,24.1,2048.0,"Thinking Process:
+
+1.  **Analyze the Request:**
+    *   Input sentence: ""The quick brown fox jumps over the lazy dog""
+    *   Task: Perform three transformations in sequence.
+    *   Step 1: Translate to French.
+    *   Step 2: Reverse each word individually (keep word order).
+    *   Step 3: Wrap each reversed word in an XML tag `<word original=""french_word"">reversed_word</word>`.
+    *   Output requirement: Show the output of each step clearly.
+
+2.  **Step 1: Translate to French.**
+    *   Sou"
+qwen-3.5-27b,mlx,metal,int4,writing,multi_doc_summary,3,3,True,42.18,24.3,1024.0,"Thinking Process:
+
+1.  **Analyze the Request:**
+    *   **Task:** Summarize three provided paragraphs into a single cohesive summary.
+    *   **Constraint 1:** Cover ALL three topics (Quantum computing, Climate change, Gene therapy).
+    *   **Constraint 2:** Length must be 3-5 sentences.
+    *   **Input:** Three distinct paragraphs about different scientific/technological topics.
+
+2.  **Analyze the Input Paragraphs:**
+    *   **Paragraph 1 (Quantum Computing):** Focuses on quantum mechanics (su"
+qwen-3.5-27b,mlx,metal,int4,writing,structured_meeting_notes,3,3,True,42.16,24.3,1024.0,"Thinking Process:
+
+1.  **Analyze the Request:**
+    *   **Task:** Write meeting notes for a fictional product team standup.
+    *   **Format:** Markdown.
+    *   **Constraints:**
+        1.  YAML frontmatter with specific fields: `date`, `attendees` (list), `meeting_type`.
+        2.  A `## Discussion` section with exactly 3 bullet points.
+        3.  A `## Decisions` section with exactly 2 bullet points.
+        4.  A `## Action Items` section with exactly 3 items, each assigned to a specific p"
+qwen-3.5-27b,mlx,metal,int4,writing,tone_rewrite,3,3,True,42.17,24.3,1024.0,"Thinking Process:
+
+1.  **Analyze the Request:**
+    *   **Task:** Rewrite a technical paragraph for a non-technical audience.
+    *   **Constraint 1:** 3 sentences or fewer.
+    *   **Constraint 2:** Preserve all key facts.
+    *   **Constraint 3:** Avoid jargon.
+    *   **Input Text:** 'Deep neural networks utilize backpropagation with stochastic gradient descent to minimize the cross-entropy loss function across training epochs. The model's accuracy on the validation set plateaued at 94.3% aft"
+qwen-3.5-27b,mlx,metal,int4,writing,contradiction_detection,3,3,True,42.19,24.3,1024.0,"Thinking Process:
+
+1.  **Analyze the Request:**
+    *   Input: Two notes about the Apollo 11 mission.
+    *   Task: Identify factual contradictions between them.
+    *   Output: Explain precisely what conflicts exist and state the actual facts.
+
+2.  **Analyze Note 1:**
+    *   Claim 1: Apollo 11 landed on the Moon on July 20, 1969.
+    *   Claim 2: Neil Armstrong and Buzz Aldrin spent approximately 2.5 hours walking on the lunar surface during their EVA (Extravehicular Activity).
+    *   Claim 3"
+qwen-3.5-27b,mlx,metal,int8,math,modular_arithmetic,0,3,False,136.01,15.1,2048.0,"Thinking Process:
+
+1.  **Analyze the Request:**
+    *   Problem: Find the remainder when $2^{100}$ is divided by 7.
+    *   Constraint: Show work step by step.
+    *   Hint: Look for a pattern in powers of 2 mod 7.
+
+2.  **Identify the Mathematical Concept:**
+    *   This is a modular arithmetic problem.
+    *   Specifically, calculating $2^{100} \pmod{7}$.
+    *   The hint suggests finding a cycle or pattern in the powers of 2 modulo 7.
+
+3.  **Step-by-Step Execution:**
+
+    *   **Step 1: Calcula"
+qwen-3.5-27b,mlx,metal,int8,math,inclusion_exclusion,3,3,True,136.25,15.0,2048.0,"Here's a thinking process that leads to the solution:
+
+1.  **Understand the Goal:** The objective is to count the number of integers between 1 and 1000 (inclusive) that are divisible by 2, 3, or 5. The method required is the Principle of Inclusion-Exclusion (PIE).
+
+2.  **Define the Sets:**
+    Let $S = \{1, 2, 3, \dots, 1000\}$.
+    Let $A$ be the set of integers in $S$ divisible by 2.
+    Let $B$ be the set of integers in $S$ divisible by 3.
+    Let $C$ be the set of integers in $S$ divisible b"
+qwen-3.5-27b,mlx,metal,int8,math,bouncing_ball,3,3,True,136.3,15.0,2048.0,"Here's a thinking process that leads to the solution:
+
+1.  **Understand the Goal:** The objective is to calculate the total distance traveled by a ball dropped from a height of 10 meters, which rebounds to $3/4$ of its previous height after each bounce, until it comes to rest (infinite bounces). The solution must use geometric series.
+
+2.  **Analyze the Motion:**
+    *   **Initial Drop:** The ball falls from $h_0 = 10$ meters.
+    *   **First Bounce:** It hits the ground, travels up to $h_1 = \f"
+qwen-3.5-27b,mlx,metal,int8,coding,markdown_to_html,3,3,True,136.19,15.0,2048.0,"This is a good challenge. I need to create a function that converts Markdown to HTML with specific formatting rules. Let me think about the requirements:
+
+1. **bold** → <strong>bold</strong>
+2. *italic* → <em>italic</em>
+3. `code` → <code>code</code>
+4. [link text](url) → <a href=""url"">link text</a>
+
+Key considerations:
+- Nested formatting (e.g., **bold and *italic* text**)
+- Multiple occurrences per line
+- Escaped characters (e.g., \* should not be treated as italic)
+- Order of processing matte"
+qwen-3.5-27b,mlx,metal,int8,coding,data_pipeline,3,3,True,59.26,15.0,889.0,"Let me break down the requirements:
+
+1. Parse CSV string with columns: date, product, region, amount, quantity
+2. Filter rows where:
+   - amount > 100
+   - region is 'North' or 'West'
+   - quantity >= 5
+3. Group by product
+4. For each product compute:
+   - total_amount (sum of amounts)
+   - avg_amount (average of amounts)
+   - count (number of rows)
+5. Sort by total_amount descending
+6. Return as JSON string
+
+I need to use only csv module and standard library (no pandas).
+
+Let me write this step"
+qwen-3.5-27b,mlx,metal,int8,coding,retry_decorator,3,3,True,84.49,15.0,1271.0,"Let me create a comprehensive retry decorator with all the specified requirements:
+
+1. Retry up to max_attempts times
+2. Exponential backoff with backoff_base ** attempt seconds
+3. Only catch specified exceptions
+4. Log each attempt
+5. Return a Result dataclass with success, value, attempts, and error fields
+
+I'll need to:
+- Create a Result dataclass
+- Create the decorator with proper signature
+- Handle the retry logic with exponential backoff
+- Track attempts and errors
+- Show usage with an int"
+qwen-3.5-27b,mlx,metal,int8,reasoning,einstein_riddle,3,3,True,273.96,15.0,4096.0,"Here's a thinking process that leads to the solution:
+
+1.  **Analyze the Request:**
+    *   **Task:** Solve a logic puzzle (Einstein's Riddle variation).
+    *   **Setup:** 5 houses in a row (1-5, left to right).
+    *   **Attributes:** Nationality, House Color, Drink. (Note: The classic puzzle usually includes Pets and Cigarettes, but this specific prompt only asks for Nationality, Color, and Drink based on the provided constraints. I need to stick strictly to the provided constraints).
+    *  "
+qwen-3.5-27b,mlx,metal,int8,reasoning,three_urns,3,3,True,136.38,15.0,2048.0,"Here's a thinking process that leads to the solution:
+
+1.  **Understand the Goal:** The objective is to calculate the probability that the *second* ball drawn is red, given a specific set of rules for which urn to draw from based on the outcome of the first draw. I need to use the Law of Total Probability and show the work.
+
+2.  **Analyze the Setup:**
+    *   **Urn A:** 3 Red ($R_A$), 2 Blue ($B_A$). Total = 5 balls.
+    *   **Urn B:** 1 Red ($R_B$), 4 Blue ($B_B$). Total = 5 balls.
+    *   **Ur"
+qwen-3.5-27b,mlx,metal,int8,reasoning,topological_sort,3,3,True,137.15,14.9,2048.0,"Here's a thinking process that leads to the suggested solution:
+
+1.  **Understand the Goal:** The objective is to find *all* valid topological orderings of a directed acyclic graph (DAG) with 5 nodes (A, B, C, D, E) based on the given dependencies. I need to show the reasoning by tracking in-degrees at each step.
+
+2.  **Analyze the Dependencies:**
+    *   $A \to B$ (A before B)
+    *   $B \to C$ (B before C)
+    *   $A \to D$ (A before D)
+    *   $D \to C$ (D before C)
+    *   $C \to E$ (C befor"
+qwen-3.5-27b,mlx,metal,int8,instruction_following,constrained_factorial,3,3,True,136.4,15.0,2048.0,"Thinking Process:
+
+1.  **Analyze the Request:**
+    *   Task: Write a Python function to compute the factorial of a non-negative integer.
+    *   Constraint 1: Every variable name must be exactly 4 characters long.
+    *   Constraint 2: No loops (for/while), use recursion only.
+    *   Constraint 3: Include exactly 3 type hints in the code.
+    *   Constraint 4: Correctly compute factorial (e.g., 5! = 120).
+    *   Output: Show the complete function.
+
+2.  **Drafting the Function:**
+    *   Funct"
+qwen-3.5-27b,mlx,metal,int8,instruction_following,library_schema,3,3,True,113.72,15.0,1708.0,"The user wants me to create a JSON Schema for a library management system with three entity types: Book, Author, and Loan. Let me break down the requirements:
+
+1. Each entity needs a unique 'id' field
+2. Cross-references must use the referenced entity's id
+3. Include 'required' fields and 'type' constraints for every property
+4. Output valid JSON Schema (draft 2020-12 or later)
+
+I'll create a schema that defines all three entity types with proper validation. I should use the $defs or $ref mechan"
+qwen-3.5-27b,mlx,metal,int8,instruction_following,adversarial_transform,3,3,True,136.58,15.0,2048.0,"Thinking Process:
+
+1.  **Analyze the Request:**
+    *   Input sentence: ""The quick brown fox jumps over the lazy dog""
+    *   Task: Perform three sequential transformations.
+    *   Step 1: Translate to French.
+    *   Step 2: Reverse each word individually (keep word order).
+    *   Step 3: Wrap each reversed word in an XML tag `<word original=""french_word"">reversed_word</word>`.
+    *   Output requirement: Show the output of each step clearly.
+
+2.  **Step 1: Translate to French.**
+    *   Sour"
+qwen-3.5-27b,mlx,metal,int8,writing,multi_doc_summary,3,3,True,68.25,15.0,1024.0,"Thinking Process:
+
+1.  **Analyze the Request:**
+    *   **Task:** Summarize three provided paragraphs into a single cohesive summary.
+    *   **Constraint 1:** Cover ALL three topics (Quantum computing, Climate change, Gene therapy).
+    *   **Constraint 2:** Length must be 3-5 sentences.
+    *   **Input:** Three distinct paragraphs about different scientific/technological topics.
+
+2.  **Analyze the Input Paragraphs:**
+    *   *Paragraph 1 (Quantum Computing):* Focuses on quantum mechanics (supe"
+qwen-3.5-27b,mlx,metal,int8,writing,structured_meeting_notes,3,3,True,68.06,15.0,1024.0,"Thinking Process:
+
+1.  **Analyze the Request:**
+    *   **Task:** Write meeting notes for a fictional product team standup.
+    *   **Constraints:**
+        1.  YAML frontmatter with specific fields: `date`, `attendees` (list), `meeting_type`.
+        2.  A `## Discussion` section with exactly 3 bullet points.
+        3.  A `## Decisions` section with exactly 2 bullet points.
+        4.  A `## Action Items` section with exactly 3 items, each assigned to a specific person using `@name` format.
+  "
+qwen-3.5-27b,mlx,metal,int8,writing,tone_rewrite,0,3,False,68.14,15.0,1024.0,"Thinking Process:
+
+1.  **Analyze the Request:**
+    *   **Task:** Rewrite a technical paragraph for a non-technical audience.
+    *   **Constraint 1:** 3 sentences or fewer.
+    *   **Constraint 2:** Preserve all key facts.
+    *   **Constraint 3:** Avoid jargon.
+    *   **Input Text:** 'Deep neural networks utilize backpropagation with stochastic gradient descent to minimize the cross-entropy loss function across training epochs. The model's accuracy on the validation set plateaued at 94.3% aft"
+qwen-3.5-27b,mlx,metal,int8,writing,contradiction_detection,3,3,True,68.03,15.1,1024.0,"Thinking Process:
+
+1.  **Analyze the Request:**
+    *   Input: Two notes about the Apollo 11 mission.
+    *   Task: Identify factual contradictions between them.
+    *   Output: Explain precisely what conflicts exist and state the actual facts.
+
+2.  **Analyze Note 1:**
+    *   Claim 1: Apollo 11 landed on the Moon on July 20, 1969.
+    *   Claim 2: Neil Armstrong and Buzz Aldrin spent approximately 2.5 hours walking on the lunar surface during their EVA (Extravehicular Activity).
+    *   Claim 3"
+qwen-3.5-27b,mlx,metal,bfloat16,math,modular_arithmetic,3,3,True,1006.28,2.0,2048.0,"Thinking Process:
+
+1.  **Analyze the Request:**
+    *   Problem: Find the remainder when $2^{100}$ is divided by 7.
+    *   Constraint: Show work step by step.
+    *   Hint: Look for a pattern in powers of 2 mod 7.
+
+2.  **Identify the Mathematical Concept:**
+    *   This is a modular arithmetic problem.
+    *   Specifically, calculating $2^{100} \pmod{7}$.
+    *   The hint suggests finding a cycle or pattern in the powers of 2 modulo 7.
+
+3.  **Step-by-Step Execution:**
+
+    *   **Step 1: Calcula"
+qwen-3.5-27b,mlx,metal,bfloat16,math,inclusion_exclusion,3,3,True,1006.39,2.0,2048.0,"Here's a thinking process that leads to the solution:
+
+1.  **Understand the Goal:** The objective is to count the number of integers between 1 and 1000 (inclusive) that are divisible by 2, 3, or 5. The method required is the Principle of Inclusion-Exclusion (PIE).
+
+2.  **Define the Sets:**
+    Let $S = \{1, 2, 3, \dots, 1000\}$.
+    Let $A$ be the set of integers in $S$ divisible by 2.
+    Let $B$ be the set of integers in $S$ divisible by 3.
+    Let $C$ be the set of integers in $S$ divisible b"
+qwen-3.5-27b,mlx,metal,bfloat16,math,bouncing_ball,3,3,True,1006.38,2.0,2048.0,"Here's a thinking process that leads to the solution:
+
+1.  **Understand the Goal:** The objective is to calculate the total distance traveled by a ball dropped from a height of 10 meters, which rebounds to $3/4$ of its previous height after each bounce, until it comes to rest (infinite bounces). The solution must use geometric series.
+
+2.  **Analyze the Motion:**
+    *   **Initial Drop:** The ball falls from $h_0 = 10$ meters.
+    *   **First Bounce:** It hits the ground, travels up to $h_1 = \f"
+qwen-3.5-27b,mlx,metal,bfloat16,coding,markdown_to_html,3,3,True,1014.73,2.0,2048.0,"This is a good challenge. I need to create a function that converts Markdown to HTML with specific formatting rules. Let me think about the requirements:
+
+1. **bold** → <strong>bold</strong>
+2. *italic* → <em>italic</em>
+3. `code` → <code>code</code>
+4. [link text](url) → <a href=""url"">link text</a>
+
+Key considerations:
+- Nested formatting (e.g., **bold and *italic* text**)
+- Multiple occurrences per line
+- Escaped characters (e.g., \* should not be treated as italic)
+- Order of processing matte"
+qwen-3.5-27b,mlx,metal,bfloat16,coding,data_pipeline,3,3,True,434.13,2.0,888.0,"Let me break down the requirements:
+
+1. Parse CSV string with columns: date, product, region, amount, quantity
+2. Filter rows where:
+   - amount > 100
+   - region is 'North' or 'West'
+   - quantity >= 5
+3. Group by product
+4. For each product compute:
+   - total_amount (sum of amounts)
+   - avg_amount (average of amounts)
+   - count (number of rows)
+5. Sort by total_amount descending
+6. Return as JSON string
+
+I need to use only csv module and standard library (no pandas).
+
+Let me write this step"
+qwen-3.5-27b,mlx,metal,bfloat16,coding,retry_decorator,3,3,True,621.27,2.0,1271.0,"Let me create a comprehensive retry decorator with all the specified requirements:
+
+1. Retry up to max_attempts times
+2. Exponential backoff with backoff_base ** attempt seconds
+3. Only catch specified exceptions
+4. Log each attempt
+5. Return a Result dataclass with success, value, attempts, and error fields
+
+I'll need to:
+- Create a Result dataclass
+- Create the decorator with proper signature
+- Handle the retry logic with exponential backoff
+- Track attempts and errors
+- Show usage with an int"
+qwen-3.5-27b,mlx,metal,bfloat16,reasoning,einstein_riddle,3,3,True,2003.59,2.0,4096.0,"Here's a thinking process that leads to the solution:
+
+1.  **Analyze the Request:**
+    *   **Task:** Solve a logic puzzle (Einstein's Riddle variation).
+    *   **Setup:** 5 houses in a row (1-5, left to right).
+    *   **Attributes:** Nationality, House Color, Drink. (Note: The classic puzzle usually includes Pets and Cigarettes, but this specific prompt only asks for Nationality, Color, and Drink based on the provided constraints. I need to stick strictly to the provided constraints).
+    *  "
+qwen-3.5-27b,mlx,metal,bfloat16,reasoning,three_urns,3,3,True,1004.28,2.0,2048.0,"Here's a thinking process that leads to the solution:
+
+1.  **Understand the Goal:** The objective is to calculate the probability that the *second* ball drawn is red, given a specific set of rules for which urn to draw from based on the outcome of the first draw. I need to use the Law of Total Probability and show the work.
+
+2.  **Analyze the Setup:**
+    *   **Urn A:** 3 Red ($R_A$), 2 Blue ($B_A$). Total = 5 balls.
+    *   **Urn B:** 1 Red ($R_B$), 4 Blue ($B_B$). Total = 5 balls.
+    *   **Ur"
+qwen-3.5-27b,mlx,metal,bfloat16,reasoning,topological_sort,3,3,True,1001.9,2.0,2048.0,"Here's a thinking process that leads to the suggested solution:
+
+1.  **Understand the Goal:** The objective is to find *all* valid topological orderings of a directed acyclic graph (DAG) with 5 nodes (A, B, C, D, E) based on the given dependencies. I need to show the reasoning by tracking in-degrees at each step.
+
+2.  **Analyze the Dependencies:**
+    *   $A \to B$ (A before B)
+    *   $B \to C$ (B before C)
+    *   $A \to D$ (A before D)
+    *   $D \to C$ (D before C)
+    *   $C \to E$ (C befor"
+qwen-3.5-27b,mlx,metal,bfloat16,instruction_following,constrained_factorial,3,3,True,1015.97,2.0,2048.0,"Thinking Process:
+
+1.  **Analyze the Request:**
+    *   Task: Write a Python function to compute the factorial of a non-negative integer.
+    *   Constraint 1: Every variable name must be exactly 4 characters long.
+    *   Constraint 2: No loops (`for` or `while`), use recursion only.
+    *   Constraint 3: Include exactly 3 type hints in the code.
+    *   Constraint 4: The function must correctly compute factorial.
+    *   Output: Show the complete function.
+
+2.  **Deconstruct Constraints:**
+   "
+qwen-3.5-27b,mlx,metal,bfloat16,instruction_following,library_schema,3,3,True,864.83,2.0,1708.0,"The user wants me to create a JSON Schema for a library management system with three entity types: Book, Author, and Loan. Let me break down the requirements:
+
+1. Each entity needs a unique 'id' field
+2. Cross-references must use the referenced entity's id
+3. Include 'required' fields and 'type' constraints for every property
+4. Output valid JSON Schema (draft 2020-12 or later)
+
+I'll create a schema that defines all three entity types with proper validation. I should use the $defs or $ref mechan"
+qwen-3.5-27b,mlx,metal,bfloat16,instruction_following,adversarial_transform,3,3,True,1027.04,2.0,2048.0,"Thinking Process:
+
+1.  **Analyze the Request:**
+    *   Input sentence: ""The quick brown fox jumps over the lazy dog""
+    *   Task: Perform three sequential transformations.
+    *   Step 1: Translate to French.
+    *   Step 2: Reverse each word individually (keep word order).
+    *   Step 3: Wrap each reversed word in an XML tag `<word original=""french_word"">reversed_word</word>`.
+    *   Output requirement: Show the output of each step clearly.
+
+2.  **Step 1: Translate to French.**
+    *   Sour"
+qwen-3.5-27b,mlx,metal,bfloat16,writing,multi_doc_summary,3,3,True,518.51,2.0,1024.0,"Thinking Process:
+
+1.  **Analyze the Request:**
+    *   **Task:** Summarize three provided paragraphs into a single cohesive summary.
+    *   **Constraint 1:** Cover ALL three topics (Quantum computing, Climate change, Gene therapy).
+    *   **Constraint 2:** Length must be 3-5 sentences.
+    *   **Input:** Three distinct paragraphs about different scientific/technological topics.
+
+2.  **Analyze the Input Paragraphs:**
+    *   *Paragraph 1 (Quantum Computing):* Focuses on quantum mechanics (supe"
+qwen-3.5-27b,mlx,metal,bfloat16,writing,structured_meeting_notes,3,3,True,518.51,2.0,1024.0,"Thinking Process:
+
+1.  **Analyze the Request:**
+    *   **Task:** Write meeting notes for a fictional product team standup.
+    *   **Format:** Markdown.
+    *   **Constraints:**
+        1.  YAML frontmatter with specific fields: `date`, `attendees` (list), `meeting_type`.
+        2.  A `## Discussion` section with exactly 3 bullet points.
+        3.  A `## Decisions` section with exactly 2 bullet points.
+        4.  A `## Action Items` section with exactly 3 items, each assigned to a specific p"
+qwen-3.5-27b,mlx,metal,bfloat16,writing,tone_rewrite,0,3,False,513.8,2.0,1024.0,"Thinking Process:
+
+1.  **Analyze the Request:**
+    *   **Task:** Rewrite a technical paragraph for a non-technical audience.
+    *   **Constraint 1:** 3 sentences or fewer.
+    *   **Constraint 2:** Preserve all key facts.
+    *   **Constraint 3:** Avoid jargon.
+    *   **Input Text:** 'Deep neural networks utilize backpropagation with stochastic gradient descent to minimize the cross-entropy loss function across training epochs. The model's accuracy on the validation set plateaued at 94.3% aft"
+qwen-3.5-27b,mlx,metal,bfloat16,writing,contradiction_detection,3,3,True,513.61,2.0,1024.0,"Thinking Process:
+
+1.  **Analyze the Request:**
+    *   Input: Two notes about the Apollo 11 mission.
+    *   Task: Identify factual contradictions between them.
+    *   Output: Explain precisely what conflicts exist and state the actual facts.
+
+2.  **Analyze Note 1:**
+    *   Claim 1: Apollo 11 landed on the Moon on July 20, 1969.
+    *   Claim 2: Neil Armstrong and Buzz Aldrin spent approximately 2.5 hours walking on the lunar surface during their EVA (Extravehicular Activity).
+    *   Claim 3"
+qwen-3.5-35b-a3b,mlx,metal,int4,math,modular_arithmetic,3,3,True,42.04,48.9,2048.0,"Thinking Process:
+
+1.  **Analyze the Request:**
+    *   Problem: Find the remainder when $2^{100}$ is divided by 7.
+    *   Requirement: Show work step by step.
+    *   Hint: Look for a pattern in powers of 2 mod 7.
+
+2.  **Identify the Mathematical Concept:**
+    *   This is a modular arithmetic problem.
+    *   Specifically, I need to calculate $2^{100} \pmod 7$.
+    *   The hint suggests looking for a cycle or pattern in the powers of 2 modulo 7.
+
+3.  **Step-by-Step Execution:**
+
+    *   **Ste"
+qwen-3.5-35b-a3b,mlx,metal,int4,math,inclusion_exclusion,3,3,True,40.63,50.4,2048.0,"Here's a thinking process that leads to the solution:
+
+1.  **Understand the Goal:** The objective is to count the number of integers between 1 and 1000 (inclusive) that are divisible by 2, 3, or 5. I need to use the Principle of Inclusion-Exclusion (PIE) and show the calculation for each term.
+
+2.  **Define the Sets:**
+    *   Let $S$ be the set of integers from 1 to 1000. So, $|S| = 1000$.
+    *   Let $A$ be the set of integers in $S$ divisible by 2.
+    *   Let $B$ be the set of integers in $S"
+qwen-3.5-35b-a3b,mlx,metal,int4,math,bouncing_ball,3,3,True,41.37,49.5,2048.0,"Here's a thinking process that leads to the solution:
+
+1.  **Understand the Goal:** The objective is to calculate the total distance traveled by a ball dropped from a specific height, given a specific rebound ratio, assuming it bounces infinitely many times until it comes to rest. I need to use geometric series to show the work.
+
+2.  **Identify the Given Information:**
+    *   Initial drop height ($h_0$) = 10 meters.
+    *   Rebound ratio ($r$) = $3/4$ (or 0.75).
+    *   The ball bounces infinit"
+qwen-3.5-35b-a3b,mlx,metal,int4,coding,markdown_to_html,3,3,True,41.49,49.4,2048.0,"The user wants me to create a Python function that converts a subset of Markdown to HTML. The requirements are:
+
+1. **bold** → <strong>bold</strong>
+2. *italic* → <em>italic</em>
+3. `code` → <code>code</code>
+4. [link text](url) → <a href=""url"">link text</a>
+
+I need to handle:
+- Nested formatting
+- Multiple occurrences per line
+- Escaped characters
+
+Let me think about the implementation:
+
+1. I'll need to use regular expressions to find and replace the Markdown patterns
+2. I need to be careful ab"
+qwen-3.5-35b-a3b,mlx,metal,int4,coding,data_pipeline,3,3,True,23.07,50.0,1154.0,"Let me break down the requirements:
+
+1. Parse CSV string with columns: date, product, region, amount, quantity
+2. Filter rows where:
+   - amount > 100
+   - region is 'North' or 'West'
+   - quantity >= 5
+3. Group by product
+4. For each product compute: total_amount, avg_amount, count
+5. Sort by total_amount descending
+6. Return as JSON string
+7. Use only csv module and standard library (no pandas)
+
+Let me write this step by step:
+
+```python
+import csv
+import json
+from collections import defaultdi"
+qwen-3.5-35b-a3b,mlx,metal,int4,coding,retry_decorator,0,3,False,28.18,49.6,1398.0,"The user wants me to create a Python decorator that implements retry logic with exponential backoff. Let me break down the requirements:
+
+1. `retry(max_attempts=3, backoff_base=2, exceptions=(Exception,))` - decorator with parameters
+2. Retries up to `max_attempts` times
+3. Exponential backoff: wait `backoff_base ** attempt` seconds between retries
+4. Only catches exceptions in the `exceptions` tuple
+5. Logs each attempt
+6. Returns a Result dataclass with fields: success, value, attempts, error
+"
+qwen-3.5-35b-a3b,mlx,metal,int4,reasoning,einstein_riddle,3,3,True,83.61,49.0,4096.0,"Here's a thinking process that leads to the solution:
+
+1.  **Analyze the Request:**
+    *   **Task:** Solve a logic puzzle involving 5 houses, 5 nationalities, 5 colors, and 5 drinks.
+    *   **Format:** Step-by-step reasoning, final assignment of Person, House Color, and Drink.
+    *   **Constraints:** 8 specific rules provided.
+    *   **Note:** This is a variation of the famous ""Einstein's Riddle"" or ""Zebra Puzzle,"" but with some specific constraints provided in the prompt that might differ s"
+qwen-3.5-35b-a3b,mlx,metal,int4,reasoning,three_urns,3,3,True,39.35,49.9,1962.0,"Here's a thinking process that leads to the solution:
+
+1.  **Understand the Goal:** The objective is to calculate the probability that the *second* ball drawn is red, given a specific process involving three urns (A, B, and C) and conditional drawing rules. I need to use the Law of Total Probability to show the work.
+
+2.  **Analyze the Setup:**
+    *   **Urn A:** 3 Red (R), 2 Blue (B). Total = 5 balls.
+    *   **Urn B:** 1 Red (R), 4 Blue (B). Total = 5 balls.
+    *   **Urn C:** 4 Red (R), 1 Blu"
+qwen-3.5-35b-a3b,mlx,metal,int4,reasoning,topological_sort,3,3,True,41.08,49.9,2048.0,"Here's a thinking process that leads to the suggested solution:
+
+1.  **Understand the Goal:** The objective is to find *all* valid topological orderings of a directed graph with 5 nodes (A, B, C, D, E) based on the given dependencies. I need to show the reasoning by tracking in-degrees at each step.
+
+2.  **Analyze the Input:**
+    *   Nodes: A, B, C, D, E
+    *   Edges (Dependencies):
+        1.  $A \to B$ (A before B)
+        2.  $B \to C$ (B before C)
+        3.  $A \to D$ (A before D)
+       "
+qwen-3.5-35b-a3b,mlx,metal,int4,instruction_following,constrained_factorial,3,3,True,41.16,49.8,2048.0,"Thinking Process:
+
+1.  **Analyze the Request:**
+    *   Task: Write a Python function to compute the factorial of a non-negative integer.
+    *   Constraint 1: Every variable name must be exactly 4 characters long (e.g., 'numb', 'rslt'). This includes function arguments, local variables, and potentially helper variables.
+    *   Constraint 2: No loops (`for`, `while`). Use recursion only.
+    *   Constraint 3: Include exactly 3 type hints in the code.
+    *   Constraint 4: Function must correctl"
+qwen-3.5-35b-a3b,mlx,metal,int4,instruction_following,library_schema,3,3,True,29.07,49.8,1448.0,"The user wants me to create a JSON Schema for a library management system with three entity types: Book, Author, and Loan. I need to follow these requirements:
+
+1. Each entity must have a unique 'id' field
+2. Cross-references must use the referenced entity's id
+3. Include 'required' fields and 'type' constraints for every property
+4. Output valid JSON Schema (draft 2020-12 or later)
+
+Let me create a comprehensive JSON Schema that includes all three entities with proper relationships.
+
+Key consid"
+qwen-3.5-35b-a3b,mlx,metal,int4,instruction_following,adversarial_transform,3,3,True,41.11,49.8,2048.0,"Thinking Process:
+
+1.  **Analyze the Request:**
+    *   Input sentence: ""The quick brown fox jumps over the lazy dog""
+    *   Task: Perform three transformations in sequence.
+    *   Step 1: Translate to French.
+    *   Step 2: Reverse each word individually (preserve word order).
+    *   Step 3: Wrap each reversed word in an XML tag `<word original=""french_word"">reversed_word</word>`.
+    *   Output requirement: Show the output of each step clearly.
+
+2.  **Step 1: Translate to French.**
+    *  "
+qwen-3.5-35b-a3b,mlx,metal,int4,writing,multi_doc_summary,3,3,True,20.39,50.3,1024.0,"Thinking Process:
+
+1.  **Analyze the Request:**
+    *   Task: Summarize three provided paragraphs into a single cohesive summary.
+    *   Constraint 1: Cover ALL three topics (Quantum Computing, Climate Change, Gene Therapy).
+    *   Constraint 2: Length must be 3-5 sentences.
+    *   Input: Three paragraphs describing distinct scientific/technological topics.
+
+2.  **Analyze the Input Paragraphs:**
+    *   *Paragraph 1 (Quantum Computing):* Uses superposition/entanglement, qubits vs. bits, expon"
+qwen-3.5-35b-a3b,mlx,metal,int4,writing,structured_meeting_notes,3,3,True,19.34,49.9,965.0,"Thinking Process:
+
+1.  **Analyze the Request:**
+    *   Task: Write meeting notes for a fictional product team standup.
+    *   Constraints:
+        1.  YAML frontmatter with fields: `date`, `attendees` (list), `meeting_type`.
+        2.  A `## Discussion` section with 3 bullet points.
+        3.  A `## Decisions` section with 2 bullet points.
+        4.  A `## Action Items` section with 3 items, each assigned to a specific person using `@name` format.
+        5.  Use proper Markdown formatting "
+qwen-3.5-35b-a3b,mlx,metal,int4,writing,tone_rewrite,0,3,False,20.58,49.8,1024.0,"Thinking Process:
+
+1.  **Analyze the Request:**
+    *   **Task:** Rewrite a technical paragraph for a non-technical audience.
+    *   **Constraint 1:** 3 sentences or fewer.
+    *   **Constraint 2:** Preserve all key facts.
+    *   **Constraint 3:** Avoid jargon.
+    *   **Input Text:** ""Deep neural networks utilize backpropagation with stochastic gradient descent to minimize the cross-entropy loss function across training epochs. The model's accuracy on the validation set plateaued at 94.3% aft"
+qwen-3.5-35b-a3b,mlx,metal,int4,writing,contradiction_detection,3,3,True,20.59,49.7,1024.0,"Thinking Process:
+
+1.  **Analyze the Request:**
+    *   Input: Two notes about the Apollo 11 mission.
+    *   Task: Identify factual contradictions between them.
+    *   Output: Explain the conflicts and provide the actual facts.
+
+2.  **Analyze Note 1:**
+    *   Claim 1: Apollo 11 landed on July 20, 1969.
+    *   Claim 2: Neil Armstrong and Buzz Aldrin spent approximately 2.5 hours walking on the lunar surface during their EVA (Extravehicular Activity).
+    *   Claim 3: They collected rock sampl"
+qwen-3.5-35b-a3b,mlx,metal,int8,math,modular_arithmetic,0,3,False,47.29,43.3,2048.0,"Thinking Process:
+
+1.  **Analyze the Request:**
+    *   Problem: Find the remainder when $2^{100}$ is divided by 7.
+    *   Requirement: Show work step by step.
+    *   Hint: Look for a pattern in powers of 2 mod 7.
+
+2.  **Initial Strategy (Pattern Recognition):**
+    *   Calculate $2^n \pmod 7$ for small values of $n$ ($n = 1, 2, 3, \dots$).
+    *   Identify the cycle length (period) of the remainders.
+    *   Use the cycle length to reduce the exponent 100.
+    *   Calculate the final remainde"
+qwen-3.5-35b-a3b,mlx,metal,int8,math,inclusion_exclusion,3,3,True,47.23,43.4,2048.0,"Here's a thinking process that leads to the solution:
+
+1.  **Understand the Goal:** The objective is to count the number of integers between 1 and 1000 (inclusive) that are divisible by at least one of the numbers 2, 3, or 5. I need to use the Principle of Inclusion-Exclusion (PIE) and show the calculation for each term.
+
+2.  **Define the Sets:**
+    *   Let $S$ be the set of integers from 1 to 1000. So, $|S| = 1000$.
+    *   Let $A$ be the set of integers in $S$ divisible by 2.
+    *   Let $B$ "
+qwen-3.5-35b-a3b,mlx,metal,int8,math,bouncing_ball,3,3,True,47.11,43.5,2048.0,"Here's a thinking process that leads to the solution:
+
+1.  **Understand the Goal:** The objective is to calculate the total distance traveled by a ball dropped from a specific height ($h_0 = 10$ meters) that bounces infinitely many times, with each bounce reaching a fraction ($r = 3/4$) of the previous height. I need to use geometric series to show the work.
+
+2.  **Analyze the Motion:**
+    *   **Drop:** The ball falls from $h_0 = 10$ m.
+    *   **1st Bounce:** It hits the ground, then goes up t"
+qwen-3.5-35b-a3b,mlx,metal,int8,coding,markdown_to_html,3,3,True,47.12,43.5,2048.0,"This is a good exercise in parsing Markdown. I need to create a function that converts a subset of Markdown to HTML. Let me think about the requirements:
+
+1. **bold** → <strong>bold</strong>
+2. *italic* → <em>italic</em>
+3. `code` → <code>code</code>
+4. [link text](url) → <a href=""url"">link text</a>
+
+Edge cases to handle:
+- Nested formatting (e.g., **bold and *italic*** or similar)
+- Multiple occurrences per line
+- Escaped characters (e.g., \* should not be treated as italic)
+
+Let me think about"
+qwen-3.5-35b-a3b,mlx,metal,int8,coding,data_pipeline,3,3,True,19.77,43.7,864.0,"Let me break down the requirements:
+
+1. Parse CSV string with columns: date, product, region, amount, quantity
+2. Filter rows where:
+   - amount > 100
+   - region is 'North' OR 'West'
+   - quantity >= 5
+3. Group by product
+4. For each product compute:
+   - total_amount (sum of amounts)
+   - avg_amount (average of amounts)
+   - count (number of rows)
+5. Sort by total_amount descending
+6. Return as JSON string
+7. Use only csv module and standard library (no pandas)
+
+Let me write this step by step:"
+qwen-3.5-35b-a3b,mlx,metal,int8,coding,retry_decorator,3,3,True,29.57,43.7,1293.0,"The user wants me to create a Python decorator with retry functionality that includes:
+1. Exponential backoff between retries
+2. Configurable max attempts
+3. Configurable exception types to catch
+4. Logging of each attempt
+5. Returns a Result dataclass with specific fields
+
+Let me write this step by step:
+
+1. First, I'll create the Result dataclass
+2. Then create the retry decorator
+3. Finally, show usage with an example function that fails intermittently
+
+Let me make sure the backoff calculatio"
+qwen-3.5-35b-a3b,mlx,metal,int8,reasoning,einstein_riddle,3,3,True,95.32,43.0,4096.0,"Here's a thinking process that leads to the solution:
+
+1.  **Analyze the Request:**
+    *   **Task:** Solve a logic puzzle (a variation of the Einstein's Riddle/Zebra Puzzle).
+    *   **Setup:** 5 houses in a row (1-5, left to right).
+    *   **Attributes:** House Number, Nationality, Color, Drink. (Note: The prompt asks for ""House Color and Drink"" assigned to each person, implying Nationality is the primary identifier).
+    *   **Constraints:** 8 specific rules provided.
+    *   **Output:** Ste"
+qwen-3.5-35b-a3b,mlx,metal,int8,reasoning,three_urns,3,3,True,39.3,43.7,1716.0,"Here's a thinking process that leads to the solution:
+
+1.  **Understand the Goal:** The objective is to calculate the probability that the *second* ball drawn is red, given a specific process involving three urns (A, B, and C) and conditional drawing rules. I need to use the Law of Total Probability.
+
+2.  **Analyze the Setup:**
+    *   **Urn A:** 3 Red ($R_A$), 2 Blue ($B_A$). Total = 5.
+    *   **Urn B:** 1 Red ($R_B$), 4 Blue ($B_B$). Total = 5.
+    *   **Urn C:** 4 Red ($R_C$), 1 Blue ($B_C$)"
+qwen-3.5-35b-a3b,mlx,metal,int8,reasoning,topological_sort,3,3,True,47.0,43.6,2048.0,"Here's a thinking process that leads to the solution:
+
+1.  **Understand the Goal:** The objective is to find *all* valid topological orderings of a directed acyclic graph (DAG) with 5 nodes (A, B, C, D, E) based on the provided dependency edges. I need to show the reasoning by tracking in-degrees at each step.
+
+2.  **Analyze the Input:**
+    *   Nodes: A, B, C, D, E
+    *   Edges (Dependencies):
+        *   $A \to B$ (A before B)
+        *   $B \to C$ (B before C)
+        *   $A \to D$ (A before"
+qwen-3.5-35b-a3b,mlx,metal,int8,instruction_following,constrained_factorial,3,3,True,47.12,43.5,2048.0,"Thinking Process:
+
+1.  **Analyze the Request:**
+    *   Task: Write a Python function to compute the factorial of a non-negative integer.
+    *   Constraint 1: Every variable name must be exactly 4 characters long (e.g., 'numb', 'rslt'). This includes function arguments, local variables, and potentially helper variables.
+    *   Constraint 2: No loops (`for`, `while`). Use recursion only.
+    *   Constraint 3: Include exactly 3 type hints in the code.
+    *   Constraint 4: Correct computation (e"
+qwen-3.5-35b-a3b,mlx,metal,int8,instruction_following,library_schema,3,3,True,41.37,43.5,1798.0,"The user wants me to create a JSON Schema for a library management system with three entity types: Book, Author, and Loan. Let me break down the requirements:
+
+1. Each entity needs a unique 'id' field
+2. Cross-references use the referenced entity's id
+3. Include 'required' fields and 'type' constraints
+4. Use JSON Schema draft 2020-12 or later
+
+Let me design the schema:
+
+**Book:**
+- id (string, required)
+- title (string, required)
+- isbn (string, required)
+- publication_year (integer, required)
+"
+qwen-3.5-35b-a3b,mlx,metal,int8,instruction_following,adversarial_transform,3,3,True,47.12,43.5,2048.0,"Thinking Process:
+
+1.  **Analyze the Request:**
+    *   Input sentence: ""The quick brown fox jumps over the lazy dog""
+    *   Task: Perform three transformations in sequence.
+    *   Step 1: Translate to French.
+    *   Step 2: Reverse each word individually (preserve word order).
+    *   Step 3: Wrap each reversed word in an XML tag `<word original=""french_word"">reversed_word</word>`.
+    *   Output requirement: Show the output of each step clearly.
+
+2.  **Step 1: Translate to French.**
+    *  "
+qwen-3.5-35b-a3b,mlx,metal,int8,writing,multi_doc_summary,3,3,True,23.49,43.6,1024.0,"Thinking Process:
+
+1.  **Analyze the Request:**
+    *   Task: Summarize three provided paragraphs into a single cohesive summary.
+    *   Constraint 1: Cover ALL three topics (Quantum Computing, Climate Change, Gene Therapy).
+    *   Constraint 2: Length must be 3-5 sentences.
+    *   Input: Three distinct paragraphs about different scientific/technological topics.
+
+2.  **Analyze the Input Paragraphs:**
+    *   *Paragraph 1 (Quantum Computing):* Uses superposition/entanglement, qubits vs. bits, "
+qwen-3.5-35b-a3b,mlx,metal,int8,writing,structured_meeting_notes,3,3,True,23.32,43.9,1024.0,"Thinking Process:
+
+1.  **Analyze the Request:**
+    *   **Task:** Write meeting notes for a fictional product team standup.
+    *   **Constraint 1:** YAML frontmatter with fields: `date`, `attendees` (list), `meeting_type`.
+    *   **Constraint 2:** A `## Discussion` section with exactly 3 bullet points.
+    *   **Constraint 3:** A `## Decisions` section with exactly 2 bullet points.
+    *   **Constraint 4:** A `## Action Items` section with exactly 3 items, each assigned to a specific person us"
+qwen-3.5-35b-a3b,mlx,metal,int8,writing,tone_rewrite,3,3,True,23.43,43.7,1024.0,"Thinking Process:
+
+1.  **Analyze the Request:**
+    *   **Task:** Rewrite a technical paragraph for a non-technical audience.
+    *   **Constraint 1:** 3 sentences or fewer.
+    *   **Constraint 2:** Preserve all key facts.
+    *   **Constraint 3:** Avoid jargon.
+    *   **Input Text:** 'Deep neural networks utilize backpropagation with stochastic gradient descent to minimize the cross-entropy loss function across training epochs. The model's accuracy on the validation set plateaued at 94.3% aft"
+qwen-3.5-35b-a3b,mlx,metal,int8,writing,contradiction_detection,3,3,True,23.5,43.6,1024.0,"Thinking Process:
+
+1.  **Analyze the Request:**
+    *   Input: Two notes (Note 1 and Note 2) about the Apollo 11 mission.
+    *   Task: Identify factual contradictions between them.
+    *   Output: Explain if there are contradictions, what conflicts, and state the actual facts.
+
+2.  **Analyze Note 1:**
+    *   Claim 1: Apollo 11 landed on the Moon on July 20, 1969.
+    *   Claim 2: Neil Armstrong and Buzz Aldrin spent approximately 2.5 hours walking on the lunar surface during their EVA (Extrave"
+qwen-3.5-27b-claude-opus-distilled,mlx,metal,int4,math,modular_arithmetic,3,3,True,25.03,29.8,745.0,"I need to find the remainder when 2^100 is divided by 7.
+
+Let me look for a pattern in powers of 2 modulo 7:
+
+2^1 = 2 ≡ 2 (mod 7)
+2^2 = 4 ≡ 4 (mod 7)
+2^3 = 8 ≡ 1 (mod 7)
+2^4 = 16 ≡ 2 (mod 7)
+2^5 = 32 ≡ 4 (mod 7)
+2^6 = 64 ≡ 1 (mod 7)
+
+So the pattern repeats every 3 powers: 2, 4, 1, 2, 4, 1, ...
+
+The cycle length is 3.
+
+To find 2^100 mod 7, I need to find what position 100 is in the cycle.
+
+100 ÷ 3 = 33 remainder 1
+
+So 2^100 ≡ 2^1 ≡ 2 (mod 7)
+
+Let me verify this another way using Fermat's Little T"
+qwen-3.5-27b-claude-opus-distilled,mlx,metal,int4,math,inclusion_exclusion,3,3,True,49.79,29.4,1465.0,"I need to find how many integers from 1 to 1000 are divisible by 2, 3, or 5.
+
+Let me define:
+- A = set of integers from 1 to 1000 divisible by 2
+- B = set of integers from 1 to 1000 divisible by 3
+- C = set of integers from 1 to 1000 divisible by 5
+
+Using the inclusion-exclusion principle:
+|A ∪ B ∪ C| = |A| + |B| + |C| - |A ∩ B| - |A ∩ C| - |B ∩ C| + |A ∩ B ∩ C|
+
+Let me calculate each term:
+
+|A| = number of integers from 1 to 1000 divisible by 2
+= floor(1000/2) = 500
+
+|B| = number of integers fr"
+qwen-3.5-27b-claude-opus-distilled,mlx,metal,int4,math,bouncing_ball,3,3,True,34.09,30.1,1027.0,"Let me work through this problem step by step.
+
+**Understanding the problem:**
+- Ball dropped from 10 meters
+- Each bounce reaches 3/4 of the previous height
+- Need total distance traveled (down + up for each bounce)
+
+**Breaking down the motion:**
+
+1. **First drop:** Ball falls 10 meters (down only)
+
+2. **First bounce:** 
+   - Ball rises to 10 × (3/4) = 7.5 meters (up)
+   - Ball falls 7.5 meters (down)
+
+3. **Second bounce:**
+   - Ball rises to 7.5 × (3/4) = 10 × (3/4)² = 5.625 meters (up)
+   - B"
+qwen-3.5-27b-claude-opus-distilled,mlx,metal,int4,coding,markdown_to_html,3,3,True,68.64,29.8,2048.0,"Let me think about how to approach this coding problem.
+
+Problem: Write a Python function `markdown_to_html(text)` that converts a subset of Markdown to HTML. It must handle:
+  1. **bold** → <strong>bold</strong>
+  2. *italic* → <em>italic</em>
+  3. `code` → <code>code</code>
+  4. [link text](url) → <a href=""url"">link text</a>
+
+Handle edge cases: nested formatting, multiple occurrences per line, and escaped characters. Provide test cases.
+
+Approach: Regex-based with careful ordering
+
+Key conside"
+qwen-3.5-27b-claude-opus-distilled,mlx,metal,int4,coding,data_pipeline,3,3,True,29.57,30.4,899.0,"Let me think about how to approach this coding problem.
+
+Problem: Write a Python function `process_sales(csv_text)` that takes a CSV string with columns: date, product, region, amount, quantity.
+
+The function must:
+1. Filter to rows where amount > 100 AND region is 'North' or 'West' AND quantity >= 5
+2. Group remaining rows by product
+3. For each product, compute: total_amount, avg_amount, count
+4. Sort products by total_amount descending
+5. Return the result as a JSON string
+
+Do not use pandas "
+qwen-3.5-27b-claude-opus-distilled,mlx,metal,int4,coding,retry_decorator,3,3,True,26.73,30.9,825.0,"Let me think about how to approach this coding problem.
+
+Problem: Write a Python decorator `retry(max_attempts=3, backoff_base=2, exceptions=(Exception,))` that:
+1. Retries the decorated function up to `max_attempts` times
+2. Uses exponential backoff: wait `backoff_base ** attempt` seconds between retries
+3. Only catches exceptions in the `exceptions` tuple
+4. Logs each attempt (print is fine)
+5. Returns a Result dataclass with fields: success (bool), value (any), attempts (int), error (Optional"
+qwen-3.5-27b-claude-opus-distilled,mlx,metal,int4,reasoning,einstein_riddle,3,3,True,80.79,29.6,2395.0,"Let me work through this logic puzzle step by step.
+
+**Setting up the grid:**
+- 5 houses numbered 1-5 (left to right)
+- Each house has: a nationality, a color, and a drink
+
+**Given constraints:**
+1. Brit → red house
+2. Swede → milk
+3. Green house is immediately left of white house
+4. Dane → tea
+5. Green house → coffee
+6. Norwegian → house 1
+7. Norwegian is next to blue house
+8. German → house 3
+
+**Step 1: Fill in the directly given information**
+
+From constraint 6: Norwegian lives in house 1
+Fro"
+qwen-3.5-27b-claude-opus-distilled,mlx,metal,int4,reasoning,three_urns,3,3,True,53.4,30.7,1638.0,"Let me work through this problem step by step.
+
+First, I need to understand what's being asked: There are three urns:
+  Urn A contains 3 red balls and 2 blue balls.
+  Urn B contains 1 red ball and 4 blue balls.
+  Urn C contains 4 red balls and 1 blue ball.
+
+You draw one ball from Urn A. If it is red, you then draw from Urn B. If it is blue, you then draw from Urn C.
+
+What is the probability that the second ball drawn is red? Show your work using the law of total probabi
+
+Key values given: 3, 2, "
+qwen-3.5-27b-claude-opus-distilled,mlx,metal,int4,reasoning,topological_sort,3,3,True,55.55,30.8,1710.0,"Let me work through this problem step by step.
+
+First, I need to understand what's being asked: Given this dependency graph:
+  A → B (A must come before B)
+  B → C
+  A → D
+  D → C
+  C → E
+
+List ALL valid topological orderings of these 5 nodes. Show your reasoning by tracking in-degrees at each step.
+
+Key values given: 5
+
+My approach:
+1. Calculate initial in-degrees
+
+For each node, count how many edges point TO it:
+- A: 0 (no incoming edges)
+- B: 1 (from A)
+- C: 2 (from B and D)
+- D: 1 (from A)
+-"
+qwen-3.5-27b-claude-opus-distilled,mlx,metal,int4,instruction_following,constrained_factorial,3,3,True,56.27,30.8,1731.0,"Let me think about how to approach this coding problem.
+
+Problem: Write a Python function that computes the factorial of a non-negative integer. You MUST follow ALL of these constraints simultaneously:
+
+1. Every variable name must be exactly 4 characters long (e.g., 'numb', 'rslt')
+2. You must NOT use any loops (for or while) — use recursion only
+3. Include exactly 3 type hints in your code
+4. The function must correctly compute factorial (e.g., factorial(5) = 120)
+
+Show the complete function.
+
+"
+qwen-3.5-27b-claude-opus-distilled,mlx,metal,int4,instruction_following,library_schema,3,3,True,66.65,30.7,2048.0,"Let me think about how to approach this coding problem.
+
+Problem: Generate a JSON Schema for a library management system with three entity types:
+
+1. **Book**: title, isbn, publication_year, author_id (reference to Author)
+2. **Author**: name, birth_year, nationality, book_ids (list of Book references)
+3. **Loan**: book_id (reference to Book), borrower_name, due_date, returned (boolean)
+
+Requirements:
+- Each entity must have a unique 'id' field
+- Cross-references must use the referenced entity's"
+qwen-3.5-27b-claude-opus-distilled,mlx,metal,int4,instruction_following,adversarial_transform,3,3,True,25.91,31.2,807.0,"Let me work through this step by step.
+
+**Step 1: Translate to French**
+
+The sentence ""The quick brown fox jumps over the lazy dog"" in French is:
+""Le rapide renard brun saute par-dessus le chien paresseux""
+
+Let me verify this translation:
+- The = Le
+- quick = rapide
+- brown = brun
+- fox = renard
+- jumps = saute
+- over = par-dessus
+- the = le
+- lazy = paresseux
+- dog = chien
+
+**Step 2: Reverse each word individually**
+
+Now I'll reverse the letters in each word while keeping word order:
+
+- Le → eL"
+qwen-3.5-27b-claude-opus-distilled,mlx,metal,int4,writing,multi_doc_summary,3,3,True,23.3,31.6,735.0,"Let me analyze the three paragraphs to identify the key topics and main points:
+
+**Paragraph 1 - Quantum Computing:**
+- Uses quantum mechanical phenomena (superposition, entanglement)
+- Qubits can exist in multiple states simultaneously (unlike classical bits)
+- Enables exponential speedups for problems like cryptography and drug discovery
+
+**Paragraph 2 - Climate Change:**
+- Accelerating faster than predicted
+- 1.2°C rise above pre-industrial levels
+- Carbon emissions continue increasing
+- IPCC"
+qwen-3.5-27b-claude-opus-distilled,mlx,metal,int4,writing,structured_meeting_notes,3,3,True,20.54,31.2,641.0,"Let me think about how to approach this coding problem.
+
+Problem: Write meeting notes for a fictional product team standup. The notes MUST include:
+
+1. YAML frontmatter with fields: date, attendees (list), meeting_type
+2. A '## Discussion' section with 3 bullet points
+3. A '## Decisions' section with 2 bullet points
+4. A '## Action Items' section with 3 items, each assigned to a specific person using @name format
+
+Use proper Markdown formatting throughout.
+
+Approach: 1. YAML Frontmatter
+- Use tr"
+qwen-3.5-27b-claude-opus-distilled,mlx,metal,int4,writing,tone_rewrite,3,3,True,23.03,30.8,708.0,"Let me analyze the original technical paragraph and identify the key facts:
+
+1. A machine learning model (deep neural network) was trained
+2. It used a specific training method (backpropagation with stochastic gradient descent)
+3. The goal was to minimize errors (cross-entropy loss function)
+4. Training happened in multiple rounds (epochs)
+5. The model achieved 94.3% accuracy on test data
+6. This accuracy was reached after adjusting settings (hyperparameter tuning of learning rate and batch size"
+qwen-3.5-27b-claude-opus-distilled,mlx,metal,int4,writing,contradiction_detection,3,3,True,30.22,30.5,921.0,"Let me carefully analyze both notes for potential contradictions.
+
+**Note 1 claims:**
+- Apollo 11 landed on the Moon on July 20, 1969
+- Neil Armstrong and Buzz Aldrin spent approximately 2.5 hours walking on the lunar surface during their EVA
+- They collected rock samples and deployed scientific instruments
+
+**Note 2 claims:**
+- Armstrong and Aldrin remained on the lunar surface for approximately 21.5 hours in total after landing
+- They collected 47.5 pounds of lunar samples during their moonwal"
+qwen-3.5-27b-claude-opus-distilled,mlx,metal,int8,math,modular_arithmetic,3,3,True,41.26,18.0,742.0,"I need to find the remainder when 2^100 is divided by 7.
+
+Let me look for a pattern in powers of 2 modulo 7:
+
+2^1 = 2 ≡ 2 (mod 7)
+2^2 = 4 ≡ 4 (mod 7)
+2^3 = 8 ≡ 1 (mod 7)
+2^4 = 16 ≡ 2 (mod 7)
+2^5 = 32 ≡ 4 (mod 7)
+2^6 = 64 ≡ 1 (mod 7)
+
+So the pattern repeats every 3 powers: 2, 4, 1, 2, 4, 1, ...
+
+The cycle length is 3.
+
+Now I need to find where 100 falls in this cycle.
+100 ÷ 3 = 33 remainder 1
+
+So 2^100 ≡ 2^1 ≡ 2 (mod 7)
+
+Let me verify this using Fermat's Little Theorem as well.
+Fermat's Little Th"
+qwen-3.5-27b-claude-opus-distilled,mlx,metal,int8,math,inclusion_exclusion,3,3,True,66.8,17.3,1155.0,"I need to find how many integers from 1 to 1000 are divisible by 2, 3, or 5.
+
+Let me define:
+- A = set of integers from 1 to 1000 divisible by 2
+- B = set of integers from 1 to 1000 divisible by 3
+- C = set of integers from 1 to 1000 divisible by 5
+
+Using the inclusion-exclusion principle:
+|A ∪ B ∪ C| = |A| + |B| + |C| - |A ∩ B| - |A ∩ C| - |B ∩ C| + |A ∩ B ∩ C|
+
+Let me calculate each term:
+
+|A| = number of integers from 1 to 1000 divisible by 2
+= floor(1000/2) = 500
+
+|B| = number of integers fr"
+qwen-3.5-27b-claude-opus-distilled,mlx,metal,int8,math,bouncing_ball,3,3,True,96.94,17.3,1678.0,"Let me work through this problem step by step.
+
+First, I need to understand what's being asked: A ball is dropped from a height of 10 meters. Each time it bounces, it rebounds to exactly 3/4 of the height from which it fell. What is the total distance the ball travels before coming to rest (i.e., after infinitely many bounces)? Show your work using geometric series.
+
+Key values given: 10, 3, 4
+
+Working through the calculation: Total Distance Traveled by a Bouncing Ball
+
+Problem Setup
+
+A ball is "
+qwen-3.5-27b-claude-opus-distilled,mlx,metal,int8,coding,markdown_to_html,3,3,True,117.22,17.5,2048.0,"Let me think about how to approach this coding problem.
+
+Problem: Write a Python function `markdown_to_html(text)` that converts a subset of Markdown to HTML. It must handle:
+  1. **bold** → <strong>bold</strong>
+  2. *italic* → <em>italic</em>
+  3. `code` → <code>code</code>
+  4. [link text](url) → <a href=""url"">link text</a>
+
+Handle edge cases: nested formatting, multiple occurrences per line, and escaped characters. Provide test cases.
+
+Approach: - `code` blocks (backticks) - these should be "
+qwen-3.5-27b-claude-opus-distilled,mlx,metal,int8,coding,data_pipeline,3,3,True,103.39,17.9,1850.0,"Let me break down the requirements:
+
+1. Parse CSV string with columns: date, product, region, amount, quantity
+2. Filter rows where:
+   - amount > 100
+   - region is 'North' or 'West'
+   - quantity >= 5
+3. Group by product
+4. For each product compute: total_amount, avg_amount, count
+5. Sort by total_amount descending
+6. Return as JSON string
+
+I'll use:
+- csv module for parsing
+- collections.defaultdict for grouping
+- json module for output
+
+Let me write the function:
+
+```python
+import csv
+import"
+qwen-3.5-27b-claude-opus-distilled,mlx,metal,int8,coding,retry_decorator,3,3,True,60.59,18.2,1104.0,"Let me think about how to approach this coding problem.
+
+Problem: Write a Python decorator `retry(max_attempts=3, backoff_base=2, exceptions=(Exception,))` that:
+1. Retries the decorated function up to `max_attempts` times
+2. Uses exponential backoff: wait `backoff_base ** attempt` seconds between retries
+3. Only catches exceptions in the `exceptions` tuple
+4. Logs each attempt (print is fine)
+5. Returns a Result dataclass with fields: success (bool), value (any), attempts (int), error (Optional"
+qwen-3.5-27b-claude-opus-distilled,mlx,metal,int8,reasoning,einstein_riddle,3,3,True,230.61,17.8,4096.0,"Let me work through this logic puzzle step by step.
+
+First, let me list out what we know:
+- 5 houses numbered 1-5 from left to right
+- Each house has: a nationality, a color, and a drink
+
+Constraints:
+1. Brit lives in red house
+2. Swede drinks milk
+3. Green house is immediately to the left of white house
+4. Dane drinks tea
+5. Green house owner drinks coffee
+6. Norwegian lives in house 1
+7. Norwegian lives next to blue house
+8. German lives in house 3
+
+Let me start filling in what we know for cer"
+qwen-3.5-27b-claude-opus-distilled,mlx,metal,int8,reasoning,three_urns,3,3,True,87.41,18.4,1606.0,"Let me work through this problem step by step.
+
+First, I need to understand what's being asked: There are three urns:
+  Urn A contains 3 red balls and 2 blue balls.
+  Urn B contains 1 red ball and 4 blue balls.
+  Urn C contains 4 red balls and 1 blue ball.
+
+You draw one ball from Urn A. If it is red, you then draw from Urn B. If it is blue, you then draw from Urn C.
+
+What is the probability that the second ball drawn is red? Show your work using the law of total proba
+
+Key values given: 3, 2, 1,"
+qwen-3.5-27b-claude-opus-distilled,mlx,metal,int8,reasoning,topological_sort,3,3,True,101.97,18.0,1840.0,"Let me work through this problem step by step.
+
+First, I need to understand what's being asked: Given this dependency graph:
+  A → B (A must come before B)
+  B → C
+  A → D
+  D → C
+  C → E
+
+List ALL valid topological orderings of these 5 nodes. Show your reasoning by tracking in-degrees at each step.
+
+Key values given: 5
+
+My approach:
+1. Calculate initial in-degrees
+
+For each node, count how many edges point TO it:
+- A: 0 (no incoming edges)
+- B: 1 (from A)
+- C: 2 (from B and D)
+- D: 1 (from A)
+-"
+qwen-3.5-27b-claude-opus-distilled,mlx,metal,int8,instruction_following,constrained_factorial,3,3,True,41.04,18.2,746.0,"Let me think about how to approach this coding problem.
+
+Problem: Write a Python function that computes the factorial of a non-negative integer. You MUST follow ALL of these constraints simultaneously:
+
+1. Every variable name must be exactly 4 characters long (e.g., 'numb', 'rslt')
+2. You must NOT use any loops (for or while) — use recursion only
+3. Include exactly 3 type hints in your code
+4. The function must correctly compute factorial (e.g., factorial(5) = 120)
+
+Show the complete function.
+
+"
+qwen-3.5-27b-claude-opus-distilled,mlx,metal,int8,instruction_following,library_schema,3,3,True,114.44,17.9,2048.0,"Let me think about how to approach this coding problem.
+
+Problem: Generate a JSON Schema for a library management system with three entity types:
+
+1. **Book**: title, isbn, publication_year, author_id (reference to Author)
+2. **Author**: name, birth_year, nationality, book_ids (list of Book references)
+3. **Loan**: book_id (reference to Book), borrower_name, due_date, returned (boolean)
+
+Requirements:
+- Each entity must have a unique 'id' field
+- Cross-references must use the referenced entity's"
+qwen-3.5-27b-claude-opus-distilled,mlx,metal,int8,instruction_following,adversarial_transform,3,3,True,38.87,18.3,712.0,"Let me work through this step by step.
+
+**Step 1: Translate to French**
+
+The sentence ""The quick brown fox jumps over the lazy dog"" translates to French as:
+""Le renard brun rapide saute par-dessus le chien paresseux""
+
+Let me verify this translation:
+- The = Le
+- quick = rapide
+- brown = brun
+- fox = renard
+- jumps = saute
+- over = par-dessus
+- the = le
+- lazy = paresseux
+- dog = chien
+
+So the French sentence is: ""Le renard brun rapide saute par-dessus le chien paresseux""
+
+**Step 2: Reverse each "
+qwen-3.5-27b-claude-opus-distilled,mlx,metal,int8,writing,multi_doc_summary,3,3,True,34.17,18.3,625.0,"Let me analyze the three paragraphs to identify the key topics:
+
+Paragraph 1: Quantum computing - discusses qubits, superposition, entanglement, and applications in cryptography and drug discovery.
+
+Paragraph 2: Climate change - discusses rising temperatures (1.2°C), carbon emissions, and IPCC warnings about 1.5°C tipping points.
+
+Paragraph 3: Gene therapy/CRISPR - discusses advances in treating sickle cell disease and cancers, but notes barriers like off-target edits and high costs.
+
+I need to "
+qwen-3.5-27b-claude-opus-distilled,mlx,metal,int8,writing,structured_meeting_notes,3,3,True,41.07,18.1,744.0,"Let me think about how to approach this coding problem.
+
+Problem: Write meeting notes for a fictional product team standup. The notes MUST include:
+
+1. YAML frontmatter with fields: date, attendees (list), meeting_type
+2. A '## Discussion' section with 3 bullet points
+3. A '## Decisions' section with 2 bullet points
+4. A '## Action Items' section with 3 items, each assigned to a specific person using @name format
+
+Use proper Markdown formatting throughout.
+
+Approach: 1. YAML Frontmatter
+- Includ"
+qwen-3.5-27b-claude-opus-distilled,mlx,metal,int8,writing,tone_rewrite,0,3,False,31.3,18.0,564.0,"Let me analyze the original technical paragraph and identify the key facts:
+
+1. A machine learning model (deep neural network) was trained
+2. It uses a specific training method (backpropagation with stochastic gradient descent)
+3. The goal was to minimize error (cross-entropy loss function)
+4. Training happened over multiple rounds (epochs)
+5. The model achieved 94.3% accuracy on test data (validation set)
+6. This accuracy was reached after adjusting settings (hyperparameter tuning of learning r"
+qwen-3.5-27b-claude-opus-distilled,mlx,metal,int8,writing,contradiction_detection,3,3,True,50.18,18.0,903.0,"Let me carefully analyze both notes for potential contradictions.
+
+**Note 1 claims:**
+- Apollo 11 landed on the Moon on July 20, 1969
+- Neil Armstrong and Buzz Aldrin spent approximately 2.5 hours walking on the lunar surface during their EVA
+- They collected rock samples and deployed scientific instruments
+
+**Note 2 claims:**
+- Armstrong and Aldrin remained on the lunar surface for approximately 21.5 hours in total after landing
+- They collected 47.5 pounds of lunar samples during their moonwal"
+gemma-3-27b-it,mlx,metal,int4,math,modular_arithmetic,0,3,False,15.25,29.1,441.0,"Okay, let's find the remainder when 2<sup>100</sup> is divided by 7.  The hint about looking for a pattern is a good one!
+
+**Step 1: Calculate the first few powers of 2 modulo 7**
+
+We want to find the remainders when 2<sup>1</sup>, 2<sup>2</sup>, 2<sup>3</sup>, 2<sup>4</sup>, etc. are divided by 7.
+
+*   2<sup>1</sup> = 2.   2 mod 7 = 2
+*   2<sup>2</sup> = 4.   4 mod 7 = 4
+*   2<sup>3</sup> = 8.   8 mod 7 = 1
+*   2<sup>4</sup> = 16.  16 mod 7 = 2
+*   2<sup>5</sup> = 32.  32 mod 7 = 4
+*   2<sup>6<"
+gemma-3-27b-it,mlx,metal,int4,math,inclusion_exclusion,3,3,True,24.36,22.2,540.0,"Okay, let's use the inclusion-exclusion principle to find the number of integers from 1 to 1000 that are divisible by 2, 3, or 5.
+
+**1. Divisible by 2:**
+
+*   Number of integers divisible by 2:  ⌊1000/2⌋ = 500
+
+**2. Divisible by 3:**
+
+*   Number of integers divisible by 3: ⌊1000/3⌋ = 333
+
+**3. Divisible by 5:**
+
+*   Number of integers divisible by 5: ⌊1000/5⌋ = 200
+
+**4. Divisible by 2 and 3 (i.e., divisible by 6):**
+
+*   Number of integers divisible by 6: ⌊1000/6⌋ = 166
+
+**5. Divisible by 2 and"
+gemma-3-27b-it,mlx,metal,int4,math,bouncing_ball,3,3,True,26.77,24.3,650.0,"Okay, let's break down this problem using geometric series.
+
+**1. Distance Falling:**
+
+*   The ball initially falls from a height of 10 meters.
+*   After the first bounce, it rises to a height of (3/4) * 10 = 7.5 meters and then falls 7.5 meters.
+*   After the second bounce, it rises to a height of (3/4) * 7.5 = 5.625 meters and then falls 5.625 meters.
+*   And so on...
+
+**2. Geometric Series for Falling Distances:**
+
+The total distance the ball falls can be represented as a geometric series:
+
+1"
+gemma-3-27b-it,mlx,metal,int4,coding,markdown_to_html,3,3,True,43.88,26.3,1152.0,"```python
+import re
+
+def markdown_to_html(text):
+    """"""
+    Converts a subset of Markdown to HTML.
+
+    Handles:
+      1. **bold** → <strong>bold</strong>
+      2. *italic* → <em>italic</em>
+      3. `code` → <code>code</code>
+      4. [link text](url) → <a href=""url"">link text</a>
+
+    Args:
+      text: The Markdown text to convert.
+
+    Returns:
+      The HTML equivalent of the Markdown text.
+    """"""
+
+    # Bold
+    text = re.sub(r'\*\*([^*]+)\*\*', r'<strong>\1</strong>', text)
+    # Italic
+"
+gemma-3-27b-it,mlx,metal,int4,coding,data_pipeline,3,3,True,46.12,26.6,1228.0,"```python
+import csv
+import json
+from collections import defaultdict
+
+def process_sales(csv_text):
+    """"""
+    Processes sales data from a CSV string.
+
+    Args:
+        csv_text: A string containing the CSV data.
+
+    Returns:
+        A JSON string representing the processed sales data.
+    """"""
+
+    reader = csv.DictReader(csv_text.splitlines())
+    filtered_sales = []
+    for row in reader:
+        try:
+            amount = float(row['amount'])
+            quantity = int(row['quantity'])
+     "
+gemma-3-27b-it,mlx,metal,int4,coding,retry_decorator,3,3,True,37.5,27.3,1023.0,"```python
+from dataclasses import dataclass
+from time import sleep
+import random
+
+@dataclass
+class Result:
+    success: bool
+    value: any
+    attempts: int
+    error: Exception | None = None
+
+def retry(max_attempts=3, backoff_base=2, exceptions=(Exception,)):
+    """"""
+    Retries the decorated function up to `max_attempts` times with exponential backoff.
+
+    Args:
+        max_attempts: The maximum number of retry attempts.
+        backoff_base: The base for exponential backoff (seconds).
+     "
+gemma-3-27b-it,mlx,metal,int4,reasoning,einstein_riddle,3,3,True,40.56,27.3,1108.0,"Okay, let's break down this classic logic puzzle step-by-step. I'll use a table to keep track of the information as we deduce it.
+
+**Initial Setup:**
+
+| House | Number | Nationality | Color | Drink |
+|---|---|---|---|---|
+| 1 |  |  |  |  |
+| 2 |  |  |  |  |
+| 3 |  |  |  |  |
+| 4 |  |  |  |  |
+| 5 |  |  |  |  |
+
+**Step 1: Use Definitive Clues**
+
+*   **Clue 6:** The Norwegian lives in house 1.
+*   **Clue 8:** The German lives in house 3.
+
+| House | Number | Nationality | Color | Drink |
+|---|---|-"
+gemma-3-27b-it,mlx,metal,int4,reasoning,three_urns,3,3,True,16.52,27.6,455.0,"Here's how to solve this problem using the law of total probability:
+
+**1. Define Events**
+
+*   Let R1 be the event that the first ball drawn from Urn A is red.
+*   Let B1 be the event that the first ball drawn from Urn A is blue.
+*   Let R2 be the event that the second ball drawn is red.
+
+**2. Probabilities of the First Draw (Urn A)**
+
+*   P(R1) = (Number of red balls in A) / (Total balls in A) = 3 / 5
+*   P(B1) = (Number of blue balls in A) / (Total balls in A) = 2 / 5
+
+**3. Conditional Probab"
+gemma-3-27b-it,mlx,metal,int4,reasoning,topological_sort,0,3,False,35.34,27.4,970.0,"Okay, let's find all valid topological orderings for the given dependency graph.
+
+**Dependency Graph:**
+
+*   A → B
+*   B → C
+*   A → D
+*   D → C
+*   C → E
+
+**1. Calculate Initial In-Degrees:**
+
+*   A: 0
+*   B: 1 (from A)
+*   C: 2 (from B and D)
+*   D: 1 (from A)
+*   E: 1 (from C)
+
+**2. Identify Starting Nodes (Nodes with In-Degree 0):**
+
+Initially, only node A has an in-degree of 0.
+
+**3. Generate Topological Orderings:**
+
+We'll explore all possible paths, keeping track of in-degrees as we add n"
+gemma-3-27b-it,mlx,metal,int4,instruction_following,constrained_factorial,3,3,True,3.91,30.6,119.0,"```python
+def fact_calc(numb: int) -> int:
+    """"""
+    Computes the factorial of a non-negative integer using recursion.
+
+    Args:
+        numb: The non-negative integer for which to calculate the factorial.
+
+    Returns:
+        The factorial of the input integer.
+    """"""
+    if numb == 0:
+        rslt: int = 1
+    else:
+        rslt: int = numb * fact_calc(numb - 1)
+    return rslt
+```"
+gemma-3-27b-it,mlx,metal,int4,instruction_following,library_schema,3,3,True,28.02,27.2,762.0,"```json
+{
+  ""$schema"": ""https://json-schema.org/draft-2020-12/schema"",
+  ""title"": ""Library Management System Schema"",
+  ""description"": ""Schema for managing books, authors, and loans in a library."",
+  ""definitions"": {
+    ""Book"": {
+      ""type"": ""object"",
+      ""properties"": {
+        ""id"": {
+          ""type"": ""integer"",
+          ""description"": ""Unique identifier for the book""
+        },
+        ""title"": {
+          ""type"": ""string"",
+          ""description"": ""Title of the book""
+        },
+      "
+gemma-3-27b-it,mlx,metal,int4,instruction_following,adversarial_transform,3,3,True,16.76,27.7,464.0,"Okay, let's perform these transformations step-by-step.
+
+**Step 1: Translate to French**
+
+The English sentence ""The quick brown fox jumps over the lazy dog"" translates to French as:
+
+""Le rapide renard brun saute par-dessus le chien paresseux""
+
+**Step 2: Reverse each word individually**
+
+Now, we reverse each word in the French sentence:
+
+*   Le -> el
+*   rapide -> edipar
+*   renard -> draner
+*   brun -> nurb
+*   saute -> etuas
+*   par-dessus -> ssevu-rap
+*   le -> el
+*   chien -> neihc
+*   paress"
+gemma-3-27b-it,mlx,metal,int4,writing,multi_doc_summary,3,3,True,3.26,29.6,96.0,"Recent advancements are being made across diverse scientific fields, holding both immense promise and significant challenges. Quantum computing offers potential for revolutionary processing speeds, while gene therapy, particularly with CRISPR-Cas9, is showing success in treating previously intractable diseases. Simultaneously, the escalating threat of climate change demands urgent attention as global temperatures rise and approach critical thresholds. These fields—computing, medicine, and enviro"
+gemma-3-27b-it,mlx,metal,int4,writing,structured_meeting_notes,3,3,True,12.39,27.5,340.0,"```yaml
+---
+date: 2024-02-29
+attendees:
+  - Alice Smith
+  - Bob Johnson
+  - Carol Williams
+  - David Lee
+meeting_type: Daily Standup
+---
+
+## Discussion
+
+* **Alice:** Made good progress on the user profile page design. Still working on responsive layouts for smaller screens. Ran into a minor issue with the API returning inconsistent data for user bios - needs clarification from the backend team.
+* **Bob:** Finished implementing the search functionality for the product catalog. Testing is going we"
+gemma-3-27b-it,mlx,metal,int4,writing,tone_rewrite,3,3,True,2.51,29.6,74.0,"Here's a simplified version:
+
+The system learned to make accurate predictions by repeatedly adjusting its internal settings based on trial and error. After refining those settings, it correctly predicted outcomes 94.3% of the time on new data it hadn't seen before. A specific adjustment method, called Adam, helped it learn more quickly than other approaches.
+
+
+
+"
+gemma-3-27b-it,mlx,metal,int4,writing,contradiction_detection,3,3,True,12.6,27.4,345.0,"Yes, there is a contradiction between the two notes regarding the *duration* of the astronauts' time on the lunar surface and specifically, the time spent *walking* (EVA - Extravehicular Activity).
+
+Here's the breakdown:
+
+* **Note 1** states Armstrong and Aldrin spent **2.5 hours *walking*** on the Moon.
+* **Note 2** states they were on the lunar surface for a **total of 21.5 hours**.
+
+These statements aren't mutually exclusive, but they *imply* a conflict. 21.5 hours includes *all* time on the "
+gemma-3-27b-it,mlx,metal,int8,math,modular_arithmetic,0,3,False,27.46,15.1,405.0,"Okay, I can help with that! Here's how to find the remainder when 2<sup>100</sup> is divided by 7, with a step-by-step explanation and pattern recognition:
+
+**1. Find a Pattern**
+
+Let's calculate the first few powers of 2 and their remainders when divided by 7:
+
+*   2<sup>1</sup> = 2.  2 mod 7 = 2
+*   2<sup>2</sup> = 4.  4 mod 7 = 4
+*   2<sup>3</sup> = 8.  8 mod 7 = 1
+*   2<sup>4</sup> = 16. 16 mod 7 = 2
+*   2<sup>5</sup> = 32. 32 mod 7 = 4
+*   2<sup>6</sup> = 64. 64 mod 7 = 1
+
+Notice that the r"
+gemma-3-27b-it,mlx,metal,int8,math,inclusion_exclusion,3,3,True,39.71,13.6,539.0,"Okay, let's use the inclusion-exclusion principle to find the number of integers from 1 to 1000 that are divisible by 2, 3, or 5.
+
+**1. Divisible by 2:**
+
+*   Number of integers divisible by 2:  ⌊1000/2⌋ = 500
+
+**2. Divisible by 3:**
+
+*   Number of integers divisible by 3: ⌊1000/3⌋ = 333
+
+**3. Divisible by 5:**
+
+*   Number of integers divisible by 5: ⌊1000/5⌋ = 200
+
+**4. Divisible by 2 and 3 (i.e., divisible by 6):**
+
+*   Number of integers divisible by 6: ⌊1000/6⌋ = 166
+
+**5. Divisible by 2 and"
+gemma-3-27b-it,mlx,metal,int8,math,bouncing_ball,3,3,True,39.53,16.3,645.0,"Here's how to solve this problem using geometric series:
+
+**1. Break down the motion**
+
+The ball's motion consists of two parts:
+
+*   **Downward motion:** The initial drop and subsequent falls after each bounce.
+*   **Upward motion:** The rebounds after each bounce.
+
+**2. Calculate the distances for each part**
+
+*   **Downward Distance:**
+    *   Initial drop: 10 meters
+    *   Subsequent falls: 10 * (3/4) + 10 * (3/4)^2 + 10 * (3/4)^3 + ...
+    This is a geometric series with first term *a* = 1"
+gemma-3-27b-it,mlx,metal,int8,coding,markdown_to_html,3,3,True,82.94,15.8,1307.0,"```python
+import re
+
+def markdown_to_html(text):
+    """"""
+    Converts a subset of Markdown to HTML.
+
+    Handles:
+      1. **bold** → <strong>bold</strong>
+      2. *italic* → <em>italic</em>
+      3. `code` → <code>code</code>
+      4. [link text](url) → <a href=""url"">link text</a>
+
+    Handles edge cases: nested formatting, multiple occurrences per line, and escaped characters.
+    """"""
+
+    # Bold
+    text = re.sub(r'\*\*([^*]+)\*\*', r'<strong>\1</strong>', text)
+
+    # Italic
+    text = re.s"
+gemma-3-27b-it,mlx,metal,int8,coding,data_pipeline,3,3,True,69.24,16.3,1128.0,"```python
+import csv
+import json
+from collections import defaultdict
+
+def process_sales(csv_text):
+    """"""
+    Processes sales data from a CSV string.
+
+    Args:
+        csv_text: A string containing the CSV data.
+
+    Returns:
+        A JSON string representing the processed sales data, grouped by product,
+        sorted by total amount descending.
+    """"""
+
+    reader = csv.DictReader(csv_text.splitlines())
+    filtered_sales = []
+
+    for row in reader:
+        try:
+            amount = float("
+gemma-3-27b-it,mlx,metal,int8,coding,retry_decorator,3,3,True,66.27,16.3,1082.0,"```python
+import time
+from dataclasses import dataclass
+from typing import Optional, Tuple, Type, Any
+
+@dataclass
+class Result:
+    success: bool
+    value: Any
+    attempts: int
+    error: Optional[Exception] = None
+
+
+def retry(max_attempts: int = 3, backoff_base: int = 2, exceptions: Tuple[Type[Exception], ...] = (Exception,)) -> callable:
+    """"""
+    A decorator that retries a function up to max_attempts times with exponential backoff.
+
+    Args:
+        max_attempts: The maximum number of at"
+gemma-3-27b-it,mlx,metal,int8,reasoning,einstein_riddle,3,3,True,68.92,16.3,1123.0,"Okay, let's break down this classic logic puzzle step-by-step. I'll create a table to keep track of our findings.
+
+**Initial Table:**
+
+| House | Nationality | Color | Drink |
+|---|---|---|---|
+| 1 |  |  |  |
+| 2 |  |  |  |
+| 3 |  |  |  |
+| 4 |  |  |  |
+| 5 |  |  |  |
+
+**Step 1: Using Direct Clues**
+
+*   **Clue 6:** The Norwegian lives in house 1.
+*   **Clue 8:** The German lives in house 3.
+
+**Updated Table:**
+
+| House | Nationality | Color | Drink |
+|---|---|---|---|
+| 1 | Norwegian |  |  |
+| 2"
+gemma-3-27b-it,mlx,metal,int8,reasoning,three_urns,3,3,True,27.03,16.6,448.0,"Here's how to solve this problem using the law of total probability:
+
+**1. Define Events**
+
+*   Let R1 be the event that the first ball drawn from Urn A is red.
+*   Let B1 be the event that the first ball drawn from Urn A is blue.
+*   Let R2 be the event that the second ball drawn is red.
+
+**2. Probabilities of the First Draw (Urn A)**
+
+*   P(R1) = (Number of red balls in A) / (Total balls in A) = 3 / 5
+*   P(B1) = (Number of blue balls in A) / (Total balls in A) = 2 / 5
+
+**3. Conditional Probab"
+gemma-3-27b-it,mlx,metal,int8,reasoning,topological_sort,3,3,True,108.56,16.1,1745.0,"Okay, let's find all valid topological orderings for the given dependency graph:
+
+**Dependencies:**
+
+*   A → B
+*   B → C
+*   A → D
+*   D → C
+*   C → E
+
+**Reasoning and Process:**
+
+Topological sorting requires us to process nodes in an order such that all dependencies are satisfied. We'll start by identifying nodes with an in-degree of 0 (nodes with no incoming edges).  These are our starting points.  Then, we'll iteratively remove a node and update the in-degrees of its neighbors.
+
+**Initial In-"
+gemma-3-27b-it,mlx,metal,int8,instruction_following,constrained_factorial,3,3,True,7.07,16.8,119.0,"```python
+def fact_calc(numb: int) -> int:
+    """"""
+    Computes the factorial of a non-negative integer using recursion.
+
+    Args:
+        numb: The non-negative integer for which to calculate the factorial.
+
+    Returns:
+        The factorial of the input integer.
+    """"""
+    if numb == 0:
+        rslt: int = 1
+    else:
+        rslt: int = numb * fact_calc(numb - 1)
+    return rslt
+```"
+gemma-3-27b-it,mlx,metal,int8,instruction_following,library_schema,3,3,True,54.26,16.6,899.0,"```json
+{
+  ""$schema"": ""http://json-schema.org/draft-2020-12/schema"",
+  ""title"": ""Library Management System Schema"",
+  ""description"": ""Schema for managing books, authors, and loans in a library."",
+  ""definitions"": {
+    ""Book"": {
+      ""type"": ""object"",
+      ""properties"": {
+        ""id"": {
+          ""type"": ""integer"",
+          ""description"": ""Unique identifier for the book""
+        },
+        ""title"": {
+          ""type"": ""string"",
+          ""description"": ""Title of the book"",
+          ""minLen"
+gemma-3-27b-it,mlx,metal,int8,instruction_following,adversarial_transform,3,3,True,16.34,16.7,273.0,"Okay, here's the breakdown of the transformations, step-by-step, as requested:
+
+**Step 1: Translate to French**
+
+The English sentence ""The quick brown fox jumps over the lazy dog"" translates to French as:
+
+""Le rapide renard brun saute par-dessus le chien paresseux""
+
+**Step 2: Reverse Each Word**
+
+Now, we reverse each word individually in the French sentence:
+
+""el edipar dranreb nub etaus red-sevrep el neihc zesserp""
+
+**Step 3: Wrap in XML Tags**
+
+Finally, we wrap each reversed word in the specif"
+gemma-3-27b-it,mlx,metal,int8,writing,multi_doc_summary,3,3,True,6.5,17.2,112.0,"Recent advancements are being made across diverse scientific fields, holding both immense promise and presenting ongoing challenges. Quantum computing is developing rapidly, utilizing the principles of quantum mechanics to potentially revolutionize fields like medicine and security, while simultaneously climate change is escalating at an alarming rate, demanding urgent action to avoid catastrophic environmental consequences. Simultaneously, gene therapy, particularly with CRISPR technology, offe"
+gemma-3-27b-it,mlx,metal,int8,writing,structured_meeting_notes,3,3,True,18.78,16.7,313.0,"```yaml
+date: 2024-02-29
+attendees:
+  - Alice (Product Manager)
+  - Bob (Lead Engineer)
+  - Carol (UX Designer)
+  - David (QA Engineer)
+meeting_type: Daily Standup
+```
+
+## Discussion
+
+* **Bob:** Made good progress on the user authentication flow. Ran into a minor issue with the session timeout implementation – needs a bit more testing to ensure it's behaving as expected.
+* **Carol:** Finished the high-fidelity mockups for the new onboarding screens. Shared them with Alice for review. We're getti"
+gemma-3-27b-it,mlx,metal,int8,writing,tone_rewrite,3,3,True,3.56,17.7,63.0,"This AI system learns by repeatedly adjusting its internal settings to improve its performance. After training and fine-tuning, it reached an accuracy of 94.3% when tested on data it hadn’t seen before. A specific adjustment method called ""Adam"" helped it learn more quickly than other approaches.
+
+
+
+"
+gemma-3-27b-it,mlx,metal,int8,writing,contradiction_detection,3,3,True,19.87,16.4,326.0,"Yes, there is a potential contradiction, though it's a matter of *how* the time is described, not a complete factual error.
+
+Here's the breakdown:
+
+* **Note 1** states Armstrong and Aldrin spent **2.5 hours *walking* (during their EVA)** on the Moon.
+* **Note 2** states they were on the lunar surface for **21.5 hours *in total* after landing.**
+
+These aren't directly contradictory, but they *seem* to conflict if interpreted as mutually exclusive times. It's not a contradiction if the 21.5 hours "
+gemma-3-27b-it,mlx,metal,bfloat16,math,modular_arithmetic,0,3,False,46.29,8.7,405.0,"Okay, I can help with that! Here's how to find the remainder when 2<sup>100</sup> is divided by 7, with a step-by-step explanation and pattern recognition:
+
+**1. Find a Pattern**
+
+Let's calculate the first few powers of 2 and their remainders when divided by 7:
+
+*   2<sup>1</sup> = 2.  2 mod 7 = 2
+*   2<sup>2</sup> = 4.  4 mod 7 = 4
+*   2<sup>3</sup> = 8.  8 mod 7 = 1
+*   2<sup>4</sup> = 16. 16 mod 7 = 2
+*   2<sup>5</sup> = 32. 32 mod 7 = 4
+*   2<sup>6</sup> = 64. 64 mod 7 = 1
+
+Notice that the r"
+gemma-3-27b-it,mlx,metal,bfloat16,math,inclusion_exclusion,3,3,True,61.08,8.8,539.0,"Okay, let's use the inclusion-exclusion principle to find the number of integers from 1 to 1000 that are divisible by 2, 3, or 5.
+
+**1. Divisible by 2:**
+
+*   Number of integers divisible by 2:  ⌊1000/2⌋ = 500
+
+**2. Divisible by 3:**
+
+*   Number of integers divisible by 3: ⌊1000/3⌋ = 333
+
+**3. Divisible by 5:**
+
+*   Number of integers divisible by 5: ⌊1000/5⌋ = 200
+
+**4. Divisible by 2 and 3 (i.e., divisible by 6):**
+
+*   Number of integers divisible by 6: ⌊1000/6⌋ = 166
+
+**5. Divisible by 2 and"
+gemma-3-27b-it,mlx,metal,bfloat16,math,bouncing_ball,3,3,True,72.71,8.8,642.0,"Here's how to solve this problem using geometric series:
+
+**1. Break down the motion**
+
+The ball's motion consists of two parts:
+
+*   **Downward motion:** The initial drop and subsequent falls after each bounce.
+*   **Upward motion:** The rebounds after each bounce.
+
+**2. Calculate the distances for each part**
+
+*   **Downward Distance:**
+    *   Initial drop: 10 meters
+    *   Subsequent falls: 10 * (3/4) + 10 * (3/4)^2 + 10 * (3/4)^3 + ...
+    This is a geometric series with first term *a* = 1"
+gemma-3-27b-it,mlx,metal,bfloat16,coding,markdown_to_html,3,3,True,147.74,8.8,1299.0,"```python
+import re
+
+def markdown_to_html(text):
+    """"""
+    Converts a subset of Markdown to HTML.
+
+    Handles:
+      1. **bold** → <strong>bold</strong>
+      2. *italic* → <em>italic</em>
+      3. `code` → <code>code</code>
+      4. [link text](url) → <a href=""url"">link text</a>
+
+    Handles edge cases: nested formatting, multiple occurrences per line, and escaped characters.
+    """"""
+
+    # Bold
+    text = re.sub(r'\*\*([^*]+)\*\*', r'<strong>\1</strong>', text)
+
+    # Italic
+    text = re.s"
+gemma-3-27b-it,mlx,metal,bfloat16,coding,data_pipeline,3,3,True,128.09,8.8,1127.0,"```python
+import csv
+import json
+from collections import defaultdict
+
+def process_sales(csv_text):
+    """"""
+    Processes sales data from a CSV string.
+
+    Args:
+        csv_text: A string containing the CSV data.
+
+    Returns:
+        A JSON string representing the processed sales data, grouped by product,
+        sorted by total amount descending.
+    """"""
+
+    reader = csv.DictReader(csv_text.splitlines())
+    filtered_sales = []
+
+    for row in reader:
+        try:
+            amount = float("
+gemma-3-27b-it,mlx,metal,bfloat16,coding,retry_decorator,3,3,True,121.94,8.8,1074.0,"```python
+import time
+from dataclasses import dataclass
+from typing import Optional, Tuple, Type, Any
+
+@dataclass
+class Result:
+    success: bool
+    value: Any
+    attempts: int
+    error: Optional[Exception] = None
+
+
+def retry(max_attempts: int = 3, backoff_base: int = 2, exceptions: Tuple[Type[Exception], ...] = (Exception,)) -> callable:
+    """"""
+    A decorator that retries a function up to max_attempts times with exponential backoff.
+
+    Args:
+        max_attempts: The maximum number of at"
+gemma-3-27b-it,mlx,metal,bfloat16,reasoning,einstein_riddle,3,3,True,136.89,8.8,1204.0,"Okay, let's break down this classic logic puzzle step-by-step! I'll use a table to keep track of our findings.
+
+**Initial Table:**
+
+| House | Person | Color | Drink |
+|---|---|---|---|
+| 1 |  |  |  |
+| 2 |  |  |  |
+| 3 |  |  |  |
+| 4 |  |  |  |
+| 5 |  |  |  |
+
+**Step 1: Using Direct Placements**
+
+*   **Constraint 6:** The Norwegian lives in house 1.
+*   **Constraint 8:** The German lives in house 3.
+
+**Updated Table:**
+
+| House | Person | Color | Drink |
+|---|---|---|---|
+| 1 | Norwegian |  |  |"
+gemma-3-27b-it,mlx,metal,bfloat16,reasoning,three_urns,3,3,True,50.91,8.8,449.0,"Here's how to solve this problem using the law of total probability:
+
+**1. Define Events**
+
+*   Let R1 be the event that the first ball drawn (from Urn A) is red.
+*   Let B1 be the event that the first ball drawn (from Urn A) is blue.
+*   Let R2 be the event that the second ball drawn is red.
+
+**2. Probabilities of the First Draw**
+
+*   P(R1) = (Number of red balls in Urn A) / (Total balls in Urn A) = 3 / 5
+*   P(B1) = (Number of blue balls in Urn A) / (Total balls in Urn A) = 2 / 5
+
+**3. Condit"
+gemma-3-27b-it,mlx,metal,bfloat16,reasoning,topological_sort,3,3,True,233.36,8.8,2048.0,"Okay, let's find all valid topological orderings for the given dependency graph:
+
+**Dependencies:**
+
+*   A → B
+*   B → C
+*   A → D
+*   D → C
+*   C → E
+
+**Reasoning and Process:**
+
+Topological sorting requires us to process nodes in an order such that all dependencies are satisfied. We'll start by identifying nodes with an in-degree of 0 (nodes with no incoming edges).  These are our starting points.  Then, we'll iteratively remove a node and update the in-degrees of its neighbors.
+
+**Initial In-"
+gemma-3-27b-it,mlx,metal,bfloat16,instruction_following,constrained_factorial,3,3,True,13.42,8.9,119.0,"```python
+def fact_calc(numb: int) -> int:
+    """"""
+    Computes the factorial of a non-negative integer using recursion.
+
+    Args:
+        numb: The non-negative integer for which to calculate the factorial.
+
+    Returns:
+        The factorial of the input integer.
+    """"""
+    if numb == 0:
+        rslt: int = 1
+    else:
+        rslt: int = numb * fact_calc(numb - 1)
+    return rslt
+```"
+gemma-3-27b-it,mlx,metal,bfloat16,instruction_following,library_schema,3,3,True,102.05,8.8,899.0,"```json
+{
+  ""$schema"": ""http://json-schema.org/draft-2020-12/schema"",
+  ""title"": ""Library Management System Schema"",
+  ""description"": ""Schema for managing books, authors, and loans in a library."",
+  ""definitions"": {
+    ""Book"": {
+      ""type"": ""object"",
+      ""properties"": {
+        ""id"": {
+          ""type"": ""integer"",
+          ""description"": ""Unique identifier for the book""
+        },
+        ""title"": {
+          ""type"": ""string"",
+          ""description"": ""Title of the book"",
+          ""minLen"
+gemma-3-27b-it,mlx,metal,bfloat16,instruction_following,adversarial_transform,3,3,True,30.9,8.8,273.0,"Okay, here's the breakdown of the transformations, step-by-step, as requested:
+
+**Step 1: Translate to French**
+
+The English sentence ""The quick brown fox jumps over the lazy dog"" translates to French as:
+
+""Le rapide renard brun saute par-dessus le chien paresseux""
+
+**Step 2: Reverse Each Word**
+
+Now, we reverse each word individually in the French sentence:
+
+""el edipar deranr nub etaus rep-dessus el neihc zesuerep""
+
+**Step 3: Wrap in XML Tags**
+
+Finally, we wrap each reversed word in the specif"
+gemma-3-27b-it,mlx,metal,bfloat16,writing,multi_doc_summary,3,3,True,12.8,8.9,114.0,"Recent advancements are being made across diverse scientific fields, holding both immense promise and presenting ongoing challenges. Quantum computing is developing rapidly, utilizing the principles of quantum mechanics to potentially revolutionize fields like medicine and security, while simultaneously climate change is worsening at an alarming rate, demanding urgent action to avoid catastrophic environmental consequences. Simultaneously, gene therapy, particularly with tools like CRISPR, is sh"
+gemma-3-27b-it,mlx,metal,bfloat16,writing,structured_meeting_notes,3,3,True,35.09,8.8,310.0,"```yaml
+date: 2024-02-29
+attendees:
+  - Alice (Product Manager)
+  - Bob (Lead Engineer)
+  - Carol (UX Designer)
+  - David (QA Engineer)
+meeting_type: Daily Standup
+```
+
+## Discussion
+
+* **Bob:** Made good progress on the user authentication flow. Ran into a minor issue with the session timeout implementation – needs a bit more testing to ensure it's behaving as expected.
+* **Carol:** Finished the high-fidelity mockups for the new onboarding screens. Shared them with Alice for review. We're getti"
+gemma-3-27b-it,mlx,metal,bfloat16,writing,tone_rewrite,3,3,True,7.05,8.9,63.0,"This AI system learns by repeatedly adjusting its internal settings to improve its performance. After training and fine-tuning, it reached an accuracy of 94.3% when tested on data it hadn’t seen before. A specific adjustment method, called Adam, helped it learn more quickly than other approaches.
+
+
+
+"
+gemma-3-27b-it,mlx,metal,bfloat16,writing,contradiction_detection,3,3,True,41.89,8.8,370.0,"Yes, there is a potential contradiction, though it's a matter of *how* the time is described, not a complete factual error.
+
+Here's the breakdown:
+
+* **Note 1** states Armstrong and Aldrin spent ""approximately 2.5 hours *walking* on the lunar surface"" (during their Extravehicular Activity - EVA).
+* **Note 2** states they remained on the lunar surface for ""approximately 21.5 hours *in total* after landing.""
+
+**The Conflict:** The 21.5 hours in Note 2 includes *all* time spent on the surface – not"
+qwen-3-32B-it,mlx,metal,int4,math,modular_arithmetic,0,3,False,91.53,22.5,2048.0,"<think>
+Okay, so I need to find the remainder when 2^100 is divided by 7. Hmm, the hint says to look for a pattern in the powers of 2 modulo 7. Let me start by calculating some small powers of 2 modulo 7 and see if there's a repeating pattern. 
+
+First, let me recall that when we say ""mod 7,"" we're talking about the remainder after division by 7. So, for example, 2^1 is 2, and 2 divided by 7 leaves a remainder of 2. Let me write that down:
+
+2^1 mod 7 = 2
+
+Now, moving on to 2^2. 2 squared is 4, an"
+qwen-3-32B-it,mlx,metal,int4,math,inclusion_exclusion,0,3,False,81.74,25.1,2048.0,"<think>
+Okay, so I need to figure out how many integers from 1 to 1000 are divisible by 2, 3, or 5. The problem says to use the inclusion-exclusion principle and show each term. Alright, let me start by recalling what the inclusion-exclusion principle is. From what I remember, it's a formula used to calculate the number of elements in the union of multiple sets by adding the sizes of the individual sets, subtracting the sizes of all possible intersections of two sets, adding back in the sizes of"
+qwen-3-32B-it,mlx,metal,int4,math,bouncing_ball,0,3,False,80.91,25.3,2048.0,"<think>
+Okay, so there's this problem where a ball is dropped from a height of 10 meters, and every time it bounces, it goes back up to 3/4 of the previous height. The question is asking for the total distance the ball travels before coming to rest, considering infinitely many bounces. Alright, let me try to figure this out step by step.
+
+First, let me visualize the scenario. The ball is initially dropped from 10 meters. So that's the first drop. Then it bounces back up to 3/4 of 10 meters, whic"
+qwen-3-32B-it,mlx,metal,int4,coding,markdown_to_html,0,3,False,80.91,25.3,2048.0,"<think>
+Okay, I need to write a Python function called markdown_to_html that converts some Markdown into HTML. The requirements are handling bold, italic, code, links, and edge cases like nested formatting, multiple occurrences per line, escaped characters. Hmm, let's think about how to approach this.
+
+First, let's consider each of the four elements:
+
+1. **bold** becomes <strong>...</strong>. The markdown for bold is **text** or __text__.
+2. *italic* becomes <em>...</em>. Similarly, *text* or _t"
+qwen-3-32B-it,mlx,metal,int4,coding,data_pipeline,0,3,False,80.92,25.3,2048.0,"<think>
+Okay, I need to write a Python function called process_sales that takes a CSV string and returns a JSON string based on some processing steps. Let me think through each step carefully.
+
+First, the CSV has columns: date, product, region, amount, quantity. The function needs to filter rows where amount is greater than 100, region is either 'North' or 'West', and quantity is at least 5. Then group by product, compute total_amount, average amount, and count for each group. Then sort by total"
+qwen-3-32B-it,mlx,metal,int4,coding,retry_decorator,0,3,False,80.82,25.3,2048.0,"<think>
+Okay, I need to create a Python decorator called retry with specific parameters. Let me think about how to approach this.
+
+First, the decorator needs to take max_attempts, backoff_base, and exceptions. The default values are 3, 2, and (Exception,), respectively. So the decorator function should be defined with these parameters.
+
+The main goal is to retry the decorated function up to max_attempts times. Each retry should have an exponential backoff. The wait time is backoff_base raised to"
+qwen-3-32B-it,mlx,metal,int4,reasoning,einstein_riddle,0,3,False,168.09,24.4,4096.0,"<think>
+Okay, let's try to solve this logic puzzle step by step. There are five houses numbered 1 to 5 from left to right. Each house has a nationality, color, drink, etc., and we need to assign each correctly based on the given constraints. Let me start by listing out all the clues and see how they connect.
+
+First, let me note down all the constraints again:
+
+1. Brit lives in the red house.
+2. Swede drinks milk.
+3. Green house is immediately to the left of the white house.
+4. Dane drinks tea.
+5"
+qwen-3-32B-it,mlx,metal,int4,reasoning,three_urns,0,3,False,70.4,25.9,1824.0,"<think>
+Okay, let me try to figure out this probability problem. So, there are three urns: A, B, and C. Each has different numbers of red and blue balls. The process is: first draw a ball from Urn A. If it's red, then draw from Urn B. If it's blue, then draw from Urn C. We need to find the probability that the second ball drawn is red. Alright, let me break this down step by step.
+
+First, I remember that the Law of Total Probability says that if we have mutually exclusive and exhaustive events, "
+qwen-3-32B-it,mlx,metal,int4,reasoning,topological_sort,0,3,False,80.61,25.4,2048.0,"<think>
+Okay, let's tackle this problem step by step. The user wants all valid topological orderings of the nodes A, B, C, D, E based on the given dependencies. The dependencies are:
+
+A → B  
+B → C  
+A → D  
+D → C  
+C → E  
+
+First, I need to recall what a topological sort is. From what I remember, a topological sort of a directed acyclic graph (DAG) is a linear ordering of its vertices such that for every directed edge UV, vertex U comes before vertex V in the ordering. Since the graph here is a"
+qwen-3-32B-it,mlx,metal,int4,instruction_following,constrained_factorial,3,3,True,71.15,25.5,1813.0,"<think>
+Okay, let's tackle this problem step by step. The user wants a Python function to compute the factorial of a non-negative integer, but there are several constraints. Let me go through each requirement carefully.
+
+First, every variable name must be exactly four characters long. That means I can't use names like 'n' or 'result'; I need to come up with four-letter names. For example, maybe 'n' could be 'numb' and 'result' could be 'rslt'. I need to make sure all variables adhere to this.
+
+S"
+qwen-3-32B-it,mlx,metal,int4,instruction_following,library_schema,0,3,False,81.03,25.3,2048.0,"<think>
+Okay, let's tackle this JSON Schema problem for a library management system. The user wants three entities: Book, Author, Loan. Each needs an 'id' field that's unique. Also, cross-references between them should use the referenced entity's id.
+
+First, I need to structure each entity properly. Starting with Book. The required fields are title, isbn, publication_year, author_id. Plus the id field. The author_id references the Author's id. So Book's schema should have properties for id (stri"
+qwen-3-32B-it,mlx,metal,int4,instruction_following,adversarial_transform,3,3,True,54.22,25.7,1395.0,"<think>
+Okay, let's tackle this step by step. First, I need to translate the original sentence into French. The sentence is ""The quick brown fox jumps over the lazy dog."" Translating each word carefully... ""The"" becomes ""Le"", ""quick brown fox"" would be ""rapide brun renard"", ""jumps over"" is ""saute par-dessus"", and ""the lazy dog"" translates to ""le chien paresseux"". Wait, maybe ""quick brown fox"" should be ""rapide brun renard""? Hmm, actually, ""quick brown fox"" in French is often translated as ""renar"
+qwen-3-32B-it,mlx,metal,int4,writing,multi_doc_summary,3,3,True,14.82,26.2,389.0,"<think>
+Okay, let's tackle this summary request. The user wants a cohesive summary covering all three paragraphs in 3-5 sentences. First, I need to identify the main points of each paragraph.
+
+Paragraph 1 is about quantum computing using superposition and entanglement for faster processing in areas like cryptography and drug discovery. Paragraph 2 discusses climate change accelerating beyond predictions, temperature rise, carbon emissions, and IPCC warnings about tipping points. Paragraph 3 talk"
+qwen-3-32B-it,mlx,metal,int4,writing,structured_meeting_notes,3,3,True,23.39,26.4,618.0,"<think>
+Okay, the user wants me to write meeting notes for a fictional product team standup. Let me start by breaking down the requirements.
+
+First, there's the YAML frontmatter with date, attendees list, and meeting_type. I need to make sure those fields are present and properly formatted. The date should probably be today's date unless specified otherwise. Attendees need to be a list of names, maybe common team names like Alex, Jamie, Samira, and Taylor. Meeting type is standup.
+
+Next, the Dis"
+qwen-3-32B-it,mlx,metal,int4,writing,tone_rewrite,0,3,False,15.53,26.7,414.0,"<think>
+Okay, let's tackle this query. The user wants me to rewrite a technical paragraph for a non-technical audience. The original text talks about deep neural networks using backpropagation and stochastic gradient descent to minimize cross-entropy loss. Then mentions validation accuracy plateauing at 94.3% after tuning learning rate and batch size, with Adam optimizer converging faster than SGD.
+
+First, I need to simplify the terms. Instead of ""deep neural networks utilize backpropagation wit"
+qwen-3-32B-it,mlx,metal,int4,writing,contradiction_detection,3,3,True,37.81,25.5,964.0,"<think>
+Okay, let's tackle this query step by step. The user wants me to compare two notes about the Apollo 11 mission and check for factual contradictions. 
+
+First, I need to recall the actual facts about Apollo 11. From what I remember, Apollo 11 landed on July 20, 1969, which matches both notes. The astronauts were Neil Armstrong and Buzz Aldrin, correct.
+
+Now, looking at Note 1: It says they spent approximately 2.5 hours walking on the lunar surface during their EVA. Note 2 states they remai"
+qwen-3-32B-it,mlx,metal,int8,math,modular_arithmetic,0,3,False,143.28,14.3,2048.0,"<think>
+Okay, so I need to find the remainder when 2^100 is divided by 7. The hint says to look for a pattern in the powers of 2 modulo 7. Let me start by recalling what modulo means. When we say 2^n mod 7, we're looking for the remainder after dividing 2^n by 7. 
+
+First, maybe I should compute the first few powers of 2 modulo 7 to see if there's a repeating pattern. Let me make a table:
+
+Let's start with n=0, just to see the pattern better, even though the problem starts at n=1.
+
+n | 2^n | 2^n "
+qwen-3-32B-it,mlx,metal,int8,math,inclusion_exclusion,0,3,False,137.99,14.8,2048.0,"<think>
+Okay, so I need to figure out how many integers from 1 to 1000 are divisible by 2, 3, or 5. The problem says to use the inclusion-exclusion principle and show each term. Alright, let me recall what the inclusion-exclusion principle is. From what I remember, it's a way to calculate the number of elements in the union of multiple sets by adding the sizes of the individual sets, then subtracting the sizes of all possible intersections, then adding back in the sizes of intersections of three"
+qwen-3-32B-it,mlx,metal,int8,math,bouncing_ball,0,3,False,137.96,14.8,2048.0,"<think>
+Okay, so there's this problem about a ball being dropped from a height of 10 meters, and each time it bounces, it goes back up to 3/4 of the previous height. The question is asking for the total distance the ball travels before coming to rest, considering infinitely many bounces. Alright, let me try to figure this out step by step.
+
+First, let me visualize the situation. The ball is initially dropped from 10 meters. When it hits the ground, it bounces back up to 3/4 of 10 meters, which i"
+qwen-3-32B-it,mlx,metal,int8,coding,markdown_to_html,0,3,False,138.04,14.8,2048.0,"<think>
+Okay, I need to write a Python function called markdown_to_html that converts a subset of Markdown to HTML. The requirements are to handle bold, italic, code, links, and edge cases like nested formatting, multiple occurrences per line, and escaped characters. Let me think about how to approach this.
+
+First, I remember that Markdown uses certain symbols for formatting. For example, **bold** becomes <strong>bold</strong>, *italic* becomes <em>, etc. But there are cases where these symbols "
+qwen-3-32B-it,mlx,metal,int8,coding,data_pipeline,0,3,False,138.04,14.8,2048.0,"<think>
+Okay, I need to write a Python function called process_sales that takes a CSV string and returns a JSON string based on some processing steps. Let me think through each step carefully.
+
+First, the CSV has columns: date, product, region, amount, quantity. The function needs to filter rows where amount is greater than 100, and region is either 'North' or 'West', and quantity is at least 5. Then group by product, compute total_amount, average amount, and count for each group. Then sort the "
+qwen-3-32B-it,mlx,metal,int8,coding,retry_decorator,0,3,False,138.01,14.8,2048.0,"<think>
+Okay, I need to create a Python decorator called retry with specific parameters. Let me think about how to approach this.
+
+First, the decorator should take max_attempts, backoff_base, and exceptions. The default for max_attempts is 3, backoff_base is 2, and exceptions is (Exception,). So the decorator function will need to accept these arguments and return a decorator that can be applied to a function.
+
+The decorated function should retry up to max_attempts times. So for each attempt, if"
+qwen-3-32B-it,mlx,metal,int8,reasoning,einstein_riddle,0,3,False,281.89,14.5,4096.0,"<think>
+Okay, let's try to solve this logic puzzle. There are five houses in a row, numbered 1 to 5 from left to right. Each house has a different nationality, color, and drink. The goal is to assign each person to a house, determine their house color, and what they drink based on the given constraints. Let me start by listing out all the constraints and see how they can be applied step by step.
+
+First, let me note down all the constraints again to make sure I don't miss any:
+
+1. The Brit lives "
+qwen-3-32B-it,mlx,metal,int8,reasoning,three_urns,0,3,False,131.59,14.9,1960.0,"<think>
+Okay, so I need to find the probability that the second ball drawn is red. Let me try to break this down step by step. 
+
+First, there are three urns: A, B, and C. The problem says I draw one ball from Urn A first. Depending on the color of that ball, I then draw from either Urn B or Urn C. If the first ball is red, I draw from Urn B; if it's blue, I draw from Urn C. The question is asking for the probability that the second ball is red. 
+
+Hmm, I remember that the Law of Total Probability"
+qwen-3-32B-it,mlx,metal,int8,reasoning,topological_sort,0,3,False,137.65,14.9,2048.0,"<think>
+Okay, let's try to figure out all the valid topological orderings for this dependency graph. The nodes are A, B, C, D, E. The dependencies are A→B, B→C, A→D, D→C, and C→E. So, I need to list all possible orderings where each node comes after all its dependencies. 
+
+First, I remember that topological sorting is a linear ordering of vertices such that for every directed edge u→v, u comes before v. Since there are multiple paths, there might be multiple valid orderings. Let me start by draw"
+qwen-3-32B-it,mlx,metal,int8,instruction_following,constrained_factorial,0,3,False,137.83,14.9,2048.0,"<think>
+Okay, let's see. I need to write a Python function to compute the factorial of a non-negative integer. The constraints are a bit specific, so I need to make sure I follow all of them.
+
+First, the function must use recursion instead of loops. So, the base case is when the input is 0 or 1, return 1. Otherwise, return n multiplied by factorial(n-1). That part I know.
+
+Now, variable names must be exactly four characters. Let's think: the function parameter, maybe 'n' is too short. Oh, wait, "
+qwen-3-32B-it,mlx,metal,int8,instruction_following,library_schema,0,3,False,137.94,14.8,2048.0,"<think>
+Okay, let's tackle this problem. The user wants a JSON Schema for a library management system with three entities: Book, Author, Loan. Each needs an 'id' field, and cross-references should use the entity's id. Also, required fields and type constraints for every property. Let me start by breaking down each entity.
+
+First, the Book entity. It has title, isbn, publication_year, author_id. Plus the required id. The author_id is a reference to Author's id. So in the schema, author_id should "
+qwen-3-32B-it,mlx,metal,int8,instruction_following,adversarial_transform,3,3,True,87.93,15.0,1322.0,"<think>
+Okay, let's tackle this problem step by step. The user wants me to perform three transformations on the sentence ""The quick brown fox jumps over the lazy dog."" First, translate it to French, then reverse each word individually while keeping the order the same, and finally wrap each reversed word in an XML tag with the original French word as an attribute.
+
+Starting with Step 1: Translating the sentence to French. I need to make sure the translation is accurate. The original sentence is a"
+qwen-3-32B-it,mlx,metal,int8,writing,multi_doc_summary,3,3,True,55.61,15.1,841.0,"<think>
+Okay, let's see. The user wants me to summarize three paragraphs into a single cohesive summary that covers all three topics in 3-5 sentences. The topics are quantum computing, climate change, and gene therapy with CRISPR-Cas9.
+
+First, I need to make sure each paragraph's main points are included. For quantum computing, the key points are superposition, entanglement, qubits, and their applications in cryptography and drug discovery. Then, climate change: accelerated warming, 1.2°C increa"
+qwen-3-32B-it,mlx,metal,int8,writing,structured_meeting_notes,3,3,True,54.53,15.1,826.0,"<think>
+Okay, the user wants me to write meeting notes for a fictional product team standup. Let me start by understanding the requirements. They specified a YAML frontmatter with date, attendees, and meeting_type. Then, sections for Discussion, Decisions, and Action Items. Each section has specific numbers of bullet points, and the Action Items need to be assigned to specific people using @names.
+
+First, I need to create the YAML frontmatter. The date should be today's date, but since it's fict"
+qwen-3-32B-it,mlx,metal,int8,writing,tone_rewrite,3,3,True,30.31,15.2,462.0,"<think>
+Okay, let's see. The user wants me to rewrite a technical paragraph for a non-technical audience. The original is about deep neural networks using backpropagation and stochastic gradient descent to minimize cross-entropy loss. The model's validation accuracy plateaued at 94.3% after tuning learning rate and batch size, with Adam optimizer being faster than SGD.
+
+First, I need to simplify the terms. ""Deep neural networks"" can stay, but maybe explain them as ""complex systems"" or ""advanced "
+qwen-3-32B-it,mlx,metal,int8,writing,contradiction_detection,3,3,True,63.92,15.0,959.0,"<think>
+Okay, let's see. I need to check if there are any factual contradictions between the two notes about the Apollo 11 mission. 
+
+First, I'll go through each note and note down the key points. 
+
+Note 1 says that Apollo 11 landed on the Moon on July 20, 1969. That part I remember is correct. Then it mentions that Neil Armstrong and Buzz Aldrin spent approximately 2.5 hours walking on the lunar surface during their EVA. They collected rock samples and deployed scientific instruments. 
+
+Note 2 "
+qwen-3-32B-it,mlx,metal,bfloat16,math,modular_arithmetic,0,3,False,274.02,7.5,2048.0,"<think>
+Okay, so I need to find the remainder when 2^100 is divided by 7. The hint says to look for a pattern in the powers of 2 modulo 7. Let me start by recalling what modulo means. When we say ""a mod b,"" we're looking for the remainder after dividing a by b. So, for example, 10 mod 3 is 1 because 10 divided by 3 is 3 with a remainder of 1. 
+
+Alright, so I need to compute 2^100 mod 7. Calculating 2^100 directly seems impossible because that's such a huge number. But maybe there's a pattern whe"
+qwen-3-32B-it,mlx,metal,bfloat16,math,inclusion_exclusion,0,3,False,273.85,7.5,2048.0,"<think>
+Okay, so I need to figure out how many integers from 1 to 1000 are divisible by 2, 3, or 5. The problem says to use the inclusion-exclusion principle and show each term. Alright, let me recall what the inclusion-exclusion principle is. From what I remember, it's a way to calculate the number of elements in the union of multiple sets by adding the sizes of the individual sets, then subtracting the sizes of all possible intersections, then adding back in the sizes of intersections of three"
+qwen-3-32B-it,mlx,metal,bfloat16,math,bouncing_ball,0,3,False,273.59,7.5,2048.0,"<think>
+Okay, so there's this problem about a ball being dropped from a height of 10 meters, and each time it bounces, it goes back up to 3/4 of the previous height. The question is asking for the total distance the ball travels before coming to rest, considering infinitely many bounces. Alright, let me try to figure this out step by step.
+
+First, let me visualize the situation. The ball is initially dropped from 10 meters. When it hits the ground, it bounces back up to 3/4 of 10 meters, which i"
+qwen-3-32B-it,mlx,metal,bfloat16,coding,markdown_to_html,0,3,False,273.81,7.5,2048.0,"<think>
+Okay, I need to write a Python function called markdown_to_html that converts a subset of Markdown to HTML. The requirements are to handle bold, italic, code, links, and edge cases like nested formatting, multiple occurrences per line, and escaped characters. Let me think about how to approach this.
+
+First, I remember that Markdown uses certain symbols for formatting. For example, **bold** becomes <strong>bold</strong>, *italic* becomes <em>, etc. But there are edge cases where these sym"
+qwen-3-32B-it,mlx,metal,bfloat16,coding,data_pipeline,0,3,False,273.93,7.5,2048.0,"<think>
+Okay, I need to write a Python function called process_sales that takes a CSV string and returns a JSON string based on some processing steps. Let me think through each step carefully.
+
+First, the CSV has columns: date, product, region, amount, quantity. The function needs to filter rows where amount is greater than 100, and region is either 'North' or 'West', and quantity is at least 5. Then group by product, compute total_amount, average amount, and count for each group. Then sort the "
+qwen-3-32B-it,mlx,metal,bfloat16,coding,retry_decorator,0,3,False,273.82,7.5,2048.0,"<think>
+Okay, I need to create a Python decorator called retry with specific parameters. Let me think about how to approach this.
+
+First, the decorator should take max_attempts, backoff_base, and exceptions. The default for max_attempts is 3, backoff_base is 2, and exceptions is (Exception,). So the decorator function will need to accept these arguments and return the actual decorator that wraps the function.
+
+The wrapped function needs to retry up to max_attempts times. So for each attempt, if "
+qwen-3-32B-it,mlx,metal,bfloat16,reasoning,einstein_riddle,0,3,False,552.02,7.4,4096.0,"<think>
+Okay, let's try to solve this logic puzzle. There are five houses in a row, numbered 1 to 5 from left to right. Each house has a different nationality, color, and drink. The goal is to assign each person to a house, determine their house color, and what they drink based on the given constraints. Let me start by listing out all the constraints again to make sure I don't miss any.
+
+1. The Brit lives in the red house.
+2. The Swede drinks milk.
+3. The green house is immediately to the left o"
+qwen-3-32B-it,mlx,metal,bfloat16,reasoning,three_urns,0,3,False,264.04,7.5,1974.0,"<think>
+Okay, so I need to find the probability that the second ball drawn is red. Let me try to break this down step by step. 
+
+First, there are three urns: A, B, and C. The problem says I draw one ball from Urn A first. Depending on the color of that ball, I then draw from either Urn B or Urn C. If the first ball is red, I draw from Urn B; if it's blue, I draw from Urn C. The question is asking for the probability that the second ball drawn is red. 
+
+Hmm, I remember that the Law of Total Proba"
+qwen-3-32B-it,mlx,metal,bfloat16,reasoning,topological_sort,0,3,False,273.63,7.5,2048.0,"<think>
+Okay, let's try to figure out all the valid topological orderings for this dependency graph. The nodes are A, B, C, D, E. The dependencies are A→B, B→C, A→D, D→C, and C→E. So, first, I need to remember how topological sorting works. From what I recall, topological sort is a linear ordering of vertices such that for every directed edge u→v, u comes before v in the ordering. And it's only possible for a directed acyclic graph (DAG), which this one is, I think.
+
+The question asks for all va"
+qwen-3-32B-it,mlx,metal,bfloat16,instruction_following,constrained_factorial,3,3,True,184.12,7.5,1381.0,"<think>
+Okay, let's see. I need to write a Python function to compute the factorial of a non-negative integer. The constraints are a bit specific, so I need to make sure I follow all of them.
+
+First, the variable names must be exactly four characters. So, I can't use names like 'n' or 'result'; they have to be four letters. Let me think of some: maybe 'numb' for the input number, 'rslt' for the result, and maybe 'base' for the base case? Or perhaps 'case'?
+
+Next, no loops allowed. So recursion i"
+qwen-3-32B-it,mlx,metal,bfloat16,instruction_following,library_schema,0,3,False,273.94,7.5,2048.0,"<think>
+Okay, let's tackle this problem. The user wants a JSON Schema for a library management system with three entities: Book, Author, Loan. Each needs an 'id' field, and cross-references should use the entity's id. Also, required fields and type constraints for every property. Let me start by breaking down each entity.
+
+First, the Book entity. It has title, isbn, publication_year, author_id. Plus the required id. The author_id is a reference to Author's id. So in the schema, author_id should "
+qwen-3-32B-it,mlx,metal,bfloat16,instruction_following,adversarial_transform,3,3,True,131.06,7.5,986.0,"<think>
+Okay, let's tackle this problem step by step. The user wants me to perform three transformations on the sentence ""The quick brown fox jumps over the lazy dog."" First, translate it to French, then reverse each word individually while keeping the order the same, and finally wrap each reversed word in an XML tag with the original French word as an attribute.
+
+Starting with Step 1: Translating the sentence to French. I know that ""The quick brown fox jumps over the lazy dog"" is a pangram, oft"
+qwen-3-32B-it,mlx,metal,bfloat16,writing,multi_doc_summary,3,3,True,77.75,7.5,586.0,"<think>
+Okay, let's see. The user wants me to summarize three paragraphs into a single cohesive summary that covers all three topics in 3-5 sentences. The topics are quantum computing, climate change, and gene therapy with CRISPR-Cas9.
+
+First, I need to make sure each paragraph's main points are included. For quantum computing, the key points are superposition, entanglement, qubits, and their applications in cryptography and drug discovery. Then, climate change is about the 1.2°C increase, accel"
+qwen-3-32B-it,mlx,metal,bfloat16,writing,structured_meeting_notes,3,3,True,85.91,7.6,649.0,"<think>
+Okay, the user wants me to write meeting notes for a fictional product team standup. Let me start by understanding the requirements. They specified a YAML frontmatter with date, attendees, and meeting_type. Then, sections for Discussion, Decisions, and Action Items. Each section has specific bullet points. I need to make sure the formatting is correct in Markdown.
+
+First, the YAML frontmatter. I'll need to pick a date, maybe today's date. Attendees should be a list of names. Let's think "
+qwen-3-32B-it,mlx,metal,bfloat16,writing,tone_rewrite,3,3,True,63.95,7.6,483.0,"<think>
+Okay, let's see. The user wants me to rewrite a technical paragraph for a non-technical audience. The original is about deep neural networks using backpropagation and stochastic gradient descent to minimize cross-entropy loss. The model's validation accuracy plateaued at 94.3% after tuning learning rate and batch size, with Adam optimizer being faster than SGD.
+
+First, I need to simplify the terms. ""Deep neural networks"" can stay, but maybe explain it's a type of AI model. ""Backpropagati"
+qwen-3-32B-it,mlx,metal,bfloat16,writing,contradiction_detection,0,3,False,136.54,7.5,1024.0,"<think>
+Okay, let's see. I need to check if there are any factual contradictions between the two notes about the Apollo 11 mission. 
+
+First, I'll go through each note and note down the key points. 
+
+Note 1 says that Apollo 11 landed on the Moon on July 20, 1969. That part I remember is correct. Then it mentions that Neil Armstrong and Buzz Aldrin spent approximately 2.5 hours walking on the lunar surface during their EVA. They collected rock samples and deployed scientific instruments. 
+
+Note 2 "
+llama-3.3-70b-it,mlx,metal,int4,math,modular_arithmetic,3,3,True,36.46,11.1,395.0,"To find the remainder when 2^100 is divided by 7, we can look for a pattern in powers of 2 mod 7. Here's the step-by-step calculation:
+
+1. Calculate the first few powers of 2 mod 7:
+   - 2^1 ≡ 2 (mod 7)
+   - 2^2 ≡ 4 (mod 7)
+   - 2^3 ≡ 8 ≡ 1 (mod 7) (since 8 = 7 + 1)
+   - 2^4 ≡ 2 * 2^3 ≡ 2 * 1 ≡ 2 (mod 7)
+   - 2^5 ≡ 2 * 2^4 ≡ 2 * 2 ≡ 4 (mod 7)
+   - 2^6 ≡ 2 * 2^5 ≡ 2 * 4 ≡ 8 ≡ 1 (mod 7)
+
+2. We notice a pattern: the powers of 2 mod 7 repeat every 3 powers (2, 4, 1, 2, 4, 1,...).
+
+3. Since 2^3 ≡ 1 ("
+llama-3.3-70b-it,mlx,metal,int4,math,inclusion_exclusion,3,3,True,62.47,11.6,721.0,"## Step 1: Calculate the number of integers divisible by 2
+To find the number of integers from 1 to 1000 that are divisible by 2, we divide 1000 by 2. This gives us 500 integers.
+
+## Step 2: Calculate the number of integers divisible by 3
+To find the number of integers from 1 to 1000 that are divisible by 3, we divide 1000 by 3 and round down to the nearest whole number since we're dealing with whole integers. This gives us 333 integers.
+
+## Step 3: Calculate the number of integers divisible by "
+llama-3.3-70b-it,mlx,metal,int4,math,bouncing_ball,3,3,True,48.0,12.6,605.0,"## Step 1: Determine the initial height and the common ratio for the geometric series.
+The ball is initially dropped from a height of 10 meters. Each time it bounces, it reaches 3/4 of its previous height. Thus, the initial term (a) of the series is 10 meters (for the initial drop), and the common ratio (r) is 3/4, since each bounce reaches 3/4 of the height of the previous bounce.
+
+## Step 2: Calculate the total distance traveled by the ball as it bounces infinitely.
+The total distance traveled"
+llama-3.3-70b-it,mlx,metal,int4,coding,markdown_to_html,3,3,True,47.89,12.7,609.0,"```python
+import re
+
+def markdown_to_html(text):
+    """"""
+    Convert a subset of Markdown to HTML.
+
+    This function handles the following conversions:
+    1. **bold** → <strong>bold</strong>
+    2. *italic* → <em>italic</em>
+    3. `code` → <code>code</code>
+    4. [link text](url) → <a href=""url"">link text</a>
+
+    It also handles edge cases such as nested formatting, multiple occurrences per line, and escaped characters.
+    """"""
+
+    # Convert **bold** to <strong>bold</strong>
+    text = re."
+llama-3.3-70b-it,mlx,metal,int4,coding,data_pipeline,3,3,True,47.48,12.7,605.0,"```python
+import csv
+import json
+from io import StringIO
+
+def process_sales(csv_text):
+    """"""
+    Process sales data from a CSV string.
+
+    Args:
+    csv_text (str): A CSV string with columns: date, product, region, amount, quantity.
+
+    Returns:
+    str: A JSON string containing the processed sales data.
+    """"""
+
+    # Initialize an empty dictionary to store the results
+    result = {}
+
+    # Create a file-like object from the CSV string
+    csv_file = StringIO(csv_text)
+
+    # Create a CSV "
+llama-3.3-70b-it,mlx,metal,int4,coding,retry_decorator,3,3,True,36.97,12.8,474.0,"```python
+import time
+import random
+from dataclasses import dataclass
+from functools import wraps
+
+@dataclass
+class Result:
+    success: bool
+    value: any
+    attempts: int
+    error: Exception = None
+
+def retry(max_attempts=3, backoff_base=2, exceptions=(Exception,)):
+    def decorator(func):
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            attempts = 0
+            delay = 0
+            result = None
+            while attempts < max_attempts:
+                attempts += "
+llama-3.3-70b-it,mlx,metal,int4,reasoning,einstein_riddle,3,3,True,223.5,11.6,2590.0,"To solve this puzzle, let's break it down step by step, using the given constraints to deduce the color of each house and the nationality and drink preference of its occupant.
+
+1. **The Brit lives in the red house.**
+2. **The Swede drinks milk.**
+3. **The green house is immediately to the left of the white house.**
+4. **The Dane drinks tea.**
+5. **The green house owner drinks coffee.**
+6. **The Norwegian lives in house 1.**
+7. **The Norwegian lives next to the blue house.**
+8. **The German lives"
+llama-3.3-70b-it,mlx,metal,int4,reasoning,three_urns,3,3,True,41.24,12.8,528.0,"## Step 1: Define the problem and the probabilities of drawing a red or blue ball from Urn A.
+First, we need to calculate the probability of drawing a red ball and a blue ball from Urn A. Urn A contains 3 red balls and 2 blue balls, making a total of 5 balls. The probability of drawing a red ball from Urn A is 3/5, and the probability of drawing a blue ball from Urn A is 2/5.
+
+## Step 2: Calculate the probability of drawing a red ball from Urn B after drawing a red ball from Urn A.
+If a red ball"
+llama-3.3-70b-it,mlx,metal,int4,reasoning,topological_sort,3,3,True,64.95,12.2,791.0,"To find all valid topological orderings, we'll start by calculating the in-degrees of each node and then iteratively select nodes with an in-degree of 0, reducing the in-degrees of their neighbors as we go.
+
+Initial in-degrees:
+- A: 0
+- B: 1 (due to A → B)
+- C: 2 (due to B → C and D → C)
+- D: 1 (due to A → D)
+- E: 1 (due to C → E)
+
+We start with nodes that have an in-degree of 0, which is A.
+
+1. **Select A**: 
+   - Remove A from the graph.
+   - Reduce in-degrees of A's neighbors: B and D.
+   - N"
+llama-3.3-70b-it,mlx,metal,int4,instruction_following,constrained_factorial,3,3,True,5.66,12.5,71.0,"```python
+def fact(numb: int) -> int:
+    rslt = 1
+    def help(dish: int) -> int:
+        if dish == 0:
+            return rslt
+        else:
+            rslt = numb * dish
+            return help(dish - 1)
+    return help(numb)
+```"
+llama-3.3-70b-it,mlx,metal,int4,instruction_following,library_schema,3,3,True,71.92,11.7,843.0,"Here's a JSON Schema that defines the structure for the library management system:
+
+```json
+{
+  ""$schema"": ""https://json-schema.org/draft/2020-12/schema"",
+  ""definitions"": {
+    ""Book"": {
+      ""type"": ""object"",
+      ""properties"": {
+        ""id"": {""type"": ""integer"", ""description"": ""Unique identifier for the book""},
+        ""title"": {""type"": ""string"", ""description"": ""Title of the book""},
+        ""isbn"": {""type"": ""string"", ""description"": ""ISBN of the book""},
+        ""publication_year"": {""type"": """
+llama-3.3-70b-it,mlx,metal,int4,instruction_following,adversarial_transform,3,3,True,37.35,11.9,446.0,"Let's perform the transformations step by step.
+
+
+## Step 1: Translate the sentence to French.
+
+The translation of ""The quick brown fox jumps over the lazy dog"" in French is:
+""Le rapide brun renard saute par-dessus le paresseux chien""
+
+
+## Step 2: Reverse each word individually.
+
+Reversing each word in the French translation:
+- Le -> el
+- rapide -> edipar
+- brun -> nurb
+- renard -> draner
+- saute -> etuas
+- par-dessus -> ssus-redrap
+- le -> el
+- paresseux -> xuesserap
+- chien -> neihc
+
+The sente"
+llama-3.3-70b-it,mlx,metal,int4,writing,multi_doc_summary,3,3,True,16.12,12.3,198.0,"Here is a summary that covers all three topics:
+
+The world is on the cusp of significant advancements and challenges, from the exponential processing power of quantum computing, which promises to revolutionize fields like cryptography and drug discovery, to the alarming acceleration of climate change, which threatens to trigger irreversible tipping points if global temperatures exceed 1.5°C above pre-industrial levels. Meanwhile, breakthroughs in gene therapy, particularly with CRISPR-Cas9 techn"
+llama-3.3-70b-it,mlx,metal,int4,writing,structured_meeting_notes,3,3,True,20.43,11.8,241.0,"---
+date: 2024-07-26
+attendees:
+  - John Doe
+  - Jane Smith
+  - Bob Johnson
+meeting_type: Product Team Standup
+---
+
+## Introduction
+The product team standup meeting was held to discuss the current status of the project and address any ongoing issues.
+
+## Discussion
+* The team discussed the recent user feedback and how it can be incorporated into the product roadmap.
+* There was a lengthy conversation about the technical debt and how to prioritize it.
+* The team also talked about the upcoming spr"
+llama-3.3-70b-it,mlx,metal,int4,writing,tone_rewrite,0,3,False,6.64,12.5,83.0,"Here's a rewritten version of the paragraph:
+
+To improve the model's performance, a technique called backpropagation is used to adjust its settings. After some fine-tuning, the model was able to correctly predict outcomes 94.3% of the time. This was achieved by experimenting with different settings, such as the speed of learning and the amount of data processed at once, to find the optimal combination."
+llama-3.3-70b-it,mlx,metal,int4,writing,contradiction_detection,3,3,True,25.32,11.5,291.0,"After carefully reading both notes, I have identified a potential contradiction. 
+
+The contradiction lies in the duration of the astronauts' stay on the lunar surface. Note 1 mentions that Neil Armstrong and Buzz Aldrin spent approximately 2.5 hours walking on the lunar surface during their EVA (Extravehicular Activity). This implies that their total time outside the lunar module might be around 2.5 hours. 
+
+However, Note 2 states that Armstrong and Aldrin remained on the lunar surface for appro"
+llama-3.3-70b-it,mlx,metal,int8,math,modular_arithmetic,3,3,True,71.45,6.0,427.0,"To find the remainder when 2^100 is divided by 7, let's start by calculating the remainders of some small powers of 2 when divided by 7. We're looking for a pattern.
+
+1. 2^1 = 2 (mod 7) = 2
+2. 2^2 = 4 (mod 7) = 4
+3. 2^3 = 8 (mod 7) = 1 (because 8 = 7 + 1)
+4. 2^4 = 16 (mod 7) = 2 (because 16 = 14 + 2, and 14 is divisible by 7)
+5. 2^5 = 32 (mod 7) = 4 (because 32 = 28 + 4, and 28 is divisible by 7)
+6. 2^6 = 64 (mod 7) = 1 (because 64 = 63 + 1, and 63 is divisible by 7)
+
+We see a pattern emerging: "
+llama-3.3-70b-it,mlx,metal,int8,math,inclusion_exclusion,3,3,True,106.37,6.5,690.0,"## Step 1: Calculate the number of integers divisible by 2
+To find the number of integers from 1 to 1000 that are divisible by 2, we divide 1000 by 2. This gives us 500 integers.
+
+## Step 2: Calculate the number of integers divisible by 3
+To find the number of integers from 1 to 1000 that are divisible by 3, we divide 1000 by 3 and round down to the nearest whole number since we're dealing with whole integers. This gives us 333 integers.
+
+## Step 3: Calculate the number of integers divisible by "
+llama-3.3-70b-it,mlx,metal,int8,math,bouncing_ball,0,3,False,90.71,6.8,621.0,"## Step 1: Determine the initial height and the common ratio for the geometric series.
+The ball is initially dropped from a height of 10 meters. Each time it bounces, it reaches 3/4 of its previous height. Thus, the common ratio (r) for the geometric series is 3/4.
+
+## Step 2: Calculate the distance traveled for each bounce until the ball comes to rest.
+The distance traveled for each descent and ascent (after the first drop) can be represented as a geometric series. The first term (a) for the se"
+llama-3.3-70b-it,mlx,metal,int8,coding,markdown_to_html,3,3,True,99.92,6.8,680.0,"### Markdown to HTML Conversion Function
+#### Overview
+The following Python function, `markdown_to_html`, converts a subset of Markdown to HTML. It handles bold, italic, code, and links, including edge cases such as nested formatting, multiple occurrences per line, and escaped characters.
+
+#### Code
+```python
+import re
+
+def markdown_to_html(text):
+    """"""
+    Convert a subset of Markdown to HTML.
+
+    Handles:
+    - **bold** → <strong>bold</strong>
+    - *italic* → <em>italic</em>
+    - `code` →"
+llama-3.3-70b-it,mlx,metal,int8,coding,data_pipeline,3,3,True,89.35,6.8,611.0,"```python
+import csv
+import json
+from io import StringIO
+
+def process_sales(csv_text):
+    """"""
+    Process sales data from a CSV string.
+
+    Args:
+    csv_text (str): A CSV string with columns: date, product, region, amount, quantity.
+
+    Returns:
+    str: A JSON string containing the processed sales data.
+    """"""
+
+    # Initialize an empty dictionary to store the results
+    result = {}
+
+    # Create a file-like object from the CSV string
+    csv_io = StringIO(csv_text)
+
+    # Read the CSV da"
+llama-3.3-70b-it,mlx,metal,int8,coding,retry_decorator,3,3,True,97.73,6.8,664.0,"```python
+import random
+import time
+from dataclasses import dataclass
+from functools import wraps
+
+@dataclass
+class Result:
+    """"""Result dataclass to store the outcome of a function call.""""""
+    success: bool
+    value: any
+    attempts: int
+    error: Exception = None
+
+def retry(max_attempts=3, backoff_base=2, exceptions=(Exception,)):
+    """"""
+    Decorator to retry a function up to max_attempts times with exponential backoff.
+
+    Args:
+    - max_attempts (int): Maximum number of attempts to "
+llama-3.3-70b-it,mlx,metal,int8,reasoning,einstein_riddle,3,3,True,359.09,6.5,2344.0,"To solve this puzzle, let's break it down step by step, using the given constraints to deduce the information about each house.
+
+1. **The Brit lives in the red house.**
+2. **The Swede drinks milk.**
+3. **The green house is immediately to the left of the white house.**
+4. **The Dane drinks tea.**
+5. **The green house owner drinks coffee.**
+6. **The Norwegian lives in house 1.**
+7. **The Norwegian lives next to the blue house.**
+8. **The German lives in house 3.**
+
+Let's start with what we know fo"
+llama-3.3-70b-it,mlx,metal,int8,reasoning,three_urns,3,3,True,74.68,7.2,534.0,"## Step 1: Define the problem and the law of total probability
+The law of total probability states that if we have multiple scenarios (in this case, drawing a red or blue ball from Urn A), the total probability of an event (drawing a red ball in the second draw) is the sum of the probabilities of each scenario multiplied by the probability of the event given that scenario. We need to calculate the probability of drawing a red ball in the second draw, given the initial draw from Urn A.
+
+## Step 2"
+llama-3.3-70b-it,mlx,metal,int8,reasoning,topological_sort,3,3,True,191.58,6.6,1268.0,"## Step 1: Initialize the in-degrees of all nodes
+To start solving this problem, we first initialize the in-degrees of all nodes based on the given dependency graph. The in-degree of a node is the number of edges pointing to it. So, we have:
+- A: 0 (no edges pointing to A)
+- B: 1 (one edge from A to B)
+- C: 3 (edges from B, D, and indirectly from A through B and D)
+- D: 1 (one edge from A to D)
+- E: 1 (one edge from C to E)
+
+Corrected in-degrees based on direct edges only:
+- A: 0
+- B: 1
+- C: 2 ("
+llama-3.3-70b-it,mlx,metal,int8,instruction_following,constrained_factorial,3,3,True,10.79,7.2,78.0,"```python
+def fact(numb: int) -> int:
+    """"""Compute the factorial of a non-negative integer.""""""
+    if numb == 0:
+        rslt = 1
+    else:
+        rslt = numb * fact(dval)
+    return rslt
+
+def main() -> None:
+    dval = 5
+    print(fact(dval))
+```"
+llama-3.3-70b-it,mlx,metal,int8,instruction_following,library_schema,3,3,True,148.31,6.8,1002.0,"Here's a JSON Schema that defines the structure for the library management system:
+
+```json
+{
+  ""$schema"": ""https://json-schema.org/draft/2020-12/schema"",
+  ""title"": ""Library Management System"",
+  ""type"": ""object"",
+  ""properties"": {
+    ""books"": {
+      ""type"": ""array"",
+      ""items"": {
+        ""$ref"": ""#/definitions/Book""
+      }
+    },
+    ""authors"": {
+      ""type"": ""array"",
+      ""items"": {
+        ""$ref"": ""#/definitions/Author""
+      }
+    },
+    ""loans"": {
+      ""type"": ""array"",
+      ""item"
+llama-3.3-70b-it,mlx,metal,int8,instruction_following,adversarial_transform,3,3,True,46.09,7.0,324.0,"### Step 1: Translate the sentence to French
+
+The translation of ""The quick brown fox jumps over the lazy dog"" in French is:
+""Le rapide renard brun saute par-dessus le chien paresseux""
+
+### Step 2: Reverse each word individually
+
+Reversing each word in the French translation:
+- Le -> el
+- rapide -> edipar
+- renard -> draner
+- brun -> nurb
+- saute -> etuas
+- par-dessus -> ssus-redrap
+- le -> el
+- chien -> neihc
+- paresseux -> xuesserap
+
+The sentence with each word reversed:
+""el edipar draner nurb"
+llama-3.3-70b-it,mlx,metal,int8,writing,multi_doc_summary,3,3,True,23.38,7.0,164.0,"Here is a summary that covers all three topics: 
+The world is experiencing rapid advancements in technology, including quantum computing, which leverages quantum mechanical phenomena to process information at exponential speeds, and gene therapy, which has entered a new era with CRISPR-Cas9 technology showing promising results for certain diseases. However, these advancements are occurring against a backdrop of accelerating climate change, with global temperatures rising 1.2°C above pre-industri"
+llama-3.3-70b-it,mlx,metal,int8,writing,structured_meeting_notes,3,3,True,36.28,6.9,250.0,"---
+date: 2024-07-26
+attendees:
+  - John Doe
+  - Jane Smith
+  - Bob Johnson
+meeting_type: Product Team Standup
+---
+
+## Introduction
+The product team standup meeting was held to discuss the current project status, address any challenges, and outline the next steps.
+
+## Discussion
+* The team discussed the recent user feedback and how it can be incorporated into the product roadmap.
+* There was a conversation about the technical debt and how to prioritize it alongside new feature development.
+* The"
+llama-3.3-70b-it,mlx,metal,int8,writing,tone_rewrite,0,3,False,11.06,7.1,78.0,"Here's a rewritten version of the paragraph:
+
+To improve the model's performance, a technique called backpropagation is used to adjust its settings. After some fine-tuning, the model was able to correctly identify patterns 94.3% of the time. The model learned to make accurate predictions more quickly when using a specific optimization method called Adam, rather than a more basic approach."
+llama-3.3-70b-it,mlx,metal,int8,writing,contradiction_detection,3,3,True,44.17,6.6,293.0,"After carefully reading both notes, I have identified a potential contradiction. 
+
+Note 1 states that Neil Armstrong and Buzz Aldrin spent approximately 2.5 hours walking on the lunar surface during their EVA (extravehicular activity). However, Note 2 mentions that they remained on the lunar surface for approximately 21.5 hours in total after landing.
+
+The contradiction lies in the fact that Note 1 only accounts for the time spent walking on the lunar surface (2.5 hours), whereas Note 2 refers t"

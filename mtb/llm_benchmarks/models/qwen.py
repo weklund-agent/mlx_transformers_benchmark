@@ -10,6 +10,7 @@ __all__ = [
     "Qwen3_0p6B_it",
     "Qwen3_8B_it",
     "Qwen3_14B_it",
+    "Qwen3_32B_it",
 ]
 
 
@@ -177,6 +178,22 @@ Qwen3_14B_it = ModelSpec(
         },
         "ollama": {
             "int4": "qwen3:14b",
+        },
+    },
+)
+
+
+# --- 128GB+ models (require >=128GB unified memory) ---
+
+Qwen3_32B_it = ModelSpec(
+    name="qwen-3-32B-it",
+    num_params=int(32e9),
+    prompt_formatter=format_qwen_prompt,
+    model_ids={
+        "mlx": {
+            "int4": "mlx-community/Qwen3-32B-4bit",
+            "int8": "mlx-community/Qwen3-32B-8bit",
+            "bfloat16": "mlx-community/Qwen3-32B-bf16",
         },
     },
 )
