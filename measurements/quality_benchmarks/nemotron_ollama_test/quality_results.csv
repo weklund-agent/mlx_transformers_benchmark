@@ -1,0 +1,219 @@
+model,framework,backend,dtype,category,problem,pass_count,num_runs,passed,avg_generation_time_sec,avg_generation_tps,avg_tokens_generated,sample_response
+nemotron-3-nano-4b,ollama,cpu,int4,coding,fizzbuzz,3,3,True,7.56,50.1,379.0,"Here’s a compact, self‑contained Python function that prints the classic FizzBuzz sequence for the numbers 1 through 100:
+
+```python
+def fizzbuzz():
+    """"""Print FizzBuzz for the numbers 1‑100.""""""
+    for n in range(1, 101):
+        if n % 15 == 0:          # divisible by both 3 and 5
+            print(""FizzBuzz"")
+        elif n % 3 == 0:         # divisible by 3 only
+            print(""Fizz"")
+        elif n % 5 == 0:         # divisible by 5 only
+            print(""Buzz"")
+        else:         "
+nemotron-3-nano-4b,ollama,cpu,int4,coding,reverse_string,3,3,True,10.22,50.1,512.0,"Below are **two idiomatic ways** to reverse a string in Python, each with a short explanation and a tiny test harness.
+
+---
+
+## 1️⃣  Using Python’s slice syntax (the “one‑liner”)
+
+```python
+def reverse_slice(s: str) -> str:
+    """"""
+    Return a new string that is the reverse of *s*.
+    The slice syntax s[::-1] walks the sequence backwards.
+    """"""
+    return s[::-1]
+```
+
+**Why it works**
+
+* `s[start:stop:step]` is the general slice construct.  
+* Leaving `start` and `stop` empty means “take the"
+nemotron-3-nano-4b,ollama,cpu,int4,coding,fibonacci,3,3,True,6.86,50.2,344.0,"**Python solution**
+
+```python
+def first_10_fibonacci():
+    """"""Return the first 10 Fibonacci numbers as a list.""""""
+    fib = [0, 1]                     # start with the first two numbers
+    while len(fib) < 10:            # keep adding until we have 10 elements
+        fib.append(fib[-1] + fib[-2])
+    return fib
+
+
+# Show the result
+result = first_10_fibonacci()
+print(result)
+```
+
+**Output**
+
+```
+[0, 1, 1, 2, 3, 5, 8, 13, 21, 34]
+```
+
+The function `first_10_fibonacci` builds the list iterative"
+nemotron-3-nano-4b,ollama,cpu,int4,coding,binary_search,3,3,True,10.23,50.1,512.0,"Here’s a clean, iterative binary‑search implementation that works on a **sorted** list (ascending order).  
+It returns the index of the target value, or `-1` if the value is not present.
+
+```python
+def binary_search(arr: list, target) -> int:
+    """"""
+    Perform binary search on a sorted list.
+
+    Parameters
+    ----------
+    arr : list
+        A list of comparable items sorted in ascending order.
+    target : any
+        The value to search for.
+
+    Returns
+    -------
+    int
+        Index "
+nemotron-3-nano-4b,ollama,cpu,int4,coding,palindrome,3,3,True,10.23,50.0,512.0,"**Solution Overview**
+
+A *palindrome* reads the same forward and backward.  
+To ignore case and any characters that are not letters or digits we:
+
+1. **Normalize** the input – keep only alphanumeric characters and convert them to lower‑case.  
+2. **Compare** the normalized string with its reverse.
+
+If the two strings are identical, the original input is a palindrome under the given rules.
+
+---
+
+## Python implementation
+
+```python
+import re
+
+def is_palindrome(s: str) -> bool:
+    """"""
+    Return T"
+nemotron-3-nano-4b,ollama,cpu,int4,reasoning,train_problem,3,3,True,3.87,50.1,194.0,"The two trains approach each other at a combined speed of  
+
+\[
+60\ \text{km/h} + 40\ \text{km/h} = 100\ \text{km/h}.
+\]
+
+The distance between them is 200 km, so the time until they meet is  
+
+\[
+\text{time} = \frac{\text{distance}}{\text{relative speed}} = \frac{200\ \text{km}}{100\ \text{km/h}} = 2\ \text{hours}.
+\]
+
+**They will meet after 2 hours.**"
+nemotron-3-nano-4b,ollama,cpu,int4,reasoning,coin_probability,0,3,False,5.36,50.0,268.0,"When you flip a fair coin three times, each of the \(2^3 = 8\) possible sequences of heads (H) and tails (T) is equally likely.
+
+**Count the favorable outcomes (≥ 2 heads):**
+
+- Exactly 2 heads: \(\binom{3}{2}=3\) ways (HTH, HTT, THH, etc.).
+- Exactly 3 heads: \(\binom{3}{3}=1\) way (HHH).
+
+Total favorable outcomes = \(3 + 1 = 4\).
+
+**Probability**
+
+\[
+P(\text{≥ 2 heads}) = \frac{\text{favorable outcomes}}{\text{total outcomes}} = \frac{4}{8} = \frac12.
+\]
+
+\[
+\boxed{\frac12}
+\]"
+nemotron-3-nano-4b,ollama,cpu,int4,reasoning,workers_problem,3,3,True,4.06,50.0,203.0,"The amount of work needed to build the wall is the same regardless of how many workers you use.
+
+- With 5 workers it takes 10 days.  
+- Total work = 5 workers × 10 days = **50 worker‑days**.
+
+If you have 10 workers, the time required is:
+
+\[
+\text{Days} = \frac{\text{Total work}}{\text{Workers}} = \frac{50\ \text{worker‑days}}{10\ \text{workers}} = 5\ \text{days}.
+\]
+
+**So it would take 5 days for 10 workers to build the same wall.**"
+nemotron-3-nano-4b,ollama,cpu,int4,reasoning,age_problem,3,3,True,9.18,49.8,457.0,"Let  
+
+- Tom’s current age = \(T\)  
+- Jerry’s current age = \(J\)
+
+The problem gives two relationships:
+
+1. Tom is twice as old as Jerry  
+   \[
+   T = 2J
+   \]
+
+2. In 5 years Tom will be 1.5 times as old as Jerry  
+   \[
+   T + 5 = 1.5\,(J + 5)
+   \]
+
+Substitute \(T = 2J\) into the second equation:
+
+\[
+2J + 5 = 1.5\,(J + 5) = 1.5J + 7.5
+\]
+
+Solve for \(J\):
+
+\[
+2J + 5 = 1.5J + 7.5 \\
+2J - 1.5J = 7.5 - 5 \\
+0.5J = 2.5 \\
+J = 5
+\]
+
+Now find \(T\):
+
+\[
+T = 2J = 2 \times 5 = 10
+\]
+
+**Answer:**  
+-"
+nemotron-3-nano-4b,ollama,cpu,int4,reasoning,sequence_pattern,3,3,True,4.96,50.0,248.0,"The pattern is \(n(n+1)\) for \(n = 1,2,3,\dots\):
+
+- \(1 \times 2 = 2\)  
+- \(2 \times 3 = 6\)  
+- \(3 \times 4 = 12\)  
+- \(4 \times 5 = 20\)  
+- \(5 \times 6 = 30\)  
+
+Continuing with \(n = 6\):
+
+\[
+6 \times 7 = 42
+\]
+
+**The next number is 42.**"
+nemotron-3-nano-4b,ollama,cpu,int4,instruction_following,json_output,3,3,True,1.95,50.3,98.0,"{
+  ""name"": ""Alex"",
+  ""age"": 28,
+  ""hobbies"": [""reading"", ""hiking"", ""coding""]
+}"
+nemotron-3-nano-4b,ollama,cpu,int4,instruction_following,numbered_list,3,3,True,2.46,50.1,123.0,"1. Improves cardiovascular health by strengthening the heart and lungs.  
+2. Helps maintain a healthy weight by increasing calorie burn and boosting metabolism.  
+3. Enhances mental well‑being by reducing stress, anxiety, and symptoms of depression.  
+4. Boosts immune function, making you less prone to infections and illnesses.  
+5. Increases muscle strength and bone density, reducing the risk of osteoporosis and injury."
+nemotron-3-nano-4b,ollama,cpu,int4,instruction_following,word_constraint,3,3,True,3.53,50.1,177.0,"Machine learning is a field of AI where computers learn patterns from data, improve performance over time without explicit programming."
+nemotron-3-nano-4b,ollama,cpu,int4,instruction_following,code_with_comments,3,3,True,15.15,49.7,753.0,"Below is a self‑contained Python function that computes the area of a circle.  
+Every line is accompanied by a comment that explains **what** the code does **and why** it is written that way.
+
+```python
+import math   # 1️⃣  Import the math module so we can use the constant π (pi).
+
+def area_of_circle(radius: float) -> float:
+    """"""
+    Calculate the area of a circle given its radius.
+
+    Parameters
+    ----------
+    radius : float
+        The radius of the circle.  Must be a non‑negative numb"
+nemotron-3-nano-4b,ollama,cpu,int4,instruction_following,direct_answer,3,3,True,0.88,51.0,45.0,Paris
