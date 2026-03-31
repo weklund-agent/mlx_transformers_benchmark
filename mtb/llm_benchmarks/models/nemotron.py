@@ -43,7 +43,7 @@ Nemotron_Nano_9B_v2 = ModelSpec(
     model_ids={
         "mlx": {
             "int4": "mlx-community/NVIDIA-Nemotron-Nano-9B-v2-4bits",
-            "int8": "mlx-community/NVIDIA-Nemotron-Nano-9B-v2-8bit",
+            "int6": "mlx-community/NVIDIA-Nemotron-Nano-9B-v2-6bit",
         },
     },
 )
