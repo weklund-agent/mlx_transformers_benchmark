@@ -1270,3 +1270,159 @@ EXPERT_EVAL_PROBLEMS: List[EvalProblem] = [
         max_tokens=1024,
     ),
 ]
+
+
+# --- TOOL CALLING PROBLEMS ---
+#
+# Tests whether models can produce structured tool/function calls when
+# given tool definitions in the prompt. Models with native tool-calling
+# support (e.g., Qwen with hermes parser) will output structured JSON
+# or XML tool calls. Models without will attempt to describe the call
+# in natural language — that still passes the lenient checks.
+
+
+def _check_tool_call_weather(response: str) -> bool:
+    """Check if response attempts to call a weather tool with a location."""
+    response = _strip_thinking(response)
+    has_tool_ref = _contains_any(response, [
+        "get_weather", "tool_call", "tool_use", "function_call",
+        '"name"', "'name'",
+    ])
+    has_location = _contains_any(response, [
+        "san francisco", "sf", '"location"', "'location'",
+    ])
+    return has_tool_ref and has_location
+
+
+def _check_tool_call_calculator(response: str) -> bool:
+    """Check if response calls a calculator tool with the correct expression."""
+    response = _strip_thinking(response)
+    has_tool_ref = _contains_any(response, [
+        "calculate", "calculator", "tool_call", "tool_use",
+        "function_call", '"name"',
+    ])
+    has_expression = _contains_any(response, [
+        "347 * 823", "347*823", "285481", "expression",
+    ])
+    return has_tool_ref and has_expression
+
+
+def _check_tool_call_multi_step(response: str) -> bool:
+    """Check if response uses multiple tools in sequence."""
+    response = _strip_thinking(response)
+    has_search = _contains_any(response, [
+        "search_web", "web_search", "search",
+    ])
+    has_summarize = _contains_any(response, [
+        "summarize", "summary", "summarize_text",
+    ])
+    return has_search and has_summarize
+
+
+def _check_tool_call_json_args(response: str) -> bool:
+    """Check if response produces valid JSON-like arguments for a tool call."""
+    response = _strip_thinking(response)
+    # Look for JSON-structured tool call arguments
+    has_json_structure = _contains_any(response, [
+        '{"', "{'", '"arguments"', '"input"', '"parameters"',
+    ])
+    has_tool_name = _contains_any(response, [
+        "create_file", "tool_call", "tool_use", "function_call", '"name"',
+    ])
+    has_filename = _contains_any(response, [
+        "hello.py", "hello", "filename", "path",
+    ])
+    return has_json_structure and (has_tool_name or has_filename)
+
+
+def _check_tool_call_selection(response: str) -> bool:
+    """Check if model selects the right tool from multiple options."""
+    response = _strip_thinking(response)
+    # Should pick send_email, not create_calendar_event or set_reminder
+    has_correct_tool = _contains_any(response, ["send_email"])
+    has_recipient = _contains_any(response, [
+        "alice", "recipient", "to",
+    ])
+    return has_correct_tool and has_recipient
+
+
+TOOL_CALLING_PROBLEMS: List[EvalProblem] = [
+    EvalProblem(
+        category="tool_calling",
+        name="simple_tool_call",
+        prompt=(
+            "You have access to the following tool:\n\n"
+            "Tool: get_weather\n"
+            "Description: Get the current weather for a city\n"
+            "Parameters:\n"
+            "  - location (string, required): The city name\n\n"
+            "Use this tool to get the weather in San Francisco. "
+            "Output a tool call with the function name and arguments."
+        ),
+        check=_check_tool_call_weather,
+        max_tokens=256,
+    ),
+    EvalProblem(
+        category="tool_calling",
+        name="calculator_tool",
+        prompt=(
+            "You have access to the following tool:\n\n"
+            "Tool: calculate\n"
+            "Description: Evaluate a mathematical expression\n"
+            "Parameters:\n"
+            "  - expression (string, required): The math expression to evaluate\n\n"
+            "Use this tool to compute 347 * 823. "
+            "Output a tool call with the function name and arguments."
+        ),
+        check=_check_tool_call_calculator,
+        max_tokens=256,
+    ),
+    EvalProblem(
+        category="tool_calling",
+        name="tool_with_json_args",
+        prompt=(
+            "You have access to the following tool:\n\n"
+            "```json\n"
+            '{"type": "function", "function": {"name": "create_file", '
+            '"description": "Create a new file with the given content", '
+            '"parameters": {"type": "object", "properties": {'
+            '"filename": {"type": "string", "description": "Name of the file"}, '
+            '"content": {"type": "string", "description": "File content"}}, '
+            '"required": ["filename", "content"]}}}\n'
+            "```\n\n"
+            "Call this tool to create a file called 'hello.py' containing "
+            "'print(\"Hello, World!\")'. Output the tool call as JSON."
+        ),
+        check=_check_tool_call_json_args,
+        max_tokens=512,
+    ),
+    EvalProblem(
+        category="tool_calling",
+        name="tool_selection",
+        prompt=(
+            "You have access to the following tools:\n\n"
+            "1. send_email(recipient: str, subject: str, body: str) - Send an email\n"
+            "2. create_calendar_event(title: str, date: str, time: str) - Create a calendar event\n"
+            "3. set_reminder(message: str, time: str) - Set a reminder\n\n"
+            "The user says: 'Send Alice a message about the project deadline tomorrow.'\n\n"
+            "Which tool should you call, and with what arguments? "
+            "Output the tool call."
+        ),
+        check=_check_tool_call_selection,
+        max_tokens=512,
+    ),
+    EvalProblem(
+        category="tool_calling",
+        name="multi_step_tool_use",
+        prompt=(
+            "You have access to the following tools:\n\n"
+            "1. search_web(query: str) - Search the web for information\n"
+            "2. summarize_text(text: str) - Summarize a piece of text\n\n"
+            "The user wants a summary of the latest news about AI regulation. "
+            "Plan which tools to call and in what order. "
+            "Output the sequence of tool calls you would make."
+        ),
+        check=_check_tool_call_multi_step,
+        max_tokens=512,
+    ),
+]
