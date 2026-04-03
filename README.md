@@ -16,6 +16,46 @@ Results can be found at
 [https://weklund-agent.github.io/mlx_transformers_benchmark/](https://weklund-agent.github.io/mlx_transformers_benchmark/).
 
 
+## Agentic Coding Model Benchmarks (MLX on Apple Silicon)
+
+> Benchmarked on M4 Pro 64GB | MLX Metal | April 2026
+> Measured at 1024 prompt tokens, 100 generated tokens, 3 iterations
+
+### Generation Speed & Memory (int4)
+
+| Model | Arch | Active Params | Gen tok/s | Prefill tok/s | Memory | Min Hardware |
+|---|---|---|---:|---:|---:|---|
+| Gemma 4 E2B-it | Dense | 2.3B | **120.5** | 4,397 | 3.5 GiB | Any Mac |
+| LFM2-24B-A2B | MoE | 2B | **116.9** | 1,225 | 14.2 GiB | 16GB+ |
+| Qwen3-Coder-30B-A3B | MoE | 3B | **80.2** | 889 | 17.8 GiB | 24GB+ |
+| Gemma 4 E4B-it | Dense | 4.5B | 69.1 | 1,268 | 5.0 GiB | Any Mac |
+| Gemma 4 26B-A4B-it | MoE | 3.8B | 65.3 | 803 | 15.3 GiB | 24GB+ |
+| GLM-4.7-Flash | MoE | 3B | 62.2 | 693 | 17.6 GiB | 24GB+ |
+| Gemma 4 31B-it | Dense | 30.7B | 12.8 | 104 | 18.9 GiB | 24GB+ |
+
+<details>
+<summary>int8 results</summary>
+
+| Model | Arch | Active Params | Gen tok/s | Prefill tok/s | Memory | Min Hardware |
+|---|---|---|---:|---:|---:|---|
+| Gemma 4 E2B-it | Dense | 2.3B | **77.9** | 4,265 | 5.8 GiB | Any Mac |
+| LFM2-24B-A2B | MoE | 2B | **75.4** | 1,186 | 25.9 GiB | 32GB+ |
+| Qwen3-Coder-30B-A3B | MoE | 3B | **54.4** | 865 | 33.1 GiB | 48GB+ |
+| Gemma 4 26B-A4B-it | MoE | 3.8B | 45.5 | 785 | 27.7 GiB | 36GB+ |
+| GLM-4.7-Flash | MoE | 3B | 42.8 | 674 | 32.5 GiB | 48GB+ |
+| Gemma 4 E4B-it | Dense | 4.5B | 42.2 | 1,229 | 8.7 GiB | 16GB+ |
+| Gemma 4 31B-it | Dense | 30.7B | 7.0 | 99 | 34.1 GiB | 48GB+ |
+
+</details>
+
+### Recommendations
+
+- **Tight agentic loops (tool calling, file reads):** LFM2-24B-A2B 4-bit -- 117 tok/s, fits 16GB
+- **Coding tasks (generation, refactoring):** Qwen3-Coder-30B-A3B 4-bit -- purpose-built coder, 80 tok/s
+- **Budget hardware:** Gemma 4 E2B-it 4-bit -- 120 tok/s in 3.5 GiB
+- **Best quality on 64GB:** Qwen3-Coder-30B-A3B 8-bit or Gemma 4 26B-A4B-it 8-bit
+
+
 ## Installation
 
 Before you start, you will need:

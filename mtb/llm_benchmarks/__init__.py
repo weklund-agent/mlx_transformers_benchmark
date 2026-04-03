@@ -15,6 +15,18 @@ from mtb.llm_benchmarks.models.gemma import (
     Gemma3_12B_it_QAT,
     Gemma3_27B_it,
 )
+from mtb.llm_benchmarks.models.glm import (
+    GLM4p7_Flash,
+)
+from mtb.llm_benchmarks.models.lfm import (
+    LFM2_24B_A2B,
+)
+from mtb.llm_benchmarks.models.gemma4 import (
+    Gemma4_E2B_it,
+    Gemma4_E4B_it,
+    Gemma4_26B_A4B_it,
+    Gemma4_31B_it,
+)
 from mtb.llm_benchmarks.models.llama import (
     Llama3p3_70B_it,
 )
@@ -27,6 +39,9 @@ from mtb.llm_benchmarks.models.qwen import (
     Qwen3_8B_it,
     Qwen3_14B_it,
     Qwen3_32B_it,
+)
+from mtb.llm_benchmarks.models.qwen3_coder import (
+    Qwen3_Coder_30B_A3B,
 )
 from mtb.llm_benchmarks.models.qwen35 import (
     Qwen3p5_0p8B,
@@ -68,6 +83,16 @@ MODEL_SPECS = [
     Qwen3p5_27B,
     Qwen3p5_35B_A3B,
     Qwen3p5_27B_Claude_Opus_Distilled,
+    # agentic / coding — MoE models
+    Qwen3_Coder_30B_A3B,
+    GLM4p7_Flash,
+    LFM2_24B_A2B,
+    # gemma 4 — fast / on-device
+    Gemma4_E2B_it,
+    Gemma4_E4B_it,
+    # gemma 4 — reasoning / agentic
+    Gemma4_26B_A4B_it,
+    Gemma4_31B_it,
     # --- 128GB+ only models ---
     Gemma3_27B_it,
     Qwen3_32B_it,
