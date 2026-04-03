@@ -25,8 +25,8 @@ Nemotron3_Nano_4B = ModelSpec(
     thinking=False,
     model_ids={
         "mlx": {
-            "int4": "models/Nemotron-3-Nano-4B-4bit",
-            "int8": "models/Nemotron-3-Nano-4B-8bit",
+            "int4": "mlx-community/Nemotron-3-Nano-4B-4bit",
+            "int8": "mlx-community/Nemotron-3-Nano-4B-8bit",
         },
         "ollama": {
             "int4": "nemotron-3-nano:4b",
@@ -56,8 +56,8 @@ Nemotron_Cascade2_30B_A3B = ModelSpec(
     thinking=True,
     model_ids={
         "mlx": {
-            "int4": "models/Nemotron-Cascade-2-30B-A3B-4bit",
-            "int8": "models/Nemotron-Cascade-2-30B-A3B-8bit",
+            "int4": "mlx-community/Nemotron-Cascade-2-30B-A3B-4bit",
+            "int8": "mlx-community/Nemotron-Cascade-2-30B-A3B-8bit",
         },
     },
 )
