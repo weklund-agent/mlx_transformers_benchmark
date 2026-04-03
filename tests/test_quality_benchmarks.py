@@ -6,6 +6,7 @@ from mtb.quality_benchmarks.eval_problems import (
     EVAL_PROBLEMS,
     EXPERT_EVAL_PROBLEMS,
     HARD_EVAL_PROBLEMS,
+    TOOL_CALLING_PROBLEMS,
     EvalProblem,
     _contains_any,
     _strip_thinking,
@@ -50,6 +51,11 @@ from mtb.quality_benchmarks.eval_problems import (
     _check_structured_meeting_notes,
     _check_tone_rewrite,
     _check_contradiction_detection,
+    _check_tool_call_weather,
+    _check_tool_call_calculator,
+    _check_tool_call_multi_step,
+    _check_tool_call_json_args,
+    _check_tool_call_selection,
 )
 
 
@@ -1292,3 +1298,204 @@ class TestExpertCheckFunctionsWithThinkBlocks:
             "after the team optimized its settings."
         )
         assert _check_tone_rewrite(response) is True
+
+
+# ===========================================================================
+# Tool calling problem structure validation
+# ===========================================================================
+
+class TestToolCallingEvalProblems:
+    def test_tool_calling_problems_count(self):
+        assert len(TOOL_CALLING_PROBLEMS) == 5
+
+    def test_all_category_is_tool_calling(self):
+        for p in TOOL_CALLING_PROBLEMS:
+            assert p.category == "tool_calling", f"{p.name} has category {p.category}"
+
+    def test_all_checks_are_callable(self):
+        for problem in TOOL_CALLING_PROBLEMS:
+            assert callable(problem.check), f"{problem.name} check is not callable"
+
+    def test_unique_names(self):
+        names = [p.name for p in TOOL_CALLING_PROBLEMS]
+        assert len(names) == len(set(names))
+
+    def test_no_name_overlap_with_other_tiers(self):
+        easy_names = {p.name for p in EVAL_PROBLEMS}
+        hard_names = {p.name for p in HARD_EVAL_PROBLEMS}
+        expert_names = {p.name for p in EXPERT_EVAL_PROBLEMS}
+        tool_names = {p.name for p in TOOL_CALLING_PROBLEMS}
+        overlap = tool_names & (easy_names | hard_names | expert_names)
+        assert len(overlap) == 0, f"Overlapping names: {overlap}"
+
+
+# ===========================================================================
+# Tool calling check functions - passing cases
+# ===========================================================================
+
+class TestToolCallingCheckFunctionsPass:
+    def test_weather_structured_json(self):
+        response = (
+            '{"name": "get_weather", "arguments": {"location": "San Francisco"}}'
+        )
+        assert _check_tool_call_weather(response) is True
+
+    def test_weather_natural_language(self):
+        response = (
+            "I'll call the get_weather function with the location "
+            "parameter set to \"San Francisco\"."
+        )
+        assert _check_tool_call_weather(response) is True
+
+    def test_weather_tool_use_format(self):
+        response = (
+            "<tool_use>\n"
+            "get_weather(location=\"San Francisco\")\n"
+            "</tool_use>"
+        )
+        assert _check_tool_call_weather(response) is True
+
+    def test_calculator_structured_json(self):
+        response = (
+            '{"name": "calculate", "arguments": {"expression": "347 * 823"}}'
+        )
+        assert _check_tool_call_calculator(response) is True
+
+    def test_calculator_with_result(self):
+        response = (
+            "function_call: calculate(expression=\"347*823\")\n"
+            "Result: 285481"
+        )
+        assert _check_tool_call_calculator(response) is True
+
+    def test_multi_step_plan(self):
+        response = (
+            "Step 1: Call search_web(query=\"AI regulation news 2026\")\n"
+            "Step 2: Call summarize_text(text=<results from step 1>)"
+        )
+        assert _check_tool_call_multi_step(response) is True
+
+    def test_multi_step_with_summary(self):
+        response = (
+            "I would first use search_web to find articles, then "
+            "use summarize to create a summary of the findings."
+        )
+        assert _check_tool_call_multi_step(response) is True
+
+    def test_json_args_structured(self):
+        response = (
+            '{"name": "create_file", "arguments": '
+            '{"filename": "hello.py", "content": "print(\\"Hello, World!\\")"}}'
+        )
+        assert _check_tool_call_json_args(response) is True
+
+    def test_json_args_tool_use_block(self):
+        response = (
+            "tool_call:\n"
+            '{"filename": "hello.py", "content": "print(\'Hello, World!\')"}'
+        )
+        assert _check_tool_call_json_args(response) is True
+
+    def test_selection_picks_send_email(self):
+        response = (
+            "I should use send_email because the user wants to send a message.\n"
+            "send_email(recipient=\"alice\", subject=\"Project Deadline\", "
+            "body=\"The project deadline is tomorrow.\")"
+        )
+        assert _check_tool_call_selection(response) is True
+
+    def test_selection_json_format(self):
+        response = (
+            '{"name": "send_email", "arguments": '
+            '{"recipient": "Alice", "subject": "Deadline", "body": "Tomorrow"}}'
+        )
+        assert _check_tool_call_selection(response) is True
+
+
+# ===========================================================================
+# Tool calling check functions - failing cases
+# ===========================================================================
+
+class TestToolCallingCheckFunctionsFail:
+    def test_weather_no_location(self):
+        response = "I'll call get_weather to check the conditions."
+        assert _check_tool_call_weather(response) is False
+
+    def test_weather_no_tool_ref(self):
+        response = "The weather in San Francisco is sunny and 72°F."
+        assert _check_tool_call_weather(response) is False
+
+    def test_calculator_wrong_expression(self):
+        response = "function_call: calculate(input=\"2 + 2\")"
+        assert _check_tool_call_calculator(response) is False
+
+    def test_calculator_no_tool_ref(self):
+        response = "347 * 823 = 285481"
+        assert _check_tool_call_calculator(response) is False
+
+    def test_multi_step_only_search(self):
+        response = "I would call search_web(query=\"AI regulation\") to find articles."
+        assert _check_tool_call_multi_step(response) is False
+
+    def test_multi_step_only_summarize(self):
+        response = "I would use summarize_text to create a summary."
+        assert _check_tool_call_multi_step(response) is False
+
+    def test_json_args_no_json_structure(self):
+        response = "Call create_file with filename hello.py and content print hello."
+        assert _check_tool_call_json_args(response) is False
+
+    def test_selection_picks_wrong_tool(self):
+        response = (
+            "I should use create_calendar_event to schedule a meeting "
+            "with Alice about the deadline."
+        )
+        assert _check_tool_call_selection(response) is False
+
+    def test_selection_picks_reminder(self):
+        response = "set_reminder(message=\"Tell Alice about deadline\", time=\"tomorrow\")"
+        assert _check_tool_call_selection(response) is False
+
+
+# ===========================================================================
+# Tool calling check functions - with think blocks
+# ===========================================================================
+
+class TestToolCallingCheckFunctionsWithThinkBlocks:
+    def test_weather_with_think_block(self):
+        response = (
+            "<think>The user wants weather in SF. I should call get_weather.</think>\n"
+            '{"name": "get_weather", "arguments": {"location": "San Francisco"}}'
+        )
+        assert _check_tool_call_weather(response) is True
+
+    def test_calculator_with_think_block(self):
+        response = (
+            "<think>I need to compute 347 * 823. Let me use the calculator.</think>\n"
+            'function_call: calculate(expression="347 * 823")'
+        )
+        assert _check_tool_call_calculator(response) is True
+
+    def test_selection_with_think_block(self):
+        response = (
+            "<think>The user wants to send a message to Alice. "
+            "send_email is the right tool, not calendar or reminder.</think>\n"
+            'send_email(recipient="Alice", subject="Deadline", body="Tomorrow")'
+        )
+        assert _check_tool_call_selection(response) is True
+
+    def test_json_args_with_think_block(self):
+        response = (
+            "<think>I need to create hello.py with a print statement.</think>\n"
+            '{"name": "create_file", "arguments": '
+            '{"filename": "hello.py", "content": "print(\'Hello, World!\')"}}'
+        )
+        assert _check_tool_call_json_args(response) is True
+
+    def test_multi_step_with_think_block(self):
+        response = (
+            "<think>First search for AI regulation news, then summarize.</think>\n"
+            "1. search_web(query=\"AI regulation 2026\")\n"
+            "2. summarize_text(text=search_results)"
+        )
+        assert _check_tool_call_multi_step(response) is True

@@ -19,7 +19,7 @@ import mtb
 import mtb.llm_benchmarks
 from mtb.file_io import create_benchmark_output_dir
 from mtb.llm_benchmarks.models.base import ModelSpec
-from mtb.quality_benchmarks import EVAL_PROBLEMS, EXPERT_EVAL_PROBLEMS, HARD_EVAL_PROBLEMS, run_quality_benchmark
+from mtb.quality_benchmarks import EVAL_PROBLEMS, EXPERT_EVAL_PROBLEMS, HARD_EVAL_PROBLEMS, TOOL_CALLING_PROBLEMS, run_quality_benchmark
 from mtb.select_benchmarks import filter_llm_benchmarks
 
 DEFAULT_OUTPUT_ROOT = mtb.REPO_ROOT / "measurements" / "quality_benchmarks"
@@ -61,10 +61,12 @@ def main(
         problems = HARD_EVAL_PROBLEMS
     elif difficulty == "expert":
         problems = EXPERT_EVAL_PROBLEMS
+    elif difficulty == "tool_calling":
+        problems = TOOL_CALLING_PROBLEMS
     elif difficulty == "all":
-        problems = EVAL_PROBLEMS + HARD_EVAL_PROBLEMS + EXPERT_EVAL_PROBLEMS
+        problems = EVAL_PROBLEMS + HARD_EVAL_PROBLEMS + EXPERT_EVAL_PROBLEMS + TOOL_CALLING_PROBLEMS
     else:
-        raise ValueError(f"Unknown difficulty '{difficulty}', must be 'easy', 'hard', 'expert', or 'all'")
+        raise ValueError(f"Unknown difficulty '{difficulty}', must be 'easy', 'hard', 'expert', 'tool_calling', or 'all'")
 
     model_specs: List[ModelSpec] = list(mtb.llm_benchmarks.MODEL_SPECS)
 

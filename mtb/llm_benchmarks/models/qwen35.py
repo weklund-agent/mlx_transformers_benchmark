@@ -35,8 +35,8 @@ Qwen3p5_0p8B = ModelSpec(
     thinking=True,
     model_ids={
         "mlx": {
-            "int4": "models/Qwen3.5-0.8B-4bit",
-            "int8": "models/Qwen3.5-0.8B-8bit",
+            "int4": "mlx-community/Qwen3.5-0.8B-4bit",
+            "int8": "mlx-community/Qwen3.5-0.8B-8bit",
         },
     },
 )
@@ -49,9 +49,9 @@ Qwen3p5_2B = ModelSpec(
     thinking=True,
     model_ids={
         "mlx": {
-            "int4": "models/Qwen3.5-2B-4bit",
-            "int8": "models/Qwen3.5-2B-8bit",
-            "bfloat16": "models/Qwen3.5-2B-bf16",
+            "int4": "mlx-community/Qwen3.5-2B-4bit",
+            "int8": "mlx-community/Qwen3.5-2B-8bit",
+            "bfloat16": "mlx-community/Qwen3.5-2B-bf16",
         },
     },
 )
@@ -64,9 +64,9 @@ Qwen3p5_4B = ModelSpec(
     thinking=True,
     model_ids={
         "mlx": {
-            "int4": "models/Qwen3.5-4B-4bit",
-            "int8": "models/Qwen3.5-4B-8bit",
-            "bfloat16": "models/Qwen3.5-4B-bf16",
+            "int4": "mlx-community/Qwen3.5-4B-4bit",
+            "int8": "mlx-community/Qwen3.5-4B-8bit",
+            "bfloat16": "mlx-community/Qwen3.5-4B-bf16",
         },
     },
 )
@@ -79,9 +79,9 @@ Qwen3p5_9B = ModelSpec(
     thinking=True,
     model_ids={
         "mlx": {
-            "int4": "models/Qwen3.5-9B-4bit",
-            "int8": "models/Qwen3.5-9B-8bit",
-            "bfloat16": "models/Qwen3.5-9B-bf16",
+            "int4": "mlx-community/Qwen3.5-9B-4bit",
+            "int8": "mlx-community/Qwen3.5-9B-8bit",
+            "bfloat16": "mlx-community/Qwen3.5-9B-bf16",
         },
     },
 )
@@ -94,9 +94,9 @@ Qwen3p5_27B = ModelSpec(
     thinking=True,
     model_ids={
         "mlx": {
-            "int4": "models/Qwen3.5-27B-4bit",
-            "int8": "models/Qwen3.5-27B-8bit",
-            "bfloat16": "models/Qwen3.5-27B-bf16",
+            "int4": "mlx-community/Qwen3.5-27B-4bit",
+            "int8": "mlx-community/Qwen3.5-27B-8bit",
+            "bfloat16": "mlx-community/Qwen3.5-27B-bf16",
         },
     },
 )
@@ -109,8 +109,8 @@ Qwen3p5_35B_A3B = ModelSpec(
     thinking=True,
     model_ids={
         "mlx": {
-            "int4": "models/Qwen3.5-35B-A3B-4bit",
-            "int8": "models/Qwen3.5-35B-A3B-8bit",
+            "int4": "mlx-community/Qwen3.5-35B-A3B-4bit",
+            "int8": "mlx-community/Qwen3.5-35B-A3B-8bit",
         },
     },
 )
@@ -123,8 +123,8 @@ Qwen3p5_27B_Claude_Opus_Distilled = ModelSpec(
     thinking=True,
     model_ids={
         "mlx": {
-            "int4": "models/Qwen3.5-27B-Claude-Opus-Distilled-4bit",
-            "int8": "models/Qwen3.5-27B-Claude-Opus-Distilled-8bit",
+            "int4": "mlx-community/Qwen3.5-27B-Claude-Opus-Distilled-4bit",
+            "int8": "mlx-community/Qwen3.5-27B-Claude-Opus-Distilled-8bit",
         },
     },
 )

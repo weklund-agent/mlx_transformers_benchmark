@@ -67,6 +67,43 @@ To get started:
    [https://aukejw.github.io/mlx_transformers_benchmark/](https://aukejw.github.io/mlx_transformers_benchmark/).
 
 
+## Relationship to mlx-stack
+
+This benchmark suite is the **data source** for [mlx-stack](https://github.com/weklund/mlx-stack), a tool that runs multiple LLMs simultaneously on Apple Silicon behind a single OpenAI-compatible endpoint.
+
+### How the two repos work together
+
+```
+mlx_transformers_benchmark          mlx-stack
+┌─────────────────────────┐         ┌──────────────────────────┐
+│  Speed benchmarks       │         │  Model catalog           │
+│  (generation_tps,       │  JSON   │  (catalog/*.yaml)        │
+│   prompt_tps, memory)   │───────▶ │                          │
+│                         │         │  Recommendation engine   │
+│  Quality benchmarks     │         │  (scoring.py)            │
+│  (pass rates by         │         │                          │
+│   category + difficulty)│         │  Hardware-aware model    │
+│                         │         │  selection for init/setup │
+└─────────────────────────┘         └──────────────────────────┘
+```
+
+1. **Benchmark** models here using `make run-llm-benchmarks` and `make run-quality-benchmarks`
+2. **Export** aggregated results with `python scripts/export_for_mlx_stack.py`
+3. **Import** into mlx-stack's catalog, where the recommendation engine uses generation speed, memory usage, and quality pass rates to decide which models to assign to each tier
+
+### Export script
+
+```bash
+# Generate benchmark_data.json from all measurements
+python scripts/export_for_mlx_stack.py
+
+# Generate and copy directly into the mlx-stack data directory
+python scripts/export_for_mlx_stack.py --copy-to ../mlx-stack/src/mlx_stack/data/
+```
+
+The export produces a single JSON keyed by HuggingFace repo ID (e.g. `mlx-community/Qwen3.5-9B-4bit`) containing speed metrics per hardware profile and quality pass rates per category.
+
+
 ## Contributing
 
 If you have an Apple device, additional measurements are always welcome! 
