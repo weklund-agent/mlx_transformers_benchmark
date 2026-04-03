@@ -137,6 +137,16 @@ show-layer:
 	uv run python scripts/visualize_layer_benchmarks.py --show_all_measurements
 	open visualizations/index.html
 
+## Export
+
+# Export benchmark data as JSON for mlx-stack
+export:
+	uv run python scripts/export_for_mlx_stack.py
+
+# Export and copy into a local mlx-stack checkout
+export-to-mlx-stack:
+	uv run python scripts/export_for_mlx_stack.py --copy-to ../mlx-stack/src/mlx_stack/data/
+
 ## Testing
 
 # Run unit tests with coverage
