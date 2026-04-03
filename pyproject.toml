@@ -4,6 +4,7 @@ version = "0.1.0"
 readme = "README.md"
 description = "Benchmarking neural network layers on MLX+Metal vs torch+MPS"
 authors = [
+    {name="Wes Eklund", email="s.wes35@gmail.com"},
     {name="Auke Wiggers", email="wiggers.auke@gmail.com"},
 ]
 requires-python = "==3.11.11"

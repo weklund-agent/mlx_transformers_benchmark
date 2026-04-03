@@ -1,6 +1,6 @@
 # Benchmarking transformer operators on Apple silicon
 
-[![tests-Mac](https://github.com/aukejw/mlx_transformers_benchmark/actions/workflows/tests-mac.yaml/badge.svg)](https://github.com/aukejw/mlx_transformers_benchmark/actions/workflows/tests-mac.yaml)
+[![tests-Mac](https://github.com/weklund-agent/mlx_transformers_benchmark/actions/workflows/tests-mac.yaml/badge.svg)](https://github.com/weklund-agent/mlx_transformers_benchmark/actions/workflows/tests-mac.yaml)
 
 Let's say you're interested in performing LLM inference on Apple hardware. You care about speed, but don't know which model or framework to pick.
 
@@ -13,13 +13,13 @@ Do you:
 
 We aim to help you make this choice, by benchmarking inference for a few common models and operators. 
 Results can be found at 
-[https://aukejw.github.io/mlx_transformers_benchmark/](https://aukejw.github.io/mlx_transformers_benchmark/).
+[https://weklund-agent.github.io/mlx_transformers_benchmark/](https://weklund-agent.github.io/mlx_transformers_benchmark/).
 
 
 ## Installation
 
 Before you start, you will need:
- - [`uv`](https://github.com/pyenv/pyenv) to manage dependencies, available as [homebrew](https://formulae.brew.sh/formula/uv)
+ - [`uv`](https://github.com/astral-sh/uv) to manage dependencies, available as [homebrew](https://formulae.brew.sh/formula/uv)
 
  To (optionally) benchmark `Metal+llama.cpp` models in common interfaces, you may also need:
  - [`LM Studio`](https://lmstudio.ai/)
@@ -29,7 +29,7 @@ To get started:
 
 1. Clone the repo:
    ```
-   git clone git@github.com:aukejw/mlx_transformers_benchmark.git
+   git clone git@github.com:weklund-agent/mlx_transformers_benchmark.git
    cd mlx_transformers_benchmark
    ```
 
@@ -61,10 +61,10 @@ To get started:
 
 4. To create a HTML report of all available measurements and open the index page:
    ```
-   make show-llm-benchmarks
+   make show-llm
    ```
    This should open a page similar to 
-   [https://aukejw.github.io/mlx_transformers_benchmark/](https://aukejw.github.io/mlx_transformers_benchmark/).
+   [https://weklund-agent.github.io/mlx_transformers_benchmark/](https://weklund-agent.github.io/mlx_transformers_benchmark/).
 
 
 ## Relationship to mlx-stack
@@ -108,10 +108,10 @@ The export produces a single JSON keyed by HuggingFace repo ID (e.g. `mlx-commun
 
 If you have an Apple device, additional measurements are always welcome! 
 The easiest way to contribute is to 
-[fork the repo](https://github.com/aukejw/mlx_transformers_benchmark/fork), 
+[fork the repo](https://github.com/weklund-agent/mlx_transformers_benchmark/fork), 
 and run benchmarks for common LLMs and/or operators. 
 
-See [CONTRIBUTING.md](https://github.com/aukejw/mlx_transformers_benchmark/blob/main/contributing.md) for more info.
+See [CONTRIBUTING.md](./CONTRIBUTING.md) for more info.
 
 
 ### On reproducibility

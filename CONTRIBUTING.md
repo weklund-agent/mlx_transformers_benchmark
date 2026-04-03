@@ -3,15 +3,13 @@
 There are two easy ways to contribute: adding a new measurement, or adding a new benchmark task.
 
 You will need:
- - [`pyenv`](https://github.com/pyenv/pyenv) to manage the python version
- - [`poetry`](https://python-poetry.org/) for dependency management
+ - [`uv`](https://github.com/astral-sh/uv) to manage dependencies, available as [homebrew](https://formulae.brew.sh/formula/uv)
 
-First, [fork the repo](https://github.com/aukejw/mlx_transformers_benchmark/fork) and set up a local `venv` using `poetry`:
+First, [fork the repo](https://github.com/weklund-agent/mlx_transformers_benchmark/fork) and set up a local environment using `uv`:
 ```
 git clone git@github.com:<your-username>/mlx_transformers_benchmark.git
 cd mlx_transformers_benchmark
-make create-venv
-source .venv/bin/activate
+make setup
 ```
 
 You can check if installation was successful by running the tests:
@@ -33,7 +31,7 @@ make test
 
 2. Check that the new measurements look sensible by visualizing results:
    ```
-   make show-llm-benchmarks
+   make show-llm
    ```
    This will open a browser window and show individual measurements. Do check for outliers!
 
@@ -84,10 +82,10 @@ class Gemma3_1B_it_Benchmark(GemmaBenchmark):
 ```
 
 For more examples, see 
-[the gemma benchmark](https://github.com/aukejw/mlx_transformers_benchmark/blob/main/mtb/llm_benchmarks/gemma.py).
+[the gemma benchmark](https://github.com/weklund-agent/mlx_transformers_benchmark/blob/main/mtb/llm_benchmarks/gemma.py).
 
 #### Layer benchmarks
 
 Layer benchmarks will run operators in torch and mlx, and therefore require you to define 
 `setup_torch`, `setup_mlx` and `run_torch`, `run_mlx` functions. For an example, see 
-[the mhsa benchmark](https://github.com/aukejw/mlx_transformers_benchmark/blob/main/mtb/layer_benchmarks/mhsa.py).
+[the mhsa benchmark](https://github.com/weklund-agent/mlx_transformers_benchmark/blob/main/mtb/layer_benchmarks/mhsa.py).
