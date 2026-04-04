@@ -1,0 +1,71 @@
+{
+  "milestone": "contamination-integration",
+  "round": 1,
+  "status": "fail",
+  "validatorsRun": {
+    "test": {
+      "passed": true,
+      "command": "uv run pytest tests/ --ignore=tests/quality_benchmarks --ignore=tests/llm_benchmarks --ignore=tests/system -v --tb=short -q",
+      "exitCode": 0
+    },
+    "typecheck": {
+      "passed": true,
+      "command": "uv run python -c \"print('No typecheck configured')\"",
+      "exitCode": 0
+    },
+    "lint": {
+      "passed": true,
+      "command": "uv run black --check mtb/ tests/ scripts/",
+      "exitCode": 0
+    }
+  },
+  "reviewsSummary": {
+    "total": 2,
+    "passed": 1,
+    "failed": 1,
+    "failedFeatures": [
+      "integration-tests-real-model"
+    ]
+  },
+  "blockingIssues": [
+    {
+      "featureId": "integration-tests-real-model",
+      "severity": "blocking",
+      "description": "tests/integration/test_full_pipeline.py:234 allows parser verification to be bypassed via `assert parsed is not None or has_tool_content`, so VAL-INTEG-003 can pass without proving parser extraction."
+    },
+    {
+      "featureId": "integration-tests-real-model",
+      "severity": "blocking",
+      "description": "tests/integration/test_full_pipeline.py:384 checks only that teardown is callable and does not assert that teardown was invoked, so VAL-INTEG-009 is not actually verified."
+    }
+  ],
+  "appliedUpdates": [],
+  "suggestedGuidanceUpdates": [
+    {
+      "target": ".factory/skills/python-worker/SKILL.md",
+      "suggestion": "Adjust runner-change smoke-test guidance so `--help` is optional when known Fire/IPython incompatibility is present; provide a deterministic fallback check path.",
+      "evidence": "Review for contamination-variant-system flagged mismatch between skill Step 7 (`--help` smoke test) and mission AGENTS known issue that `fire.Fire --help` can crash.",
+      "isSystemic": true
+    },
+    {
+      "target": ".factory/skills/python-worker/SKILL.md",
+      "suggestion": "Clarify TDD expectations for real-model integration tests: allow discovery-first iterations with explicit later tightening of assertions, while preserving strict verification gates.",
+      "evidence": "Review for integration-tests-real-model showed strict test-first flow was impractical due real-model output variance and led to weakened assertions.",
+      "isSystemic": false
+    },
+    {
+      "target": ".factory/library/architecture.md",
+      "suggestion": "Update ProblemSource documentation to reflect current implementation location and shape (ABC in `mtb/quality_benchmarks/scoring.py`, not Protocol in `problem_source.py`).",
+      "evidence": "Review for contamination-variant-system found `.factory/library/architecture.md` out of sync with implementation introduced in commit 73207123ea14e51cd2af12290e833109b6a19241.",
+      "isSystemic": false
+    },
+    {
+      "target": ".factory/library/",
+      "suggestion": "Add model-behavior note documenting Gemma 4 E2B-it tool-call key variance (`tool_name`/`params`) observed in integration testing to reduce repeated re-discovery.",
+      "evidence": "Review for integration-tests-real-model found fallback logic and handoff notes tied to non-standard tool-call key names from real-model outputs.",
+      "isSystemic": false
+    }
+  ],
+  "rejectedObservations": [],
+  "previousRound": null
+}

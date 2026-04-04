@@ -1,0 +1,39 @@
+{
+  "featureId": "integration-tests-real-model",
+  "reviewedAt": "2026-04-04T21:14:15Z",
+  "commitId": "725a937",
+  "transcriptSkeletonReviewed": true,
+  "diffReviewed": true,
+  "status": "fail",
+  "codeReview": {
+    "summary": "The feature adds the requested integration suite and pytest/Makefile wiring, but two required behaviors are not actually verified: parser extraction can be bypassed, and teardown invocation is not asserted.",
+    "issues": [
+      {
+        "file": "tests/integration/test_full_pipeline.py",
+        "line": 234,
+        "severity": "blocking",
+        "description": "VAL-INTEG-003 requires verifying that the parser extracts tool calls, but the test passes when parsing fails as long as the response has tool-call-like text (`assert parsed is not None or has_tool_content`). This allows success without proving parser extraction/check acceptance."
+      },
+      {
+        "file": "tests/integration/test_full_pipeline.py",
+        "line": 384,
+        "severity": "blocking",
+        "description": "VAL-INTEG-009 requires verifying cleanup/teardown is called, but this test only checks `teardown` is callable and documents expected fixture behavior; it does not assert invocation (e.g., via spy/mock/call-count or post-finalizer state assertion)."
+      }
+    ]
+  },
+  "sharedStateObservations": [
+    {
+      "area": "skills",
+      "observation": "The python-worker skill mandates TDD with failing tests first, but this integration feature required real-model behavior discovery and iteration (including relaxing assertions after observed model output variability). The skill should clarify a pragmatic flow for real-model integration tests where strict test-first is not always practical.",
+      "evidence": ".factory/skills/python-worker/SKILL.md Step 3 vs handoff.skillFeedback.suggestedChanges in /Users/weae1504/.factory/missions/7a98117d-95dc-4445-8b4e-9c6c1c89f9a0/handoffs/2026-04-04T21-10-33-076Z__integration-tests-real-model__45c0a8a3-c9e0-42dd-963f-ae6906e7d568.json"
+    },
+    {
+      "area": "knowledge",
+      "observation": "Gemma 4 E2B-it produced non-standard tool-call keys (`tool_name`/`params`) during integration testing, which led to weaker assertions. This model-specific behavior is not captured in shared library docs and could cause repeated re-discovery in future integration work.",
+      "evidence": "tests/integration/test_full_pipeline.py:202-234 fallback logic plus handoff.discoveredIssues in /Users/weae1504/.factory/missions/7a98117d-95dc-4445-8b4e-9c6c1c89f9a0/handoffs/2026-04-04T21-10-33-076Z__integration-tests-real-model__45c0a8a3-c9e0-42dd-963f-ae6906e7d568.json"
+    }
+  ],
+  "addressesFailureFrom": null,
+  "summary": "Reviewed feature integration-tests-real-model (commit 725a937) via handoff, transcript skeleton, skill file, and git diff. Result: fail, due to two blocking requirement gaps—tool-call parsing is not strictly validated and teardown invocation is not actually asserted."
+}
