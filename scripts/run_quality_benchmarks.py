@@ -26,6 +26,7 @@ from mtb.quality_benchmarks import (
     TOOL_CALLING_PROBLEMS,
     run_quality_benchmark,
 )
+from mtb.quality_benchmarks.eval_problem import EvalProblem
 from mtb.quality_benchmarks.scoring import compute_weighted_score
 from mtb.select_benchmarks import filter_llm_benchmarks
 
@@ -44,6 +45,7 @@ def main(
     run_mlx_metal: bool = True,
     run_ollama_metal: bool = False,
     use_variants: bool = False,
+    num_variants: int = 3,
 ):
     """Run quality evaluation benchmarks.
 
@@ -58,9 +60,13 @@ def main(
         run_mlx_metal: Whether to run MLX with Metal backend.
         run_ollama_metal: Whether to run Ollama with Metal backend.
         use_variants: Replace problems that have generate_variant() with
-            a freshly generated variant. Helps resist benchmark contamination
+            freshly generated variants. Helps resist benchmark contamination
             by changing concrete values (numbers, names, constraints) while
-            preserving problem structure.
+            preserving problem structure. Each parameterized problem generates
+            num_variants variants, each running as a separate row in the output.
+            Non-parameterized problems are kept unchanged.
+        num_variants: Number of variants to generate per parameterized problem
+            when use_variants is enabled (default 3).
 
     """
     from mtb.hf_utils import set_hf_home
@@ -93,7 +99,20 @@ def main(
         variant_problems = []
         for p in problems:
             if p.generate_variant is not None:
-                variant_problems.append(p.generate_variant())
+                for i in range(1, num_variants + 1):
+                    variant = p.generate_variant()
+                    # Give each variant a distinct name
+                    variant = EvalProblem(
+                        category=variant.category,
+                        name=f"{p.name}_variant_{i}",
+                        prompt=variant.prompt,
+                        check=variant.check,
+                        max_tokens=variant.max_tokens,
+                        function_signature=variant.function_signature,
+                        test_cases=variant.test_cases,
+                        generate_variant=variant.generate_variant,
+                    )
+                    variant_problems.append(variant)
             else:
                 variant_problems.append(p)
         problems = variant_problems

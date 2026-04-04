@@ -466,7 +466,7 @@ class TestVariantPreservesStructure:
 
 
 class TestCLIVariantFlag:
-    """--use_variants CLI flag is accepted by run_quality_benchmarks.py."""
+    """--use_variants and --num_variants CLI flags are accepted by run_quality_benchmarks.py."""
 
     def test_use_variants_flag_in_help(self):
         """The --use_variants flag is defined in the main() function signature."""
@@ -488,3 +488,187 @@ class TestCLIVariantFlag:
         sig = inspect.signature(main)
         param = sig.parameters["use_variants"]
         assert param.default is False
+
+    def test_num_variants_flag_in_signature(self):
+        """The --num_variants flag is defined in the main() function signature."""
+        import inspect
+
+        from scripts.run_quality_benchmarks import main
+
+        sig = inspect.signature(main)
+        assert (
+            "num_variants" in sig.parameters
+        ), "--num_variants not found in main() parameters"
+
+    def test_num_variants_defaults_to_3(self):
+        """--num_variants defaults to 3."""
+        import inspect
+
+        from scripts.run_quality_benchmarks import main
+
+        sig = inspect.signature(main)
+        param = sig.parameters["num_variants"]
+        assert param.default == 3
+
+
+# =============================================================================
+# VAL-CROSS-003: Multi-variant expansion produces correct number of rows
+# =============================================================================
+
+
+class TestMultiVariantExpansion:
+    """VAL-CROSS-003: When --use_variants is enabled, each parameterized problem
+    generates N variants (default 3) per parameterized problem, each with a
+    distinct name. Non-parameterized problems are kept unchanged."""
+
+    def _make_parameterized_problem(self, name="fizzbuzz"):
+        """Create a simple parameterized problem for testing."""
+        import random
+
+        def _gen_variant():
+            n = random.randint(1, 100)
+            return EvalProblem(
+                category="coding",
+                name=f"{name}_variant",
+                prompt=f"Implement fizzbuzz up to {n}.",
+                check=lambda r, _n=n: str(_n) in r,
+                max_tokens=512,
+            )
+
+        return EvalProblem(
+            category="coding",
+            name=name,
+            prompt="Implement fizzbuzz up to 15.",
+            check=lambda r: "FizzBuzz" in r,
+            max_tokens=512,
+            generate_variant=_gen_variant,
+        )
+
+    def _make_non_parameterized_problem(self, name="reverse_string"):
+        """Create a simple non-parameterized problem (no generate_variant)."""
+        return EvalProblem(
+            category="coding",
+            name=name,
+            prompt="Implement a function to reverse a string.",
+            check=lambda r: "reverse" in r.lower(),
+            max_tokens=512,
+        )
+
+    def _expand_variants(self, problems, num_variants=3):
+        """Replicate the variant expansion logic from run_quality_benchmarks.py."""
+        variant_problems = []
+        for p in problems:
+            if p.generate_variant is not None:
+                for i in range(1, num_variants + 1):
+                    variant = p.generate_variant()
+                    variant = EvalProblem(
+                        category=variant.category,
+                        name=f"{p.name}_variant_{i}",
+                        prompt=variant.prompt,
+                        check=variant.check,
+                        max_tokens=variant.max_tokens,
+                        function_signature=variant.function_signature,
+                        test_cases=variant.test_cases,
+                        generate_variant=variant.generate_variant,
+                    )
+                    variant_problems.append(variant)
+            else:
+                variant_problems.append(p)
+        return variant_problems
+
+    def test_parameterized_problem_generates_n_variants(self):
+        """Each parameterized problem generates N variants (default 3)."""
+        problems = [self._make_parameterized_problem()]
+        expanded = self._expand_variants(problems, num_variants=3)
+        assert len(expanded) == 3
+
+    def test_non_parameterized_problem_unchanged(self):
+        """Non-parameterized problems (no generate_variant) are kept unchanged."""
+        problems = [self._make_non_parameterized_problem()]
+        expanded = self._expand_variants(problems, num_variants=3)
+        assert len(expanded) == 1
+        assert expanded[0].name == "reverse_string"
+
+    def test_mixed_problems_correct_count(self):
+        """Mix of parameterized and non-parameterized problems produces correct count.
+
+        2 parameterized (3 variants each) + 1 non-parameterized = 7 total.
+        """
+        problems = [
+            self._make_parameterized_problem("fizzbuzz"),
+            self._make_non_parameterized_problem("reverse_string"),
+            self._make_parameterized_problem("fibonacci"),
+        ]
+        expanded = self._expand_variants(problems, num_variants=3)
+        # 3 + 1 + 3 = 7
+        assert len(expanded) == 7
+
+    def test_variant_names_are_distinct(self):
+        """Each variant has a distinct name (e.g., fizzbuzz_variant_1, _2, _3)."""
+        problems = [self._make_parameterized_problem("fizzbuzz")]
+        expanded = self._expand_variants(problems, num_variants=3)
+        names = [p.name for p in expanded]
+        assert names == [
+            "fizzbuzz_variant_1",
+            "fizzbuzz_variant_2",
+            "fizzbuzz_variant_3",
+        ]
+
+    def test_variant_names_unique_across_all_problems(self):
+        """All variant names are unique across multiple parameterized problems."""
+        problems = [
+            self._make_parameterized_problem("fizzbuzz"),
+            self._make_parameterized_problem("fibonacci"),
+        ]
+        expanded = self._expand_variants(problems, num_variants=3)
+        names = [p.name for p in expanded]
+        assert len(names) == len(set(names)), f"Duplicate names found: {names}"
+
+    def test_custom_num_variants(self):
+        """num_variants parameter controls how many variants are generated."""
+        problems = [self._make_parameterized_problem()]
+        for n in [1, 2, 5]:
+            expanded = self._expand_variants(problems, num_variants=n)
+            assert len(expanded) == n, f"Expected {n} variants, got {len(expanded)}"
+
+    def test_each_variant_runs_as_separate_row(self):
+        """Each variant is a full EvalProblem that can run independently in the pipeline."""
+        problems = [self._make_parameterized_problem()]
+        expanded = self._expand_variants(problems, num_variants=3)
+        for variant in expanded:
+            assert isinstance(variant, EvalProblem)
+            assert callable(variant.check)
+            assert len(variant.prompt) > 0
+            assert variant.category == "coding"
+
+    def test_real_problems_multi_variant_expansion(self):
+        """Using real problems from the registry, variant expansion produces correct count.
+
+        Verifies the fix for VAL-CROSS-003: parameterized problems expand to N rows.
+        """
+        from mtb.quality_benchmarks import (
+            EVAL_PROBLEMS,
+            EXPERT_EVAL_PROBLEMS,
+            HARD_EVAL_PROBLEMS,
+            TOOL_CALLING_PROBLEMS,
+        )
+
+        all_problems = (
+            EVAL_PROBLEMS
+            + HARD_EVAL_PROBLEMS
+            + EXPERT_EVAL_PROBLEMS
+            + TOOL_CALLING_PROBLEMS
+        )
+        num_variants = 3
+        parameterized_count = sum(
+            1 for p in all_problems if p.generate_variant is not None
+        )
+        non_parameterized_count = len(all_problems) - parameterized_count
+
+        expanded = self._expand_variants(all_problems, num_variants=num_variants)
+        expected_count = parameterized_count * num_variants + non_parameterized_count
+        assert len(expanded) == expected_count, (
+            f"Expected {expected_count} problems after expansion "
+            f"({parameterized_count} parameterized × {num_variants} + "
+            f"{non_parameterized_count} non-parameterized), got {len(expanded)}"
+        )
