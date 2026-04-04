@@ -24,17 +24,14 @@ Results can be found at
 > Speed: 1024 prompt tokens, 100 generated tokens
 > Quality: 46 problems across coding, reasoning, tool calling, math, writing (3 runs each, majority vote)
 
+### Best Models by Hardware
+
+| Hardware | Best Overall | Best Fast | Best Coder |
+|---|---|---|---|
+| **M4 Pro 64GB** | Qwen 3.5-35B-A3B (26 tok/s, 100.0%) | Gemma 4 E2B-it (121 tok/s, 95.7%) | Qwen 3.5-27B (12 tok/s, 100.0%) |
+| **M5 Max 128GB** | Qwen 3.5-27B Opus Distilled (28 tok/s, 100.0%) | Qwen 3.5-27B (25 tok/s, 100.0%) | Qwen 3.5-27B (25 tok/s, 100.0%) |
+
 ### M4 Pro 64GB
-
-#### Quick Picks
-
-| Use Case | Model | Speed | Quality | Memory |
-|---|---|---|---|---|
-| **Best overall** | Qwen 3.5-35B-A3B | 26 tok/s | 100.0% | 22 GiB |
-| **Best coder** | Qwen 3.5-27B | 12 tok/s | 100.0% | 19 GiB |
-| **Best reasoning** | Gemma 3-4B-it QAT | 88 tok/s | 97.6% | 3 GiB |
-
-#### All Models
 
 | Model | Arch | Gen tok/s | Quality | Coding | Tool Calling | Reasoning | Memory | Min HW |
 |---|---|---:|---:|---|---|---|---:|---|
@@ -106,16 +103,6 @@ Results can be found at
 
 ### M5 Max 128GB
 
-#### Quick Picks
-
-| Use Case | Model | Speed | Quality | Memory |
-|---|---|---|---|---|
-| **Best overall** | Qwen 3.5-27B Opus Distilled | 28 tok/s | 100.0% | 17 GiB |
-| **Best MoE** | Qwen 3.5-35B-A3B | 44 tok/s | 87.5% | 22 GiB |
-| **Best coder** | Qwen 3.5-27B | 25 tok/s | 100.0% | 19 GiB |
-
-#### All Models
-
 | Model | Arch | Gen tok/s | Quality | Memory | Min HW |
 |---|---|---:|---:|---:|---|
 | Qwen 2.5-Coder-0.5B | 0.5B dense | **611** | -- | 1.1 GiB | Any Mac |
@@ -169,9 +156,8 @@ Results can be found at
 
 </details>
 
-### M4 Pro 24GB
-
-#### All Models
+<details>
+<summary><h3>M4 Pro 24GB (legacy)</h3></summary>
 
 | Model | Arch | Gen tok/s | Prefill tok/s | Memory | Min HW |
 |---|---|---:|---:|---:|---|
@@ -207,6 +193,8 @@ Results can be found at
 | Qwen 3-8B-it | 8B dense | 29.7 | 413 | 9.7 GiB | 16GB+ |
 | DeepSeek-R1-0528-Qwen3-8B | 8B dense | 29.6 | 413 | 9.7 GiB | 16GB+ |
 | Gemma 3-12B-it QAT | 12B dense | 18.2 | 254 | 15.0 GiB | 24GB+ |
+
+</details>
 
 </details>
 

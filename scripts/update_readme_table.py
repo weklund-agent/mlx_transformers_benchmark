@@ -281,29 +281,7 @@ def generate_hardware_table(
     has_tool = "tool_calling" in combined.columns
     has_reasoning = "reasoning" in combined.columns
 
-    hw_display = HARDWARE_DISPLAY.get(hardware, hardware)
     lines = []
-
-    # Quick Picks (only for primary hardware)
-    if has_quality:
-        picks = pick_quick_picks(combined)
-        if picks:
-            lines.append("#### Quick Picks")
-            lines.append("")
-            lines.append("| Use Case | Model | Speed | Quality | Memory |")
-            lines.append("|---|---|---|---|---|")
-            for p in picks:
-                r = p["row"]
-                name = format_model_name(r["name"])
-                qual = f"{r['quality_pct']}%" if pd.notna(r.get("quality_pct")) else "N/A"
-                lines.append(
-                    f"| **{p['use_case']}** | {name} | {r['generation_tps']:.0f} tok/s | {qual} | {r['peak_memory_gib']:.0f} GiB |"
-                )
-            lines.append("")
-
-    # All Models table
-    lines.append("#### All Models")
-    lines.append("")
 
     if has_quality and has_coding and has_tool and has_reasoning:
         lines.append("| Model | Arch | Gen tok/s | Quality | Coding | Tool Calling | Reasoning | Memory | Min HW |")
@@ -366,6 +344,106 @@ def generate_hardware_table(
     return "\n".join(lines)
 
 
+def _get_combined_for_hardware(
+    speed_df: pd.DataFrame,
+    quality_df: pd.DataFrame,
+    hardware: str,
+) -> pd.DataFrame:
+    """Build combined speed+quality dataframe for a hardware profile."""
+    hw_speed = speed_df[speed_df["hardware"] == hardware].copy()
+    int4_speed = hw_speed[hw_speed["dtype"] == "int4"].copy()
+    if int4_speed.empty:
+        return pd.DataFrame()
+
+    quality_summary = compute_quality_summary(quality_df, hardware, "int4")
+    combined = int4_speed.rename(columns={"name": "model"}).copy()
+    if not quality_summary.empty:
+        combined = combined.merge(quality_summary, on="model", how="left")
+    else:
+        combined["quality_pct"] = None
+
+    combined["arch"] = combined["model"].map(get_arch)
+    combined["min_hw"] = combined.apply(
+        lambda r: _min_hw_from_memory(r["peak_memory_gib"]), axis=1
+    )
+    combined = combined.rename(columns={"model": "name"})
+    combined = combined.sort_values("generation_tps", ascending=False)
+    return combined
+
+
+def generate_cross_hardware_summary(
+    speed_df: pd.DataFrame,
+    quality_df: pd.DataFrame,
+    hardware_profiles: List[str],
+) -> str:
+    """Generate a cross-hardware Best Models summary table."""
+    lines = []
+    lines.append("### Best Models by Hardware")
+    lines.append("")
+    lines.append("| Hardware | Best Overall | Best Fast | Best Coder |")
+    lines.append("|---|---|---|---|")
+
+    for hw in hardware_profiles:
+        hw_display = HARDWARE_DISPLAY.get(hw, hw)
+        combined = _get_combined_for_hardware(speed_df, quality_df, hw)
+        if combined.empty:
+            continue
+
+        has_quality = combined["quality_pct"].notna().any()
+
+        # Best overall: highest quality then fastest (or just fastest if no quality)
+        if has_quality:
+            with_quality = combined[combined["quality_pct"].notna()]
+            if not with_quality.empty:
+                best = with_quality.sort_values(
+                    ["quality_pct", "generation_tps"], ascending=[False, False]
+                ).iloc[0]
+                best_str = f"{format_model_name(best['name'])} ({best['generation_tps']:.0f} tok/s, {best['quality_pct']}%)"
+            else:
+                best = combined.iloc[0]
+                best_str = f"{format_model_name(best['name'])} ({best['generation_tps']:.0f} tok/s)"
+        else:
+            best = combined.iloc[0]
+            best_str = f"{format_model_name(best['name'])} ({best['generation_tps']:.0f} tok/s)"
+
+        # Best fast: fastest model with quality >= 90% if available, else just fastest
+        # Must be different from best overall
+        if has_quality:
+            fast_candidates = combined[combined["quality_pct"] >= 90.0]
+            if fast_candidates.empty:
+                fast_candidates = combined
+        else:
+            fast_candidates = combined
+        fastest = fast_candidates.sort_values("generation_tps", ascending=False).iloc[0]
+        # Try to pick a different model than best overall
+        if fastest["name"] == best["name"] and len(fast_candidates) > 1:
+            fastest = fast_candidates.sort_values("generation_tps", ascending=False).iloc[1]
+        if has_quality and pd.notna(fastest.get("quality_pct")):
+            fast_str = f"{format_model_name(fastest['name'])} ({fastest['generation_tps']:.0f} tok/s, {fastest['quality_pct']}%)"
+        else:
+            fast_str = f"{format_model_name(fastest['name'])} ({fastest['generation_tps']:.0f} tok/s)"
+
+        # Best coder: highest quality with perfect coding, then fastest
+        if has_quality and "coding" in combined.columns and combined["coding"].notna().any():
+            with_quality = combined[combined["quality_pct"].notna()]
+            coders = with_quality.sort_values(
+                ["quality_pct", "generation_tps"], ascending=[False, False]
+            )
+            # Pick first one not already used as best overall
+            coder = coders.iloc[0]
+            for _, c in coders.iterrows():
+                if c["name"] != best["name"]:
+                    coder = c
+                    break
+            coder_str = f"{format_model_name(coder['name'])} ({coder['generation_tps']:.0f} tok/s, {coder['quality_pct']}%)"
+        else:
+            coder_str = "--"
+
+        lines.append(f"| **{hw_display}** | {best_str} | {fast_str} | {coder_str} |")
+
+    return "\n".join(lines)
+
+
 def generate_tables(
     models: Optional[List[str]] = None,
 ) -> str:
@@ -384,7 +462,6 @@ def generate_tables(
     ]
     available_hw = speed_df["hardware"].unique()
     hardware_profiles = [h for h in hardware_order if h in available_hw]
-    # Add any not in our preferred order
     for h in sorted(available_hw):
         if h not in hardware_profiles:
             hardware_profiles.append(h)
@@ -396,15 +473,36 @@ def generate_tables(
     lines.append("> Quality: 46 problems across coding, reasoning, tool calling, math, writing (3 runs each, majority vote)")
     lines.append("")
 
+    # Cross-hardware summary at top
+    # Only include primary hardware profiles (skip older/legacy)
+    primary_hw = [h for h in hardware_profiles if "24GB" not in h]
+    if len(primary_hw) >= 1:
+        lines.append(generate_cross_hardware_summary(speed_df, quality_df, primary_hw))
+        lines.append("")
+
+    # Per-hardware detailed tables
     for hw in hardware_profiles:
         hw_display = HARDWARE_DISPLAY.get(hw, hw)
-        lines.append(f"### {hw_display}")
-        lines.append("")
+        is_legacy = "24GB" in hw
+
+        if is_legacy:
+            lines.append(f"<details>")
+            lines.append(f"<summary><h3>{hw_display} (legacy)</h3></summary>")
+            lines.append("")
+        else:
+            lines.append(f"### {hw_display}")
+            lines.append("")
+
         table = generate_hardware_table(speed_df, quality_df, hw)
         if table:
             lines.append(table)
         else:
             lines.append("No data available.")
+
+        if is_legacy:
+            lines.append("")
+            lines.append("</details>")
+
         lines.append("")
 
     return "\n".join(lines)
