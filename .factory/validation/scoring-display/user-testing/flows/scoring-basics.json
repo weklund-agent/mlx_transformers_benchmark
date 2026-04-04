@@ -1,0 +1,106 @@
+{
+  "groupId": "scoring-basics",
+  "testedAt": "2026-04-04T20:46:39Z",
+  "isolation": {
+    "surface": "shell-pytest",
+    "repoRoot": "/Users/weae1504/Projects/mlx_transformers_benchmark",
+    "missionDir": "/Users/weae1504/.factory/missions/7a98117d-95dc-4445-8b4e-9c6c1c89f9a0",
+    "evidenceDir": "/Users/weae1504/.factory/missions/7a98117d-95dc-4445-8b4e-9c6c1c89f9a0/evidence/scoring-display/scoring-basics"
+  },
+  "toolsUsed": ["shell", "uv", "pytest"],
+  "assertions": [
+    {
+      "id": "VAL-SCORING-001",
+      "title": "Correct weighted score for known mixed results",
+      "status": "pass",
+      "steps": [
+        {
+          "action": "Run uv run pytest -p no:cacheprovider tests/test_scoring.py::TestKnownMixedResults::test_known_mixed_weighted_score -v --tb=short",
+          "expected": "Test passes and validates weighted_score ≈ 124/203",
+          "observed": "PASSED (1 passed in 0.12s, exit code 0)"
+        }
+      ],
+      "evidence": {
+        "terminalSnapshots": [
+          "scoring-display/scoring-basics/VAL-SCORING-001.log"
+        ]
+      },
+      "issues": null
+    },
+    {
+      "id": "VAL-SCORING-002",
+      "title": "All pass yields 100%",
+      "status": "pass",
+      "steps": [
+        {
+          "action": "Run uv run pytest -p no:cacheprovider tests/test_scoring.py::TestAllPass::test_all_pass_weighted_score -v --tb=short",
+          "expected": "Test passes and validates weighted_score == 1.0",
+          "observed": "PASSED (1 passed in 0.13s, exit code 0)"
+        }
+      ],
+      "evidence": {
+        "terminalSnapshots": [
+          "scoring-display/scoring-basics/VAL-SCORING-002.log"
+        ]
+      },
+      "issues": null
+    },
+    {
+      "id": "VAL-SCORING-003",
+      "title": "All fail yields 0%",
+      "status": "pass",
+      "steps": [
+        {
+          "action": "Run uv run pytest -p no:cacheprovider tests/test_scoring.py::TestAllFail::test_all_fail_weighted_score -v --tb=short",
+          "expected": "Test passes and validates weighted_score == 0.0",
+          "observed": "PASSED (1 passed in 0.12s, exit code 0)"
+        }
+      ],
+      "evidence": {
+        "terminalSnapshots": [
+          "scoring-display/scoring-basics/VAL-SCORING-003.log"
+        ]
+      },
+      "issues": null
+    },
+    {
+      "id": "VAL-SCORING-004",
+      "title": "Empty tier handled gracefully",
+      "status": "pass",
+      "steps": [
+        {
+          "action": "Run uv run pytest -p no:cacheprovider tests/test_scoring.py::TestEmptyTier -v --tb=short",
+          "expected": "All TestEmptyTier checks pass without division errors and with correct remaining-tier calculations",
+          "observed": "PASSED (3 passed in 0.12s, exit code 0)"
+        }
+      ],
+      "evidence": {
+        "terminalSnapshots": [
+          "scoring-display/scoring-basics/VAL-SCORING-004.log"
+        ]
+      },
+      "issues": null
+    },
+    {
+      "id": "VAL-SCORING-005",
+      "title": "Single problem in a single tier",
+      "status": "pass",
+      "steps": [
+        {
+          "action": "Run uv run pytest -p no:cacheprovider tests/test_scoring.py::TestSingleProblem -v --tb=short",
+          "expected": "Single-problem weighted scoring scenarios validate correctly (including expert-only pass case at 1.0)",
+          "observed": "PASSED (3 passed in 0.12s, exit code 0)"
+        }
+      ],
+      "evidence": {
+        "terminalSnapshots": [
+          "scoring-display/scoring-basics/VAL-SCORING-005.log"
+        ]
+      },
+      "issues": null
+    }
+  ],
+  "frictions": [],
+  "blockers": [],
+  "summary": "Tested 5 assertions (VAL-SCORING-001 through VAL-SCORING-005): all 5 passed with required pytest flags and isolated evidence capture."
+}

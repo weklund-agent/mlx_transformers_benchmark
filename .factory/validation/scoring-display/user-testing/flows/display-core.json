@@ -1,0 +1,115 @@
+{
+  "groupId": "display-core",
+  "testedAt": "2026-04-04T20:46:28Z",
+  "isolation": {
+    "surface": "shell-pytest",
+    "repoRoot": "/Users/weae1504/Projects/mlx_transformers_benchmark",
+    "missionDir": "/Users/weae1504/.factory/missions/7a98117d-95dc-4445-8b4e-9c6c1c89f9a0",
+    "evidenceDir": "/Users/weae1504/.factory/missions/7a98117d-95dc-4445-8b4e-9c6c1c89f9a0/evidence/scoring-display/display-core"
+  },
+  "toolsUsed": [
+    "shell",
+    "uv",
+    "pytest"
+  ],
+  "assertions": [
+    {
+      "id": "VAL-DISPLAY-001",
+      "title": "Weighted score shown as primary percentage column",
+      "status": "pass",
+      "steps": [
+        {
+          "action": "Run `uv run pytest -p no:cacheprovider tests/test_update_readme_table.py::TestWeightedScorePrimary -v --tb=short`",
+          "expected": "Targeted weighted-score display tests pass",
+          "observed": "3 passed in 0.13s"
+        }
+      ],
+      "evidence": {
+        "terminalSnapshots": [
+          "scoring-display/display-core/VAL-DISPLAY-001-TestWeightedScorePrimary.txt"
+        ],
+        "exitCode": 0
+      },
+      "issues": null
+    },
+    {
+      "id": "VAL-DISPLAY-002",
+      "title": "Raw pass rate available as footnote or secondary display",
+      "status": "pass",
+      "steps": [
+        {
+          "action": "Run `uv run pytest -p no:cacheprovider tests/test_update_readme_table.py::TestRawPassRateSecondary -v --tb=short`",
+          "expected": "Targeted raw-pass-rate display tests pass",
+          "observed": "2 passed in 0.18s"
+        }
+      ],
+      "evidence": {
+        "terminalSnapshots": [
+          "scoring-display/display-core/VAL-DISPLAY-002-TestRawPassRateSecondary.txt"
+        ],
+        "exitCode": 0
+      },
+      "issues": null
+    },
+    {
+      "id": "VAL-DISPLAY-003",
+      "title": "Per-category breakdowns reflect correct problem counts",
+      "status": "pass",
+      "steps": [
+        {
+          "action": "Run `uv run pytest -p no:cacheprovider tests/test_update_readme_table.py::TestCategoryBreakdowns -v --tb=short`",
+          "expected": "Targeted category-breakdown denominator tests pass",
+          "observed": "2 passed in 0.14s"
+        }
+      ],
+      "evidence": {
+        "terminalSnapshots": [
+          "scoring-display/display-core/VAL-DISPLAY-003-TestCategoryBreakdowns.txt"
+        ],
+        "exitCode": 0
+      },
+      "issues": null
+    },
+    {
+      "id": "VAL-DISPLAY-004",
+      "title": "Backward compatibility — old CSV format renders correctly",
+      "status": "pass",
+      "steps": [
+        {
+          "action": "Run `uv run pytest -p no:cacheprovider tests/test_update_readme_table.py::TestBackwardCompatOldCSV -v --tb=short`",
+          "expected": "Targeted old-CSV compatibility tests pass",
+          "observed": "2 passed in 0.12s"
+        }
+      ],
+      "evidence": {
+        "terminalSnapshots": [
+          "scoring-display/display-core/VAL-DISPLAY-004-TestBackwardCompatOldCSV.txt"
+        ],
+        "exitCode": 0
+      },
+      "issues": null
+    },
+    {
+      "id": "VAL-DISPLAY-005",
+      "title": "Backward compatibility — new CSV with old CSVs coexist",
+      "status": "pass",
+      "steps": [
+        {
+          "action": "Run `uv run pytest -p no:cacheprovider tests/test_update_readme_table.py::TestMixedOldNewCSV -v --tb=short`",
+          "expected": "Targeted mixed old/new CSV compatibility test passes",
+          "observed": "1 passed in 0.12s"
+        }
+      ],
+      "evidence": {
+        "terminalSnapshots": [
+          "scoring-display/display-core/VAL-DISPLAY-005-TestMixedOldNewCSV.txt"
+        ],
+        "exitCode": 0
+      },
+      "issues": null
+    }
+  ],
+  "frictions": [],
+  "blockers": [],
+  "summary": "Tested 5 assertions (VAL-DISPLAY-001..005) via assigned shell/pytest commands; all passed."
+}

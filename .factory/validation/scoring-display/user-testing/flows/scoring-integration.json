@@ -1,0 +1,153 @@
+{
+  "groupId": "scoring-integration",
+  "testedAt": "2026-04-04T20:47:04.334702+00:00",
+  "isolation": {
+    "surface": "shell-pytest",
+    "repoRoot": "/Users/weae1504/Projects/mlx_transformers_benchmark",
+    "missionDir": "/Users/weae1504/.factory/missions/7a98117d-95dc-4445-8b4e-9c6c1c89f9a0",
+    "evidenceDir": "/Users/weae1504/.factory/missions/7a98117d-95dc-4445-8b4e-9c6c1c89f9a0/evidence/scoring-display/scoring-integration"
+  },
+  "toolsUsed": [
+    "shell",
+    "uv",
+    "pytest"
+  ],
+  "assertions": [
+    {
+      "id": "VAL-SCORING-006",
+      "title": "Per-category weighted scores computed correctly",
+      "status": "pass",
+      "steps": [
+        {
+          "action": "Run uv pytest for TestPerCategoryScores",
+          "expected": "All targeted per-category scoring tests pass",
+          "observed": "5 tests passed"
+        }
+      ],
+      "evidence": {
+        "terminalOutputs": [
+          "scoring-display/scoring-integration/VAL-SCORING-006-pytest.txt"
+        ],
+        "exitCode": 0
+      },
+      "issues": null
+    },
+    {
+      "id": "VAL-SCORING-007",
+      "title": "Raw pass rate still available alongside weighted score",
+      "status": "pass",
+      "steps": [
+        {
+          "action": "Run uv pytest for TestRawPassRate",
+          "expected": "Raw pass rate and weighted score fields validated",
+          "observed": "2 tests passed"
+        }
+      ],
+      "evidence": {
+        "terminalOutputs": [
+          "scoring-display/scoring-integration/VAL-SCORING-007-pytest.txt"
+        ],
+        "exitCode": 0
+      },
+      "issues": null
+    },
+    {
+      "id": "VAL-SCORING-008",
+      "title": "Weight constants match specification",
+      "status": "pass",
+      "steps": [
+        {
+          "action": "Run uv pytest for TestTierWeights::test_weight_constants_match_specification",
+          "expected": "Tier weight constants exactly match specification",
+          "observed": "1 test passed"
+        }
+      ],
+      "evidence": {
+        "terminalOutputs": [
+          "scoring-display/scoring-integration/VAL-SCORING-008-pytest.txt"
+        ],
+        "exitCode": 0
+      },
+      "issues": null
+    },
+    {
+      "id": "VAL-SCORING-009",
+      "title": "Problem-to-tier mapping covers all problems",
+      "status": "pass",
+      "steps": [
+        {
+          "action": "Run uv pytest for TestProblemToTierMapping",
+          "expected": "All problems map to tiers with correct assignments",
+          "observed": "2 tests passed"
+        }
+      ],
+      "evidence": {
+        "terminalOutputs": [
+          "scoring-display/scoring-integration/VAL-SCORING-009-pytest.txt"
+        ],
+        "exitCode": 0
+      },
+      "issues": null
+    },
+    {
+      "id": "VAL-SCORING-010",
+      "title": "Weighted score is deterministic",
+      "status": "pass",
+      "steps": [
+        {
+          "action": "Run uv pytest for TestDeterminism",
+          "expected": "Repeated scoring output remains identical",
+          "observed": "1 test passed"
+        }
+      ],
+      "evidence": {
+        "terminalOutputs": [
+          "scoring-display/scoring-integration/VAL-SCORING-010-pytest.txt"
+        ],
+        "exitCode": 0
+      },
+      "issues": null
+    },
+    {
+      "id": "VAL-MODULE-004",
+      "title": "New utility modules exist and are importable",
+      "status": "pass",
+      "steps": [
+        {
+          "action": "Run uv python import check for sandbox, tool_call_parser, and scoring",
+          "expected": "Import command prints OK and exits successfully",
+          "observed": "Printed OK"
+        }
+      ],
+      "evidence": {
+        "terminalOutputs": [
+          "scoring-display/scoring-integration/VAL-MODULE-004-imports.txt"
+        ],
+        "exitCode": 0
+      },
+      "issues": null
+    },
+    {
+      "id": "VAL-RUNNER-007",
+      "title": "Summary prints both weighted and raw scores",
+      "status": "pass",
+      "steps": [
+        {
+          "action": "Run uv pytest for TestWeightedScoringSummary",
+          "expected": "Runner summary tests validate weighted and raw score output",
+          "observed": "5 tests passed"
+        }
+      ],
+      "evidence": {
+        "terminalOutputs": [
+          "scoring-display/scoring-integration/VAL-RUNNER-007-pytest.txt"
+        ],
+        "exitCode": 0
+      },
+      "issues": null
+    }
+  ],
+  "frictions": [],
+  "blockers": [],
+  "summary": "Tested 7 assertions via shell/pytest; all passed with exit code 0 and evidence captured for each command."
+}

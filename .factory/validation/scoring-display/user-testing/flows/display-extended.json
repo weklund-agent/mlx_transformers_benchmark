@@ -1,0 +1,134 @@
+{
+  "groupId": "display-extended",
+  "testedAt": "2026-04-04T20:46:53.782371Z",
+  "isolation": {
+    "surface": "shell-pytest",
+    "repoRoot": "/Users/weae1504/Projects/mlx_transformers_benchmark",
+    "missionDir": "/Users/weae1504/.factory/missions/7a98117d-95dc-4445-8b4e-9c6c1c89f9a0",
+    "evidenceDir": "/Users/weae1504/.factory/missions/7a98117d-95dc-4445-8b4e-9c6c1c89f9a0/evidence/scoring-display/display-extended"
+  },
+  "toolsUsed": [
+    "shell",
+    "uv",
+    "pytest"
+  ],
+  "assertions": [
+    {
+      "id": "VAL-DISPLAY-006",
+      "title": "Table header format preserved",
+      "status": "pass",
+      "steps": [
+        {
+          "action": "Run uv run pytest -p no:cacheprovider tests/test_update_readme_table.py::TestTableHeaderFormat -v --tb=short",
+          "expected": "Test class passes",
+          "observed": "1 passed"
+        }
+      ],
+      "evidence": {
+        "terminalSnapshots": [
+          "scoring-display/display-extended/VAL-DISPLAY-006-terminal.txt"
+        ],
+        "commandResult": "exit_code=0"
+      },
+      "issues": null
+    },
+    {
+      "id": "VAL-DISPLAY-007",
+      "title": "BEGIN/END markers preserved after update",
+      "status": "pass",
+      "steps": [
+        {
+          "action": "Run uv run pytest -p no:cacheprovider tests/test_update_readme_table.py::TestBeginEndMarkers -v --tb=short",
+          "expected": "Marker preservation tests pass",
+          "observed": "2 passed"
+        }
+      ],
+      "evidence": {
+        "terminalSnapshots": [
+          "scoring-display/display-extended/VAL-DISPLAY-007-terminal.txt"
+        ],
+        "commandResult": "exit_code=0"
+      },
+      "issues": null
+    },
+    {
+      "id": "VAL-DISPLAY-008",
+      "title": "Problem count annotation updated",
+      "status": "pass",
+      "steps": [
+        {
+          "action": "Run uv run pytest -p no:cacheprovider tests/test_update_readme_table.py::TestProblemCountAnnotation -v --tb=short",
+          "expected": "Problem count annotation test passes",
+          "observed": "1 passed"
+        }
+      ],
+      "evidence": {
+        "terminalSnapshots": [
+          "scoring-display/display-extended/VAL-DISPLAY-008-terminal.txt"
+        ],
+        "commandResult": "exit_code=0"
+      },
+      "issues": null
+    },
+    {
+      "id": "VAL-DISPLAY-009",
+      "title": "Dry-run mode does not modify README",
+      "status": "pass",
+      "steps": [
+        {
+          "action": "Run uv run pytest -p no:cacheprovider tests/test_update_readme_table.py::TestDryRunMode -v --tb=short",
+          "expected": "Dry-run protection test passes",
+          "observed": "1 passed"
+        }
+      ],
+      "evidence": {
+        "terminalSnapshots": [
+          "scoring-display/display-extended/VAL-DISPLAY-009-terminal.txt"
+        ],
+        "commandResult": "exit_code=0"
+      },
+      "issues": null
+    },
+    {
+      "id": "VAL-DISPLAY-010",
+      "title": "Models without quality data show '--' in Quality column",
+      "status": "pass",
+      "steps": [
+        {
+          "action": "Run uv run pytest -p no:cacheprovider tests/test_update_readme_table.py::TestModelsWithoutQuality -v --tb=short",
+          "expected": "Models-without-quality tests pass",
+          "observed": "2 passed"
+        }
+      ],
+      "evidence": {
+        "terminalSnapshots": [
+          "scoring-display/display-extended/VAL-DISPLAY-010-terminal.txt"
+        ],
+        "commandResult": "exit_code=0"
+      },
+      "issues": null
+    },
+    {
+      "id": "VAL-CROSS-008",
+      "title": "Integration test exercises complete flow end-to-end",
+      "status": "pass",
+      "steps": [
+        {
+          "action": "Run uv run pytest -p no:cacheprovider tests/test_runner_integration.py::TestCompleteFlowMocked::test_full_flow_with_mock -v --tb=short",
+          "expected": "Mocked full flow integration test passes",
+          "observed": "1 passed"
+        }
+      ],
+      "evidence": {
+        "terminalSnapshots": [
+          "scoring-display/display-extended/VAL-CROSS-008-terminal.txt"
+        ],
+        "commandResult": "exit_code=0"
+      },
+      "issues": null
+    }
+  ],
+  "frictions": [],
+  "blockers": [],
+  "summary": "Tested 6 assertions: 6 passed, 0 failed, 0 blocked."
+}
