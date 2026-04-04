@@ -134,10 +134,24 @@ def execute_code(code: str, timeout: int = 10) -> SandboxResult:
 
         except subprocess.TimeoutExpired as e:
             elapsed = time.monotonic() - start_time
+            # e.stdout/e.stderr may be bytes when capture_output=True,
+            # even with text=True, depending on Python version and platform.
+            raw_stdout = e.stdout or b""
+            raw_stderr = e.stderr or b""
+            stdout = (
+                raw_stdout.decode("utf-8", errors="replace")
+                if isinstance(raw_stdout, bytes)
+                else raw_stdout
+            )
+            stderr = (
+                raw_stderr.decode("utf-8", errors="replace")
+                if isinstance(raw_stderr, bytes)
+                else raw_stderr
+            )
             return SandboxResult(
                 success=False,
-                stdout=e.stdout or "",
-                stderr=e.stderr or "",
+                stdout=stdout,
+                stderr=stderr,
                 error_type="timeout",
                 return_code=-1,
                 execution_time_sec=elapsed,

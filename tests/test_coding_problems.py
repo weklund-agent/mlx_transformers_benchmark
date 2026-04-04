@@ -137,12 +137,30 @@ class TestCodingProblemsStructure:
         for p in CODING_PROBLEMS:
             assert callable(p.check), f"{p.name} check is not callable"
 
-    def test_all_have_category_coding(self):
-        """All 18 problems have category='coding'."""
+    def test_all_have_valid_category(self):
+        """All 18 problems have a valid category.
+
+        The 13 native coding problems have category='coding'.
+        The 5 cross-category problems retain their original categories
+        (reasoning, instruction_following) but are included in CODING_PROBLEMS
+        for code-execution-based evaluation.
+        """
+        _CROSS_CATEGORY_NAMES = {
+            "topological_sort",
+            "constrained_factorial",
+            "code_with_comments",
+            "library_schema",
+            "adversarial_transform",
+        }
+        valid_categories = {"coding", "reasoning", "instruction_following"}
         for p in CODING_PROBLEMS:
             assert (
-                p.category == "coding"
-            ), f"{p.name} has category '{p.category}', expected 'coding'"
+                p.category in valid_categories
+            ), f"{p.name} has unexpected category '{p.category}'"
+            if p.name not in _CROSS_CATEGORY_NAMES:
+                assert (
+                    p.category == "coding"
+                ), f"{p.name} should have category 'coding', got '{p.category}'"
 
 
 class TestDifficultyTiers:

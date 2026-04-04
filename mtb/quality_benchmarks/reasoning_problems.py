@@ -451,5 +451,56 @@ REASONING_EXPERT_PROBLEMS: List[EvalProblem] = [
         ),
         check=_check_topological_sort,
         max_tokens=2048,
+        function_signature="def topological_sort(graph: dict) -> list:",
+        test_cases=[
+            {
+                "input": "{'A': ['B', 'C'], 'B': ['D'], 'C': ['D'], 'D': []}",
+                "expected_output": ["A", "B", "C", "D"],
+            },
+            {
+                "input": "{'A': [], 'B': [], 'C': []}",
+                "expected_output": ["A", "B", "C"],
+            },
+            {
+                "input": "{'A': ['B'], 'B': ['C'], 'C': []}",
+                "expected_output": ["A", "B", "C"],
+            },
+            {
+                "input": "{'X': ['Y'], 'Y': ['Z'], 'Z': [], 'W': ['X']}",
+                "expected_output": ["W", "X", "Y", "Z"],
+            },
+            {
+                "input": "{'A': []}",
+                "expected_output": ["A"],
+            },
+            {
+                "input": "{'C': ['A'], 'B': ['A'], 'A': []}",
+                "expected_output": ["B", "C", "A"],
+            },
+        ],
+        _correct_impl=(
+            "def topological_sort(graph: dict) -> list:\n"
+            "    in_degree = {node: 0 for node in graph}\n"
+            "    for node in graph:\n"
+            "        for neighbor in graph[node]:\n"
+            "            if neighbor not in in_degree:\n"
+            "                in_degree[neighbor] = 0\n"
+            "            in_degree[neighbor] += 1\n"
+            "    queue = sorted([n for n in in_degree if in_degree[n] == 0])\n"
+            "    result = []\n"
+            "    while queue:\n"
+            "        node = queue.pop(0)\n"
+            "        result.append(node)\n"
+            "        for neighbor in sorted(graph.get(node, [])):\n"
+            "            in_degree[neighbor] -= 1\n"
+            "            if in_degree[neighbor] == 0:\n"
+            "                queue.append(neighbor)\n"
+            "                queue.sort()\n"
+            "    return result\n"
+        ),
+        _incorrect_impl=(
+            "def topological_sort(graph: dict) -> list:\n"
+            "    return sorted(graph.keys())\n"
+        ),
     ),
 ]

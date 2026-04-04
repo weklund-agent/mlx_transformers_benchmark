@@ -229,6 +229,33 @@ INSTRUCTION_EASY_PROBLEMS: List[EvalProblem] = [
         prompt="Write a Python function to calculate the area of a circle. Include detailed comments explaining each step.",
         check=_check_code_with_comments,
         max_tokens=1024,
+        function_signature="def circle_area(radius: float) -> float:",
+        test_cases=[
+            {"input": "0.0", "expected_output": 0.0},
+            {"input": "1.0", "expected_output": 3.141593},
+            {"input": "2.0", "expected_output": 12.566371},
+            {"input": "0.5", "expected_output": 0.785398},
+            {"input": "10.0", "expected_output": 314.159265},
+            {"input": "100.0", "expected_output": 31415.926536},
+        ],
+        _correct_impl=(
+            "import math\n"
+            "\n"
+            "def circle_area(radius: float) -> float:\n"
+            "    # Calculate the area of a circle using A = pi * r^2\n"
+            "    # Validate input\n"
+            "    if radius < 0:\n"
+            '        raise ValueError("Radius cannot be negative")\n'
+            "    # Compute and return area\n"
+            "    area = math.pi * radius ** 2\n"
+            "    return round(area, 6)\n"
+        ),
+        _incorrect_impl=(
+            "import math\n"
+            "\n"
+            "def circle_area(radius: float) -> float:\n"
+            "    return math.pi * radius\n"
+        ),
     ),
     EvalProblem(
         category="instruction_following",
@@ -254,6 +281,27 @@ INSTRUCTION_EXPERT_PROBLEMS: List[EvalProblem] = [
         ),
         check=_check_constrained_factorial,
         max_tokens=2048,
+        function_signature="def constrained_factorial(n: int) -> int:",
+        test_cases=[
+            {"input": "0", "expected_output": 1},
+            {"input": "1", "expected_output": 1},
+            {"input": "5", "expected_output": 120},
+            {"input": "10", "expected_output": 3628800},
+            {"input": "3", "expected_output": 6},
+            {"input": "7", "expected_output": 5040},
+        ],
+        _correct_impl=(
+            "def constrained_factorial(n: int) -> int:\n"
+            "    if n <= 1:\n"
+            "        return 1\n"
+            "    return n * constrained_factorial(n - 1)\n"
+        ),
+        _incorrect_impl=(
+            "def constrained_factorial(n: int) -> int:\n"
+            "    if n <= 1:\n"
+            "        return 0\n"
+            "    return n * constrained_factorial(n - 1)\n"
+        ),
     ),
     EvalProblem(
         category="instruction_following",
@@ -271,6 +319,134 @@ INSTRUCTION_EXPERT_PROBLEMS: List[EvalProblem] = [
         ),
         check=_check_library_schema,
         max_tokens=2048,
+        function_signature="def library_schema(entity: str = '') -> dict:",
+        test_cases=[
+            {
+                "input": "'Book'",
+                "expected_output": {
+                    "fields": {
+                        "id": "int",
+                        "title": "str",
+                        "isbn": "str",
+                        "author_id": "int",
+                        "publication_year": "int",
+                    },
+                    "required": ["id", "title", "author_id"],
+                },
+            },
+            {
+                "input": "'Author'",
+                "expected_output": {
+                    "fields": {
+                        "id": "int",
+                        "name": "str",
+                        "birth_year": "int",
+                        "nationality": "str",
+                    },
+                    "required": ["id", "name"],
+                },
+            },
+            {
+                "input": "'Loan'",
+                "expected_output": {
+                    "fields": {
+                        "id": "int",
+                        "book_id": "int",
+                        "borrower_name": "str",
+                        "due_date": "str",
+                        "returned": "bool",
+                    },
+                    "required": ["id", "book_id", "borrower_name"],
+                },
+            },
+            {
+                "input": "''",
+                "expected_output": {
+                    "Book": {
+                        "fields": {
+                            "id": "int",
+                            "title": "str",
+                            "isbn": "str",
+                            "author_id": "int",
+                            "publication_year": "int",
+                        },
+                        "required": ["id", "title", "author_id"],
+                    },
+                    "Author": {
+                        "fields": {
+                            "id": "int",
+                            "name": "str",
+                            "birth_year": "int",
+                            "nationality": "str",
+                        },
+                        "required": ["id", "name"],
+                    },
+                    "Loan": {
+                        "fields": {
+                            "id": "int",
+                            "book_id": "int",
+                            "borrower_name": "str",
+                            "due_date": "str",
+                            "returned": "bool",
+                        },
+                        "required": ["id", "book_id", "borrower_name"],
+                    },
+                },
+            },
+            {
+                "input": "'Unknown'",
+                "expected_output": {},
+            },
+        ],
+        _correct_impl=(
+            "def library_schema(entity: str = '') -> dict:\n"
+            "    schema = {\n"
+            '        "Book": {\n'
+            '            "fields": {\n'
+            '                "id": "int",\n'
+            '                "title": "str",\n'
+            '                "isbn": "str",\n'
+            '                "author_id": "int",\n'
+            '                "publication_year": "int"\n'
+            "            },\n"
+            '            "required": ["id", "title", "author_id"]\n'
+            "        },\n"
+            '        "Author": {\n'
+            '            "fields": {\n'
+            '                "id": "int",\n'
+            '                "name": "str",\n'
+            '                "birth_year": "int",\n'
+            '                "nationality": "str"\n'
+            "            },\n"
+            '            "required": ["id", "name"]\n'
+            "        },\n"
+            '        "Loan": {\n'
+            '            "fields": {\n'
+            '                "id": "int",\n'
+            '                "book_id": "int",\n'
+            '                "borrower_name": "str",\n'
+            '                "due_date": "str",\n'
+            '                "returned": "bool"\n'
+            "            },\n"
+            '            "required": ["id", "book_id", "borrower_name"]\n'
+            "        }\n"
+            "    }\n"
+            "    if entity:\n"
+            "        return schema.get(entity, {})\n"
+            "    return schema\n"
+        ),
+        _incorrect_impl=(
+            "def library_schema(entity: str = '') -> dict:\n"
+            "    schema = {\n"
+            '        "Book": {\n'
+            '            "fields": {"title": "str"},\n'
+            '            "required": ["title"]\n'
+            "        }\n"
+            "    }\n"
+            "    if entity:\n"
+            "        return schema.get(entity, {})\n"
+            "    return schema\n"
+        ),
     ),
     EvalProblem(
         category="instruction_following",
@@ -287,5 +463,27 @@ INSTRUCTION_EXPERT_PROBLEMS: List[EvalProblem] = [
         ),
         check=_check_adversarial_transform,
         max_tokens=2048,
+        function_signature="def adversarial_transform(text: str) -> str:",
+        test_cases=[
+            {"input": "'hello'", "expected_output": "OLLEH"},
+            {"input": "'Hello World'", "expected_output": "OLLEh DLROw"},
+            {"input": "''", "expected_output": ""},
+            {"input": "'a'", "expected_output": "A"},
+            {"input": "'ABC'", "expected_output": "cba"},
+            {"input": "'Test Case'", "expected_output": "TSEt ESAc"},
+        ],
+        _correct_impl=(
+            "def adversarial_transform(text: str) -> str:\n"
+            "    words = text.split()\n"
+            "    transformed = []\n"
+            "    for word in words:\n"
+            "        reversed_word = word[::-1]\n"
+            "        swapped = reversed_word.swapcase()\n"
+            "        transformed.append(swapped)\n"
+            "    return ' '.join(transformed)\n"
+        ),
+        _incorrect_impl=(
+            "def adversarial_transform(text: str) -> str:\n" "    return text.upper()\n"
+        ),
     ),
 ]
