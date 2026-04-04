@@ -1,7 +1,7 @@
 {
   "milestone": "scoring-display",
-  "round": 1,
-  "status": "fail",
+  "round": 2,
+  "status": "pass",
   "validatorsRun": {
     "test": {
       "passed": true,
@@ -20,34 +20,19 @@
     }
   },
   "reviewsSummary": {
-    "total": 3,
-    "passed": 2,
-    "failed": 1,
-    "failedFeatures": [
-      "readme-table-weighted-scoring"
-    ]
+    "total": 1,
+    "passed": 1,
+    "failed": 0,
+    "failedFeatures": []
   },
-  "blockingIssues": [
-    {
-      "featureId": "readme-table-weighted-scoring",
-      "severity": "blocking",
-      "description": "Old CSV fallback behavior is incorrect: README quality cell formatting prioritizes weighted_pct even when weighted scoring drops unknown legacy problem IDs, yielding misleading primary quality output instead of required flat-pass-rate fallback."
-    }
-  ],
+  "blockingIssues": [],
   "appliedUpdates": [],
-  "suggestedGuidanceUpdates": [
-    {
-      "target": "skills/python-worker",
-      "suggestion": "Tighten validation of required skill commands so handoff.skillFeedback.followedProcedure cannot be marked true when required verification commands are missing from evidence.",
-      "evidence": "weighted-scoring-module review noted python-worker requires tests/test_quality_benchmarks.py, but handoff marked followedProcedure=true without that command in verification.",
-      "isSystemic": true
-    }
-  ],
+  "suggestedGuidanceUpdates": [],
   "rejectedObservations": [
     {
-      "observation": "Shared architecture documentation appears stale on scoring semantics versus current tier-weighted implementation.",
+      "observation": "Architecture docs remain out of sync with current scoring implementation details.",
       "reason": "already-documented"
     }
   ],
-  "previousRound": null
+  "previousRound": ".factory/validation/scoring-display/scrutiny/synthesis.round1.json"
 }
