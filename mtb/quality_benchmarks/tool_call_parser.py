@@ -230,7 +230,14 @@ def _fix_single_quotes(text: str) -> str:
 
     This is a best-effort transformation for model outputs that use
     Python-style single quotes instead of JSON double quotes.
+
+    Escaped apostrophes (\\') inside values are preserved by temporarily
+    replacing them with a placeholder before the quote swap.
     """
+    # Preserve escaped apostrophes (e.g., it\'s) by replacing with placeholder
+    _ESCAPED_APOS_PLACEHOLDER = "\x00ESCAPED_APOS\x00"
+    text = text.replace("\\'", _ESCAPED_APOS_PLACEHOLDER)
+
     # Replace single quotes that are likely JSON delimiters
     # This is a simple heuristic: replace ' with " when it appears
     # at typical JSON boundaries
@@ -247,7 +254,11 @@ def _fix_single_quotes(text: str) -> str:
         else:
             result.append(ch)
         i += 1
-    return "".join(result)
+    fixed = "".join(result)
+
+    # Restore escaped apostrophes
+    fixed = fixed.replace(_ESCAPED_APOS_PLACEHOLDER, "'")
+    return fixed
 
 
 def _extract_tool_calls_from_parsed(parsed: object) -> list[ToolCall]:

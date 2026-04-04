@@ -706,20 +706,22 @@ AA_ALL_REQUIRED_ARGS = EvalProblem(
 
 
 def _check_aa_preserve_exact_strings(response: str) -> bool:
-    """Check model preserves exact string values without modification."""
+    """Check model preserves exact string values without modification.
+
+    Requires exact command equality (with normalized whitespace) rather
+    than broad substring containment, to prevent altered commands from
+    passing the check.
+    """
     calls = _parse_response_tool_calls(response)
     if not calls:
         return False
+    expected_command = "grep -rn 'TODO' src/"
     for call in calls:
         if call.name == "execute_command":
             command = call.arguments.get("command", "")
-            # The exact command should be preserved
-            if (
-                isinstance(command, str)
-                and "grep" in command
-                and "-rn" in command
-                and "TODO" in command
-                and "src/" in command
+            # Require exact command equality with normalized whitespace
+            if isinstance(command, str) and " ".join(command.split()) == " ".join(
+                expected_command.split()
             ):
                 return True
     return False
@@ -1655,7 +1657,12 @@ FC_MULTIPLE_TOOLS_SINGLE_RESPONSE = EvalProblem(
 
 
 def _check_fc_null_argument(response: str) -> bool:
-    """Check model handles null/None values in tool arguments correctly."""
+    """Check model handles null/None values in tool arguments correctly.
+
+    The prompt explicitly says 'use null (not an empty string)' to clear
+    the bio field. Therefore we require explicit JSON null (Python None)
+    for the bio argument. Empty string and omitted field are rejected.
+    """
     calls = _parse_response_tool_calls(response)
     if not calls:
         return False
@@ -1663,9 +1670,8 @@ def _check_fc_null_argument(response: str) -> bool:
         if c.name == "update_profile":
             name_val = c.arguments.get("display_name", "")
             if isinstance(name_val, str) and "alex" in name_val.lower():
-                # Check bio is null or not present (both acceptable)
-                bio_val = c.arguments.get("bio")
-                if bio_val is None or bio_val == "" or "bio" not in c.arguments:
+                # Require explicit null: bio key must be present with value None
+                if "bio" in c.arguments and c.arguments["bio"] is None:
                     return True
     return False
 

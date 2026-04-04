@@ -34,6 +34,9 @@ from mtb.quality_benchmarks.eval_problem import EvalProblem
 from mtb.quality_benchmarks.run_quality_benchmark import run_quality_benchmark
 from mtb.quality_benchmarks.sandbox import SandboxResult
 
+# Resolve repo root relative to this test file to avoid hardcoded absolute paths
+_REPO_ROOT = Path(__file__).resolve().parent.parent
+
 # The create_benchmark function is imported inside run_quality_benchmark() via:
 #   from mtb.llm_benchmarks.run_llm_benchmark import create_benchmark
 # To mock it, we patch the module-level import path.
@@ -655,7 +658,7 @@ class TestCLIFlags:
 
         spec = importlib.util.spec_from_file_location(
             "run_quality_benchmarks",
-            "/Users/weae1504/Projects/mlx_transformers_benchmark/scripts/run_quality_benchmarks.py",
+            str(_REPO_ROOT / "scripts" / "run_quality_benchmarks.py"),
         )
         module = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(module)
@@ -1139,7 +1142,7 @@ class TestReadmeToolCallingAnnotation:
 
         spec = importlib.util.spec_from_file_location(
             "update_readme_table",
-            "/Users/weae1504/Projects/mlx_transformers_benchmark/scripts/update_readme_table.py",
+            str(_REPO_ROOT / "scripts" / "update_readme_table.py"),
         )
         module = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(module)
@@ -1152,9 +1155,7 @@ class TestReadmeToolCallingAnnotation:
 
     def test_tool_calling_in_table_header(self):
         """The table generator includes 'Tool Calling' in column headers."""
-        source_code = open(
-            "/Users/weae1504/Projects/mlx_transformers_benchmark/scripts/update_readme_table.py"
-        ).read()
+        source_code = (_REPO_ROOT / "scripts" / "update_readme_table.py").read_text()
         assert "Tool Calling" in source_code
 
 

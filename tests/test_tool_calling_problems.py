@@ -789,6 +789,26 @@ class TestArgumentAccuracyFail:
         )
         assert _check_aa_preserve_exact_strings(response) is False
 
+    def test_aa_preserve_exact_strings_altered_command(self):
+        """Command with same substrings but different structure must fail."""
+        response = json.dumps(
+            {
+                "name": "execute_command",
+                "arguments": {"command": "grep -rn 'TODO' src/ --include='*.py'"},
+            }
+        )
+        assert _check_aa_preserve_exact_strings(response) is False
+
+    def test_aa_preserve_exact_strings_reordered_flags(self):
+        """Command with reordered flags must fail — exact string required."""
+        response = json.dumps(
+            {
+                "name": "execute_command",
+                "arguments": {"command": "grep -n -r 'TODO' src/"},
+            }
+        )
+        assert _check_aa_preserve_exact_strings(response) is False
+
     def test_aa_preserve_exact_strings_no_tool(self):
         response = "Sure, I'll run grep -rn 'TODO' src/ for you."
         assert _check_aa_preserve_exact_strings(response) is False
@@ -1430,12 +1450,22 @@ class TestFormatCompliancePass:
         )
         assert _check_fc_null_argument(response) is True
 
-    def test_fc_null_argument_pass_without_bio(self):
-        """Not including bio at all is also acceptable."""
+    def test_fc_null_argument_rejects_omitted_bio(self):
+        """Omitting bio is NOT acceptable — must be explicit null."""
         response = json.dumps(
             {"name": "update_profile", "arguments": {"display_name": "Alex"}}
         )
-        assert _check_fc_null_argument(response) is True
+        assert _check_fc_null_argument(response) is False
+
+    def test_fc_null_argument_rejects_empty_string_bio(self):
+        """Empty string bio is NOT acceptable — must be explicit null."""
+        response = json.dumps(
+            {
+                "name": "update_profile",
+                "arguments": {"display_name": "Alex", "bio": ""},
+            }
+        )
+        assert _check_fc_null_argument(response) is False
 
     def test_fc_empty_string_pass(self):
         response = json.dumps(

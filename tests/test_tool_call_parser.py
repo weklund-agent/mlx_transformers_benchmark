@@ -390,6 +390,35 @@ class TestMalformedJson:
         assert result[0].name == "get_weather"
         assert result[0].arguments == {"location": "SF"}
 
+    def test_single_quotes_with_escaped_apostrophe(self):
+        """Single-quoted JSON with escaped apostrophes preserves the apostrophe.
+
+        Model output like: {'name': 'send_message', 'arguments': {'text': 'it\\'s fine'}}
+        The escaped apostrophe in the value should be preserved as "it's fine",
+        not corrupted by the single-quote → double-quote conversion.
+        """
+        response = (
+            "<tool_call>{'name': 'send_message', "
+            "'arguments': {'text': 'it\\'s fine'}}</tool_call>"
+        )
+        result = parse_tool_calls(response)
+        assert result is not None
+        assert len(result) == 1
+        assert result[0].name == "send_message"
+        assert result[0].arguments["text"] == "it's fine"
+
+    def test_single_quotes_with_multiple_escaped_apostrophes(self):
+        """Multiple escaped apostrophes in single-quoted JSON are all preserved."""
+        response = (
+            "<tool_call>{'name': 'send_message', "
+            "'arguments': {'text': 'it\\'s Bob\\'s turn'}}</tool_call>"
+        )
+        result = parse_tool_calls(response)
+        assert result is not None
+        assert len(result) == 1
+        assert result[0].name == "send_message"
+        assert result[0].arguments["text"] == "it's Bob's turn"
+
     def test_completely_invalid_json(self):
         """Completely invalid content inside tags."""
         response = "<tool_call>not json at all</tool_call>"
