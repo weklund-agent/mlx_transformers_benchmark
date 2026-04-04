@@ -1,0 +1,231 @@
+{
+  "groupId": "integration-real-model",
+  "testedAt": "2026-04-04T21:33:00Z",
+  "isolation": {
+    "surface": "shell-pytest (integration)",
+    "repoRoot": "/Users/weae1504/Projects/mlx_transformers_benchmark",
+    "missionDir": "/Users/weae1504/.factory/missions/7a98117d-95dc-4445-8b4e-9c6c1c89f9a0",
+    "milestone": "contamination-integration"
+  },
+  "toolsUsed": [
+    "shell",
+    "pytest",
+    "rg"
+  ],
+  "assertions": [
+    {
+      "id": "VAL-INTEG-001",
+      "title": "Model loads and generates code for a coding problem",
+      "status": "pass",
+      "steps": [
+        {
+          "action": "Run pytest integration suite including test_model_loads_and_generates_code",
+          "expected": "Test passes with non-empty code-like response",
+          "observed": "test_model_loads_and_generates_code PASSED"
+        }
+      ],
+      "evidence": {
+        "commandOutput": [
+          "contamination-integration/integration-real-model/val-integ-001-004-008-010-integration-run.txt"
+        ],
+        "pytest": "tests/integration/test_full_pipeline.py::test_model_loads_and_generates_code PASSED"
+      },
+      "issues": null
+    },
+    {
+      "id": "VAL-INTEG-002",
+      "title": "Generated code passes the check function",
+      "status": "pass",
+      "steps": [
+        {
+          "action": "Run pytest integration suite including test_generated_code_passes_check",
+          "expected": "Fizzbuzz generated output passes check",
+          "observed": "test_generated_code_passes_check PASSED"
+        }
+      ],
+      "evidence": {
+        "commandOutput": [
+          "contamination-integration/integration-real-model/val-integ-001-004-008-010-integration-run.txt"
+        ],
+        "pytest": "tests/integration/test_full_pipeline.py::test_generated_code_passes_check PASSED"
+      },
+      "issues": null
+    },
+    {
+      "id": "VAL-INTEG-003",
+      "title": "Model generates tool calls and parser extracts them",
+      "status": "pass",
+      "steps": [
+        {
+          "action": "Run pytest integration suite including test_model_generates_tool_calls",
+          "expected": "Tool-calling output is parseable / accepted",
+          "observed": "test_model_generates_tool_calls PASSED"
+        }
+      ],
+      "evidence": {
+        "commandOutput": [
+          "contamination-integration/integration-real-model/val-integ-001-004-008-010-integration-run.txt"
+        ],
+        "pytest": "tests/integration/test_full_pipeline.py::test_model_generates_tool_calls PASSED"
+      },
+      "issues": null
+    },
+    {
+      "id": "VAL-INTEG-004",
+      "title": "Weighted scoring applied to real model results",
+      "status": "pass",
+      "steps": [
+        {
+          "action": "Run pytest integration suite including test_weighted_scoring_on_real_results",
+          "expected": "Weighted score computed and validated",
+          "observed": "test_weighted_scoring_on_real_results PASSED"
+        }
+      ],
+      "evidence": {
+        "commandOutput": [
+          "contamination-integration/integration-real-model/val-integ-001-004-008-010-integration-run.txt"
+        ],
+        "pytest": "tests/integration/test_full_pipeline.py::test_weighted_scoring_on_real_results PASSED"
+      },
+      "issues": null
+    },
+    {
+      "id": "VAL-INTEG-005",
+      "title": "Integration tests marked as slow/integration",
+      "status": "pass",
+      "steps": [
+        {
+          "action": "Collect tests with -m integration",
+          "expected": "Integration marker selects integration tests",
+          "observed": "8 tests collected"
+        },
+        {
+          "action": "Collect tests with -m 'not integration'",
+          "expected": "No integration tests collected",
+          "observed": "no tests collected (8 deselected)"
+        }
+      ],
+      "evidence": {
+        "commandOutput": [
+          "contamination-integration/integration-real-model/val-integ-005-collect-integration.txt",
+          "contamination-integration/integration-real-model/val-integ-005-collect-not-integration.txt"
+        ],
+        "pytest": "Integration collect = 8; non-integration collect = 0"
+      },
+      "issues": null
+    },
+    {
+      "id": "VAL-INTEG-006",
+      "title": "Default pytest run excludes integration tests",
+      "status": "pass",
+      "steps": [
+        {
+          "action": "Run collect-only without explicit marker",
+          "expected": "Integration tests excluded by default",
+          "observed": "no tests collected (8 deselected)"
+        },
+        {
+          "action": "Inspect pytest config addopts",
+          "expected": "Default marker exclusion configured",
+          "observed": "addopts = -m 'not integration'"
+        }
+      ],
+      "evidence": {
+        "commandOutput": [
+          "contamination-integration/integration-real-model/val-integ-006-default-exclusion.txt",
+          "contamination-integration/integration-real-model/val-integ-006-pyproject-addopts.txt"
+        ],
+        "pytest": "Default deselection confirmed"
+      },
+      "issues": null
+    },
+    {
+      "id": "VAL-INTEG-007",
+      "title": "CI workflow supports fast and slow test runs",
+      "status": "pass",
+      "steps": [
+        {
+          "action": "Search CI workflow and Makefile for separate unit/integration targets",
+          "expected": "Distinct fast/unit and slow/integration commands exist",
+          "observed": "Found unit-tests + integration-tests jobs and test/test_integration targets"
+        }
+      ],
+      "evidence": {
+        "commandOutput": [
+          "contamination-integration/integration-real-model/val-integ-007-ci-separation.txt"
+        ],
+        "files": [
+          ".github/workflows/tests-mac.yaml",
+          "Makefile"
+        ]
+      },
+      "issues": null
+    },
+    {
+      "id": "VAL-INTEG-008",
+      "title": "Integration test timeout is reasonable",
+      "status": "pass",
+      "steps": [
+        {
+          "action": "Run full integration suite with pytest-timeout enabled",
+          "expected": "Tests complete within configured timeout",
+          "observed": "8 passed in 44.61s; timeout plugin active at 600s"
+        },
+        {
+          "action": "Inspect timeout decorators",
+          "expected": "Single tests use 300s and multi-problem tests use 600s",
+          "observed": "Timeout markers present: 300 and 600"
+        }
+      ],
+      "evidence": {
+        "commandOutput": [
+          "contamination-integration/integration-real-model/val-integ-001-004-008-010-integration-run.txt",
+          "contamination-integration/integration-real-model/val-integ-008-timeout-markers.txt"
+        ],
+        "pytest": "No timeout failures"
+      },
+      "issues": null
+    },
+    {
+      "id": "VAL-INTEG-009",
+      "title": "Model cleanup after integration tests",
+      "status": "pass",
+      "steps": [
+        {
+          "action": "Run integration suite including test_model_cleanup_after_tests",
+          "expected": "Teardown executes and cleanup assertions pass",
+          "observed": "test_model_cleanup_after_tests PASSED"
+        }
+      ],
+      "evidence": {
+        "commandOutput": [
+          "contamination-integration/integration-real-model/val-integ-001-004-008-010-integration-run.txt"
+        ],
+        "pytest": "tests/integration/test_full_pipeline.py::test_model_cleanup_after_tests PASSED"
+      },
+      "issues": null
+    },
+    {
+      "id": "VAL-INTEG-010",
+      "title": "Sandbox execution for coding problems",
+      "status": "pass",
+      "steps": [
+        {
+          "action": "Run integration suite including sandbox and full pipeline tests",
+          "expected": "Sandbox executes model code and pipeline yields DataFrame with passed column",
+          "observed": "test_sandbox_execution_with_real_model_output PASSED and test_run_quality_benchmark_full_pipeline PASSED"
+        }
+      ],
+      "evidence": {
+        "commandOutput": [
+          "contamination-integration/integration-real-model/val-integ-001-004-008-010-integration-run.txt"
+        ],
+        "pytest": "Sandbox + full pipeline integration tests passed"
+      },
+      "issues": null
+    }
+  ],
+  "frictions": [],
+  "blockers": [],
+  "summary": "Tested 10 assertions (VAL-INTEG-001..010): 10 passed, 0 failed, 0 blocked."
+}
