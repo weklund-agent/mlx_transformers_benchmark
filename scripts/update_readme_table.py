@@ -47,15 +47,24 @@ MODEL_META = {
     "lfm2-24b-a2b": {"display": "LFM2-24B-A2B", "arch": "2B MoE"},
     "qwen-3.5-35b-a3b": {"display": "Qwen 3.5-35B-A3B", "arch": "3B MoE"},
     "qwen-3.5-27b": {"display": "Qwen 3.5-27B", "arch": "27B dense"},
-    "qwen-3.5-27b-claude-opus-distilled": {"display": "Qwen 3.5-27B Opus Distilled", "arch": "27B dense"},
+    "qwen-3.5-27b-claude-opus-distilled": {
+        "display": "Qwen 3.5-27B Opus Distilled",
+        "arch": "27B dense",
+    },
     "qwen-3.5-9b": {"display": "Qwen 3.5-9B", "arch": "9B dense"},
     "qwen-3.5-4b": {"display": "Qwen 3.5-4B", "arch": "4B dense"},
     "qwen-3.5-2b": {"display": "Qwen 3.5-2B", "arch": "2B dense"},
     "qwen-3.5-0.8b": {"display": "Qwen 3.5-0.8B", "arch": "0.8B dense"},
     "nemotron-nano-9b-v2": {"display": "Nemotron-Nano-9B-v2", "arch": "9B dense"},
     "nemotron-3-nano-4b": {"display": "Nemotron-3-Nano-4B", "arch": "4B dense"},
-    "nemotron-cascade-2-30b-a3b": {"display": "Nemotron-Cascade-2-30B-A3B", "arch": "3B MoE"},
-    "Deepseek-R1-0528_Qwen3-8B": {"display": "DeepSeek-R1-0528-Qwen3-8B", "arch": "8B dense"},
+    "nemotron-cascade-2-30b-a3b": {
+        "display": "Nemotron-Cascade-2-30B-A3B",
+        "arch": "3B MoE",
+    },
+    "Deepseek-R1-0528_Qwen3-8B": {
+        "display": "DeepSeek-R1-0528-Qwen3-8B",
+        "arch": "8B dense",
+    },
     "Deepseek-R1-Distill-7B": {"display": "DeepSeek-R1-Distill-7B", "arch": "7B dense"},
     "gemma-3-4b-it": {"display": "Gemma 3-4B-it", "arch": "4B dense"},
     "gemma-3-4b-it-qat": {"display": "Gemma 3-4B-it QAT", "arch": "4B dense"},
@@ -132,11 +141,16 @@ def load_speed_data(
         all_df = all_df[all_df["name"].isin(models)]
 
     # Keep latest per model/dtype/hardware
-    all_df = all_df.sort_values("_source_dir").groupby(
-        ["hardware", "name", "dtype"]
-    ).last().reset_index()
+    all_df = (
+        all_df.sort_values("_source_dir")
+        .groupby(["hardware", "name", "dtype"])
+        .last()
+        .reset_index()
+    )
 
-    return all_df[["hardware", "name", "dtype", "generation_tps", "prompt_tps", "peak_memory_gib"]]
+    return all_df[
+        ["hardware", "name", "dtype", "generation_tps", "prompt_tps", "peak_memory_gib"]
+    ]
 
 
 def load_quality_data(
@@ -160,21 +174,30 @@ def load_quality_data(
         all_df = all_df[all_df["model"].isin(models)]
 
     # Keep latest per model/dtype/hardware/problem
-    all_df = all_df.sort_values("_source_dir").groupby(
-        ["hardware", "model", "dtype", "category", "problem"]
-    ).last().reset_index()
+    all_df = (
+        all_df.sort_values("_source_dir")
+        .groupby(["hardware", "model", "dtype", "category", "problem"])
+        .last()
+        .reset_index()
+    )
 
     return all_df
 
 
-def compute_quality_summary(quality_df: pd.DataFrame, hardware: str, dtype: str = "int4") -> pd.DataFrame:
-    df = quality_df[(quality_df["dtype"] == dtype) & (quality_df["hardware"] == hardware)].copy()
+def compute_quality_summary(
+    quality_df: pd.DataFrame, hardware: str, dtype: str = "int4"
+) -> pd.DataFrame:
+    df = quality_df[
+        (quality_df["dtype"] == dtype) & (quality_df["hardware"] == hardware)
+    ].copy()
     if df.empty:
         return pd.DataFrame()
 
-    overall = df.groupby("model").agg(
-        passed=("passed", "sum"), total=("passed", "count")
-    ).reset_index()
+    overall = (
+        df.groupby("model")
+        .agg(passed=("passed", "sum"), total=("passed", "count"))
+        .reset_index()
+    )
     overall["quality_pct"] = (overall["passed"] / overall["total"] * 100).round(1)
 
     cats = {}
@@ -182,9 +205,11 @@ def compute_quality_summary(quality_df: pd.DataFrame, hardware: str, dtype: str 
         cat_df = df[df["category"] == cat]
         if cat_df.empty:
             continue
-        cat_sum = cat_df.groupby("model").agg(
-            p=("passed", "sum"), t=("passed", "count")
-        ).reset_index()
+        cat_sum = (
+            cat_df.groupby("model")
+            .agg(p=("passed", "sum"), t=("passed", "count"))
+            .reset_index()
+        )
         cat_sum[cat] = cat_sum.apply(lambda r: f"{int(r['p'])}/{int(r['t'])}", axis=1)
         cats[cat] = cat_sum[["model", cat]]
 
@@ -200,7 +225,9 @@ def pick_quick_picks(combined: pd.DataFrame) -> List[dict]:
     if combined.empty:
         return picks
 
-    has_quality = "quality_pct" in combined.columns and combined["quality_pct"].notna().any()
+    has_quality = (
+        "quality_pct" in combined.columns and combined["quality_pct"].notna().any()
+    )
 
     if has_quality:
         # Best overall: highest quality, then fastest
@@ -284,7 +311,9 @@ def generate_hardware_table(
     lines = []
 
     if has_quality and has_coding and has_tool and has_reasoning:
-        lines.append("| Model | Arch | Gen tok/s | Quality | Coding | Tool Calling | Reasoning | Memory | Min HW |")
+        lines.append(
+            "| Model | Arch | Gen tok/s | Quality | Coding | Tool Calling | Reasoning | Memory | Min HW |"
+        )
         lines.append("|---|---|---:|---:|---|---|---|---:|---|")
     elif has_quality:
         lines.append("| Model | Arch | Gen tok/s | Quality | Memory | Min HW |")
@@ -303,16 +332,28 @@ def generate_hardware_table(
 
         if has_quality and has_coding and has_tool and has_reasoning:
             qual = r.get("quality_pct")
-            qual_str = f"**{qual}%**" if pd.notna(qual) and qual >= top_quality - 0.1 else (f"{qual}%" if pd.notna(qual) else "--")
+            qual_str = (
+                f"**{qual}%**"
+                if pd.notna(qual) and qual >= top_quality - 0.1
+                else (f"{qual}%" if pd.notna(qual) else "--")
+            )
             coding = r.get("coding", "--") if pd.notna(r.get("coding")) else "--"
-            tool_calling = r.get("tool_calling", "--") if pd.notna(r.get("tool_calling")) else "--"
-            reasoning = r.get("reasoning", "--") if pd.notna(r.get("reasoning")) else "--"
+            tool_calling = (
+                r.get("tool_calling", "--") if pd.notna(r.get("tool_calling")) else "--"
+            )
+            reasoning = (
+                r.get("reasoning", "--") if pd.notna(r.get("reasoning")) else "--"
+            )
             lines.append(
                 f"| {name} | {r['arch']} | {tps_str} | {qual_str} | {coding} | {tool_calling} | {reasoning} | {r['peak_memory_gib']:.1f} GiB | {r['min_hw']} |"
             )
         elif has_quality:
             qual = r.get("quality_pct")
-            qual_str = f"**{qual}%**" if pd.notna(qual) and qual >= top_quality - 0.1 else (f"{qual}%" if pd.notna(qual) else "--")
+            qual_str = (
+                f"**{qual}%**"
+                if pd.notna(qual) and qual >= top_quality - 0.1
+                else (f"{qual}%" if pd.notna(qual) else "--")
+            )
             lines.append(
                 f"| {name} | {r['arch']} | {tps_str} | {qual_str} | {r['peak_memory_gib']:.1f} GiB | {r['min_hw']} |"
             )
@@ -334,7 +375,11 @@ def generate_hardware_table(
             name = format_model_name(r["name"])
             arch = get_arch(r["name"])
             min_hw = _min_hw_from_memory(r["peak_memory_gib"])
-            tps_str = f"**{r['generation_tps']:.1f}**" if r["generation_tps"] >= int8_speed["generation_tps"].max() * 0.7 else f"{r['generation_tps']:.1f}"
+            tps_str = (
+                f"**{r['generation_tps']:.1f}**"
+                if r["generation_tps"] >= int8_speed["generation_tps"].max() * 0.7
+                else f"{r['generation_tps']:.1f}"
+            )
             lines.append(
                 f"| {name} | {arch} | {tps_str} | {r['prompt_tps']:.0f} | {r['peak_memory_gib']:.1f} GiB | {min_hw} |"
             )
@@ -417,14 +462,20 @@ def generate_cross_hardware_summary(
         fastest = fast_candidates.sort_values("generation_tps", ascending=False).iloc[0]
         # Try to pick a different model than best overall
         if fastest["name"] == best["name"] and len(fast_candidates) > 1:
-            fastest = fast_candidates.sort_values("generation_tps", ascending=False).iloc[1]
+            fastest = fast_candidates.sort_values(
+                "generation_tps", ascending=False
+            ).iloc[1]
         if has_quality and pd.notna(fastest.get("quality_pct")):
             fast_str = f"{format_model_name(fastest['name'])} ({fastest['generation_tps']:.0f} tok/s, {fastest['quality_pct']}%)"
         else:
             fast_str = f"{format_model_name(fastest['name'])} ({fastest['generation_tps']:.0f} tok/s)"
 
         # Best coder: highest quality with perfect coding, then fastest
-        if has_quality and "coding" in combined.columns and combined["coding"].notna().any():
+        if (
+            has_quality
+            and "coding" in combined.columns
+            and combined["coding"].notna().any()
+        ):
             with_quality = combined[combined["quality_pct"].notna()]
             coders = with_quality.sort_values(
                 ["quality_pct", "generation_tps"], ascending=[False, False]
@@ -470,7 +521,9 @@ def generate_tables(
     lines = []
     lines.append(f"> MLX Metal | int4 quantization | {today}")
     lines.append("> Speed: 1024 prompt tokens, 100 generated tokens")
-    lines.append("> Quality: 46 problems across coding, reasoning, tool calling, math, writing (3 runs each, majority vote)")
+    lines.append(
+        "> Quality: 81 problems across coding, reasoning, tool calling, math, writing (3 runs each, majority vote)"
+    )
     lines.append("")
 
     # Cross-hardware summary at top
@@ -537,10 +590,13 @@ def update_readme(
                 readme[:start_idx]
                 + f"## Agentic Coding Model Benchmarks (MLX on Apple Silicon)\n\n"
                 + f"{BEGIN_MARKER}\n\n{table_content}\n\n{END_MARKER}\n\n"
-                + readme[heading_after + 1:]
+                + readme[heading_after + 1 :]
             )
         else:
-            new_readme = readme + f"\n\n## Agentic Coding Model Benchmarks (MLX on Apple Silicon)\n\n{BEGIN_MARKER}\n\n{table_content}\n\n{END_MARKER}\n"
+            new_readme = (
+                readme
+                + f"\n\n## Agentic Coding Model Benchmarks (MLX on Apple Silicon)\n\n{BEGIN_MARKER}\n\n{table_content}\n\n{END_MARKER}\n"
+            )
 
     if dry_run:
         print("=== DRY RUN — would write: ===")

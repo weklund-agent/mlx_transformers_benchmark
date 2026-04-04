@@ -1,18 +1,23 @@
-"""Tests for quality benchmark runner integration with code execution.
+"""Tests for quality benchmark runner integration with code execution and tool calling.
 
 Verifies:
 - Runner uses sandbox for problems with test_cases, check() for others
+- Runner uses structured tool call parsing for tool_calling problems
 - CSV output has execution detail columns for code-execution problems
+- CSV output has parsed_tool_calls column for tool calling problems
 - CLI preserves all existing flags
 - Sandbox timeout produces failure row, not crash
 - Majority vote logic correct for even/odd num_runs
 - Mixed problem types in single run handled correctly
 - Non-coding pattern-match problems produce identical results
 - Summary prints pass counts per category
+- Tool calling subcategory breakdowns in summary
 
 Maps to validation contract assertions:
-  VAL-RUNNER-001, -002, -004, -005, -009, -010, -011, -012
-  VAL-CROSS-001, -007, -008
+  VAL-RUNNER-001, -002, -003, -004, -005, -009, -010, -011, -012
+  VAL-CROSS-001, -002, -007, -008
+  VAL-TOOLCALL-904
+  VAL-MODULE-005
 """
 
 import math
@@ -774,3 +779,548 @@ class TestCompleteFlowMocked:
 
         assert df.iloc[0]["pass_count"] == 2
         assert df.iloc[0]["passed"] is True or df.iloc[0]["passed"] == True
+
+
+# ---------------------------------------------------------------------------
+# VAL-RUNNER-003: Tool-call problems use structured tool-call parser
+# ---------------------------------------------------------------------------
+
+
+class TestToolCallingEvaluation:
+    """Runner handles tool_calling category problems via structured parsing."""
+
+    def test_tool_calling_problem_uses_parser_and_check(self, tmp_path):
+        """Tool calling problem is evaluated via parse_tool_calls + check()."""
+        check_called = []
+
+        def tracking_check(response):
+            check_called.append(response)
+            # Simulate a passing check
+            return True
+
+        problem = EvalProblem(
+            category="tool_calling",
+            name="ts_test_tool",
+            prompt="Call the get_weather tool.",
+            check=tracking_check,
+            max_tokens=256,
+        )
+
+        # Model returns a valid tool call response
+        tool_call_response = '{"name": "get_weather", "arguments": {"city": "NYC"}}'
+        mock_benchmark = _mock_benchmark_factory([tool_call_response])
+        output_path = tmp_path / "results.csv"
+
+        with patch(
+            _CREATE_BENCHMARK_PATCH,
+            return_value=mock_benchmark,
+        ):
+            df = run_quality_benchmark(
+                model_spec=MagicMock(name="test-model"),
+                framework="mlx",
+                backend="metal",
+                dtype="int4",
+                output_path=output_path,
+                problems=[problem],
+                num_runs=1,
+                cooldown_time_fraction=0.0,
+            )
+
+        # check() should have been called
+        assert (
+            len(check_called) == 1
+        ), "check() should be called for tool_calling problem"
+        assert df.iloc[0]["passed"] is True or df.iloc[0]["passed"] == True
+
+    def test_tool_calling_logs_parsed_calls(self, tmp_path):
+        """Tool calling problems log parsed tool calls in CSV output."""
+        problem = EvalProblem(
+            category="tool_calling",
+            name="ts_test_logging",
+            prompt="Call the get_weather tool.",
+            check=lambda r: True,
+            max_tokens=256,
+        )
+
+        tool_call_response = '{"name": "get_weather", "arguments": {"city": "NYC"}}'
+        mock_benchmark = _mock_benchmark_factory([tool_call_response])
+        output_path = tmp_path / "results.csv"
+
+        with patch(
+            _CREATE_BENCHMARK_PATCH,
+            return_value=mock_benchmark,
+        ):
+            df = run_quality_benchmark(
+                model_spec=MagicMock(name="test-model"),
+                framework="mlx",
+                backend="metal",
+                dtype="int4",
+                output_path=output_path,
+                problems=[problem],
+                num_runs=1,
+                cooldown_time_fraction=0.0,
+            )
+
+        # parsed_tool_calls column should be present and populated
+        assert "parsed_tool_calls" in df.columns
+        parsed = df.iloc[0]["parsed_tool_calls"]
+        assert isinstance(parsed, str)
+        assert "get_weather" in parsed
+        assert "NYC" in parsed
+
+    def test_tool_calling_no_tool_calls_logs_null(self, tmp_path):
+        """When model response has no tool calls, parsed_tool_calls is 'null'."""
+        problem = EvalProblem(
+            category="tool_calling",
+            name="ec_test_no_tool",
+            prompt="What is 2 + 2?",
+            check=lambda r: "4" in r,
+            max_tokens=256,
+        )
+
+        # Model responds without any tool call
+        plain_response = "The answer is 4."
+        mock_benchmark = _mock_benchmark_factory([plain_response])
+        output_path = tmp_path / "results.csv"
+
+        with patch(
+            _CREATE_BENCHMARK_PATCH,
+            return_value=mock_benchmark,
+        ):
+            df = run_quality_benchmark(
+                model_spec=MagicMock(name="test-model"),
+                framework="mlx",
+                backend="metal",
+                dtype="int4",
+                output_path=output_path,
+                problems=[problem],
+                num_runs=1,
+                cooldown_time_fraction=0.0,
+            )
+
+        assert df.iloc[0]["parsed_tool_calls"] == "null"
+
+    def test_tool_calling_failing_check(self, tmp_path):
+        """Tool calling problem with failing check records failure."""
+        problem = EvalProblem(
+            category="tool_calling",
+            name="ts_test_fail",
+            prompt="Call search_flights.",
+            check=lambda r: False,  # always fail
+            max_tokens=256,
+        )
+
+        response = '{"name": "wrong_tool", "arguments": {}}'
+        mock_benchmark = _mock_benchmark_factory([response])
+        output_path = tmp_path / "results.csv"
+
+        with patch(
+            _CREATE_BENCHMARK_PATCH,
+            return_value=mock_benchmark,
+        ):
+            df = run_quality_benchmark(
+                model_spec=MagicMock(name="test-model"),
+                framework="mlx",
+                backend="metal",
+                dtype="int4",
+                output_path=output_path,
+                problems=[problem],
+                num_runs=1,
+                cooldown_time_fraction=0.0,
+            )
+
+        assert df.iloc[0]["passed"] is False or df.iloc[0]["passed"] == False
+
+    def test_tool_calling_execution_columns_nan(self, tmp_path):
+        """Tool calling problems have NaN execution columns (not code execution)."""
+        problem = EvalProblem(
+            category="tool_calling",
+            name="ts_test_exec_cols",
+            prompt="Call get_weather.",
+            check=lambda r: True,
+            max_tokens=256,
+        )
+
+        response = '{"name": "get_weather", "arguments": {"city": "NYC"}}'
+        mock_benchmark = _mock_benchmark_factory([response])
+        output_path = tmp_path / "results.csv"
+
+        with patch(
+            _CREATE_BENCHMARK_PATCH,
+            return_value=mock_benchmark,
+        ):
+            df = run_quality_benchmark(
+                model_spec=MagicMock(name="test-model"),
+                framework="mlx",
+                backend="metal",
+                dtype="int4",
+                output_path=output_path,
+                problems=[problem],
+                num_runs=1,
+                cooldown_time_fraction=0.0,
+            )
+
+        # Execution columns should be NaN for tool calling
+        row = df.iloc[0]
+        assert pd.isna(row["execution_stdout"])
+        assert pd.isna(row["execution_stderr"])
+        assert pd.isna(row["execution_exit_code"])
+        # But parsed_tool_calls should be populated
+        assert not pd.isna(row["parsed_tool_calls"])
+
+    def test_tool_calling_exception_in_check_no_crash(self, tmp_path):
+        """If check() raises, runner catches it and records failure."""
+
+        def bad_check(response):
+            raise RuntimeError("check exploded")
+
+        problem = EvalProblem(
+            category="tool_calling",
+            name="ts_test_exception",
+            prompt="Call get_weather.",
+            check=bad_check,
+            max_tokens=256,
+        )
+
+        response = '{"name": "get_weather", "arguments": {}}'
+        mock_benchmark = _mock_benchmark_factory([response])
+        output_path = tmp_path / "results.csv"
+
+        with patch(
+            _CREATE_BENCHMARK_PATCH,
+            return_value=mock_benchmark,
+        ):
+            df = run_quality_benchmark(
+                model_spec=MagicMock(name="test-model"),
+                framework="mlx",
+                backend="metal",
+                dtype="int4",
+                output_path=output_path,
+                problems=[problem],
+                num_runs=1,
+                cooldown_time_fraction=0.0,
+            )
+
+        # Runner should not crash, should record failure
+        assert len(df) == 1
+        assert df.iloc[0]["passed"] is False or df.iloc[0]["passed"] == False
+        assert df.iloc[0]["parsed_tool_calls"] == "null"
+
+
+# ---------------------------------------------------------------------------
+# VAL-CROSS-002: Tool-calling problem → parser → check → CSV end-to-end
+# ---------------------------------------------------------------------------
+
+
+class TestToolCallingEndToEnd:
+    """End-to-end test: tool_calling → parser → check → CSV."""
+
+    def test_tool_calling_full_flow(self, tmp_path):
+        """Full pipeline: tool calling problem → parser extracts calls → check validates → CSV correct."""
+        import json
+
+        from mtb.quality_benchmarks.tool_call_parser import parse_tool_calls
+
+        # Use a real-ish check function that uses the parser
+        def check_get_weather(response):
+            calls = parse_tool_calls(response)
+            if not calls:
+                return False
+            return any(
+                c.name == "get_weather" and c.arguments.get("city") == "NYC"
+                for c in calls
+            )
+
+        problem = EvalProblem(
+            category="tool_calling",
+            name="ts_e2e_weather",
+            prompt="Call get_weather for NYC.",
+            check=check_get_weather,
+            max_tokens=256,
+        )
+
+        # Correct tool call response
+        correct_response = json.dumps(
+            {"name": "get_weather", "arguments": {"city": "NYC"}}
+        )
+        mock_benchmark = _mock_benchmark_factory([correct_response])
+        output_path = tmp_path / "results.csv"
+
+        with patch(
+            _CREATE_BENCHMARK_PATCH,
+            return_value=mock_benchmark,
+        ):
+            df = run_quality_benchmark(
+                model_spec=MagicMock(name="test-model"),
+                framework="mlx",
+                backend="metal",
+                dtype="int4",
+                output_path=output_path,
+                problems=[problem],
+                num_runs=1,
+                cooldown_time_fraction=0.0,
+            )
+
+        assert len(df) == 1
+        row = df.iloc[0]
+
+        # Verify CSV columns
+        assert row["category"] == "tool_calling"
+        assert row["problem"] == "ts_e2e_weather"
+        assert row["passed"] is True or row["passed"] == True
+
+        # Verify parsed tool calls were logged
+        parsed_tc = row["parsed_tool_calls"]
+        assert isinstance(parsed_tc, str)
+        parsed_list = json.loads(parsed_tc)
+        assert len(parsed_list) == 1
+        assert parsed_list[0]["name"] == "get_weather"
+        assert parsed_list[0]["arguments"]["city"] == "NYC"
+
+        # Verify CSV was saved to disk
+        assert output_path.exists()
+        saved_df = pd.read_csv(output_path)
+        assert "parsed_tool_calls" in saved_df.columns
+
+    def test_tool_calling_wrong_tool_fails(self, tmp_path):
+        """Wrong tool call fails the check function in the full pipeline."""
+        from mtb.quality_benchmarks.tool_call_parser import parse_tool_calls
+
+        def check_search_flights(response):
+            calls = parse_tool_calls(response)
+            if not calls:
+                return False
+            return any(c.name == "search_flights" for c in calls)
+
+        problem = EvalProblem(
+            category="tool_calling",
+            name="ts_e2e_wrong_tool",
+            prompt="Search for flights.",
+            check=check_search_flights,
+            max_tokens=256,
+        )
+
+        # Wrong tool
+        wrong_response = '{"name": "get_weather", "arguments": {"city": "NYC"}}'
+        mock_benchmark = _mock_benchmark_factory([wrong_response])
+        output_path = tmp_path / "results.csv"
+
+        with patch(
+            _CREATE_BENCHMARK_PATCH,
+            return_value=mock_benchmark,
+        ):
+            df = run_quality_benchmark(
+                model_spec=MagicMock(name="test-model"),
+                framework="mlx",
+                backend="metal",
+                dtype="int4",
+                output_path=output_path,
+                problems=[problem],
+                num_runs=1,
+                cooldown_time_fraction=0.0,
+            )
+
+        assert df.iloc[0]["passed"] is False or df.iloc[0]["passed"] == False
+        # But tool calls were still parsed and logged
+        assert "get_weather" in df.iloc[0]["parsed_tool_calls"]
+
+
+# ---------------------------------------------------------------------------
+# VAL-TOOLCALL-904: update_readme_table.py includes tool calling in output
+# ---------------------------------------------------------------------------
+
+
+class TestReadmeToolCallingAnnotation:
+    """update_readme_table.py references tool calling in quality annotation."""
+
+    def test_problem_count_annotation_updated(self):
+        """The problem count annotation reflects 81 problems, not 46."""
+        import importlib.util
+
+        spec = importlib.util.spec_from_file_location(
+            "update_readme_table",
+            "/Users/weae1504/Projects/mlx_transformers_benchmark/scripts/update_readme_table.py",
+        )
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+
+        # Call generate_tables to get the output text
+        tables_text = module.generate_tables()
+
+        # Should mention 81 problems (updated from 46)
+        assert "81 problems" in tables_text
+
+    def test_tool_calling_in_table_header(self):
+        """The table generator includes 'Tool Calling' in column headers."""
+        source_code = open(
+            "/Users/weae1504/Projects/mlx_transformers_benchmark/scripts/update_readme_table.py"
+        ).read()
+        assert "Tool Calling" in source_code
+
+
+# ---------------------------------------------------------------------------
+# VAL-MODULE-005: Total problem count is approximately 85 (within 75-95)
+# ---------------------------------------------------------------------------
+
+
+class TestTotalProblemCount:
+    """Total problem count across all tiers is ~81 (within 75-95 range)."""
+
+    def test_total_count_in_range(self):
+        """Combined problem count is between 75 and 95."""
+        from mtb.quality_benchmarks import (
+            EVAL_PROBLEMS,
+            EXPERT_EVAL_PROBLEMS,
+            HARD_EVAL_PROBLEMS,
+            TOOL_CALLING_PROBLEMS,
+        )
+
+        total = (
+            len(EVAL_PROBLEMS)
+            + len(HARD_EVAL_PROBLEMS)
+            + len(EXPERT_EVAL_PROBLEMS)
+            + len(TOOL_CALLING_PROBLEMS)
+        )
+        assert 75 <= total <= 95, f"Total problem count {total} outside [75, 95] range"
+
+    def test_exact_total_is_81(self):
+        """Exact total: 15 easy + 10 hard + 16 expert + 40 tool_calling = 81."""
+        from mtb.quality_benchmarks import (
+            EVAL_PROBLEMS,
+            EXPERT_EVAL_PROBLEMS,
+            HARD_EVAL_PROBLEMS,
+            TOOL_CALLING_PROBLEMS,
+        )
+
+        assert len(EVAL_PROBLEMS) == 15
+        assert len(HARD_EVAL_PROBLEMS) == 10
+        assert len(EXPERT_EVAL_PROBLEMS) == 16
+        assert len(TOOL_CALLING_PROBLEMS) == 40
+
+    def test_difficulty_tool_calling_loads_all_40(self):
+        """--difficulty tool_calling should load all 40 problems."""
+        from mtb.quality_benchmarks import TOOL_CALLING_PROBLEMS
+
+        assert len(TOOL_CALLING_PROBLEMS) == 40
+        # All should have category "tool_calling"
+        assert all(p.category == "tool_calling" for p in TOOL_CALLING_PROBLEMS)
+
+
+# ---------------------------------------------------------------------------
+# Mixed problem types including tool calling
+# ---------------------------------------------------------------------------
+
+
+class TestMixedWithToolCalling:
+    """Runner handles mixed problem types: pattern-match + code execution + tool calling."""
+
+    def test_all_three_evaluation_types(self, tmp_path):
+        """Run with pattern-match, code-execution, and tool-calling problems."""
+        import json
+
+        from mtb.quality_benchmarks.tool_call_parser import parse_tool_calls
+
+        pattern_problem = _make_pattern_match_problem("reason_q", "reasoning", True)
+
+        code_problem = EvalProblem(
+            category="coding",
+            name="code_add",
+            prompt="Write add(a, b).",
+            check=lambda r: True,
+            max_tokens=512,
+            function_signature="def add(a, b):",
+            test_cases=[{"input": "1, 2", "expected_output": 3}],
+        )
+
+        def check_tool(response):
+            calls = parse_tool_calls(response)
+            return calls is not None and any(c.name == "get_time" for c in calls)
+
+        tool_problem = EvalProblem(
+            category="tool_calling",
+            name="ts_get_time",
+            prompt="Get the current time.",
+            check=check_tool,
+            max_tokens=256,
+        )
+
+        responses = [
+            "The answer is 42.",
+            "```python\ndef add(a, b):\n    return a + b\n```",
+            '{"name": "get_time", "arguments": {"timezone": "UTC"}}',
+        ]
+        mock_benchmark = _mock_benchmark_factory(responses)
+        output_path = tmp_path / "results.csv"
+
+        with patch(
+            _CREATE_BENCHMARK_PATCH,
+            return_value=mock_benchmark,
+        ):
+            df = run_quality_benchmark(
+                model_spec=MagicMock(name="test-model"),
+                framework="mlx",
+                backend="metal",
+                dtype="int4",
+                output_path=output_path,
+                problems=[pattern_problem, code_problem, tool_problem],
+                num_runs=1,
+                cooldown_time_fraction=0.0,
+            )
+
+        assert len(df) == 3
+
+        # Check categories
+        assert df.iloc[0]["category"] == "reasoning"
+        assert df.iloc[1]["category"] == "coding"
+        assert df.iloc[2]["category"] == "tool_calling"
+
+        # Pattern match: no execution columns, no parsed_tool_calls
+        assert pd.isna(df.iloc[0]["execution_exit_code"])
+        assert pd.isna(df.iloc[0]["parsed_tool_calls"])
+
+        # Code execution: has execution columns, no parsed_tool_calls
+        assert not pd.isna(df.iloc[1]["execution_exit_code"])
+        assert pd.isna(df.iloc[1]["parsed_tool_calls"])
+
+        # Tool calling: no execution columns, has parsed_tool_calls
+        assert pd.isna(df.iloc[2]["execution_exit_code"])
+        assert not pd.isna(df.iloc[2]["parsed_tool_calls"])
+        assert "get_time" in df.iloc[2]["parsed_tool_calls"]
+
+    def test_csv_has_parsed_tool_calls_column(self, tmp_path):
+        """CSV output includes parsed_tool_calls column for all problem types."""
+        pattern_problem = _make_pattern_match_problem("reason_q2", "reasoning", True)
+
+        tool_problem = EvalProblem(
+            category="tool_calling",
+            name="ts_csv_test",
+            prompt="Call a tool.",
+            check=lambda r: True,
+            max_tokens=256,
+        )
+
+        responses = ["answer", '{"name": "test_tool", "arguments": {}}']
+        mock_benchmark = _mock_benchmark_factory(responses)
+        output_path = tmp_path / "results.csv"
+
+        with patch(
+            _CREATE_BENCHMARK_PATCH,
+            return_value=mock_benchmark,
+        ):
+            df = run_quality_benchmark(
+                model_spec=MagicMock(name="test-model"),
+                framework="mlx",
+                backend="metal",
+                dtype="int4",
+                output_path=output_path,
+                problems=[pattern_problem, tool_problem],
+                num_runs=1,
+                cooldown_time_fraction=0.0,
+            )
+
+        # Column exists
+        assert "parsed_tool_calls" in df.columns
+
+        # Saved CSV also has the column
+        saved_df = pd.read_csv(output_path)
+        assert "parsed_tool_calls" in saved_df.columns

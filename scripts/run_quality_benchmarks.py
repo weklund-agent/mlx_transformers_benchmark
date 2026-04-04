@@ -19,7 +19,13 @@ import mtb
 import mtb.llm_benchmarks
 from mtb.file_io import create_benchmark_output_dir
 from mtb.llm_benchmarks.models.base import ModelSpec
-from mtb.quality_benchmarks import EVAL_PROBLEMS, EXPERT_EVAL_PROBLEMS, HARD_EVAL_PROBLEMS, TOOL_CALLING_PROBLEMS, run_quality_benchmark
+from mtb.quality_benchmarks import (
+    EVAL_PROBLEMS,
+    EXPERT_EVAL_PROBLEMS,
+    HARD_EVAL_PROBLEMS,
+    TOOL_CALLING_PROBLEMS,
+    run_quality_benchmark,
+)
 from mtb.select_benchmarks import filter_llm_benchmarks
 
 DEFAULT_OUTPUT_ROOT = mtb.REPO_ROOT / "measurements" / "quality_benchmarks"
@@ -64,9 +70,16 @@ def main(
     elif difficulty == "tool_calling":
         problems = TOOL_CALLING_PROBLEMS
     elif difficulty == "all":
-        problems = EVAL_PROBLEMS + HARD_EVAL_PROBLEMS + EXPERT_EVAL_PROBLEMS + TOOL_CALLING_PROBLEMS
+        problems = (
+            EVAL_PROBLEMS
+            + HARD_EVAL_PROBLEMS
+            + EXPERT_EVAL_PROBLEMS
+            + TOOL_CALLING_PROBLEMS
+        )
     else:
-        raise ValueError(f"Unknown difficulty '{difficulty}', must be 'easy', 'hard', 'expert', 'tool_calling', or 'all'")
+        raise ValueError(
+            f"Unknown difficulty '{difficulty}', must be 'easy', 'hard', 'expert', 'tool_calling', or 'all'"
+        )
 
     model_specs: List[ModelSpec] = list(mtb.llm_benchmarks.MODEL_SPECS)
 
@@ -153,17 +166,60 @@ def main(
             cat_summary["score"] = cat_summary.apply(
                 lambda r: f"{int(r['passed'])}/{int(r['total'])}", axis=1
             )
-            cat_pivot = cat_summary.pivot(index="model", columns="dtype", values="score")
+            cat_pivot = cat_summary.pivot(
+                index="model", columns="dtype", values="score"
+            )
             print(f"\n{category.replace('_', ' ').title()}:")
             print(cat_pivot.to_string())
+
+        # Tool calling subcategory breakdowns
+        tc_df = df[df["category"] == "tool_calling"]
+        if not tc_df.empty:
+            # Determine subcategory from problem name prefix
+            _SUBCATEGORY_MAP = {
+                "ts_": "Tool Selection",
+                "aa_": "Argument Accuracy",
+                "mt_": "Multi-Tool",
+                "ec_": "Edge Cases",
+                "fc_": "Format Compliance",
+            }
+
+            def _get_subcategory(name: str) -> str:
+                for prefix, label in _SUBCATEGORY_MAP.items():
+                    if name.startswith(prefix):
+                        return label
+                return "Other"
+
+            tc_df = tc_df.copy()
+            tc_df["subcategory"] = tc_df["problem"].apply(_get_subcategory)
+            print("\nTool Calling Subcategory Breakdown:")
+            for subcat in _SUBCATEGORY_MAP.values():
+                sub_df = tc_df[tc_df["subcategory"] == subcat]
+                if sub_df.empty:
+                    continue
+                sub_summary = (
+                    sub_df.groupby(["model", "dtype"])
+                    .agg(passed=("passed", "sum"), total=("passed", "count"))
+                    .reset_index()
+                )
+                sub_summary["score"] = sub_summary.apply(
+                    lambda r: f"{int(r['passed'])}/{int(r['total'])}", axis=1
+                )
+                sub_pivot = sub_summary.pivot(
+                    index="model", columns="dtype", values="score"
+                )
+                print(f"\n  {subcat}:")
+                print("  " + sub_pivot.to_string().replace("\n", "\n  "))
 
         # Show any failures
         failures = df[~df["passed"]]
         if not failures.empty:
             print(f"\nFailed problems ({len(failures)}):")
             for _, row in failures.iterrows():
-                print(f"  {row['model']} {row['dtype']}: {row['problem']} "
-                      f"({row['pass_count']}/{row['num_runs']} runs)")
+                print(
+                    f"  {row['model']} {row['dtype']}: {row['problem']} "
+                    f"({row['pass_count']}/{row['num_runs']} runs)"
+                )
 
     print(f"\nResults saved to: {output_path}")
 

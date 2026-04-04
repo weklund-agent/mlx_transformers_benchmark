@@ -1,5 +1,6 @@
 """Run quality evaluation benchmarks to measure reasoning accuracy across quantizations."""
 
+import json
 import math
 import time
 from pathlib import Path
@@ -11,6 +12,7 @@ from tqdm import tqdm
 from mtb.llm_benchmarks.models.base import ModelSpec
 from mtb.quality_benchmarks.eval_problems import EVAL_PROBLEMS, EvalProblem
 from mtb.quality_benchmarks.sandbox import SandboxResult, execute_code
+from mtb.quality_benchmarks.tool_call_parser import parse_tool_calls
 
 
 def _build_test_code(problem: EvalProblem, code: str) -> str:
@@ -88,6 +90,54 @@ def _has_code_execution(problem: EvalProblem) -> bool:
     return problem.test_cases is not None and problem.function_signature is not None
 
 
+def _is_tool_calling(problem: EvalProblem) -> bool:
+    """Check if a problem is a tool calling evaluation problem.
+
+    Tool calling problems have category 'tool_calling' and are evaluated
+    using structured tool call parsing followed by check().
+
+    Args:
+        problem: The evaluation problem to check.
+
+    Returns:
+        True if the problem is a tool calling problem.
+    """
+    return problem.category == "tool_calling"
+
+
+def _evaluate_tool_calling(problem: EvalProblem, response: str) -> tuple:
+    """Evaluate a tool calling problem with structured parsing and logging.
+
+    Parses the model response through the tool call parser for debugging,
+    then passes the original response to the problem's check() function
+    (which internally also uses the parser for validation).
+
+    Args:
+        problem: The tool calling problem.
+        response: The raw model response.
+
+    Returns:
+        Tuple of (passed: bool, parsed_tool_calls_json: str).
+        The parsed_tool_calls_json is a JSON string of extracted tool calls
+        for debugging/logging, or "null" if no tool calls were found.
+    """
+    # Parse tool calls for debugging/logging
+    parsed = parse_tool_calls(response)
+    if parsed:
+        parsed_json = json.dumps(
+            [{"name": tc.name, "arguments": tc.arguments} for tc in parsed],
+            default=str,
+        )
+    else:
+        parsed_json = "null"
+
+    # Use the problem's check function for pass/fail determination
+    # (check functions already use the parser internally)
+    passed = problem.check(response)
+
+    return passed, parsed_json
+
+
 def run_quality_benchmark(
     model_spec: ModelSpec,
     framework: str,
@@ -146,6 +196,7 @@ def run_quality_benchmark(
 
             prompt = problem.prompt
             is_code_exec = _has_code_execution(problem)
+            is_tool_call = _is_tool_calling(problem)
 
             run_passes = []
             run_responses = []
@@ -154,6 +205,8 @@ def run_quality_benchmark(
             run_gen_tokens = []
             # Track last sandbox result for execution detail columns
             last_sandbox_result: Optional[SandboxResult] = None
+            # Track last parsed tool calls for debugging
+            last_parsed_tool_calls: Optional[str] = None
 
             start_time = time.perf_counter()
             for run_idx in range(num_runs):
@@ -178,6 +231,16 @@ def run_quality_benchmark(
                             return_code=-1,
                             execution_time_sec=0.0,
                         )
+                elif is_tool_call:
+                    # Tool calling: parse response for structured tool calls,
+                    # then use check() for pass/fail
+                    try:
+                        passed, parsed_json = _evaluate_tool_calling(problem, response)
+                        last_parsed_tool_calls = parsed_json
+                    except Exception:
+                        # Tool call evaluation failure should not crash the runner
+                        passed = False
+                        last_parsed_tool_calls = "null"
                 else:
                     # Pattern matching: use check() callback
                     passed = problem.check(response)
@@ -229,6 +292,12 @@ def run_quality_benchmark(
                 execution_exit_code=(
                     last_sandbox_result.return_code
                     if last_sandbox_result is not None
+                    else float("nan")
+                ),
+                # Parsed tool calls for debugging (NaN for non-tool-calling problems)
+                parsed_tool_calls=(
+                    last_parsed_tool_calls
+                    if last_parsed_tool_calls is not None
                     else float("nan")
                 ),
             )
