@@ -27,6 +27,7 @@ from mtb.quality_benchmarks.coding_problems import (
     CODING_EASY_PROBLEMS,
     CODING_EXPERT_PROBLEMS,
     CODING_HARD_PROBLEMS,
+    CODING_PROBLEMS,
     _check_binary_search,
     _check_buggy_merge_sort,
     _check_calculator,

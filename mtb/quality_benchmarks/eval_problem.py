@@ -22,6 +22,8 @@ class EvalProblem:
         function_signature: Optional function signature for code execution problems
         test_cases: Optional list of test cases for code execution problems
         generate_variant: Optional callable that returns a variant EvalProblem
+        _correct_impl: Optional reference correct implementation (for testing)
+        _incorrect_impl: Optional known-incorrect implementation (for testing)
     """
 
     category: str
@@ -32,3 +34,5 @@ class EvalProblem:
     function_signature: Optional[str] = None
     test_cases: Optional[list] = field(default=None)
     generate_variant: Optional[Callable] = None
+    _correct_impl: Optional[str] = field(default=None, repr=False)
+    _incorrect_impl: Optional[str] = field(default=None, repr=False)
