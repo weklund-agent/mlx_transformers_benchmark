@@ -18,6 +18,8 @@ Results can be found at
 
 ## Agentic Coding Model Benchmarks (MLX on Apple Silicon)
 
+<!-- BEGIN BENCHMARK TABLE -->
+
 > M4 Pro 64GB | MLX Metal | int4 quantization | April 2026
 > Speed: 1024 prompt tokens, 100 generated tokens, 3 iterations
 > Quality: 46 problems across coding, reasoning, tool calling, math, writing (3 runs each, majority vote)
@@ -57,6 +59,8 @@ Results can be found at
 | Gemma 4 31B-it | 31B dense | 7.0 | 99 | 34.1 GiB | 48GB+ |
 
 </details>
+
+<!-- END BENCHMARK TABLE -->
 
 
 ## Installation
