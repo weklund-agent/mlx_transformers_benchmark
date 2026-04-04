@@ -28,7 +28,7 @@ Results can be found at
 
 | Hardware | Best Overall | Best Fast | Best Coder |
 |---|---|---|---|
-| **M4 Pro 64GB** | Qwen 3.5-35B-A3B (26 tok/s, 100.0%) | Gemma 4 E2B-it (121 tok/s, 95.7%) | Qwen 3.5-27B (12 tok/s, 100.0%) |
+| **M4 Pro 64GB** | Qwen 3.5-9B (39 tok/s, 100.0%) | Gemma 4 E2B-it (121 tok/s, 95.7%) | Qwen 3.5-35B-A3B (26 tok/s, 100.0%) |
 | **M5 Max 128GB** | Qwen 3.5-27B Opus Distilled (28 tok/s, 100.0%) | Qwen 3.5-27B (25 tok/s, 100.0%) | Qwen 3.5-27B (25 tok/s, 100.0%) |
 
 ### M4 Pro 64GB
@@ -43,7 +43,7 @@ Results can be found at
 | Gemma 3-1B-it QAT | 1B dense | 250 | -- | -- | -- | -- | 1.6 GiB | Any Mac |
 | Qwen 3.5-2B | 2B dense | 142 | 85.4% | 13/13 | -- | 9/13 | 3.3 GiB | Any Mac |
 | Gemma 4 E2B-it | 2.3B dense | 121 | 95.7% | 13/13 | 4/5 | 13/13 | 3.5 GiB | Any Mac |
-| Qwen 2.5-Coder-3B | 3B dense | 117 | -- | -- | -- | -- | 2.6 GiB | Any Mac |
+| Qwen 2.5-Coder-3B | 3B dense | 117 | 84.8% | 13/13 | 5/5 | 9/13 | 2.6 GiB | Any Mac |
 | LFM2-24B-A2B | 2B MoE | 117 | 95.7% | 13/13 | 5/5 | 12/13 | 14.2 GiB | 24GB+ |
 | Qwen 2.5-3B-it | 3B dense | 111 | 80.5% | 13/13 | -- | 8/13 | 2.6 GiB | Any Mac |
 | Nemotron-3-Nano-4B | 4B dense | 102 | 58.5% | 8/13 | -- | 5/13 | 4.5 GiB | Any Mac |
@@ -56,9 +56,9 @@ Results can be found at
 | GLM-4.7-Flash | 3B MoE | 62 | 73.9% | 12/13 | 5/5 | 7/13 | 17.6 GiB | 24GB+ |
 | DeepSeek-R1-Distill-7B | 7B dense | 56 | -- | -- | -- | -- | 5.1 GiB | Any Mac |
 | Qwen 3-8B-it | 8B dense | 51 | -- | -- | -- | -- | 5.4 GiB | Any Mac |
-| DeepSeek-R1-0528-Qwen3-8B | 8B dense | 51 | -- | -- | -- | -- | 5.4 GiB | Any Mac |
+| DeepSeek-R1-0528-Qwen3-8B | 8B dense | 51 | 34.8% | 4/13 | 2/5 | 2/13 | 5.4 GiB | Any Mac |
 | Nemotron-Nano-9B-v2 | 9B dense | 47 | 97.6% | 13/13 | -- | 12/13 | 8.1 GiB | 16GB+ |
-| Qwen 3.5-9B | 9B dense | 39 | 97.6% | 13/13 | -- | 12/13 | 7.3 GiB | Any Mac |
+| Qwen 3.5-9B | 9B dense | 39 | **100.0%** | 13/13 | 5/5 | 13/13 | 7.3 GiB | Any Mac |
 | Gemma 3-12B-it QAT | 12B dense | 32 | -- | -- | -- | -- | 8.2 GiB | 16GB+ |
 | Qwen 3-14B-it | 14B dense | 29 | -- | -- | -- | -- | 9.1 GiB | 16GB+ |
 | Qwen 3.5-35B-A3B | 3B MoE | 26 | **100.0%** | 13/13 | -- | 13/13 | 21.9 GiB | 24GB+ |
