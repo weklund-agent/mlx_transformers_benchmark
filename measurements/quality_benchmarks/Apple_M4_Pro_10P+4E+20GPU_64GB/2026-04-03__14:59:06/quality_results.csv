@@ -1,0 +1,3699 @@
+model,framework,backend,dtype,category,problem,pass_count,num_runs,passed,avg_generation_time_sec,avg_generation_tps,avg_tokens_generated,sample_response
+qwen3-coder-30b-a3b,mlx,metal,int4,coding,fizzbuzz,3,3,True,4.75,87.9,417.0,"Here's a Python function that implements the FizzBuzz problem:
+
+```python
+def fizzbuzz():
+    """"""
+    Print FizzBuzz for numbers 1 to 100
+    - Print 'Fizz' for multiples of 3
+    - Print 'Buzz' for multiples of 5
+    - Print 'FizzBuzz' for multiples of both
+    """"""
+    for i in range(1, 101):
+        if i % 3 == 0 and i % 5 == 0:
+            print(""FizzBuzz"")
+        elif i % 3 == 0:
+            print(""Fizz"")
+        elif i % 5 == 0:
+            print(""Buzz"")
+        else:
+            print(i)
+"
+qwen3-coder-30b-a3b,mlx,metal,int4,coding,reverse_string,3,3,True,5.7,87.7,500.0,"Here are two different approaches to reverse a string in Python:
+
+## Approach 1: Using slicing (most Pythonic)
+```python
+def reverse_string_slicing(s):
+    """"""
+    Reverse a string using slicing.
+    Time complexity: O(n)
+    Space complexity: O(n)
+    """"""
+    return s[::-1]
+
+# Example usage
+original = ""hello world""
+reversed_str = reverse_string_slicing(original)
+print(f""Original: {original}"")
+print(f""Reversed: {reversed_str}"")
+```
+
+## Approach 2: Using built-in `reversed()` function
+```python
+d"
+qwen3-coder-30b-a3b,mlx,metal,int4,coding,fibonacci,3,3,True,1.77,89.1,158.0,"```python
+def fibonacci_first_10():
+    """"""Return the first 10 Fibonacci numbers as a list.""""""
+    fib_list = [0, 1]
+    
+    # Generate the remaining Fibonacci numbers
+    for i in range(2, 10):
+        fib_list.append(fib_list[i-1] + fib_list[i-2])
+    
+    return fib_list
+
+# Get and display the first 10 Fibonacci numbers
+result = fibonacci_first_10()
+print(""First 10 Fibonacci numbers:"", result)
+```
+
+Output:
+```
+First 10 Fibonacci numbers: [0, 1, 1, 2, 3, 5, 8, 13, 21, 34]
+```"
+qwen3-coder-30b-a3b,mlx,metal,int4,coding,binary_search,3,3,True,5.87,87.3,512.0,"Here's a Python implementation of binary search:
+
+```python
+def binary_search(arr, target):
+    """"""
+    Binary search implementation to find target in a sorted array.
+    
+    Args:
+        arr: A sorted list of elements
+        target: The value to search for
+    
+    Returns:
+        The index of target if found, otherwise -1
+    """"""
+    left = 0
+    right = len(arr) - 1
+    
+    while left <= right:
+        mid = (left + right) // 2
+        
+        if arr[mid] == target:
+            return m"
+qwen3-coder-30b-a3b,mlx,metal,int4,coding,palindrome,3,3,True,5.85,87.5,512.0,"Here's a function to check if a string is a palindrome, ignoring case and non-alphanumeric characters:
+
+```python
+def is_palindrome(s):
+    """"""
+    Check if a string is a palindrome, ignoring case and non-alphanumeric characters.
+    
+    Args:
+        s (str): The string to check
+        
+    Returns:
+        bool: True if the string is a palindrome, False otherwise
+    """"""
+    # Convert to lowercase and keep only alphanumeric characters
+    cleaned = ''.join(char.lower() for char in s if char."
+qwen3-coder-30b-a3b,mlx,metal,int4,reasoning,train_problem,3,3,True,2.23,88.7,198.0,"To find when the trains will meet, I need to determine how long it takes for them to cover the 200 km between them.
+
+Since the trains are moving toward each other, their relative speed is the sum of their individual speeds:
+- Train A: 60 km/h
+- Train B: 40 km/h
+- Combined speed: 60 + 40 = 100 km/h
+
+Time = Distance ÷ Speed
+Time = 200 km ÷ 100 km/h = 2 hours
+
+The trains will meet after 2 hours.
+
+To verify: In 2 hours, Train A travels 60 km/h × 2 h = 120 km, and Train B travels 40 km/h × 2 h = 80 k"
+qwen3-coder-30b-a3b,mlx,metal,int4,reasoning,coin_probability,3,3,True,4.24,88.1,373.0,"I need to find the probability of getting at least 2 heads when flipping a fair coin 3 times.
+
+Let me list all possible outcomes when flipping a coin 3 times. Each flip can be either H (head) or T (tail), so there are 2³ = 8 possible outcomes:
+
+HHH, HHT, HTH, HTT, THH, THT, TTH, TTT
+
+Now I'll count the outcomes with at least 2 heads:
+- HHH: 3 heads (✓)
+- HHT: 2 heads (✓)
+- HTH: 2 heads (✓)
+- HTT: 1 head (✗)
+- THH: 2 heads (✓)
+- THT: 1 head (✗)
+- TTH: 1 head (✗)
+- TTT: 0 heads (✗)
+
+The favorable "
+qwen3-coder-30b-a3b,mlx,metal,int4,reasoning,workers_problem,3,3,True,1.74,89.1,155.0,"To solve this problem, I'll use the concept of worker-days, which is a measure of the total amount of work required to complete a task.
+
+First, let me find the total amount of work needed:
+- 5 workers × 10 days = 50 worker-days
+
+This means the wall requires 50 worker-days of work to complete.
+
+Now I can find how long it would take 10 workers:
+- 50 worker-days ÷ 10 workers = 5 days
+
+Therefore, it would take 10 workers 5 days to build the same wall.
+
+This makes logical sense - doubling the number "
+qwen3-coder-30b-a3b,mlx,metal,int4,reasoning,age_problem,0,3,False,3.15,88.3,278.0,"I need to solve this step-by-step using algebra.
+
+Let me define variables:
+- Let Jerry's current age = j
+- Let Tom's current age = t
+
+From the given information:
+1) Tom is twice as old as Jerry: t = 2j
+2) In 5 years, Tom will be 1.5 times as old as Jerry: t + 5 = 1.5(j + 5)
+
+Now I'll substitute the first equation into the second:
+2j + 5 = 1.5(j + 5)
+
+Solving:
+2j + 5 = 1.5j + 7.5
+2j - 1.5j = 7.5 - 5
+0.5j = 2.5
+j = 5
+
+Therefore:
+- Jerry's current age = 5 years
+- Tom's current age = 2 × 5 = 10 year"
+qwen3-coder-30b-a3b,mlx,metal,int4,reasoning,sequence_pattern,3,3,True,1.94,89.0,173.0,"I need to find the pattern in the sequence: 2, 6, 12, 20, 30, ?
+
+Let me look at the differences between consecutive terms:
+- 6 - 2 = 4
+- 12 - 6 = 6
+- 20 - 12 = 8
+- 30 - 20 = 10
+
+The differences are: 4, 6, 8, 10
+
+I can see that the differences increase by 2 each time:
+- 4, 6, 8, 10, 12
+
+So the next difference should be 12.
+
+Therefore, the next number in the sequence is: 30 + 12 = 42
+
+The answer is 42."
+qwen3-coder-30b-a3b,mlx,metal,int4,instruction_following,json_output,3,3,True,0.4,91.5,37.0,"{
+  ""name"": ""Liam Chen"",
+  ""age"": 28,
+  ""hobbies"": [""hacking"", ""hacking"", ""hacking""]
+}"
+qwen3-coder-30b-a3b,mlx,metal,int4,instruction_following,numbered_list,3,3,True,1.84,89.1,164.0,"1. **Improved cardiovascular health** - Regular exercise strengthens the heart muscle, improves blood circulation, and reduces the risk of heart disease, stroke, and high blood pressure.
+
+2. **Enhanced mental health and mood** - Exercise releases endorphins that reduce stress, anxiety, and symptoms of depression while improving overall mood and mental well-being.
+
+3. **Increased energy levels** - Regular physical activity improves cardiovascular efficiency and muscle efficiency, leading to bette"
+qwen3-coder-30b-a3b,mlx,metal,int4,instruction_following,word_constraint,3,3,True,0.43,91.5,39.0,"Machine learning teaches computers to recognize patterns and learn from data, enabling them to make predictions or decisions without explicit programming. It's used in recommendation systems, image recognition, and natural language processing."
+qwen3-coder-30b-a3b,mlx,metal,int4,instruction_following,code_with_comments,3,3,True,4.97,87.8,436.0,"```python
+import math
+
+def calculate_circle_area(radius):
+    """"""
+    Calculate the area of a circle given its radius.
+    
+    The area of a circle is calculated using the formula: A = πr²
+    where π (pi) is approximately 3.14159 and r is the radius.
+    
+    Parameters:
+    radius (float): The radius of the circle (must be non-negative)
+    
+    Returns:
+    float: The area of the circle
+    
+    Raises:
+    ValueError: If the radius is negative
+    """"""
+    
+    # Validate input - ensure radi"
+qwen3-coder-30b-a3b,mlx,metal,int4,instruction_following,direct_answer,3,3,True,0.01,178.7,2.0,Paris
+qwen3-coder-30b-a3b,mlx,metal,int4,coding,lru_cache,3,3,True,13.53,84.0,1136.0,"I'll implement an LRU cache from scratch using a doubly linked list and hash map for O(1) operations.
+
+```python
+class ListNode:
+    """"""Node for doubly linked list""""""
+    def __init__(self, key=0, value=0):
+        self.key = key
+        self.value = value
+        self.prev = None
+        self.next = None
+
+class LRUCache:
+    def __init__(self, capacity: int):
+        """"""
+        Initialize LRU cache with given capacity
+        """"""
+        self.capacity = capacity
+        self.cache = {}  # hash"
+qwen3-coder-30b-a3b,mlx,metal,int4,coding,flatten_nested,3,3,True,12.25,83.6,1024.0,"Here's a Python function that flattens arbitrarily nested lists while preserving mixed types:
+
+```python
+def flatten(lst):
+    """"""
+    Flatten an arbitrarily nested list structure.
+    
+    Args:
+        lst: A nested list structure containing any mix of data types
+             (numbers, strings, lists, etc.)
+    
+    Returns:
+        A flat list containing all values in the original structure
+    """"""
+    result = []
+    for item in lst:
+        if isinstance(item, list):
+            # Recursive"
+qwen3-coder-30b-a3b,mlx,metal,int4,coding,longest_palindrome_substring,3,3,True,8.67,85.2,738.0,"Here's a Python function that finds the longest palindromic substring with O(n²) time complexity:
+
+```python
+def longest_palindrome(s):
+    """"""
+    Find the longest palindromic substring in a given string.
+    
+    Args:
+        s: Input string
+    
+    Returns:
+        The longest palindromic substring
+    """"""
+    if not s:
+        return """"
+    
+    start = 0
+    max_len = 1
+    
+    def expand_from_center(left, right):
+        """"""Helper function to expand around center and return length""""""
+  "
+qwen3-coder-30b-a3b,mlx,metal,int4,coding,calculator,3,3,True,10.21,84.3,861.0,"Here's a Python implementation of a basic calculator that handles operator precedence and parentheses:
+
+```python
+def calculate(s):
+    """"""
+    Evaluates a string expression containing +, -, *, /, parentheses, and non-negative integers.
+    
+    Args:
+        s (str): A string expression to evaluate
+        
+    Returns:
+        int: The result of the calculation
+    """"""
+    def helper(s, index):
+        """"""
+        Recursive helper function to evaluate the expression starting from index.
+      "
+qwen3-coder-30b-a3b,mlx,metal,int4,coding,buggy_merge_sort,3,3,True,5.24,85.5,448.0,"Looking at this code, I can see the main issue is in the `merge` function. The problem is that it's missing the remaining elements from either the left or right array when one array is exhausted.
+
+When one array is exhausted, the remaining elements from the other array need to be added to the result. Here's the bug and fix:
+
+**The Problem**: The `merge` function only handles the case where both arrays have elements left to compare, but it doesn't handle the case where one array is exhausted and "
+qwen3-coder-30b-a3b,mlx,metal,int4,reasoning,compound_interest,0,3,False,5.2,86.3,449.0,"I need to calculate the final amount using the compound interest formula.
+
+Given information:
+- Principal (P) = $10,000
+- Annual interest rate (r) = 5% = 0.05
+- Compounding frequency = quarterly (4 times per year)
+- Time (t) = 3 years
+
+The compound interest formula is: A = P(1 + r/n)^(nt)
+
+Where:
+- A = final amount
+- P = principal ($10,000)
+- r = annual interest rate (0.05)
+- n = number of compounding periods per year (4)
+- t = number of years (3)
+
+Step 1: Identify the values
+- P = $10,000
+- r ="
+qwen3-coder-30b-a3b,mlx,metal,int4,reasoning,circular_seating,3,3,True,4.76,86.5,412.0,"I need to find the number of ways to seat 6 people around a circular table such that Alice and Bob are not seated next to each other.
+
+I'll use the complementary counting approach: Total arrangements - Arrangements where Alice and Bob sit together.
+
+**Step 1: Find total arrangements around a circular table**
+For n people sitting around a circular table, the number of distinct arrangements is (n-1)!.
+With 6 people: Total arrangements = (6-1)! = 5! = 120
+
+**Step 2: Find arrangements where Alice an"
+qwen3-coder-30b-a3b,mlx,metal,int4,reasoning,logic_puzzle,3,3,True,9.03,84.7,765.0,"I need to analyze all possible combinations of truth-tellers and liars among A, B, and C.
+
+Let me denote T for truth-teller and L for liar, and check all 8 possible combinations:
+
+**Case 1: A is T, B is T, C is T**
+- A says ""B is a liar"" - this is false, so A would be lying
+- But A is supposed to be a truth-teller, so this is a contradiction
+- This case is impossible
+
+**Case 2: A is T, B is T, C is L**
+- A says ""B is a liar"" - this is false, so A would be lying
+- But A is supposed to be a truth-"
+qwen3-coder-30b-a3b,mlx,metal,int4,reasoning,bayes_theorem,3,3,True,4.8,86.2,414.0,"I need to find the probability that a person actually has the disease given a positive test result, using Bayes' theorem.
+
+Let me define the events:
+- D = person has the disease
+- T = person tests positive
+
+I'm given:
+- P(D) = 1% = 0.01 (prevalence)
+- P(T|D) = 95% = 0.95 (sensitivity)
+- P(T|¬D) = 5% = 0.05 (false positive rate)
+
+I want to find P(D|T) using Bayes' theorem:
+
+P(D|T) = P(T|D) × P(D) / P(T)
+
+First, I need to find P(T) using the law of total probability:
+P(T) = P(T|D) × P(D) + P(T|¬D)"
+qwen3-coder-30b-a3b,mlx,metal,int4,reasoning,proof_bug,3,3,True,2.56,87.1,223.0,"The error occurs when both sides of the equation are divided by (a - b).
+
+Here's the breakdown:
+
+1. We start with a = b, which means a - b = 0
+2. At the step (a + b)(a - b) = b(a - b), both sides contain the factor (a - b)
+3. When we divide both sides by (a - b), we're dividing by zero
+4. Division by zero is undefined in mathematics, so this step is invalid
+
+The step where (a + b)(a - b) = b(a - b) is valid, but when we divide both sides by (a - b), we're dividing by zero since a = b means a - b"
+qwen3-coder-30b-a3b,mlx,metal,int4,math,modular_arithmetic,3,3,True,8.08,85.4,690.0,"I need to find the remainder when 2^100 is divided by 7.
+
+Let me start by looking for a pattern in powers of 2 modulo 7.
+
+Let me calculate the first few powers of 2 and their remainders when divided by 7:
+
+2^1 = 2, so 2^1 ≡ 2 (mod 7)
+2^2 = 4, so 2^2 ≡ 4 (mod 7)
+2^3 = 8, so 2^3 ≡ 1 (mod 7)
+2^4 = 16, so 2^4 ≡ 2 (mod 7)
+2^5 = 32, so 2^5 ≡ 4 (mod 7)
+2^6 = 64, so 2^6 ≡ 1 (mod 7)
+
+Let me continue to see the pattern:
+2^7 = 128, so 2^7 ≡ 2 (mod 7)
+2^8 = 256, so 2^8 ≡ 4 (mod 16) ≡ 2 (mod 7)
+
+I can see th"
+qwen3-coder-30b-a3b,mlx,metal,int4,math,inclusion_exclusion,3,3,True,7.85,85.5,671.0,"I need to find the number of integers from 1 to 1000 that are divisible by 2, 3, or 5 using the inclusion-exclusion principle.
+
+Let me define:
+- A = set of integers from 1 to 1000 divisible by 2
+- B = set of integers from 1 to 1000 divisible by 3
+- C = set of integers from 1 to 1000 divisible by 5
+
+I want to find |A �∪ B �∪ C|.
+
+Using the inclusion-exclusion principle:
+|A �∪ B �∪ C| = |A| + |B| + |C| - |A �cap B| - |A �cap C| - |B �cap C| + |A �cap B cap C|
+
+Let me calculate each term:
+
+**Term 1"
+qwen3-coder-30b-a3b,mlx,metal,int4,math,bouncing_ball,3,3,True,10.89,84.4,919.0,"I need to find the total distance traveled by the ball.
+
+Let me set up the problem:
+- Initial height: 10 meters
+- Each bounce reaches 3/4 of the previous height
+- The ball travels both down and up distances
+
+Let me trace the ball's path:
+- Drop: 10 meters down
+- First bounce: 10 × (3/4) = 7.5 meters up, then 7.5 meters down
+- Second bounce: 7.5 × (3/4) = 5.625 meters up, then 5.625 meters down
+- And so on...
+
+Let me organize the distances:
+- First drop: 10 meters
+- First bounce up: 10 × (3/4) = "
+qwen3-coder-30b-a3b,mlx,metal,int4,coding,markdown_to_html,3,3,True,25.79,79.4,2048.0,"Here's a Python function that converts Markdown to HTML, handling the specified formatting rules and edge cases:
+
+```python
+import re
+
+def markdown_to_html(text):
+    """"""
+    Convert Markdown to HTML with support for bold, italic, code, and links.
+    
+    Args:
+        text (str): Markdown text to convert
+        
+    Returns:
+        str: HTML formatted text
+    """"""
+    if not text:
+        return text
+    
+    # Handle escaped characters first (backslash escapes)
+    # This prevents escaping "
+qwen3-coder-30b-a3b,mlx,metal,int4,coding,data_pipeline,3,3,True,7.99,85.3,681.0,"```python
+import csv
+import json
+from io import StringIO
+
+def process_sales(csv_text):
+    # Parse CSV
+    reader = csv.DictReader(StringIO(csv_text))
+    
+    # Filter and filter rows
+    filtered_rows = []
+    for row in reader:
+        amount = float(row['amount'])
+        region = row['region']
+        quantity = int(row['quantity'])
+        
+        # Apply filters
+        if amount > 100 and (region == 'North' or region == 'West') and quantity >= 5:
+            filtered_rows.append(row)
+  "
+qwen3-coder-30b-a3b,mlx,metal,int4,coding,retry_decorator,3,3,True,12.8,83.0,1062.0,"```python
+import time
+import random
+from typing import Type, Tuple, Optional, Any, Callable
+from dataclasses import dataclass
+from functools import wraps
+
+@dataclass
+class Result:
+    success: bool
+    value: Any
+    attempts: int
+    error: Optional[Exception]
+
+def retry(max_attempts: int = 3, backoff_base: int = 2, exceptions: Tuple[Type[Exception], ...] = (Exception,)):
+    """"""
+    Retry decorator with exponential backoff.
+    
+    Args:
+        max_attempts: Maximum number of retry attempts
+"
+qwen3-coder-30b-a3b,mlx,metal,int4,reasoning,einstein_riddle,3,3,True,54.92,74.6,4096.0,"I need to solve this step-by-step using the given constraints.
+
+Let me start by listing what I know:
+- Houses: 1, 2, 3, 4, 5 from left to right
+- People: Brit, Swede, Dane, German, Norwegian
+- Drinks: milk, coffee, tea, water, beer
+- Colors: red, green, white, blue, yellow
+
+Let me work through the constraints:
+
+From constraint 6: Norwegian lives in house 1
+From constraint 8: German lives in house 3
+
+From constraint 7: Norwegian lives next to the blue house
+Since Norwegian is in house 1, the blue"
+qwen3-coder-30b-a3b,mlx,metal,int4,reasoning,three_urns,3,3,True,4.13,87.0,359.0,"I need to find the probability that the second ball drawn is red using the law of total probability.
+
+Let me define the events:
+- A₁: first ball is red (drawn from Urn A)
+- A₂: first ball is blue (drawn from Urn A)
+- B: second ball is red (drawn from Urn B or C)
+
+Using the law of total probability:
+P(B) = P(B|A₁) × P(A₁) + P(B|A₂) × P(A₂)
+
+First, I'll find the probabilities from Urn A:
+- P(A₁) = 3/5 (3 red balls out of 5 total)
+- P(A₂) = 2/5 (2 blue balls out of 5 total)
+
+Next, I'll find the con"
+qwen3-coder-30b-a3b,mlx,metal,int4,reasoning,topological_sort,0,3,False,25.66,79.8,2048.0,"I need to find all valid topological orderings of the given dependency graph.
+
+First, let me identify the dependencies:
+- A → B (A must come before B)
+- B → C (B must come before C)
+- A → D (A must come before D)
+- D → C (D must come before C)
+- C → E (C must come before E)
+
+Let me first identify the nodes and their dependencies:
+- A: no incoming edges (source)
+- B: comes after A
+- C: comes after B and D
+- D: comes after A
+- E: comes after C
+
+Let me build the adjacency list representation:
+- A: "
+qwen3-coder-30b-a3b,mlx,metal,int4,instruction_following,constrained_factorial,3,3,True,0.99,88.8,88.0,"```python
+def fact(numb: int) -> int:
+    """"""Compute factorial of a non-negative integer using recursion.""""""
+    if numb < 0:
+        raise ValueError(""Factorial is not defined for negative numbers"")
+    
+    if numb == 0 or numb == 1:
+        return 1
+    else:
+        rslt: int = numb * fact(numb - 1)
+        return rslt
+```"
+qwen3-coder-30b-a3b,mlx,metal,int4,instruction_following,library_schema,3,3,True,7.77,85.0,661.0,"```json
+{
+  ""$schema"": ""https://json-schema.org/draft/2020-12/schema"",
+  ""$id"": ""https://example.com/library-schema.json"",
+  ""title"": ""Library Management System"",
+  ""description"": ""Schema for library management system entities"",
+  ""type"": ""object"",
+  ""properties"": {
+    ""books"": {
+      ""type"": ""array"",
+      ""items"": {
+        ""type"": ""object"",
+        ""properties"": {
+          ""id"": {
+            ""type"": ""string"",
+            ""description"": ""Unique identifier for the book""
+  },
+          ""titl"
+qwen3-coder-30b-a3b,mlx,metal,int4,instruction_following,adversarial_transform,0,3,False,25.76,79.5,2048.0,"**Step 1: Translate to French**
+""The quick brown fox jumps over the lazy dog""
+→ ""Le quick brown fox jumps over the lazy dog""
+
+Wait, let me do this properly - translating the entire sentence:
+""The quick brown fox jumps over the lazy dog""
+→ ""Le quick brown fox jumps over the lazy dog""
+
+Actually, let me translate the entire sentence correctly:
+""The quick brown fox jumps over the lazy dog""
+→ ""Le quick brown fox jumps over the lazy dog""
+
+Let me do this correctly - full translation:
+""The quick brown f"
+qwen3-coder-30b-a3b,mlx,metal,int4,writing,multi_doc_summary,3,3,True,1.55,87.5,136.0,"Quantum computing, climate change, and gene therapy represent three cutting-edge areas of scientific advancement that are reshaping our future. Quantum computing harnesses quantum mechanical principles to process information exponentially faster than classical computers, while gene therapy advances through CRISPR technology offer new hope for treating previously incurable diseases. These technologies face significant challenges including high costs, technical limitations, and potential risks tha"
+qwen3-coder-30b-a3b,mlx,metal,int4,writing,structured_meeting_notes,3,3,True,12.26,83.5,1024.0,"```yaml
+date: 2023-12-15
+attendees:
+  - Alice Chen
+  - Bob Rodriguez
+  - Carol Kim
+  - David Wilson
+  - Eve Martinez
+meeting_type: daily standup
+```
+
+## Discussion
+
+• Alice reported that the mobile app's login flow is working but needs some minor UI adjustments to match the new design system
+• Bob mentioned that the backend API is experiencing occasional timeout issues during peak usage times
+• Carol shared that the customer feedback for the new feature is mostly positive, with only minor sugges"
+qwen3-coder-30b-a3b,mlx,metal,int4,writing,tone_rewrite,0,3,False,0.93,88.4,82.0,"Deep neural networks learn by adjusting their internal settings through a process called backpropagation, where the system gradually improves its performance by comparing results to correct answers. The model reached its best performance at 94.3% accuracy on test data, which came after testing different settings to help it learn faster. The model learned more quickly when using a special method called Adam compared to a simpler method called SGD."
+qwen3-coder-30b-a3b,mlx,metal,int4,writing,contradiction_detection,3,3,True,3.87,86.2,334.0,"Yes, there are factual contradictions between these two notes, but they refer to different aspects of the mission:
+
+**Contradiction 1: EVA duration**
+- Note 1: ""approximately 2.5 hours"" for the first EVA
+- Note 2: ""approximately 21.5 hours"" total time on the surface
+
+**Contradiction 2: Sample collection**
+- Note 1: ""approximately 2.5 hours"" for the first EVA
+- Note 2: ""47.5 pounds"" of samples collected
+
+**Actual facts:**
+- Armstrong and Aldrin spent about 21.5 hours total on the lunar surface (1"
+qwen3-coder-30b-a3b,mlx,metal,int4,tool_calling,simple_tool_call,3,3,True,0.28,91.3,26.0,"{
+  ""name"": ""get_weather"",
+  ""arguments"": {
+    ""location"": ""San Francisco""
+  }
+}"
+qwen3-coder-30b-a3b,mlx,metal,int4,tool_calling,calculator_tool,3,3,True,0.34,90.8,31.0,"{
+  ""name"": ""calculate"",
+  ""arguments"": {
+    ""expression"": ""347 * 823""
+  }
+}"
+qwen3-coder-30b-a3b,mlx,metal,int4,tool_calling,tool_with_json_args,3,3,True,0.47,89.3,42.0,"```json
+{
+  ""name"": ""create_file"",
+  ""arguments"": {
+    ""filename"": ""hello.py"",
+    ""content"": ""print(""Hello, World!"")""
+  }
+}
+```"
+qwen3-coder-30b-a3b,mlx,metal,int4,tool_calling,tool_selection,3,3,True,1.2,87.8,105.0,"send_email(recipient=""Alice"", subject=""Project deadline"", body=""This is a reminder about the project deadline that is due tomorrow."")
+
+Note: The user only provided a general message about the project deadline, so I've created a generic reminder message. In a real-world scenario, you would want to include specific details about the deadline, such as the specific time and date, and potentially the project name or other relevant details. However, since the user didn't provide specific details, I've"
+qwen3-coder-30b-a3b,mlx,metal,int4,tool_calling,multi_step_tool_use,3,3,True,0.19,92.7,18.0,"1. search_web(""AI regulation latest news"")
+2. summarize_text(search_results)"
+glm-4.7-flash,mlx,metal,int4,coding,fizzbuzz,3,3,True,7.93,64.6,512.0,"The user wants a Python function that implements the classic FizzBuzz problem.
+The requirements are:
+1.  Iterate through numbers from 1 to 100.
+2.  If a number is a multiple of both 3 and 5, print ""FizzBuzz"".
+3.  If a number is a multiple of only 5, print ""Buzz"".
+4.  If a number is a multiple of only 3, print ""Fizz"".
+5.  If a number is neither, print the number itself.
+6.  The output should be a function.
+
+Let's draft the code.
+
+```python
+def fizzbuzz():
+    for i in range(1, 101):
+        if i "
+glm-4.7-flash,mlx,metal,int4,coding,reverse_string,3,3,True,7.9,64.8,512.0,"The user wants a function to reverse a string.
+They requested at least two different approaches.
+I need to provide code examples, likely in a popular language like Python, but I should probably mention that the logic applies to others, or provide examples in a couple of languages if possible. Python is the most common for this type of request, so I'll focus on Python but maybe add a JavaScript example or just stick to Python if I want to keep it simple. Let's stick to Python for clarity, or mayb"
+glm-4.7-flash,mlx,metal,int4,coding,fibonacci,3,3,True,7.91,64.8,512.0,"The user wants a function that returns the first 10 Fibonacci numbers.
+I need to write a Python function (since it's the most common language for this type of request, though not explicitly specified, I will assume Python unless asked otherwise, or provide a generic explanation). Let's stick to Python as it's the standard for these types of coding tasks.
+
+**Plan:**
+1.  Define a function, say `get_fibonacci(n)`.
+2.  Initialize a list to store the numbers.
+3.  Handle the base cases (first two numb"
+glm-4.7-flash,mlx,metal,int4,coding,binary_search,3,3,True,7.91,64.7,512.0,"We need to implement binary search in Python. The function should take a sorted list and a target value, and return the index of the target or -1 if not found2. We need to output the code. The user says ""Implement binary search in Python."" So we need to provide a function. Probably we should also include a brief explanation? The instruction says ""You are a helpful assistant."" So we can provide the code and maybe a short description. But the user only asked to implement, so we can just give the c"
+glm-4.7-flash,mlx,metal,int4,coding,palindrome,3,3,True,7.89,64.9,512.0,"We need to write a function that checks if a string is a palindrome, ignoring case and non-alphanumeric characters. The problem statement: ""Write a function to check if a string is a palindrome, ignoring case and non-alphanumeric characters."" So we need to produce a function, likely in a programming language, but not specified. Usually, it's Python. We'll write a Python function.
+
+We need to consider: The function should take a string, ignore case (so convert to lowercase or uppercase), ignore n"
+glm-4.7-flash,mlx,metal,int4,reasoning,train_problem,3,3,True,8.86,64.4,571.0,"The user wants to solve a simple relative motion problem.
+
+**1. Identify the goal:** Calculate the time it takes for two trains moving toward each other to meet.
+
+**2. Identify the given information:**
+*   Initial distance between trains ($d$) = $200\text{ km0}$.
+*   Speed of Train A ($v_A$) = $60\text{ km/h}$.
+*   Speed of Train B ($v_B$) = $40\text{ km/h}$0.
+*   Direction: Toward each other.
+
+**3. Determine the relative speed:**
+*   Since they are moving toward each other, their speeds add up."
+glm-4.7-flash,mlx,metal,int4,reasoning,coin_probability,0,3,False,12.57,63.6,800.0,"The user wants to find the probability of getting at least 2 heads when flipping a fair coin 3 times.
+
+**Method 1: Listing all possible outcomes (Sample Space)**
+- The sample space consists of all possible sequences of 3 coin flips.
+- Each flip has 2 outcomes: H (Head) or T (Tail).
+- Total outcomes = $2 \times 2 \times 2 = 2^3 = 8$.
+
+Let's list them:
+1.  H H H
+2.  H H T
+3.  H T H
+4.  H T T
+5.  T H H
+6.  T H T
+7.  T T H
+8.  T T T
+
+**Method 2: Counting favorable outcomes**
+- ""At least 2 heads"" mea"
+glm-4.7-flash,mlx,metal,int4,reasoning,workers_problem,3,3,True,6.6,65.1,430.0,"The user is asking a classic work-rate problem.
+The problem states: 5 workers take 10 days to build a wall.
+The question is: How long would it take 10 workers to build the same wall?
+
+**Step 1: Understand the relationship between workers, time, and work.**
+Work = (Number of Workers) × (Time)
+In this case, the ""Work"" is building one wall.
+
+**Step 2: Calculate the total work required.**
+Let $W$ be the total work.
+$5 \text{ workers} \times 10 \text{ days} = 50 \text{ worker-days}$.
+So, building the"
+glm-4.7-flash,mlx,metal,int4,reasoning,age_problem,0,3,False,16.25,63.0,1024.0,"The user wants me to solve a word problem about ages.
+
+**1. Identify the variables:**
+Let $T$ be Tom's current age.
+Let $J$ be Jerry's current age.
+
+**2. Translate the statements into equations:**
+*   ""Tom is twice as old as Jerry."" -> $T = 2J$
+*   ""In 5 years, Tom will be 1.5 times as old as Jerry."" -> $(T + 5) = 1.5 \times (J + 5)$
+
+**3. Solve the system of equations:**
+*   From the first equation, I know $T = 2J2$.
+*   Substitute this into the second equation:
+    $(2J + 5) = 1.5 \times (J + "
+glm-4.7-flash,mlx,metal,int4,reasoning,sequence_pattern,3,3,True,3.82,66.3,253.0,"The user wants me to find the next number in the sequence: 2, 6, 12, 20, 30, ?.
+
+**Analysis of the sequence:**
+Let's look at the differences between consecutive terms:
+6 - 2 = 4
+12 - 6 = 6
+20 - 12 = 8
+30 - 20 = 10
+
+The differences are 4, 6, 8, 10. These are consecutive even numbers.
+
+**Prediction:**
+The next difference should be the next even number in the sequence, which is 12.
+
+**Calculation:**
+Next term = Last term + Next difference
+Next term = 30 + 12 = 422, 6, 12, 20, 30, 42.</think>The nex"
+glm-4.7-flash,mlx,metal,int4,instruction_following,json_output,3,3,True,4.08,65.9,269.0,"The user wants a JSON object representing a fictional person.
+The object must have three specific keys:
+1.  ""name""
+2.  ""age""
+3.  ""hobbies"" (which must be a list)
+
+I need to construct a valid JSON string.
+- ""name"": A string, e.g., ""Alice""
+- ""age"": A number, e.g., 30
+- ""hobbies"": An array of strings, e.g., [""reading"", ""hiking"", ""coding""]
+
+The user explicitly requested ""Output ONLY the JSON, no other text."" This means I should not include a preamble or a postscript, just the raw JSON string.
+
+Let's"
+glm-4.7-flash,mlx,metal,int4,instruction_following,numbered_list,3,3,True,6.22,65.2,406.0,"The user wants a list of 5 benefits of regular exercise.
+The format must be a numbered list (1, 2, 3, etc.).
+I need to generate 5 distinct, accurate, and helpful points.
+
+Potential benefits:
+1. Weight management (burning calories, metabolism).
+2. Mental health (reducing stress, anxiety, depression, boosting mood).
+3. Disease prevention (heart health, lower risk of diabetes, high blood pressure).
+4. Energy levels (improved circulation, better sleep).
+5. Muscle and bone strength (preventing osteop"
+glm-4.7-flash,mlx,metal,int4,instruction_following,word_constraint,3,3,True,5.57,65.7,366.0,"The user wants an explanation of machine learning in 50 words or fewer.
+
+Key concepts to include:
+1.  Definition (algorithms learning from data).
+2.  Goal (improving performance/predictions without explicit programming).
+
+Drafting ideas:
+- Machine learning is a subset of AI where computers use algorithms to learn from data, identify patterns, and make decisions with minimal human intervention, improving over time.
+- Machine learning is a branch of AI that enables computers to learn from data, id"
+glm-4.7-flash,mlx,metal,int4,instruction_following,code_with_comments,3,3,True,16.2,63.2,1024.0,"The user wants a Python function to calculate the area of a circle.
+I need to provide a complete, runnable Python function.
+I need to include detailed comments explaining each step of the code.
+The formula for the area of a circle is $\pi \times r^2$.
+
+**Plan:**
+1.  Define the function, e.g., `calculate_circle_area`.
+2.  Add a docstring explaining what the function does.
+3.  Add a parameter, e.g., `radius`.
+4.  Inside the function:
+    *   Check if the input is valid (e.g., is it a number? is it"
+glm-4.7-flash,mlx,metal,int4,instruction_following,direct_answer,3,3,True,1.27,67.9,86.0,"The user is asking a simple factual question: ""What is the capital of France?"" and explicitly requests a direct answer with no explanation.
+
+My knowledge base confirms that the capital of France is Paris.
+
+The user's request is straightforward and does not violate any safety policies. There is no request for my chain of thought, no attempt to jailbreak, and no harmful content.
+
+Therefore, I will provide the direct answer.</think>Paris"
+glm-4.7-flash,mlx,metal,int4,coding,lru_cache,3,3,True,33.67,60.8,2048.0,"We need to implement an LRU cache in Python from scratch, with O(1) get and put, using a custom data structure, not OrderedDict. The typical approach is to use a hash map (dictionary) to map keys to nodes in a doubly linked list. The doubly linked list maintains the order of usage: most recently used at one end, least recently used at the other. When we get or update a key, we move the node to the most recent position. When we need to evict, we remove the node at the least recent end.
+
+We need t"
+glm-4.7-flash,mlx,metal,int4,coding,flatten_nested,0,3,False,16.36,62.6,1024.0,"We need to write a Python function flatten(lst) that takes an arbitrarily nested list and returns a flat list of all values. The example: flatten([1, [2, [3, 4], 5], [6, 7]]) -> [1, 2, 3, 4, 5, 6, 7]. Also, handle mixed types, and strings should not be iterated into characters. So if a string appears, it should be treated as a single element, not split into characters. Also, presumably, if there are other iterable types? The problem says ""arbitrarily nested list"", so input is a list, but it may "
+glm-4.7-flash,mlx,metal,int4,coding,longest_palindrome_substring,3,3,True,7.9,64.4,509.0,"We need to write a Python function that finds the longest palindromic substring in a given string. The problem is classic. The solution should be O(n^2) or better. O(n^2) is acceptable, but we can also implement Manacher's algorithm O(n). But the instruction says O(n^2) or better. So we can implement either. Usually, a simple expand around center approach is O(n^2) and easy to implement. We'll do that.
+
+We need to return the longest palindromic substring. If there are multiple, any is fine.
+
+We'"
+glm-4.7-flash,mlx,metal,int4,coding,calculator,3,3,True,33.64,60.9,2048.0,"The user wants a Python function to evaluate a basic arithmetic expression.
+The expression can contain:
+- Non-negative integers.
+- Operators: `+`, `-`, `*`, `/`.
+- Parentheses: `(`, `)`.
+- Operator precedence: `*` and `/` have higher precedence than `+` and `-`.
+- Associativity: Standard left-to-right for same precedence.
+- Nested parentheses are allowed.
+
+I need to implement a parser and evaluator. There are a few ways to do this:
+1.  **Recursive Descent Parser:** This is a clean, readable, and"
+glm-4.7-flash,mlx,metal,int4,coding,buggy_merge_sort,3,3,True,33.78,60.6,2048.0,"The user wants me to find a bug in a provided Python implementation of Merge Sort and explain the fix.
+
+**Analysis of the Code:**
+
+1.  **`merge_sort(arr)` function:**
+    *   Base case: `if len(arr) <= 1: return arr`. This is correct.
+    *   Recursion: `mid = len(arr) // 2`. Correct.
+    *   Slicing: `left = merge_sort(arr[:mid])`, `right = merge_sort(arr[mid:])`. Correct.
+    *   Merge: `return merge(left, right)`. Correct.
+
+2.  **`merge(left, right)` function:**
+    *   Initialization: `resul"
+glm-4.7-flash,mlx,metal,int4,reasoning,compound_interest,0,3,False,33.53,61.1,2048.0,"The user wants to calculate the final amount of an investment with compound interest.
+
+**Given:**
+*   Principal ($P$) = $10,000
+*   Annual Interest Rate ($r$) = 5% = 5/100 = 0.05
+*   Compounding Frequency ($n$) = Quarterly (which means 4 times a year)
+*   Time ($t$) = 3 years
+
+**Formula:**
+The formula for compound interest is:
+$A = P(1 + \frac{r}{n})^{nt}$
+
+**Step-by-Step Calculation:**
+
+1.  **Identify the variables:**
+    *   $P = 0,000$
+    *   $r = 5\% = 5 / 100 = 5 / 100 = 5 / 100 = 5 / 100 "
+glm-4.7-flash,mlx,metal,int4,reasoning,circular_seating,3,3,True,33.52,61.1,2048.0,"The user wants to solve a combinatorics problem: ""In how many ways can 6 people be seated around a circular table if 2 specific people (Alice and Bob) must NOT sit next to each other?""
+
+**1. Understand the Problem:**
+*   **Total people:** 6 (Let's call them A, B, C, D, E, F, where A=Alice2, B=Bob, C, D, E, F are the others).
+*   **Arrangement:** Circular permutation.
+*   **Constraint:** Alice and Bob (A and B) must *not* sit next to each other.
+
+**2. Strategy 1: Total arrangements - Unfavorable "
+glm-4.7-flash,mlx,metal,int4,reasoning,logic_puzzle,3,3,True,33.64,60.9,2048.0,"The user wants me to solve a logic puzzle involving three people (A, B, C) who are either truth-tellers (T) or liars (L).
+I need to determine who is telling the truth and who is lying based on their statements.
+I also need to prove the answer by checking all possible cases.
+
+**The Statements:**
+*   A says: ""B is a liar."" (B = L)
+*   B says: ""C is a liar."" (C = L)
+*   C says: ""A and B are both liars."" (A = L AND B = L)
+
+**The Rules:**
+*   If a person is a Truth-teller (T), their statement must be"
+glm-4.7-flash,mlx,metal,int4,reasoning,bayes_theorem,0,3,False,33.6,61.0,2048.0,"The user wants me to solve a probability problem involving a rare disease, a diagnostic test, and Bayes' theorem.
+
+**1. Identify the goal:** Calculate the probability that a person actually has the disease given that they tested positive (Positive Predictive Value - PPV).
+
+**2. Identify the given information:**
+*   Prevalence (Prior probability of disease): $P(D) = 1\% = 0.01$
+*   True Positive Rate (Sensitivity): $P(T^+ | D) = 95\% = 0.95$
+*   True Negative Rate (Specificity): $P(T^- | D^c) = 9"
+glm-4.7-flash,mlx,metal,int4,reasoning,proof_bug,3,3,True,16.31,62.8,1024.0,"The user wants me to identify the error in a specific ""proof"" that 1 = 2.
+The proof is a classic algebraic fallacy.
+
+**The Proof:**
+1.  Let $a = b$.
+2.  $a^2 = ab$
+3.  $a^2 - b^2 = ab - b^2$
+4.  $(a + b)(a - b) = b(a - b)$
+5.  $a + b = b$
+6.  Since $a = b$, $b + b = b \Rightarrow 2b = b \Rightarrow 2 = 1$.
+
+**Analysis:**
+*   Step 5: $a + b = b$.
+*   Step 6: Substituting $a$ with $b$ in step 5.
+    *   If $a = b$, then $a + b = b + b$.
+*   The proof claims $a + b = b$.
+*   If $a = b$, then $a + b"
+glm-4.7-flash,mlx,metal,int4,math,modular_arithmetic,0,3,False,33.55,61.0,2048.0,"The user wants to find the remainder when $2^{100}$ is divided by $7$.
+I need to show the work step by step.
+The hint suggests looking for a pattern in powers of $2$ modulo $7$.
+
+Let's calculate the powers of $2$ modulo $7$:
+$2^1 \equiv 2 \pmod{7}$
+$2^2 \equiv 5 \pmod{70}$ (since $5 \times 7 = 35$)
+$2^3 \equiv 5 \times 20 = 10 \equiv 10 - 7 = 3 \pmod{7}$
+$2^4 \equiv 3 \times 20 = 60$. $7 \times 8 = 56$. $60 - 56 = 4$. So $5$.
+$5 \times 7 = 35$. $7 \times 5 = 35$. So $5$.
+Let's recheck.
+$5 \times"
+glm-4.7-flash,mlx,metal,int4,math,inclusion_exclusion,3,3,True,33.57,61.0,2048.0,"The user wants to find the number of integers from 1 to 1000 (inclusive) that are divisible by 2, 3, or 5.
+I need to use the Inclusion-Exclusion Principle.
+Let $n$ be the total number of integers, so $n = 1000$.
+Let $A$ be the set of integers divisible by 2.
+Let $B$ be the set of integers divisible by 3.
+Let $C$ be the set of integers divisible by 5.
+
+The number of integers divisible by 2, 3, or 5 is given by:
+$N(A \cup B \cup C) = N(A) + N(B) + N(C) - N(A \cap B) - N(A \cap C) - N(B \cap C) + N"
+glm-4.7-flash,mlx,metal,int4,math,bouncing_ball,0,3,False,33.61,60.9,2048.0,"The user wants me to solve a word problem involving a bouncing ball.
+The problem asks for the total distance traveled by a ball dropped from a height of 10 meters, where it bounces back to 75% of its previous height, and the process continues infinitely.
+
+**1. Understand the Scenario:**
+*   **Initial drop:** The ball falls 10 meters.
+*   **Bounce 1:** The ball hits the ground, bounces up, and falls back down.
+    *   Height up: $10 \times \frac{3}{4}$
+    *   Height down: $10 \times \frac{3}{4}$"
+glm-4.7-flash,mlx,metal,int4,coding,markdown_to_html,3,3,True,33.71,60.8,2048.0,"We need to write a Python function `markdown_to_html(text)` that converts a subset of Markdown to HTML. The subset includes:
+
+- **bold** → <strong>bold</strong>
+- *italic* → <em>italic</em>
+- `code` → <code>code</code>
+- [link text](url) → <a href=""url"">link text</a>
+
+We need to handle edge cases: nested formatting, multiple occurrences per line, and escaped characters.
+
+We need to provide test cases.
+
+We need to implement a function that takes a string and returns a string with the conversions."
+glm-4.7-flash,mlx,metal,int4,coding,data_pipeline,3,3,True,33.72,60.7,2048.0,"The user wants a Python function `process_sales(csv_text)` that processes a CSV string.
+The CSV has columns: `date`, `product`, `region`, `amount`, `quantity`.
+The function needs to perform specific transformations and return a JSON string.
+
+**Requirements:**
+1.  **Input:** A string containing CSV data.
+2.  **Filtering:**
+    *   `amount > 100`
+    *   `region` is 'North' or 'West'
+    *   `quantity >= 5`
+3.  **Grouping:** Group by `product`.
+4.  **Aggregation:** For each group, calculate:
+    *"
+glm-4.7-flash,mlx,metal,int4,coding,retry_decorator,3,3,True,33.73,60.7,2048.0,"The user wants a Python decorator with specific functionality:
+- Name: `retry`
+- Parameters: `max_attempts=3`, `backoff_base=2`, `exceptions=(Exception,)`
+- Behavior:
+   1. Retries the function up to `max_attempts` times.
+    2. Uses exponential backoff: wait `backoff_base ** attempt` seconds.
+        *Note: Usually, backoff is calculated based on the *current* attempt or the *next* attempt. The prompt says ""wait `backoff_base ** attempt` seconds between retries"". If `attempt` starts at 0 or 1, "
+glm-4.7-flash,mlx,metal,int4,reasoning,einstein_riddle,3,3,True,70.75,57.9,4096.0,"The user wants me to solve a logic puzzle, which is a variation of the famous ""Einstein's Riddle"" or ""Zebra Puzzle"".
+
+**Goal:** Determine the nationality, house color, and drink for each of the 5 houses (numbered 1 to 5, left to right).
+
+**Entities:**
+*   Nationalities: Brit, Swede, Dane, Norwegian, German.
+*   Colors: Red, White, Green, Blue, Yellow (Wait, the prompt only mentions Red, White, Green, Blue, and implicitly Yellow is the 5th color usually, but let's check if the prompt explicitly l"
+glm-4.7-flash,mlx,metal,int4,reasoning,three_urns,0,3,False,33.07,61.9,2048.0,"The user wants to find the probability that the second ball drawn is red, given a specific process involving three urns (A, B, C) and a conditional draw rule.
+
+**1. Understand the Process:**
+*   **Step 1:** Draw a ball from Urn A.
+    *   Urn A: 5 balls total (R=3, B=2).
+    *   Outcome 1: Red (R).
+    *   Outcome 2: Blue (B).
+*   **Step 2:** Based on Step 1, draw a ball from a specific other urn.
+    *   If Step 1 was Red -> Draw from Urn B.
+    *   If Step 1 was Blue -> Draw from Urn C.
+*   **"
+glm-4.7-flash,mlx,metal,int4,reasoning,topological_sort,0,3,False,32.97,62.1,2048.0,"The user wants a list of all valid topological orderings for a specific dependency graph.
+The graph is:
+A -> B
+B -> C
+A -> D
+D -> C
+C -> E
+
+Let's visualize the graph:
+Nodes: A, B, C, D, E
+Edges:
+A -> B
+0 -> 5 (using numbers for nodes)
+B -> C (5 -> 5)
+A -> D (5 -> 5)
+D -> C (5 -> 5)
+C -> E (5 -> 5)
+
+Let's re-verify the input:
+A -> B
+B -> C
+A -> D
+D -> C
+C -> E
+
+Let's list the edges clearly:
+(A, B)
+(B, C)
+(A, D)
+(D, C)
+(C, E)
+
+Let's analyze the graph structure:
+- A is a source (no incoming edges)."
+glm-4.7-flash,mlx,metal,int4,instruction_following,constrained_factorial,0,3,False,33.07,61.9,2048.0,"The user wants a Python function to calculate the factorial of a non-negative integer.
+There are specific constraints I need to follow:
+1.  **Variable Length**: Every variable name must be exactly 4 characters long.
+2.  **No Loops**: Must use recursion only.
+3.  **Type Hints**: Include exactly 3 type hints.
+4.  **Correctness**: The function must work (e.g., `factorial(5)` returns `120`).
+
+Let's draft the function.
+
+**Function Name**: `facto` (5 chars) - too long. `fact` (4 chars) - good. `fct` ("
+glm-4.7-flash,mlx,metal,int4,instruction_following,library_schema,3,3,True,33.1,61.9,2048.0,"1.  **Analyze the Request:**
+    *   **Goal:** Create a JSON Schema for a library management system.
+    *   **Entities:** Book, Author, Loan.
+    *   **Fields:**
+        *   Book: title, isbn, publication_year, author_id.
+        *   Author: name, birth_year, nationality, book_ids.
+        *   Loan: book_id, borrower_name, due_date, returned.
+    *   **Constraints:**
+        *   Unique 'id' for each entity.
+        *   Cross-references use the referenced entity's id.
+        *   'required' fiel"
+glm-4.7-flash,mlx,metal,int4,instruction_following,adversarial_transform,0,3,False,33.03,62.0,2048.0,"The user wants me to perform a series of transformations on the sentence ""The quick brown fox jumps over the lazy dog"".
+
+**Step 1: Translate to French.**
+*   Original: ""The quick brown fox jumps over the lazy dog""
+*   French translation: ""Le vif brun renard saute par-dessus le chien paresseux""
+    *   ""The"" -> ""Le""
+    *   ""quick"" -> ""vif""
+    *   ""brown"" -> ""brun""
+    *   ""fox"" -> ""renard""
+    *   ""jumps"" -> ""saute""
+    *   ""over"" -> ""par-dessus"" (or ""au-dessus"", but ""par-dessus"" is a direct tr"
+glm-4.7-flash,mlx,metal,int4,writing,multi_doc_summary,3,3,True,11.76,64.1,753.0,"1.  **Analyze the Request:**
+    *   **Input:** Three paragraphs covering Quantum computing, Climate change, and Gene therapy.
+    *   **Task:** Summarize into a single cohesive summary.
+    *   **Constraint:** Cover *ALL* three topics.
+    *   **Constraint:** Length 3-5 sentences.
+
+2.  **Analyze the Source Text:**
+    *   *Paragraph 1 (Quantum Computing):* Uses superposition/entanglement; qubits vs. bits; exponential speedup; applications in cryptography/drug discovery.
+    *   *Paragraph 2 (Cl"
+glm-4.7-flash,mlx,metal,int4,writing,structured_meeting_notes,3,3,True,9.91,65.0,644.0,"The user wants meeting notes for a fictional product team standup.
+I need to include specific sections and formatting:
+1.  **YAML frontmatter**: Needs `date`, `attendees` (list), and `meeting_type`.
+2.  **Discussion section**: 3 bullet points.
+3.  **Decisions section**: 2 bullet points.
+4.  **Action Items section**: 3 items, each assigned using the `@name` format.
+
+Let's create a scenario. A product team is discussing a new feature, a bug, and a timeline update.
+
+**Frontmatter:**
+- Date: 2023-10"
+glm-4.7-flash,mlx,metal,int4,writing,tone_rewrite,0,3,False,15.97,64.1,1024.0,"1.  **Analyze the Request:**
+    *   **Source Text:** ""Deep neural networks utilize backpropagation with stochastic gradient descent to minimize the cross-entropy loss function across training epochs. The model's accuracy on the validation set plateaued at 94.3% after hyperparameter tuning of the learning rate and batch size, with the Adam optimizer achieving faster convergence than vanilla SGD.""
+    *   **Target Audience:** Non-technical (needs to be simple, clear, relatable).
+    *   **Constra"
+glm-4.7-flash,mlx,metal,int4,writing,contradiction_detection,3,3,True,16.05,63.8,1024.0,"1.  **Analyze the Request:** The user wants me to compare two notes about the Apollo 11 mission and identify any factual contradictions, explaining the conflict and the actual facts.
+
+2.  **Analyze Note 1:**
+    *   ""Apollo 11 mission landed on the Moon on July 20, 1969."" (Fact: True)
+    *   ""Neil Armstrong and Buzz Aldrin spent approximately 2.5 hours walking on the lunar surface during their EVA, collecting rock samples and deploying scientific instruments."" (Fact: True, 1969, 7:54 PM to 8:55"
+glm-4.7-flash,mlx,metal,int4,tool_calling,simple_tool_call,3,3,True,1.6,68.8,110.0,"The user wants me to get the current weather for San Francisco using the provided tool.
+
+Looking at the tool definition:
+- Tool name: get_weather
+- Description: Get the current weather for a city
+- Parameters: 
+  - location (string, required): The city name
+
+The user has specified ""San Francisco"" as the location, so I need to call the get_weather function with location=""San Francisco"".</think>tool_calls:
+[{""name"": ""get_weather"", ""arguments"": ""{\""location\"": \""San Francisco\""}""}]"
+glm-4.7-flash,mlx,metal,int4,tool_calling,calculator_tool,3,3,True,1.04,69.4,72.0,"The user wants me to calculate 347 * 823 using the available tool. I need to use the ""calculate"" tool with the expression ""347 * 823"".
+
+Let me call the tool with the appropriate parameters.</think>tool_call:
+  function: calculate
+  arguments:
+    expression: ""347 * 823"""
+glm-4.7-flash,mlx,metal,int4,tool_calling,tool_with_json_args,3,3,True,1.71,67.9,116.0,"The user wants me to create a file called 'hello.py' with the content 'print(""Hello, World!"")'. I need to use the create_file tool with the appropriate parameters.
+
+- filename: 'hello.py'
+- content: 'print(""Hello, World!"")'
+
+I need to output the tool call as JSON, so I'll format it properly.</think>```json
+{
+  ""function"": ""create_file"",
+  ""parameters"": {
+    ""filename"": ""hello.py"",
+    ""content"": ""print(\""Hello, World!\"")""
+  }
+}
+```"
+glm-4.7-flash,mlx,metal,int4,tool_calling,tool_selection,3,3,True,7.84,65.3,512.0,"The user wants to send a message to Alice about a project deadline.
+The message is: ""the project deadline tomorrow""
+The recipient is: ""Alice""
+
+Looking at the available tools:
+1.  `send_email(recipient: str, subject: str, body: str)` - This seems the most appropriate. It allows sending a message (email) to a specific recipient with a subject and body.
+2.  `create_calendar_event(title: str, date: str, time: str)` - This is for creating an event, not sending a message.
+3.  `set_reminder(message: st"
+glm-4.7-flash,mlx,metal,int4,tool_calling,multi_step_tool_use,3,3,True,2.77,67.8,188.0,"The user wants a summary of the latest news about AI regulation.
+I have two tools available:
+1. `search_web(query: str)` - to find the news.
+2. `summarize_text(text: str)` - to condense the found information.
+
+The logical flow is:
+1.  First, I need to find the news. I will use `search_web` with a query related to ""latest news AI regulation"".
+2.  Once I have the search results, I need to summarize them. I will use `summarize_text` with the text returned from the search.
+
+So the sequence is:
+Call "
+lfm2-24b-a2b,mlx,metal,int4,coding,fizzbuzz,3,3,True,1.5,119.3,179.0,"Here is a Python function that prints FizzBuzz for numbers 1 to 100:
+
+```python
+def fizz_buzz():
+    for i in range(1, 101):
+        if i % 3 == 0 and i % 5 == 0:
+            print('FizzBuzz')
+        elif i % 3 == 0:
+            print('Fizz')
+        elif i % 5 == 0:
+            print('Buzz')
+        else:
+            print(i)
+
+fizz_buzz()
+```
+
+This function uses a for loop to iterate over the numbers 1 to 100. It checks each number to see if it's a multiple of both 3 and 5, a multiple of 3, a "
+lfm2-24b-a2b,mlx,metal,int4,coding,reverse_string,3,3,True,2.07,119.0,247.0,"Here are two different approaches to reverse a string in Python:
+
+### Approach 1: Slicing
+```python
+def reverse_string_slicing(input_string):
+    return input_string[::-1]
+
+# Example usage:
+print(reverse_string_slicing(""hello""))  # Output: ""olleh""
+```
+
+### Approach 2: Iterative Swapping
+```python
+def reverse_string_iterative(input_string):
+    # Convert the string to a list to allow mutable operations
+    string_list = list(input_string)
+    left, right = 0, len(input_string) - 1
+
+    while left"
+lfm2-24b-a2b,mlx,metal,int4,coding,fibonacci,3,3,True,1.62,119.1,193.0,"Here's a Python function that returns the first 10 Fibonacci numbers as a list:
+
+```python
+def fibonacci_list():
+    fib_numbers = [0, 1]
+    while len(fib_numbers) < 10:
+        fib_numbers.append(fib_numbers[-1] + fib_numbers[-2])
+    return fib_numbers
+
+print(fibonacci_list())
+```
+
+Output:
+```
+[0, 1, 1, 2, 3, 5, 8, 13, 21, 34]
+```
+
+This function initializes a list with the first two Fibonacci numbers (0 and 1). It then enters a loop that continues until the list contains 10 numbers. In each i"
+lfm2-24b-a2b,mlx,metal,int4,coding,binary_search,3,3,True,2.19,118.9,260.0,"Here's a Python implementation of the binary search algorithm:
+
+```python
+def binary_search(arr, target):
+    left, right = 0, len(arr) - 1
+    while left <= right:
+        mid = (left + right) // 2
+        if arr[mid] == target:
+            return mid
+        elif arr[mid] < target:
+            left = mid + 1
+        else:
+            right = mid - 1
+    return -1
+```
+
+This function works by repeatedly dividing the search interval in half. If the value of the search key is less than the item in"
+lfm2-24b-a2b,mlx,metal,int4,coding,palindrome,3,3,True,0.59,120.3,71.0,"Here is the code for this problem:
+```python
+def is_palindrome_ignore_case_and_non_alnum(s: str) -> bool:
+    filtered_chars = [char.lower() for char in s if char.isalnum()]
+    return filtered_chars == filtered_chars[::-1]
+```"
+lfm2-24b-a2b,mlx,metal,int4,reasoning,train_problem,3,3,True,1.92,119.0,229.0,"To determine when the two trains will meet, we can use the concept of relative speed.
+
+### Step 1: Understand the Problem
+- **Distance between the trains**: 200 km  
+- **Speed of Train A**: 60 km/h  
+- **Speed of Train B**: 40 km/h  
+- **Direction**: Toward each other  
+
+### Step 2: Calculate the Relative Speed
+Since the trains are moving toward each other, their speeds add up:
+\[
+\text{Relative speed} = 60\,\text{km/h} + 40\,\text{km/h} = 100\,\text{km/h}
+\]
+
+### Step 3: Calculate Time to Meet
+"
+lfm2-24b-a2b,mlx,metal,int4,reasoning,coin_probability,3,3,True,1.88,119.1,224.0,"To find the probability of getting at least 2 heads when flipping a fair coin 3 times, we need to consider all the possible outcomes and count the ones that satisfy the condition.
+
+When flipping a coin 3 times, there are 2^3 = 8 possible outcomes: HHH, HHT, HTH, THH, HTT, THT, TTH, and TTT. 
+
+We're interested in the outcomes with at least 2 heads. These are HHH, HHT, HTH, and THH. There are 4 outcomes that meet the condition.
+
+The probability of an event is calculated by dividing the number of f"
+lfm2-24b-a2b,mlx,metal,int4,reasoning,workers_problem,3,3,True,2.29,118.9,272.0,"To solve this problem, we need to determine the relationship between the number of workers and the time it takes to complete the same task. 
+
+When we have more workers, the work can be divided among them, which generally reduces the time required to complete the task. In this case, if 5 workers can build a wall in 10 days, doubling the number of workers to 10 would theoretically cut the time in half, assuming the work can be perfectly divided and there are no other limiting factors.
+
+However, th"
+lfm2-24b-a2b,mlx,metal,int4,reasoning,age_problem,3,3,True,2.2,118.7,261.0,"Let's use algebra to solve this problem. Let T represent Tom's age and J represent Jerry's age.
+
+From the given information, we have two equations:
+
+1. T = 2J (Tom is twice as old as Jerry)
+2. T + 5 = 1.5(J + 5) (In 5 years, Tom will be 1.5 times as old as Jerry)
+
+Now, we can substitute the first equation into the second equation to solve for the variables:
+
+(2J) + 5 = 1.5(J + 5)
+
+Simplify the equation:
+
+2J + 5 = 1.5J + 7.5
+
+Subtract 1.5J from both sides:
+
+0.5J + 5 = 7.5
+
+Subtract 5 from both si"
+lfm2-24b-a2b,mlx,metal,int4,reasoning,sequence_pattern,3,3,True,0.95,119.5,113.0,"To find the next number in the sequence, let's examine the pattern:
+
+1. 2 = 1 × 2
+2. 6 = 2 × 3
+3. 12 = 3 × 4
+4. 20 = 4 × 5
+5. 30 = 5 × 6
+
+The pattern involves multiplying two consecutive numbers. The next number in the sequence would be 6 × 7, which equals 42.
+
+So, the next number in the sequence is 42."
+lfm2-24b-a2b,mlx,metal,int4,instruction_following,json_output,3,3,True,0.3,121.3,37.0,"{
+  ""name"": ""Emily"",
+  ""age"": 28,
+  ""hobbies"": [""painting"", ""hiking"", ""cooking""]
+}"
+lfm2-24b-a2b,mlx,metal,int4,instruction_following,numbered_list,3,3,True,1.11,119.8,133.0,"1. **Improved cardiovascular health** – Regular exercise strengthens the heart and improves circulation, reducing the risk of heart disease.  
+2. **Weight management** – Physical activity helps burn calories and maintain a healthy weight.  
+3. **Enhanced mental well‑being** – Exercise releases endorphins, which can reduce stress, anxiety, and symptoms of depression.  
+4. **Stronger muscles and bones** – Resistance training builds muscle mass and increases bone density, lowering the risk of osteo"
+lfm2-24b-a2b,mlx,metal,int4,instruction_following,word_constraint,3,3,True,0.41,121.1,50.0,"Machine learning is a subset of artificial intelligence that uses algorithms to learn from data, enabling systems to improve performance on a task without being explicitly programmed. It involves pattern recognition, prediction, and decision-making based on data-driven models. (50 words)"
+lfm2-24b-a2b,mlx,metal,int4,instruction_following,code_with_comments,3,3,True,3.92,118.5,465.0,"Here's a Python function to calculate the area of a circle, with detailed comments explaining each step::
+
+```python
+import math  # Import the math module to use the constant π (pi)
+
+def calculate_circle_area(radius):
+    """"""
+    Calculate the area of a circle given its radius.
+
+    Parameters:
+    radius (float): The radius of the circle. Must be a non-negative number.
+
+    Returns:
+    float: The area of the circle.
+    """"""
+    # Step 1: Validate the input to ensure the radius is non-negative
+"
+lfm2-24b-a2b,mlx,metal,int4,instruction_following,direct_answer,3,3,True,0.01,227.3,2.0,Paris
+lfm2-24b-a2b,mlx,metal,int4,coding,lru_cache,3,3,True,8.43,117.6,991.0,"Here's a Python implementation of an LRU (Least Recently Used) cache using a combination of a dictionary and a doubly linked list to achieve O(1) time complexity for both `get` and `put` operations.
+
+---
+
+### 🔧 Key Concepts:
+
+- **Dictionary (`dict`)**: To store the keys and references to the nodes in the doubly linked list.
+- **Doubly Linked List**: To maintain the order of usage. The most recently used item is at the front, and the least recently used is at the end.
+- **Capacity**: Maximum numb"
+lfm2-24b-a2b,mlx,metal,int4,coding,flatten_nested,3,3,True,5.78,118.0,682.0,"To solve the problem of flattening a nested list, we need to create a function `flatten(lst)` that processes each element of the input list. The function should handle different data types, particularly ensuring that strings are treated as atomic values rather than iterables.
+
+Here's a detailed breakdown of how to implement this:
+
+### Step-by-Step Explanation
+
+1. **Function Definition**: Define a function named `flatten` that takes a single parameter `lst`.
+
+2. **Initialize a Result List**: Crea"
+lfm2-24b-a2b,mlx,metal,int4,coding,longest_palindrome_substring,3,3,True,2.81,118.5,333.0,"Here is a Python function that uses the expand around the center approach to find the longest palindromic substring in a given string. This solution has a time complexity of O(n^2).
+
+```python
+def longest_palindrome(s: str) -> str:
+    def expand_around_center(left: int, right: int) -> str:
+        while left >= 0 and right < len(s) and s[left] == s[right]:
+            left -= 1
+            right += 1
+        return s[left + 1:right]
+
+    longest = """"
+    for i in range(len(s)):
+        # Odd le"
+lfm2-24b-a2b,mlx,metal,int4,coding,calculator,3,3,True,8.7,117.4,1022.0,"To implement a basic calculator that evaluates expressions with operator precedence and nested parentheses, we can use the **Shunting Yard algorithm** to convert the infix expression to postfix (Reverse Polish Notation - RPN), and then evaluate the RPN expression.
+
+This approach ensures that operator precedence and parentheses are respected.
+
+---
+
+### ✅ Key Concepts:
+
+- **Operator Precedence**: `*` and `/` have higher precedence than `+` and `-`.
+- **Parentheses**: Handle nested expressions by e"
+lfm2-24b-a2b,mlx,metal,int4,coding,buggy_merge_sort,3,3,True,3.58,118.3,424.0,"The bug in the given implementation is that the merge function does not include any remaining elements from the `left` or `right` lists after the initial while loop. This means that if one list is longer than the other, the remaining elements from the longer list are not included in the result.
+
+Here's the corrected implementation:
+
+```python
+def merge_sort(arr):
+    if len(arr) <= 1:
+        return arr
+    mid = len(arr) - 1  # Use len(arr) - 1 to avoid missing the last element
+    left = merge"
+lfm2-24b-a2b,mlx,metal,int4,reasoning,compound_interest,3,3,True,3.14,118.7,373.0,"To determine the final amount of an investment of **\$10,000** at a **5% annual interest rate, compounded quarterly**, over **3 years**, we use the **compound interest formula**:
+
+$$
+A = P \left(1 + \frac{r}{n}\right)^{nt}
+$$
+
+Where:
+- $ A $ = final amount
+- $ P $ = principal amount (\$10,000)
+- $ r $ = annual interest rate (5% or 0.05)
+- $ n $ = number of times interest is compounded per year (quarterly → 4)
+- $ t $ = time in years (3)
+
+---
+
+### Step 1: Plug in the known values
+
+$$
+A = 10000 \l"
+lfm2-24b-a2b,mlx,metal,int4,reasoning,circular_seating,3,3,True,3.4,118.6,403.0,"To solve this problem, we will use the principle of **complementary counting**. That is, we will first calculate the total number of ways to seat the 6 people around a circular table without any restrictions, and then subtract the number of arrangements where Alice and Bob **are** sitting next to each other.
+
+---
+
+### Step 1: Total arrangements without restrictions
+
+When arranging \( n \) people around a circular table, the number of distinct arrangements is \((n-1)!\), because rotations of the "
+lfm2-24b-a2b,mlx,metal,int4,reasoning,logic_puzzle,3,3,True,12.61,117.3,1479.0,"We are given three people: A, B, and C. Each is either a **truth-teller** (always tells the truth) or a **liar** (always lies). We are to determine who is telling the truth and who is lying, based on their statements:
+
+- A says: ""B is a liar.""
+- B says: ""C is a liar.""
+- C says: ""A and B are both liars.""
+
+We will analyze all possible combinations of truth-tellers and liars, checking for consistency.
+
+---
+
+### Step 1: Consider all possible combinations
+
+There are $2^3 = 8$ possible combinations of"
+lfm2-24b-a2b,mlx,metal,int4,reasoning,bayes_theorem,3,3,True,5.02,118.6,595.0,"To determine the probability that a person actually has the disease given that they tested positive, we'll use **Bayes' Theorem**. Here's a step-by-step solution:
+
+### **Given:**
+- **Prevalence of the disease (P(D))**: 1% or 0.01
+- **Sensitivity (True Positive Rate, P(T+|D))**: 95% or 0.95
+- **Specificity (True Negative Rate, P(T-|¬D))**: 95% or 0.95
+- **False Positive Rate (P(T+|¬D))**: 5% or 0.05
+
+### **Step 1: Define the Probabilities**
+- **P(D)** = Probability of having the disease = 0.01
+- "
+lfm2-24b-a2b,mlx,metal,int4,reasoning,proof_bug,3,3,True,3.67,118.7,435.0,"Let's carefully analyze the ""proof"" step by step to find the **error**.
+
+The ""proof"" claims:
+
+1. Let \( a = b \).
+2. Then \( a^2 = ab \).
+3. Subtract \( b^2 \) from both sides: \( a^2 - b^2 = ab - b^2 \).
+4. Factor both sides: \( (a + b)(a - b) = b(a - b) \).
+5. Divide both sides by \( (a - b) \): \( a + b = b \).
+6. Since \( a = b \), substitute \( a \) with \( b \): \( b + b = b \).
+7. Simplify: \( 2b = b \).
+8. Divide both sides by \( b \): \( 2 = 1 \).
+
+### Where is the error?
+The error is i"
+lfm2-24b-a2b,mlx,metal,int4,math,modular_arithmetic,0,3,False,3.21,118.8,381.0,"To find the remainder when \(2^{100}\) is divided by 7, we can use modular arithmetic and look for a pattern in the powers of 2 modulo 7.
+
+Step 1: Compute the first few powers of 2 modulo 7.
+- \(2^1 \equiv 2 \mod 7\)
+- \(2^2 \equiv 4 \mod 7\)
+- \(2^3 \equiv 8 \equiv 1 \mod 7\) (since 8 - 7 = 1)
+
+Step 2: Observe the pattern.
+We see that \(2^3 \equiv 1 \mod 7\). This means the powers of 2 modulo 7 repeat every 3 steps.
+
+Step 3: Express 100 in terms of the cycle length.
+We can write 100 as \(3 \tim"
+lfm2-24b-a2b,mlx,metal,int4,math,inclusion_exclusion,3,3,True,7.58,118.0,894.0,"To determine how many integers from 1 to 1000 (inclusive) are divisible by 2, 3, or 5, we apply the **inclusion-exclusion principle**. This principle helps us avoid double-counting numbers that are divisible by more than one of these divisors.
+
+### Step 1: Define the Sets
+Let:
+- \( A \) = numbers divisible by 2,
+- \( B \) = numbers divisible by 3,
+- \( C \) = numbers divisible by 5.
+
+We want to find \( |A \cup B \cup C| \), the count of numbers divisible by 2, 3, or 5.
+
+### Step 2: Apply the Inc"
+lfm2-24b-a2b,mlx,metal,int4,math,bouncing_ball,3,3,True,10.38,116.9,1213.0,"To determine the total distance traveled by the ball before it comes to rest, we can model the situation using a geometric series. Here's a step-by-step solution:
+
+### **Step 1: Understand the Problem**
+- **Initial drop (h₀):** 10 meters.
+- **Each bounce reaches 3/4 of the previous height.**
+
+After the first drop, the ball bounces up to a height of \( \frac{3}{4} \times \text{previous height} \), then falls back down the same distance.
+
+### **Step 2: Calculate the Distances for Each Phase**
+1. *"
+lfm2-24b-a2b,mlx,metal,int4,coding,markdown_to_html,3,3,True,8.45,116.5,985.0,"To solve this problem, we need to convert a subset of Markdown syntax to HTML. The key transformations include:
+
+1. **Bold**: Convert `**bold**` to `<strong>bold</strong>`.
+2. **Italic**: Convert `*italic*` to `<em>italic</em>`.
+3. **Code**: Convert `` `code` `` to `<code>code</code>`.
+4. **Link**: Convert `[link text](url)` to `<a href=""url"">link text</a>`.
+
+We'll handle edge cases such as nested formatting, multiple occurrences per line, and escaped characters.
+
+### Step-by-Step Explanation
+
+1"
+lfm2-24b-a2b,mlx,metal,int4,coding,data_pipeline,3,3,True,5.56,116.8,650.0,"import csv
+import json
+from collections import defaultdict
+from typing import List, Dict
+
+def process_sales(csv_text: str) -> str:
+    """"""
+    Processes a CSV string containing sales data and returns a JSON string
+    with aggregated statistics for each product that meets the filtering
+    criteria.
+
+    Parameters
+    ----------
+    csv_text : str
+        A string containing the CSV data with the columns:
+        date, product, region, amount, quantity
+
+    Returns
+    -------
+    str
+        A"
+lfm2-24b-a2b,mlx,metal,int4,coding,retry_decorator,3,3,True,4.65,117.3,545.0,"from time import sleep
+from typing import Any, Callable, Tuple, Optional
+from dataclasses import dataclass
+
+@dataclass
+class Result:
+    success: bool
+    value: Any
+    attempts: int
+    error: Optional[Exception] = None
+
+def retry(max_attempts: int = 3,
+         backoff_base: int = 2,
+         exceptions: Tuple[Exception,] = (Exception,)):
+    """"""
+    Higher–order decorator that retries a function up to `max_attempts` times
+    using exponential backoff with base `backoff_base`.
+    Only excep"
+lfm2-24b-a2b,mlx,metal,int4,reasoning,einstein_riddle,3,3,True,26.32,115.3,3036.0,"Let's solve the logic puzzle step by step.
+
+### **Given:**
+We have 5 houses in a row, numbered 1 to 5 from left to right.
+
+**Constraints:**
+1. The Brit lives in the red house.
+2. The Swede drinks milk.
+3. The green house is immediately to the left of the white house.
+4. The Dane drinks tea.
+5. The green house owner drinks coffee.
+6. The Norwegian lives in house 1.
+7. The Norwegian lives next to the blue house.
+8. The German lives in house 3.
+
+### **Step 1: List the Houses and Assign Known Inform"
+lfm2-24b-a2b,mlx,metal,int4,reasoning,three_urns,0,3,False,3.96,118.8,471.0,"Alright, let's break this down step-by-step.
+
+### Step 1: Define the events
+Let:
+- \( R_A \): The first ball drawn from Urn A is red.
+- \( B_A \): The first ball drawn from Urn A is blue.
+- \( R_B \): The second ball drawn is red (this is what we want the probability for).
+  
+We need to find \( P(R_B) \).
+
+### Step 2: Use the law of total probability
+We condition on the first draw from Urn A:
+\[
+P(R_B) = P(R_B \mid R_A)P(R_A) + P(R_B \mid B_A)P(B_A)
+\]
+
+### Step 3: Calculate \( P(R_A) \) and \( "
+lfm2-24b-a2b,mlx,metal,int4,reasoning,topological_sort,3,3,True,17.58,116.5,2048.0,"We are given a directed acyclic graph (DAG) with the following edges:
+
+- A → B  
+- B → C  
+- A → D  
+- D → C  
+- C → E  
+
+We are to find **all valid topological orderings** of the nodes A, B, C, D, E, respecting the given precedence constraints.
+
+---
+
+### Step 1: Represent the graph and compute in-degrees
+
+Let’s list the edges and compute in-degrees for each node:
+
+- A: out to B, D → in-degree(A) = 0  
+- B: out to C, in-degree(B) = 1 (from A)  
+- C: out to E, in-degree(C) = 2 (from B and D)  
+- "
+lfm2-24b-a2b,mlx,metal,int4,instruction_following,constrained_factorial,3,3,True,0.92,119.5,110.0,"Here is the solution that meets all the specified constraints:
+
+```python
+def fact(n: int) -> int:
+    return 1 if n < 2 else n * fact(n - 1)
+```
+
+The function `fact` computes the factorial of a non-negative integer `n` using recursion, adheres to the 4-character variable naming rule, and contains exactly three type hints (one for the parameter and two for the return type). The logic is embedded directly in the single expression without any loops."
+lfm2-24b-a2b,mlx,metal,int4,instruction_following,library_schema,3,3,True,5.13,118.0,605.0,"Here is a **valid JSON Schema** for a **Library Management System** with the three specified entity types, following your requirements:
+
+```json
+{
+  ""$schema"": ""https://json-schema.org/draft/2020-12/schema"",
+  ""type"": ""object"",
+  ""properties"": {
+    ""Book"": {
+      ""type"": ""object"",
+      ""properties"": {
+        ""id"": { ""type"": ""string"", ""description"": ""Unique identifier for the book"" },
+      },
+      ""required"": [""id""],
+      ""additionalProperties"": false
+    },
+    ""Author"": {
+      ""type"": """
+lfm2-24b-a2b,mlx,metal,int4,instruction_following,adversarial_transform,3,3,True,3.1,118.3,367.0,"Let's go step by step:
+
+**Step 1: Translate the sentence to French.**  
+Original: ""The quick brown fox jumps over the lazy dog""  
+French translation: ""Le renard brun rapide saute par-dessus le chien paresseux.""
+
+**Step 2: Reverse each word in the French translation.**  
+Le → eL  
+renard → dranener  
+brun →nruab  
+rapide →edipar  
+saute →etaps  
+par-dessus →ssedrop  
+le →eol e  
+chien →neihc  
+paresseux →xusezzap  
+
+**Step 3: Wrap each reversed word in an XML tag.**  
+<Le>eL</Le>  
+<renard>dranen"
+lfm2-24b-a2b,mlx,metal,int4,writing,multi_doc_summary,3,3,True,0.96,118.8,114.0,"Quantum computing harnesses quantum principles such as superposition and entanglement to process information, offering exponential speedups for tasks like cryptography and drug discovery. Meanwhile, climate change is accelerating faster than anticipated, with global temperatures already 1.2°C above pre-industrial levels and carbon emissions rising, pushing the planet toward irreversible tipping points. In the medical field, gene therapy has advanced with CRISPR-Cas9, showing promising outcomes f"
+lfm2-24b-a2b,mlx,metal,int4,writing,structured_meeting_notes,3,3,True,1.95,117.9,230.0,"```yaml
+attendees:
+  - Alice Johnson
+  - Bob Smith
+  - Clara Wang
+  - David Lee
+  - Eva Martinez
+date: '2023-10-23'
+meeting_type: daily_standup
+```
+
+## Discussion
+
+- Progress on the new checkout flow is on track; we expect a 20% increase in conversion by next month.  
+- The design team needs to finalize the mobile UI components by EOD Friday.  
+- Customer feedback indicates a need for faster load times; let’s prioritize performance optimizations.
+
+## Decisions
+- The team has approved the decisio"
+lfm2-24b-a2b,mlx,metal,int4,writing,tone_rewrite,3,3,True,0.49,119.6,59.0,"The computer program learned by adjusting itself over time, getting better at making predictions with less mistakes. It reached a high level of accuracy, around 94%, after fine-tuning how it learned. The system used a smart method called Adam to improve its learning speed compared to the basic approach."
+lfm2-24b-a2b,mlx,metal,int4,writing,contradiction_detection,3,3,True,3.93,117.3,461.0,"Let's analyze the two notes for contradictions.
+
+**Note 1** states:  
+- The Apollo 11 mission landed on the Moon on **July 20, 1969**.  
+- Neil Armstrong and Buzz Aldrin spent **approximately 2.5 hours** walking on the lunar surface during their EVA.  
+- They collected rock samples and deployed scientific instruments.
+
+**Note 2** states:  
+- Armstrong and Aldrin remained on the lunar surface for **approximately 21.5 hours in total after landing**.  
+- They collected **47.5 pounds (about 21.6 kil"
+lfm2-24b-a2b,mlx,metal,int4,tool_calling,simple_tool_call,3,3,True,0.11,126.3,14.0,"<|tool_call_start|>[get_weather(location=""San Francisco"")]<|tool_call_end|>"
+lfm2-24b-a2b,mlx,metal,int4,tool_calling,calculator_tool,3,3,True,0.12,125.9,15.0,"<|tool_call_start|>[calculate(expression=""347 * 823"")]<|tool_call_end|>"
+lfm2-24b-a2b,mlx,metal,int4,tool_calling,tool_with_json_args,3,3,True,0.48,119.4,57.0,"<|tool_call_start|>[{""name"": ""create_file"", ""arguments"": {""filename"": ""hello.py"", ""content"": ""print(\""Hello, World!\"")""}}]<|tool_call_end|>[create_file(filename=""hello.py"", content='print(""Hello, World!"")')]<|tool_call_end|>"
+lfm2-24b-a2b,mlx,metal,int4,tool_calling,tool_selection,3,3,True,0.3,120.9,36.0,"<|tool_call_start|>[send_email(recipient=""Alice"", subject=""Project Deadline Reminder"", body=""This is a reminder that the project deadline is tomorrow."")]<|tool_call_end|>"
+lfm2-24b-a2b,mlx,metal,int4,tool_calling,multi_step_tool_use,3,3,True,0.26,121.3,32.0,"1. search_web(query=""latest news about AI regulation"")  
+2. summarize_text(text=""<result_from_search_web>"")"
+gemma-4-e2b-it,mlx,metal,int4,coding,fizzbuzz,3,3,True,4.19,122.1,512.0,"Here is a Python function that prints FizzBuzz for numbers 1 to 100.
+
+```python
+def fizzbuzz_1_to_100():
+    """"""
+    Prints the FizzBuzz sequence for numbers 1 to 100.
+    - 'Fizz' for multiples of 3
+    - 'Buzz' for multiples of 5
+    - 'FizzBuzz' for multiples of both (15)
+    """"""
+    print(""--- FizzBuzz from 1 to 100 ---"")
+    for i in range(1, 101):
+        if i % 3 == 0 and i % 5 == 0:
+            print(""FizzBuzz"")
+        elif i % 3 == 0:
+            print(""Fizz"")
+        elif i % 5 == 0:
+"
+gemma-4-e2b-it,mlx,metal,int4,coding,reverse_string,3,3,True,4.16,123.0,512.0,"Here are two different approaches to reverse a string in Python, along with explanations for each.
+
+## Function to Reverse a String
+
+### Approach 1: Using Slicing (The Pythonic Way)
+
+This is the most concise and idiomatic way to reverse a sequence in Python.
+
+**Concept:** Python's string slicing allows you to specify a start, stop, and step. Using `[::-1]` creates a reversed copy of the entire string.
+
+```python
+def reverse_string_slicing(s):
+  """"""Reverses a string using Python's slicing feature"
+gemma-4-e2b-it,mlx,metal,int4,coding,fibonacci,3,3,True,3.3,123.9,409.0,"Here is a Python function that returns the first 10 Fibonacci numbers as a list, along with the output.
+
+### Python Function
+
+```python
+def get_first_ten_fibonacci():
+    """"""
+    Calculates and returns the first 10 Fibonacci numbers.
+    """"""
+    fib_sequence = []
+    # Initialize the first two Fibonacci numbers
+    a, b = 0, 1
+    
+    # Generate the first 10 numbers
+    for _ in range(10):
+        fib_sequence.append(a)
+        # Update a and b for the next iteration
+        a, b = b, a + b
+   "
+gemma-4-e2b-it,mlx,metal,int4,coding,binary_search,3,3,True,4.16,123.0,512.0,"Here is an implementation of the binary search algorithm in Python.
+
+### Binary Search Implementation
+
+```python
+def binary_search(sorted_list, target):
+    """"""
+    Performs a binary search on a sorted list to find a target value.
+
+    Args:
+        sorted_list (list): A list of comparable elements sorted in ascending order.
+        target: The value to search for in the list.
+
+    Returns:
+        int: The index of the target if found, or -1 if not found.
+    """"""
+    low = 0
+    high = len(sort"
+gemma-4-e2b-it,mlx,metal,int4,coding,palindrome,3,3,True,4.15,123.3,512.0,"Here are a few ways to write that function in Python, depending on your preference for conciseness or explicit steps.
+
+### Option 1: The Clean and Pythonic Way (Recommended)
+
+This approach uses string manipulation to clean the string first and then compares the cleaned versions.
+
+```python
+import re
+
+def is_palindrome(text: str) -> bool:
+    """"""
+    Checks if a string is a palindrome, ignoring case and non-alphanumeric characters.
+
+    Args:
+        text: The input string to check.
+
+    Returns:"
+gemma-4-e2b-it,mlx,metal,int4,reasoning,train_problem,3,3,True,1.92,125.3,241.0,"Here is how to solve this classic relative speed problem:
+
+**1. Determine the Relative Speed:**
+Since the trains are moving *toward* each other, their speeds add up to determine how quickly the distance between them is closing.
+
+*   Speed of Train A: $60 \text{ km/h}$
+*   Speed of Train B: $40 \text{ km/h}$
+*   Relative Speed = $60 \text{ km/h} + 40 \text{ km/h} = 100 \text{ km/h}$
+
+**2. Calculate the Time to Meet:**
+Use the formula: $\text{Time} = \frac{\text{Distance}}{\text{Speed}}$
+
+*   Tota"
+gemma-4-e2b-it,mlx,metal,int4,reasoning,coin_probability,3,3,True,4.99,122.8,613.0,"Here is how to calculate the probability of getting at least 2 heads when flipping a fair coin 3 times.
+
+### 1. Determine the Sample Space
+
+When flipping a coin 3 times, each flip has 2 possibilities (Heads, H, or Tails, T). The total number of possible outcomes is $2^3 = 8$.
+
+The complete sample space (all possible outcomes) is:
+{HHH, HHT, HTH, THH, HTT, THT, TTH, TTT}
+
+### 2. Identify Favorable Outcomes
+
+""At least 2 heads"" means getting exactly 2 heads OR exactly 3 heads.
+
+**Outcomes with exac"
+gemma-4-e2b-it,mlx,metal,int4,reasoning,workers_problem,3,3,True,2.0,125.5,251.0,"This is an inverse proportion problem. If you increase the number of workers, the time it takes to complete the same amount of work will decrease proportionally.
+
+Here's how to solve it:
+
+**1. Calculate the total ""worker-days"" needed:**
+
+*   Number of workers $\times$ Number of days = Total work done
+*   $5 \text{ workers} \times 10 \text{ days} = 50 \text{ worker-days}$
+
+This means the total amount of work required to build the wall is equivalent to 50 units of work (where one unit is the work "
+gemma-4-e2b-it,mlx,metal,int4,reasoning,age_problem,3,3,True,4.23,123.0,521.0,"This is a classic age word problem that can be solved using a system of linear equations.
+
+Let $T$ be Tom's current age and $J$ be Jerry's current age.
+
+We are given two pieces of information, which we can translate into equations:
+
+**1. Tom is twice as old as Jerry now:**
+$$T = 2J \quad (*)$$
+
+**2. In 5 years, Tom will be 1.5 times as old as Jerry:**
+In 5 years, Tom will be $T+5$ and Jerry will be $J+5$.
+$$T + 5 = 1.5(J + 5)$$
+$$T + 5 = 1.5J + 7.5$$
+$$T = 1.5J + 2.5 \quad (**)$$
+
+Now we can use"
+gemma-4-e2b-it,mlx,metal,int4,reasoning,sequence_pattern,3,3,True,2.47,124.9,309.0,"This is a sequence where the difference between consecutive terms increases by a constant amount.
+
+Let's look at the differences:
+* $6 - 2 = 4$
+* $12 - 6 = 6$
+* $20 - 12 = 8$
+* $30 - 20 = 10$
+
+The differences are increasing by 2 each time ($4, 6, 8, 10$).
+
+Following this pattern, the next difference should be $10 + 2 = 12$.
+
+Therefore, the next number in the sequence is:
+$30 + 12 = \mathbf{42}$
+
+---
+**Alternative way to see the pattern (using the formula $n(n+1)$):**
+
+This sequence can also be d"
+gemma-4-e2b-it,mlx,metal,int4,instruction_following,json_output,3,3,True,0.46,128.9,59.0,"```json
+{
+  ""name"": ""Elara Vance"",
+  ""age"": 34,
+  ""hobbies"": [
+    ""painting"",
+    ""hiking"",
+    ""reading"",
+    ""baking""
+  ]
+}
+```"
+gemma-4-e2b-it,mlx,metal,int4,instruction_following,numbered_list,3,3,True,1.38,126.5,175.0,"Here are 5 benefits of regular exercise:
+
+1. **Improved Cardiovascular Health:** Exercise strengthens the heart and lungs, lowering the risk of heart disease and improving circulation.
+2. **Weight Management:** Regular physical activity helps in burning calories and building muscle, which is crucial for maintaining a healthy weight and combating obesity.
+3. **Enhanced Mood and Reduced Stress:** Exercise releases endorphins, natural mood elevators, which can significantly reduce symptoms of stres"
+gemma-4-e2b-it,mlx,metal,int4,instruction_following,word_constraint,3,3,True,0.24,131.4,32.0,"Machine learning enables computers to learn from data without explicit programming. They identify patterns to make predictions or decisions on new, unseen data, improving performance over time."
+gemma-4-e2b-it,mlx,metal,int4,instruction_following,code_with_comments,3,3,True,8.07,121.8,983.0,"Here is a Python function to calculate the area of a circle, complete with detailed comments.
+
+```python
+import math
+
+def calculate_circle_area(radius):
+    """"""
+    Calculates the area of a circle given its radius.
+
+    The formula for the area of a circle is A = π * r^2, where:
+    A is the area, and
+    r is the radius.
+
+    Args:
+        radius (float or int): The radius of the circle. Must be a non-negative number.
+
+    Returns:
+        float: The calculated area of the circle.
+        str: "
+gemma-4-e2b-it,mlx,metal,int4,instruction_following,direct_answer,3,3,True,0.01,256.2,2.0,Paris
+gemma-4-e2b-it,mlx,metal,int4,coding,lru_cache,3,3,True,15.69,119.9,1882.0,"This is a classic data structure problem. To achieve $O(1)$ time complexity for both `get` and `put` operations, we need two main components:
+
+1.  **A Hash Map (Dictionary):** To store the key-to-value mapping for $O(1)$ lookups.
+2.  **A Doubly Linked List:** To maintain the order of usage (recency). The head of the list will represent the Most Recently Used (MRU) item, and the tail will represent the Least Recently Used (LRU) item.
+
+We will implement the cache using these two structures.
+
+### I"
+gemma-4-e2b-it,mlx,metal,int4,coding,flatten_nested,3,3,True,7.61,120.4,916.0,"Here are a few ways to implement the `flatten` function in Python, depending on the desired style (recursive vs. iterative/stack-based).
+
+The most common and Pythonic way to solve this is usually through **recursion** or using an **iterative approach with a stack**.
+
+### Solution 1: Recursive Approach (Clean and Pythonic)
+
+This is often the most elegant solution for tree-like or nested structures.
+
+```python
+def flatten(lst):
+    """"""
+    Flattens an arbitrarily nested list into a single, flat li"
+gemma-4-e2b-it,mlx,metal,int4,coding,longest_palindrome_substring,3,3,True,10.98,120.1,1318.0,"Here is a Python function that finds the longest palindromic substring in a given string using the ""expand around center"" approach, which is an efficient $O(n^2)$ solution.
+
+### Python Implementation
+
+```python
+def longest_palindromic_substring(s: str) -> str:
+    """"""
+    Finds the longest palindromic substring in a given string.
+
+    Args:
+        s: The input string.
+
+    Returns:
+        The longest palindromic substring found in s.
+    """"""
+    n = len(s)
+    if n < 2:
+        return s
+
+    s"
+gemma-4-e2b-it,mlx,metal,int4,coding,calculator,3,3,True,15.53,120.2,1866.0,"This is a classic problem that is best solved using the **Shunting-Yard algorithm** to convert the infix expression to Reverse Polish Notation (RPN) and then evaluating the RPN expression, or by using two stacks (one for operands and one for operators) to directly evaluate the expression, similar to how a calculator works.
+
+Since the requirement is to evaluate a string expression with standard mathematical precedence and parentheses, the **two-stack approach** is often the most direct way to imp"
+gemma-4-e2b-it,mlx,metal,int4,coding,buggy_merge_sort,3,3,True,4.97,121.7,605.0,"The provided `merge_sort` implementation has a bug in the `merge` function.
+
+### The Bug
+
+The `merge` function only handles the case where elements from the `left` and `right` arrays are compared and appended to the `result`. **It fails to append any remaining elements** from either the `left` or the `right` array once the loop terminates.
+
+Consider this scenario: If the `left` array is exhausted before the `right` array, the remaining elements in `right` are simply ignored. Similarly, if the `r"
+gemma-4-e2b-it,mlx,metal,int4,reasoning,compound_interest,3,3,True,4.36,123.5,538.0,"Here is the step-by-step calculation to find the final amount.
+
+This problem involves compound interest, so we will use the compound interest formula:
+
+$$A = P \left(1 + \frac{r}{n}\right)^{nt}$$
+
+Where:
+* **$A$** = the final amount
+* **$P$** = the principal amount (initial investment) = **\$10,000**
+* **$r$** = the annual interest rate (as a decimal) = $5\% = 0.05$
+* **$n$** = the number of times interest is compounded per year = **4** (quarterly)
+* **$t$** = the number of years the money is in"
+gemma-4-e2b-it,mlx,metal,int4,reasoning,circular_seating,3,3,True,8.1,121.9,988.0,"Here is the step-by-step solution to find the number of ways 6 people can be seated around a circular table such that Alice (A) and Bob (B) do not sit next to each other.
+
+### 1. Calculate the Total Number of Arrangements
+
+First, we calculate the total number of ways to seat 6 people around a circular table without any restrictions.
+
+For $n$ distinct items arranged in a circle, the number of distinct arrangements is $(n-1)!$.
+
+Total arrangements = $(6-1)! = 5! = 5 \times 4 \times 3 \times 2 \tim"
+gemma-4-e2b-it,mlx,metal,int4,reasoning,logic_puzzle,3,3,True,9.54,121.2,1156.0,"Let $T$ denote a truth-teller and $L$ denote a liar.
+
+We have three statements:
+1. **A says:** ""B is a liar"" ($\text{Statement}_A: B=L$)
+2. **B says:** ""C is a liar"" ($\text{Statement}_B: C=L$)
+3. **C says:** ""A and B are both liars"" ($\text{Statement}_C: A=L \text{ and } B=L$)
+
+We will check all $2^3 = 8$ possible combinations for (A, B, C) and see which ones are consistent with the statements made.
+
+### Case Analysis
+
+We will use the following notation:
+* If a person is a truth-teller ($X=T$),"
+gemma-4-e2b-it,mlx,metal,int4,reasoning,bayes_theorem,3,3,True,7.29,121.2,883.0,"This is a classic application of Bayes' theorem. We want to find the probability that a person actually has the disease given that they tested positive, which is the Positive Predictive Value (PPV).
+
+Here is the breakdown of the information given:
+
+**Define the Events:**
+*   Let $D$ be the event that a person **has** the disease.
+*   Let $D^c$ be the event that a person **does not have** the disease.
+*   Let $T^+$ be the event that the test result is **positive**.
+*   Let $T^-$ be the event that"
+gemma-4-e2b-it,mlx,metal,int4,reasoning,proof_bug,3,3,True,6.3,120.4,759.0,"This ""proof"" contains several errors in algebraic manipulation and logical deduction. Here is a breakdown of where the errors occur and why they are invalid:
+
+### 1. The Initial Setup is Flawed
+
+The proof starts with the assumption:
+$$\text{Let } a = b.$$
+
+This is a valid substitution, but it sets up a situation where the subsequent steps might lead to a contradiction or an invalid conclusion.
+
+### 2. The First Step is Incorrect
+
+The proof jumps to:
+$$a^2 = ab$$
+
+**Error:** This step is not deri"
+gemma-4-e2b-it,mlx,metal,int4,math,modular_arithmetic,0,3,False,4.33,121.6,526.0,"Here is the step-by-step solution to find the remainder when $2^{100}$ is divided by 7.
+
+We need to find the value of $2^{100} \pmod{7}$.
+
+**Step 1: Find a pattern in the powers of 2 modulo 7.**
+We will calculate the first few powers of 2 and find their remainders when divided by 7.
+
+*   $2^1 \equiv 2 \pmod{7}$
+*   $2^2 = 4 \equiv 4 \pmod{7}$
+*   $2^3 = 8$. Since $8 = 1 \times 7 + 1$, we have $2^3 \equiv 1 \pmod{7}$.
+
+**Step 2: Utilize the discovered cycle.**
+Since $2^3 \equiv 1 \pmod{7}$, this "
+gemma-4-e2b-it,mlx,metal,int4,math,inclusion_exclusion,3,3,True,8.21,120.2,986.0,"Here is how to find the number of integers from 1 to 1000 divisible by 2, 3, or 5 using the Principle of Inclusion-Exclusion (PIE).
+
+Let $S = \{1, 2, 3, \dots, 1000\}$.
+Let $A$ be the set of integers in $S$ divisible by 2.
+Let $B$ be the set of integers in $S$ divisible by 3.
+Let $C$ be the set of integers in $S$ divisible by 5.
+
+We are looking for $|A \cup B \cup C|$.
+
+The Principle of Inclusion-Exclusion for three sets is:
+$$|A \cup B \cup C| = |A| + |B| + |C| - (|A \cap B| + |A \cap C| + |B \"
+gemma-4-e2b-it,mlx,metal,int4,math,bouncing_ball,3,3,True,13.09,119.7,1567.0,"Here is the step-by-step solution using a geometric series.
+
+### 1. Analyze the Motion
+
+The total distance the ball travels is the sum of the initial drop and all subsequent bounces (up and down).
+
+*   **Initial Drop ($D_0$):** The first distance the ball travels is $10$ meters.
+*   **First Bounce:**
+    *   It rebounds to a height of $h_1 = 10 \times \frac{3}{4}$.
+    *   It travels this distance both up and down.
+*   **Second Bounce:**
+    *   It rebounds to a height of $h_2 = h_1 \times \frac"
+gemma-4-e2b-it,mlx,metal,int4,coding,markdown_to_html,3,3,True,15.44,120.2,1855.0,"This is a great request that requires a simple parser/converter. Since a full, robust Markdown parser is complex, I will implement a function that handles the specified subset of syntax using regular expressions for pattern matching.
+
+Here is the complete Python solution, including the function and comprehensive test cases.
+
+### Python Implementation
+
+```python
+import re
+
+def markdown_to_html(text: str) -> str:
+    """"""
+    Converts a subset of Markdown syntax to HTML.
+
+    Handles:
+    1. **bold"
+gemma-4-e2b-it,mlx,metal,int4,coding,data_pipeline,3,3,True,12.78,120.7,1542.0,"This is a great task that requires careful string parsing, filtering, grouping, and aggregation using only standard Python libraries.
+
+Here is the complete Python function:
+
+```python
+import csv
+import io
+import json
+from collections import defaultdict
+
+def process_sales(csv_text: str) -> str:
+    """"""
+    Processes a CSV string of sales data, filters it based on specific criteria,
+    groups the results by product, computes summary statistics, sorts them,
+    and returns the result as a JSON str"
+gemma-4-e2b-it,mlx,metal,int4,coding,retry_decorator,3,3,True,10.61,120.6,1280.0,"This is a comprehensive request that requires implementing a robust decorator with specific retry logic, logging, and result encapsulation.
+
+Here is the complete Python solution:
+
+```python
+import time
+import random
+from functools import wraps
+from typing import Callable, Type, Any, Tuple, Optional
+from dataclasses import dataclass
+
+# --- 1. Result Dataclass ---
+
+@dataclass
+class RetryResult:
+    """"""A dataclass to hold the result of a retried function call.""""""
+    success: bool
+    value: Any
+  "
+gemma-4-e2b-it,mlx,metal,int4,reasoning,einstein_riddle,3,3,True,22.77,118.4,2696.0,"This is a classic logic puzzle, often similar to the Einstein puzzle. We need to determine the arrangement of 5 people, 5 house colors, and 5 drinks based on the given constraints.
+
+Let's set up a table and use the clues to deduce the positions.
+
+**Houses:** 1, 2, 3, 4, 5
+**People:** Brit, Swede, Dane, Norwegian, German (We need to find the 5th person, but the clues only mention 4 nationalities. Let's assume the 5th person is the one whose identity is determined by elimination, or perhaps one of"
+gemma-4-e2b-it,mlx,metal,int4,reasoning,three_urns,3,3,True,5.79,120.6,698.0,"Here is the step-by-step solution using the Law of Total Probability.
+
+### 1. Define the Events
+
+Let $A_R$ be the event that the ball drawn from Urn A is Red.
+Let $A_B$ be the event that the ball drawn from Urn A is Blue.
+
+Let $R_2$ be the event that the second ball drawn is Red.
+
+### 2. Calculate the Probabilities of the First Draw (from Urn A)
+
+**Urn A contents:** 3 Red balls, 2 Blue balls (Total = 5 balls)
+
+$$P(A_R) = \frac{\text{Number of Red balls in A}}{\text{Total balls in A}} = \frac{3}{"
+gemma-4-e2b-it,mlx,metal,int4,reasoning,topological_sort,3,3,True,12.65,120.3,1523.0,"This is a classic problem that requires finding all possible **topological sorts** of a directed acyclic graph (DAG).
+
+Here is the dependency graph:
+*   A $\rightarrow$ B
+*   B $\rightarrow$ C
+*   A $\rightarrow$ D
+*   D $\rightarrow$ C
+*   C $\rightarrow$ E
+
+### 1. Determine In-Degrees
+
+First, let's list the nodes and calculate their in-degrees (the number of incoming edges):
+
+*   **A:** In-degree = 0 (No prerequisites)
+*   **B:** In-degree = 1 (from A)
+*   **C:** In-degree = 2 (from B and D)
+*"
+gemma-4-e2b-it,mlx,metal,int4,instruction_following,constrained_factorial,3,3,True,2.24,123.9,277.0,"```python
+from typing import Union
+
+def fact(n: int, base: int = 1) -> int:
+    """"""
+    Computes the factorial of a non-negative integer using recursion.
+
+    Args:
+        n: The non-negative integer for which to compute the factorial.
+        base: The base for the factorial calculation (defaults to 1).
+
+    Returns:
+        The factorial of n.
+    """"""
+    # Constraint 1: Every variable name must be exactly 4 characters long.
+    # Constraint 2: Must use recursion only (no loops).
+    # Constr"
+gemma-4-e2b-it,mlx,metal,int4,instruction_following,library_schema,3,3,True,7.78,121.1,942.0,"```json
+{
+  ""$schema"": ""http://json-schema.org/draft-07/schema"",
+  ""title"": ""Library Management System Schema"",
+  ""type"": ""object"",
+  ""properties"": {
+    ""books"": {
+      ""type"": ""array"",
+      ""description"": ""Collection of book entities."",
+      ""items"": {
+        ""type"": ""object"",
+        ""properties"": {
+          ""id"": {
+            ""type"": ""string"",
+            ""description"": ""Unique identifier for the book (Primary Key).""
+          },
+          ""title"": {
+            ""type"": ""string"",
+     "
+gemma-4-e2b-it,mlx,metal,int4,instruction_following,adversarial_transform,3,3,True,2.73,123.8,338.0,"Here are the three transformations performed in sequence on the sentence: ""The quick brown fox jumps over the lazy dog"".
+
+### Step 1: Translate the sentence to French.
+
+**Original Sentence:** ""The quick brown fox jumps over the lazy dog""
+
+**French Translation:** ""Le rapide renard brun saute par-dessus le chien paresseux""
+
+***
+
+### Step 2: Reverse each word individually.
+
+**French Sentence:** ""Le rapide renard brun saute par-dessus le chien paresseux""
+
+**Reversed Words (keeping word order):**
+* L"
+gemma-4-e2b-it,mlx,metal,int4,writing,multi_doc_summary,3,3,True,1.04,123.4,128.0,"Here is a cohesive summary covering all three topics:
+
+Quantum computing harnesses phenomena like superposition and entanglement to utilize qubits, allowing for exponential speedups in areas such as cryptography and drug discovery by processing information in multiple states simultaneously. Simultaneously, the climate crisis is intensifying, with global temperatures already exceeding pre-industrial levels, raising serious concerns that exceeding 1.5°C could trigger irreversible environmental tip"
+gemma-4-e2b-it,mlx,metal,int4,writing,structured_meeting_notes,3,3,True,2.44,123.1,300.0,"```markdown
+---
+date: 2024-10-27
+attendees:
+  - Alice Johnson
+  - Bob Smith
+  - Carol Davis
+meeting_type: Product Standup
+---
+
+## Discussion
+
+*   **Feature X Progress:** The team reviewed the latest implementation for Feature X. Initial feedback suggests the core logic is sound, but the UI integration is still causing rendering issues on mobile viewports.
+*   **API Dependency Review:** Discussion centered on the stability of the third-party API we are relying on. Consensus was that we need to bu"
+gemma-4-e2b-it,mlx,metal,int4,writing,tone_rewrite,3,3,True,1.02,126.1,129.0,"Here are a few options, depending on the desired tone:
+
+**Option 1 (Focus on the process):**
+The computer program learns by adjusting its internal settings repeatedly to reduce errors. By fine-tuning these settings, the model reached 94.3% accuracy on testing data, and a newer method helped it learn much faster than the older method.
+
+**Option 2 (More direct):**
+This AI system learns by constantly adjusting its internal calculations to get better results. After tweaking some key numbers, the sys"
+gemma-4-e2b-it,mlx,metal,int4,writing,contradiction_detection,3,3,True,2.7,123.2,333.0,"Yes, there are factual contradictions between the two notes.
+
+Here is a breakdown of the conflicts:
+
+**1. Duration of Lunar Surface Activity:**
+
+*   **Note 1 states:** Neil Armstrong and Buzz Aldrin spent **approximately 2.5 hours** walking on the lunar surface during their EVA.
+*   **Note 2 states:** Armstrong and Aldrin remained on the lunar surface for **approximately 21.5 hours in total** after landing.
+
+**Contradiction:** The time spent on the lunar surface is drastically different (2.5 hou"
+gemma-4-e2b-it,mlx,metal,int4,tool_calling,simple_tool_call,3,3,True,0.09,138.4,12.0,Tool: get_weather(location='San Francisco')
+gemma-4-e2b-it,mlx,metal,int4,tool_calling,calculator_tool,3,3,True,0.17,133.0,22.0,"Tool: calculate
+Parameters:
+  - expression: ""347 * 823"""
+gemma-4-e2b-it,mlx,metal,int4,tool_calling,tool_with_json_args,3,3,True,0.5,127.3,64.0,"```json
+{
+  ""tool_call"": {
+    ""name"": ""create_file"",
+    ""arguments"": {
+      ""filename"": ""hello.py"",
+      ""content"": ""print(\""Hello, World!\"")""
+    }
+  }
+}
+```"
+gemma-4-e2b-it,mlx,metal,int4,tool_calling,tool_selection,3,3,True,0.21,130.9,27.0,"send_email(recipient: 'Alice', subject: 'Project Deadline', body: 'Reminder: The project deadline is tomorrow.')"
+gemma-4-e2b-it,mlx,metal,int4,tool_calling,multi_step_tool_use,0,3,False,0.09,137.3,13.0,"search_web(query=""latest news about AI regulation"")"
+gemma-4-e4b-it,mlx,metal,int4,coding,fizzbuzz,3,3,True,7.28,70.4,512.0,"Here are a few ways to write the Python function, depending on how you want to handle the output (i.e., whether you want to print the number itself or just the FizzBuzz equivalent).
+
+### Solution 1: Printing the Number AND the FizzBuzz Equivalent (Most Common Interpretation)
+
+This version prints the number on each line, followed by the FizzBuzz output for that number.
+
+```python
+def fizzbuzz_1_to_100_print():
+    """"""
+    Prints the numbers from 1 to 100, applying FizzBuzz rules.
+    If the numbe"
+gemma-4-e4b-it,mlx,metal,int4,coding,reverse_string,3,3,True,7.28,70.3,512.0,"Here are two different approaches to write a function that reverses a string in Python.
+
+## Approach 1: Using Slicing (The Pythonic Way)
+
+This is the most concise and ""Pythonic"" way to reverse a sequence like a string. Python's extended slice syntax `[::-1]` creates a reversed copy of the sequence.
+
+```python
+def reverse_string_slicing(input_str):
+  """"""
+  Reverses a string using Python's extended slice syntax [::-1].
+  This is the most efficient and idiomatic way in Python.
+
+  Args:
+    input_st"
+gemma-4-e4b-it,mlx,metal,int4,coding,fibonacci,3,3,True,4.27,70.4,301.0,"Here is a Python function that returns the first 10 Fibonacci numbers as a list, along with the output.
+
+### Python Implementation
+
+```python
+def get_first_n_fibonacci(n):
+    """"""
+    Generates the first n Fibonacci numbers and returns them as a list.
+    The sequence starts with 0 and 1.
+    """"""
+    if n <= 0:
+        return []
+    elif n == 1:
+        return [0]
+    else:
+        # Initialize the sequence with the first two numbers
+        fib_sequence = [0, 1]
+        # Generate the rest of t"
+gemma-4-e4b-it,mlx,metal,int4,coding,binary_search,3,3,True,7.37,69.4,512.0,"Here are two common ways to implement binary search in Python: an iterative approach (using a `while` loop) and a recursive approach.
+
+The **iterative approach is generally preferred** in production code because it avoids the overhead of function calls associated with recursion and is less prone to hitting Python's recursion depth limit for very large lists.
+
+---
+
+## 1. Iterative Binary Search (Recommended)
+
+This version uses pointers (`low` and `high`) to narrow down the search range until the "
+gemma-4-e4b-it,mlx,metal,int4,coding,palindrome,3,3,True,7.39,69.3,512.0,"Here are a few ways to write this function, depending on the programming language you prefer. I'll provide examples in Python, JavaScript, and a conceptual outline for others.
+
+## Python Solution (Most Concise)
+
+Python is excellent for this task due to its string manipulation capabilities.
+
+```python
+def is_palindrome(s: str) -> bool:
+    """"""
+    Checks if a string is a palindrome, ignoring case and non-alphanumeric characters.
+    """"""
+    # 1. Filter and normalize the string:
+    #    - Filter "
+gemma-4-e4b-it,mlx,metal,int4,reasoning,train_problem,3,3,True,2.73,70.3,192.0,"Here is how to solve the problem:
+
+**1. Determine the combined speed (relative speed):**
+Since the trains are moving toward each other, you add their speeds to find how quickly they are closing the distance between them.
+$$\text{Combined Speed} = \text{Speed of Train A} + \text{Speed of Train B}$$
+$$\text{Combined Speed} = 60 \text{ km/h} + 40 \text{ km/h} = 100 \text{ km/h}$$
+
+**2. Calculate the time:**
+Use the formula: $$\text{Time} = \frac{\text{Distance}}{\text{Speed}}$$
+$$\text{Time} = \fra"
+gemma-4-e4b-it,mlx,metal,int4,reasoning,coin_probability,3,3,True,5.34,69.8,373.0,"Here is how to solve the problem:
+
+**1. Determine the Sample Space**
+
+When you flip a coin 3 times, each flip can be Heads ($\text{H}$) or Tails ($\text{T}$). The total possible outcomes (the sample space, $S$) are:
+$$S = \{\text{HHH}, \text{HHT}, \text{HTH}, \text{THH}, \text{HTT}, \text{THT}, \text{TTH}, \text{TTT}\}$$
+
+The total number of possible outcomes is $2^3 = 8$.
+
+**2. Identify Favorable Outcomes**
+
+We are looking for the probability of getting **at least 2 heads**. This means we want "
+gemma-4-e4b-it,mlx,metal,int4,reasoning,workers_problem,3,3,True,2.42,70.6,171.0,"This is an inverse proportion problem. Here's how to solve it:
+
+**1. Calculate the total ""worker-days"" needed:**
+
+* If 5 workers take 10 days, the total amount of work is $5 \text{ workers} \times 10 \text{ days} = 50 \text{ worker-days}$.
+
+**2. Calculate the time needed with 10 workers:**
+
+* To find out how long 10 workers would take, divide the total work by the new number of workers:
+$$\text{Days} = \frac{50 \text{ worker-days}}{10 \text{ workers}} = 5 \text{ days}$$
+
+**Answer:** It would tak"
+gemma-4-e4b-it,mlx,metal,int4,reasoning,age_problem,0,3,False,7.24,69.8,506.0,"Here is how to solve the problem using algebra:
+
+**1. Define variables:**
+* Let $T$ be Tom's current age.
+* Let $J$ be Jerry's current age.
+
+**2. Set up equations based on the current information:**
+* ""Tom is twice as old as Jerry.""
+   $$\text{Equation 1: } T = 2J$$
+
+**3. Set up equations based on the future information (in 5 years):**
+* In 5 years, Tom will be $T + 5$.
+* In 5 years, Jerry will be $J + 5$.
+* ""In 5 years, Tom will be 1.5 times as old as Jerry.""
+   $$\text{Equation 2: } T + 5 = 1."
+gemma-4-e4b-it,mlx,metal,int4,reasoning,sequence_pattern,3,3,True,4.15,70.9,294.0,"The next number in the sequence is **42**.
+
+Here's how the pattern works:
+
+* **Differences between terms:**
+    * $6 - 2 = 4$
+    * $12 - 6 = 6$
+    * $20 - 12 = 8$
+    * $30 - 20 = 10$
+    * The differences are increasing by 2 each time ($4, 6, 8, 10$).
+
+* **Next difference:** The next difference should be $10 + 2 = 12$.
+
+* **Next number:** $30 + 12 = \mathbf{42}$.
+
+***
+
+**Alternative Pattern (Formulaic):**
+
+This sequence can also be described by the formula $n(n+1)$ where $n$ starts at 1:
+
+* $"
+gemma-4-e4b-it,mlx,metal,int4,instruction_following,json_output,3,3,True,0.79,72.5,57.0,"```json
+{
+  ""name"": ""Elara Vance"",
+  ""age"": 29,
+  ""hobbies"": [
+    ""astrophotography"",
+    ""hiking"",
+    ""vintage film collecting""
+  ]
+}
+```"
+gemma-4-e4b-it,mlx,metal,int4,instruction_following,numbered_list,3,3,True,1.12,72.1,81.0,"Here are 5 benefits of regular exercise:
+
+1. Improves cardiovascular health and strengthens the heart.
+2. Helps manage weight and maintain a healthy body composition.
+3. Boosts mood and reduces symptoms of stress, anxiety, and depression.
+4. Strengthens bones and muscles, reducing the risk of osteoporosis and injury.
+5. Enhances sleep quality and improves overall energy levels."
+gemma-4-e4b-it,mlx,metal,int4,instruction_following,word_constraint,3,3,True,0.6,73.0,44.0,"Machine learning is a type of Artificial Intelligence where computers learn patterns from data without being explicitly programmed. They use algorithms to improve performance on a specific task, making predictions or decisions based on the information they've processed."
+gemma-4-e4b-it,mlx,metal,int4,instruction_following,code_with_comments,3,3,True,9.1,70.1,638.0,"```python
+import math
+
+def calculate_circle_area(radius):
+    """"""
+    Calculates the area of a circle given its radius.
+
+    The formula for the area of a circle is: Area = π * r^2
+    where π (Pi) is a mathematical constant (approximately 3.14159) and r is the radius.
+
+    Args:
+        radius (float or int): The radius of the circle. Must be a non-negative number.
+
+    Returns:
+        float: The calculated area of the circle.
+        str: An error message if the radius is negative.
+    """"""
+  "
+gemma-4-e4b-it,mlx,metal,int4,instruction_following,direct_answer,3,3,True,0.01,143.0,2.0,Paris
+gemma-4-e4b-it,mlx,metal,int4,coding,lru_cache,3,3,True,22.53,69.1,1558.0,"This is a classic problem that requires combining a **Hash Map (Dictionary in Python)** for $O(1)$ average time complexity lookups and a **Doubly Linked List** to maintain the usage order and allow $O(1)$ movement/deletion of nodes.
+
+Here is the complete implementation:
+
+```python
+class Node:
+    """"""
+    A simple node for the Doubly Linked List.
+    Stores the key-value pair and pointers to previous/next nodes.
+    """"""
+    def __init__(self, key, value):
+        self.key = key
+        self.value"
+gemma-4-e4b-it,mlx,metal,int4,coding,flatten_nested,3,3,True,11.11,69.1,767.0,"Here is the Python function `flatten(lst)` that accomplishes the task using recursion.
+
+```python
+def flatten(lst):
+    """"""
+    Flattens an arbitrarily nested list into a single, flat list.
+
+    Args:
+        lst: The input list, which may contain other lists.
+
+    Returns:
+        A new list containing all non-list elements from the input list, 
+        in a flat structure.
+    """"""
+    result = []
+    for item in lst:
+        # Check if the item is a list (and not a string, as strings are itera"
+gemma-4-e4b-it,mlx,metal,int4,coding,longest_palindrome_substring,3,3,True,20.35,68.6,1396.0,"Here are a few ways to solve this problem in Python, with the most straightforward and common approach being the ""Expand Around Center"" method, which achieves $O(n^2)$ time complexity and $O(1)$ space complexity (excluding the output string).
+
+### Solution 1: Expand Around Center (Most Efficient for this constraint)
+
+This approach is generally preferred because it's intuitive and achieves $O(n)$ time complexity if implemented correctly, though the worst-case scenario for finding the answer might"
+gemma-4-e4b-it,mlx,metal,int4,coding,calculator,3,3,True,24.75,69.1,1710.0,"This is a classic problem that is best solved using the **Shunting-Yard algorithm** (to convert infix notation to Reverse Polish Notation or RPN) followed by an **RPN evaluation algorithm**.
+
+However, since the input is a string that needs parsing, a simpler approach for a basic implementation is to use two stacks: one for numbers and one for operators, mimicking how a compiler evaluates expressions.
+
+Here is a complete, robust implementation in Python.
+
+### Python Implementation
+
+```python
+impo"
+gemma-4-e4b-it,mlx,metal,int4,coding,buggy_merge_sort,3,3,True,9.68,69.6,674.0,"The bug is in the `merge` function.
+
+### The Bug
+
+The `merge` function correctly merges two sorted lists (`left` and `right`) into a single sorted list (`result`) while comparing elements from both lists. However, it fails to append any remaining elements from either `left` or `right` after the main `while` loop finishes.
+
+The `while` loop terminates as soon as *one* of the lists is exhausted. If `left` is longer than `right` (or vice versa), the remaining elements in the longer list are never a"
+gemma-4-e4b-it,mlx,metal,int4,reasoning,compound_interest,3,3,True,8.46,70.0,592.0,"Here is the step-by-step calculation to find the final amount:
+
+This is a compound interest problem, and we will use the following formula:
+
+$$\text{A} = \text{P} \left(1 + \frac{r}{n}\right)^{nt}$$
+
+Where:
+*   **A** = the future value of the investment/loan, including interest (the final amount)
+*   **P** = the principal investment amount (the initial deposit or loan amount) = **\$10,000**
+*   **r** = the annual interest rate (as a decimal) = **0.05** (since 5% = 0.05)
+*   **n** = the number of"
+gemma-4-e4b-it,mlx,metal,int4,reasoning,circular_seating,3,3,True,14.76,68.9,1017.0,"Here is the step-by-step reasoning to solve the problem:
+
+**1. Calculate the total number of arrangements without restrictions.**
+
+For $n$ distinct objects arranged in a circle, the number of unique arrangements is $(n-1)!$.
+
+In this case, we have 6 people ($n=6$).
+$$\text{Total arrangements} = (6 - 1)! = 5!$$
+$$5! = 5 \times 4 \times 3 \times 2 \times 1 = 120$$
+There are **120** total ways to seat the 6 people around the table.
+
+**2. Calculate the number of arrangements where the two specific p"
+gemma-4-e4b-it,mlx,metal,int4,reasoning,logic_puzzle,3,3,True,16.13,68.6,1106.0,"Here is the step-by-step logical deduction to solve this puzzle.
+
+Let $T$ denote a truth-teller and $L$ denote a liar.
+
+The statements are:
+*   **A says:** ""B is an L."" ($\text{Statement}_A$)
+*   **B says:** ""C is an L."" ($\text{Statement}_B$)
+*   **C says:** ""A is an L AND B is an L."" ($\text{Statement}_C$)
+
+We must check all $2^3 = 8$ possible combinations of types for (A, B, C) to see which one is consistent with the statements made.
+
+---
+
+### Case Analysis
+
+**Case 1: (A, B, C) = (T, T, T)**
+"
+gemma-4-e4b-it,mlx,metal,int4,reasoning,bayes_theorem,3,3,True,12.29,69.6,856.0,"This is a classic application of Bayes' Theorem. Here is the step-by-step solution.
+
+### Define the Events and Probabilities
+
+Let:
+*   $D$ = The event that a person has the disease.
+*   $D'$ = The event that a person does **not** have the disease.
+*   $T+$ = The event that the test result is positive.
+*   $T-$ = The event that the test result is negative.
+
+**Given Probabilities (Prior and Likelihoods):**
+
+1.  **Prevalence of the disease ($P(D)$):**
+    $$P(D) = 0.01 \text{ (or 1\%)}$$
+2.  **Prob"
+gemma-4-e4b-it,mlx,metal,int4,reasoning,proof_bug,3,3,True,5.21,70.4,367.0,"The error occurs in the step where you divide by $(a - b)$.
+
+Here is the breakdown of the problematic step:
+
+$$\text{(a + b)(a - b) = b(a - b)}$$
+$$\text{a + b = b}$$
+
+To get from the line above to the line below, you must divide both sides of the equation by $(a - b)$.
+
+**The critical error is that you are dividing by zero.**
+
+Since the initial premise is $a = b$, it means that $a - b = 0$. When you divide by $(a - b)$, you are dividing by **zero**, which is an undefined operation and makes the"
+gemma-4-e4b-it,mlx,metal,int4,math,modular_arithmetic,0,3,False,8.5,70.1,596.0,"Here is the step-by-step solution to find the remainder when $2^{100}$ is divided by 7.
+
+We need to calculate $2^{100} \pmod{7}$.
+
+### Step 1: Find the pattern of powers of 2 modulo 7
+
+We will calculate the first few powers of 2 modulo 7 to find a repeating pattern (the cycle length).
+
+*   $2^1 \equiv 2 \pmod{7}$
+*   $2^2 \equiv 4 \pmod{7}$
+*   $2^3 \equiv 8 \equiv 1 \pmod{7}$
+*   $2^4 \equiv 2 \cdot 2^3 \equiv 2 \cdot 1 \equiv 2 \pmod{7}$
+*   $2^5 \equiv 4 \pmod{7}$
+*   $2^6 \equiv 1 \pmod{7}$ "
+gemma-4-e4b-it,mlx,metal,int4,math,inclusion_exclusion,3,3,True,13.47,69.7,939.0,"Here is how to solve the problem using the Inclusion-Exclusion Principle.
+
+We are looking for the number of integers in the set $\{1, 2, \dots, 1000\}$ that are divisible by 2, 3, or 5.
+
+Let $S$ be the set of all integers from 1 to 1000. $|S| = 1000$.
+Let $A$ be the set of integers divisible by 2.
+Let $B$ be the set of integers divisible by 3.
+Let $C$ be the set of integers divisible by 5.
+
+We want to find $|A \cup B \cup C|$. The Inclusion-Exclusion Principle for three sets is:
+$$|A \cup B \cup"
+gemma-4-e4b-it,mlx,metal,int4,math,bouncing_ball,3,3,True,18.65,68.8,1283.0,"Here is the step-by-step solution using geometric series.
+
+### 1. Define the motion and distances
+
+The ball undergoes two types of motion: falling and rising.
+
+*   **Initial Drop:** The first distance traveled is the initial fall.
+    $$D_{\text{initial}} = 10 \text{ meters}$$
+
+*   **Subsequent Bounces:** After the first fall, the ball travels both up and down for every subsequent bounce.
+    *   **Bounce 1:**
+        *   Rebounds to $\frac{3}{4}$ of the initial height.
+        *   Distance trav"
+gemma-4-e4b-it,mlx,metal,int4,coding,markdown_to_html,3,3,True,26.73,68.4,1829.0,"This is a classic text processing problem. Since Markdown parsing can be complex (especially handling nesting perfectly with simple regex), we will use a sequential replacement strategy, which is generally safer than trying to do everything in one go.
+
+Here is the complete Python solution, including the function, detailed explanations, and comprehensive test cases.
+
+### Python Implementation
+
+```python
+import re
+
+def markdown_to_html(text: str) -> str:
+    """"""
+    Converts a subset of Markdown s"
+gemma-4-e4b-it,mlx,metal,int4,coding,data_pipeline,3,3,True,22.53,69.1,1558.0,"This is a comprehensive task requiring string parsing, data filtering, grouping, aggregation, sorting, and final JSON serialization, all without using `pandas`.
+
+Here is the complete Python solution:
+
+```python
+import csv
+import io
+import json
+from collections import defaultdict
+
+def process_sales(csv_text: str) -> str:
+    """"""
+    Processes raw sales data from a CSV string, filters it based on specific criteria,
+    groups by product, computes aggregates, sorts the results, and returns a JSON s"
+gemma-4-e4b-it,mlx,metal,int4,coding,retry_decorator,3,3,True,22.22,68.8,1528.0,"This is a complete solution implementing the `retry` decorator as requested, including the necessary imports, the `Result` dataclass, and a runnable example.
+
+### Python Implementation
+
+```python
+import time
+import logging
+from functools import wraps
+from typing import Callable, Any, Tuple, Type, TypeVar, Optional, List
+
+# Configure basic logging for visibility
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+
+# --- 1. Result Dataclass ---
+
+class Result"
+gemma-4-e4b-it,mlx,metal,int4,reasoning,einstein_riddle,3,3,True,28.14,68.3,1921.0,"This is a classic logic puzzle, often called the Zebra Puzzle. I will solve it by systematically applying the constraints to deduce the arrangement.
+
+Here is the step-by-step reasoning:
+
+### Setup
+We have 5 houses in a row (Positions 1 to 5).
+For each house, we need to determine:
+*   **Owner:** (Norwegian, Dane, Brit, Swede, German)
+*   **Color:** (Red, Green, White, Blue, ?)
+*   **Drink:** (Milk, Tea, Coffee, ?)
+
+### Applying Constraints
+
+**Constraint 6: The Norwegian lives in house 1.**
+| Hous"
+gemma-4-e4b-it,mlx,metal,int4,reasoning,three_urns,3,3,True,10.2,69.8,712.0,"Here is the step-by-step solution using the Law of Total Probability.
+
+### 1. Define the Events
+
+Let $A$ be the event of drawing from Urn A first.
+Let $R_1$ be the event that the first ball drawn (from Urn A) is Red.
+Let $B_1$ be the event that the first ball drawn (from Urn A) is Blue.
+Let $R_2$ be the event that the second ball drawn is Red.
+
+### 2. Determine Initial Probabilities (First Draw from Urn A)
+
+Urn A contains 3 Red and 2 Blue balls (Total = 5 balls).
+
+*   Probability of drawing Red "
+gemma-4-e4b-it,mlx,metal,int4,reasoning,topological_sort,3,3,True,15.48,69.6,1077.0,"This is a classic problem that can be solved using Kahn's algorithm for topological sorting, which relies on tracking in-degrees.
+
+### Dependency Graph Analysis
+
+**Nodes:** A, B, C, D, E
+**Dependencies (Edges):**
+*   $A \rightarrow B$
+*   $B \rightarrow C$
+*   $A \rightarrow D$
+*   $D \rightarrow C$
+*   $C \rightarrow E$
+
+**Initial In-Degrees:**
+*   A: 0
+*   B: 1 (from A)
+*   C: 2 (from B, D)
+*   D: 1 (from A)
+*   E: 1 (from C)
+
+**Initial Queue/Ready Nodes (In-degree = 0):** [A]
+
+---
+
+### Findin"
+gemma-4-e4b-it,mlx,metal,int4,instruction_following,constrained_factorial,3,3,True,3.2,70.7,226.0,"```python
+def fact(numb: int) -> int:
+    """"""
+    Computes the factorial of a non-negative integer using recursion.
+    """"""
+    if numb < 0:
+        # Factorial is not defined for negative numbers in this context
+        return 0
+    elif numb == 0:
+        # Base case: 0! = 1
+        rslt = 1
+        return rslt
+    else:
+        # Recursive step: n! = n * (n-1)!
+        # We use a temporary variable 'tmp' to hold the result of the recursive call
+        tmp = fact(numb - 1)
+        # Calculate"
+gemma-4-e4b-it,mlx,metal,int4,instruction_following,library_schema,3,3,True,19.98,68.7,1373.0,"This is a complex request because a single JSON Schema file cannot perfectly model a relational database structure (like foreign keys and bidirectional relationships) while simultaneously serving as the schema for *each* individual object instance.
+
+However, I will provide a structure that uses **JSON Schema Draft 2020-12** and models the entities as distinct schemas, using `$ref` to establish the relationships, which is the standard way to handle this in modern schema design.
+
+Here is the compl"
+gemma-4-e4b-it,mlx,metal,int4,instruction_following,adversarial_transform,3,3,True,4.33,70.0,303.0,"Here are the three transformations performed in sequence:
+
+### Step 1: Translate the sentence to French.
+
+**Original Sentence:** ""The quick brown fox jumps over the lazy dog""
+**French Translation:** ""Le renard brun rapide saute par-dessus le chien paresseux""
+
+***
+
+### Step 2: Take your French translation and reverse each word individually.
+
+**French Translation:** ""Le renard brun rapide saute par-dessus le chien paresseux""
+**Reversed Words:** ""eL draner nurb epira etaus ussebrap el neich xeusser"
+gemma-4-e4b-it,mlx,metal,int4,writing,multi_doc_summary,3,3,True,1.91,70.3,134.0,"Quantum computing harnesses quantum phenomena like superposition and entanglement using qubits to achieve exponential processing speeds for complex problems in fields such as cryptography and drug discovery. Simultaneously, the urgent reality of climate change accelerates, with global temperatures rising and the IPCC warning that exceeding 1.5°C could trigger irreversible environmental tipping points. Furthermore, gene therapy, empowered by CRISPR-Cas9, shows immense promise in treating diseases"
+gemma-4-e4b-it,mlx,metal,int4,writing,structured_meeting_notes,3,3,True,4.02,70.1,282.0,"```yaml
+---
+date: 2023-10-27
+attendees:
+  - @Alex
+  - @Ben
+  - @Chloe
+meeting_type: Product Standup
+---
+# Product Team Standup Notes - Project Chimera
+
+## Discussion
+
+*   **Alpha Build Feedback:** The initial user testing on the Alpha build revealed significant friction in the onboarding flow, specifically around setting up the integration keys.
+*   **Scope Creep Concern:** Ben raised a concern regarding the recent addition of the advanced analytics dashboard; while valuable, it might push the M"
+gemma-4-e4b-it,mlx,metal,int4,writing,tone_rewrite,3,3,True,0.69,72.2,50.0,"The AI model learned by repeatedly showing it examples and adjusting its internal settings. After fine-tuning, it reached a consistent accuracy of 94.3% on new data. Using a specific optimization method helped it learn this pattern much faster."
+gemma-4-e4b-it,mlx,metal,int4,writing,contradiction_detection,3,3,True,4.95,69.7,345.0,"Yes, there are factual contradictions between the two notes.
+
+Here is a precise breakdown of the conflicts:
+
+1. **Duration of EVA/Lunar Surface Time:**
+    * **Note 1 states:** They spent **approximately 2.5 hours** walking on the lunar surface.
+    * **Note 2 states:** They remained on the lunar surface for **approximately 21.5 hours** in total after landing.
+    * **Contradiction:** These two figures are vastly different. 2.5 hours is a short EVA time, while 21.5 hours is an extremely long dur"
+gemma-4-e4b-it,mlx,metal,int4,tool_calling,simple_tool_call,3,3,True,0.28,74.4,21.0,"{""tool_name"": ""get_weather"", ""parameters"": {""location"": ""San Francisco""}}"
+gemma-4-e4b-it,mlx,metal,int4,tool_calling,calculator_tool,3,3,True,1.33,71.6,95.0,"<|channel>thought
+The user wants me to calculate the product of 347 and 823 using the available `calculate` tool.
+The `calculate` tool takes a single argument, `expression`, which is the math expression to evaluate.
+The expression is ""347 * 823"".
+
+I need to construct the tool call.<channel|><|tool_call>call:calculate{expression:<|""|>347 * 823<|""|>}<tool_call|>"
+gemma-4-e4b-it,mlx,metal,int4,tool_calling,tool_with_json_args,3,3,True,0.61,72.4,44.0,"```json
+{""tool_calls"": [{""function"": ""create_file"", ""args"": {""filename"": ""hello.py"", ""content"": ""print(\""Hello, World!\"")""}}]}
+```"
+gemma-4-e4b-it,mlx,metal,int4,tool_calling,tool_selection,3,3,True,1.03,71.7,74.0,"```json
+{
+  ""tool_calls"": [
+    {
+      ""function"": ""send_email"",
+      ""args"": {
+        ""recipient"": ""Alice"",
+        ""subject"": ""Project Deadline"",
+        ""body"": ""Tomorrow is the project deadline.""
+      }
+    }
+  ]
+}
+```"
+gemma-4-e4b-it,mlx,metal,int4,tool_calling,multi_step_tool_use,3,3,True,0.96,71.8,69.0,"1. **search_web(query=""latest news on AI regulation"")** - To gather the most current and relevant information regarding AI regulation.
+2. **summarize_text(text=<results from search_web>)** - Once the search results are obtained, this tool will be used to condense the information into a summary."
+gemma-4-26b-a4b-it,mlx,metal,int4,coding,fizzbuzz,3,3,True,7.47,68.5,512.0,"<|channel>thought
+The objective is to write a Python function that iterates through numbers 1 to 100 and prints ""Fizz"", ""Buzz"", or ""FizzBuzz"" based on divisibility rules.
+
+    *   Input: None (the range is fixed 1-100).
+    *   Output: Printed text to the console.
+    *   Rules:
+        *   If number % 3 == 0 AND number % 5 == 0 $\rightarrow$ ""FizzBuzz""
+        *   Else if number % 3 == 0 $\rightarrow$ ""Fizz""
+        *   Else if number % 5 == 0 $\rightarrow$ ""Buzz""
+        *   Else $\rightarrow$"
+gemma-4-26b-a4b-it,mlx,metal,int4,coding,reverse_string,3,3,True,7.45,68.7,512.0,"<|channel>thought
+The objective is to write a function to reverse a string in a programming language (I'll use Python as it's the most common for these types of requests, but I should mention it's Python). I need to provide at least two different approaches.
+
+    *   *Approach 1: Slicing (The Pythonic way).*
+        *   Mechanism: Python's slice notation `[::-1]`.
+        *   Pros: Extremely concise, efficient (implemented in C), readable for Pythonistas.
+        *   Cons: Not ""algorithmic"" in t"
+gemma-4-26b-a4b-it,mlx,metal,int4,coding,fibonacci,3,3,True,7.46,68.7,512.0,"<|channel>thought
+*   Goal: Write a function to return the first 10 Fibonacci numbers as a list.
+    *   Output: Show the result of the function.
+    *   Language: Python (implied, as it's the standard for such requests unless specified otherwise).
+
+    *   The Fibonacci sequence starts with 0 and 1 (or sometimes 1 and 1, but 0 and 1 is the standard mathematical definition).
+    *   Each subsequent number is the sum of the two preceding ones.
+    *   Sequence: 0, 1, 1, 2, 3, 5, 8, 13, 21, 34...
+"
+gemma-4-26b-a4b-it,mlx,metal,int4,coding,binary_search,3,3,True,7.47,68.6,512.0,"<|channel>thought
+The objective is to implement the Binary Search algorithm in Python.
+
+    *   Input: A sorted list (`arr`) and a target value (`target`).
+    *   Output: The index of the target if found, otherwise `-1`.
+
+    *   Binary search works on the ""divide and conquer"" principle.
+    *   It requires a sorted list.
+    *   Maintain two pointers: `low` (start of the range) and `high` (end of the range).
+    *   Calculate the `mid` point.
+    *   Compare `arr[mid]` with `target`:
+        *"
+gemma-4-26b-a4b-it,mlx,metal,int4,coding,palindrome,3,3,True,7.49,68.3,512.0,"<|channel>thought
+The objective is to write a function that checks if a string is a palindrome.
+    *   *Constraint 1:* Ignore case (e.g., 'A' == 'a').
+    *   *Constraint 2:* Ignore non-alphanumeric characters (e.g., spaces, punctuation, symbols).
+
+    *   Input: A string (e.g., `""A man, a plan, a canal: Panama""`).
+    *   Output: A boolean (`True` or `False`).
+
+    *   *Step 1: Preprocessing.*
+        *   Convert the string to lowercase.
+        *   Remove all characters that are not letters o"
+gemma-4-26b-a4b-it,mlx,metal,int4,reasoning,train_problem,3,3,True,5.32,68.2,363.0,"<|channel>thought
+*   Distance between trains: 200 km.
+    *   Speed of Train A: 60 km/h.
+    *   Speed of Train B: 40 km/h.
+    *   Direction: Moving toward each other (closing the gap).
+
+    *   When two objects move toward each other, their relative speed is the *sum* of their individual speeds.
+    *   Relative Speed = Speed of A + Speed of B.
+
+    *   Relative Speed = 60 km/h + 40 km/h = 100 km/h.
+
+    *   Time = Distance / Relative Speed.
+    *   Time = 200 km / 100 km/h.
+
+    *   Time = 2"
+gemma-4-26b-a4b-it,mlx,metal,int4,reasoning,coin_probability,3,3,True,15.04,66.7,1004.0,"<|channel>thought
+*   Event: Flipping a fair coin 3 times.
+    *   Goal: Find the probability of getting *at least 2 heads*.
+
+    *   Each flip has 2 outcomes (H or T).
+    *   Total outcomes for 3 flips = $2^3 = 2 \times 2 \times 2 = 8$.
+
+    *   The possible outcomes are:
+        1.  HHH
+        2.  HHT
+        3.  HTH
+        4.  THH
+        5.  HTT
+        6.  THT
+        7.  TTH
+        8.  TTT
+
+    *   ""At least 2 heads"" means 2 heads OR 3 heads.
+    *   Let's look at the list:
+        1. "
+gemma-4-26b-a4b-it,mlx,metal,int4,reasoning,workers_problem,3,3,True,7.53,68.6,516.0,"<|channel>thought
+*   Input: ""If 5 workers can build a wall in 10 days, how long would it take 10 workers to build the same wall?""
+    *   Goal: Calculate the time required for a different number of workers to complete the same task.
+
+    *   Workers ($W_1$) = 5
+    *   Time ($T_1$) = 10 days
+    *   Workers ($W_2$) = 10
+    *   Time ($T_2$) = ?
+
+    *   The relationship between workers and time (for a fixed amount of work) is *inversely proportional*.
+    *   More workers = less time.
+    *   F"
+gemma-4-26b-a4b-it,mlx,metal,int4,reasoning,age_problem,3,3,True,15.06,67.5,1017.0,"<|channel>thought
+*   Relationship 1 (Now): Tom is twice as old as Jerry.
+    *   Relationship 2 (In 5 years): Tom will be 1.5 times as old as Jerry.
+    *   Goal: Find the current ages of Tom and Jerry.
+
+    *   Let $J$ be Jerry's current age.
+    *   Let $T$ be Tom's current age.
+
+    *   *Equation 1 (Current relationship):*
+        $T = 2J$
+
+    *   *Equation 2 (Relationship in 5 years):*
+        In 5 years, Tom's age will be $T + 5$.
+        In 5 years, Jerry's age will be $J + 5$.
+        T"
+gemma-4-26b-a4b-it,mlx,metal,int4,reasoning,sequence_pattern,3,3,True,11.13,68.0,757.0,"<|channel>thought
+*   Sequence: 2, 6, 12, 20, 30, ?
+    *   Goal: Find the next number.
+
+    *   Term 1: 2
+    *   Term 2: 6
+    *   Term 3: 12
+    *   Term 4: 20
+    *   Term 5: 30
+
+    *   6 - 2 = 4
+    *   12 - 6 = 6
+    *   20 - 12 = 8
+    *   30 - 20 = 10
+    *   The differences are: 4, 6, 8, 10.
+
+    *   The differences are increasing by 2 each time (4, 6, 8, 10...).
+    *   The next difference should be 10 + 2 = 12.
+
+    *   30 + 12 = 42.
+
+    *   *Method 2: $n^2 + n$*
+        *   $1^2 + "
+gemma-4-26b-a4b-it,mlx,metal,int4,instruction_following,json_output,3,3,True,3.58,69.3,248.0,"<|channel>thought
+*   Goal: Output a JSON object.
+    *   Keys required: ""name"", ""age"", ""hobbies"" (a list).
+    *   Content: Fictional person.
+    *   Constraint: Output ONLY the JSON, no other text.
+
+    *   Name: ""Elias Thorne""
+    *   Age: 28
+    *   Hobbies: [""Astronomy"", ""Playing cello"", ""Hiking""]
+
+    *   `{""name"": ""Elias Thorne"", ""age"": 28, ""hobbies"": [""Astronomy"", ""Playing cello"", ""Hiking""]}`
+
+    *   Does it have the keys ""name"", ""age"", ""hobbies""? Yes.
+    *   Is ""hobbies"" a list? Yes.
+"
+gemma-4-26b-a4b-it,mlx,metal,int4,instruction_following,numbered_list,3,3,True,5.0,68.7,343.0,"<|channel>thought
+*   Topic: 5 benefits of regular exercise.
+    *   Format: Numbered list (1. 2. 3. etc).
+    *   Constraint: Exactly 5 benefits.
+
+    *   Weight management.
+    *   Improved cardiovascular health.
+    *   Mental health/mood improvement.
+    *   Stronger bones and muscles.
+    *   Better sleep quality.
+    *   Increased energy levels.
+    *   Reduced risk of chronic diseases (diabetes, etc.).
+
+    1.  Weight Management: Helps control weight by burning calories.
+    2.  Improved "
+gemma-4-26b-a4b-it,mlx,metal,int4,instruction_following,word_constraint,3,3,True,7.54,67.9,512.0,"<|channel>thought
+*   Topic: Machine Learning.
+    *   Constraint: 50 words or fewer.
+    *   Goal: Explain what it is.
+
+    Machine learning is a branch of artificial intelligence that focuses on building systems that can learn from data. Instead of being explicitly programmed for every task, these algorithms use patterns in data to make decisions, predictions, or improve their performance over time through experience.
+
+    Machine learning is a subset of artificial intelligence that enables co"
+gemma-4-26b-a4b-it,mlx,metal,int4,instruction_following,code_with_comments,3,3,True,15.38,66.6,1024.0,"<|channel>thought
+The objective is to write a Python function that calculates the area of a circle.
+
+    *   Formula: $Area = \pi \times r^2$ (where $r$ is the radius).
+    *   Input: Radius (a number).
+    *   Output: Area (a number).
+
+    *   *Step 1: Import necessary modules.* I need $\pi$. The `math` module is the standard way to get a precise value of $\pi$.
+    *   *Step 2: Define the function.* Use `def calculate_circle_area(radius):`.
+    *   *Step 3: Handle edge cases/errors.* What if t"
+gemma-4-26b-a4b-it,mlx,metal,int4,instruction_following,direct_answer,3,3,True,0.49,71.5,35.0,"<|channel>thought
+The user is asking for the capital of France.
+The user requested a direct answer with no explanation.
+The capital of France is Paris.<channel|>Paris"
+gemma-4-26b-a4b-it,mlx,metal,int4,coding,lru_cache,3,3,True,31.11,65.8,2048.0,"<|channel>thought
+
+*   Goal: Implement an LRU Cache in Python.
+*   Operations: `get(key)` and `put(key, value)`.
+*   Time Complexity: Both operations must be $O(1)$.
+*   Constraint: Do not use `collections.OrderedDict`.
+*   Mechanism: Evict the least recently used item when capacity is reached.
+
+    *   To achieve $O(1)$ for `get` and `put`, we need two things:
+        1.  A way to look up items by key instantly $\rightarrow$ **Hash Map (Dictionary)**.
+        2.  A way to maintain the order of "
+gemma-4-26b-a4b-it,mlx,metal,int4,coding,flatten_nested,3,3,True,15.26,67.1,1024.0,"<|channel>thought
+The objective is to write a Python function `flatten(lst)` that takes a nested list (of any depth) and returns a single-level list containing all the non-list elements.
+
+    *   Input: A list that can contain integers, strings, or other lists.
+    *   Output: A flat list of elements.
+    *   Constraint: Strings should be treated as single elements (not iterated into characters).
+    *   Constraint: Arbitrary nesting (requires recursion or a stack).
+
+    *   *Approach 1: Recursi"
+gemma-4-26b-a4b-it,mlx,metal,int4,coding,longest_palindrome_substring,3,3,True,28.95,65.6,1900.0,"<|channel>thought
+The objective is to write a Python function to find the longest palindromic substring in a given string.
+
+    *   Input: A string (e.g., ""babad"").
+    *   Output: A string representing the longest palindrome (e.g., ""bab"" or ""aba"").
+    *   Constraint: Time complexity should be $O(n^2)$ or better.
+
+    *   *Brute Force:* Check every possible substring. There are $O(n^2)$ substrings, and checking each takes $O(n)$. Total: $O(n^3)$. (Too slow for large $n$, though acceptable for s"
+gemma-4-26b-a4b-it,mlx,metal,int4,coding,calculator,3,3,True,31.29,65.4,2048.0,"<|channel>thought
+The objective is to build a basic calculator in Python that evaluates a string expression. It needs to handle:
+    *   Operators: `+`, `-`, `*`, `/`
+    *   Parentheses: `(` and `)`
+    *   Operands: Non-negative integers.
+    *   Precedence: Standard math rules (PEMDAS/BODMAS).
+    *   Nested parentheses.
+
+    *   *Approach 1: Shunting-yard algorithm + Stack evaluation.* Convert the infix expression to Reverse Polish Notation (RPN) using the Shunting-yard algorithm, then evalu"
+gemma-4-26b-a4b-it,mlx,metal,int4,coding,buggy_merge_sort,3,3,True,20.19,66.3,1338.0,"<|channel>thought
+
+*   Input: A Python implementation of Merge Sort.
+    *   Goal: Identify the bug, explain it, and provide the fix.
+
+    *   `merge_sort(arr)`:
+        *   Base case: `if len(arr) <= 1: return arr` (Correct).
+        *   Splitting: `mid = len(arr) // 2` (Correct).
+        *   Recursive calls: `left = merge_sort(arr[:mid])`, `right = merge_sort(arr[mid:])` (Correct).
+        *   Merging: `return merge(left, right)` (Correct).
+    *   `merge(left, right)`:
+        *   Initializat"
+gemma-4-26b-a4b-it,mlx,metal,int4,reasoning,compound_interest,3,3,True,12.86,67.4,867.0,"<|channel>thought
+*   Principal ($P$): $10,000
+    *   Annual Interest Rate ($r$): 5% (or 0.05 as a decimal)
+    *   Compounding Frequency ($n$): Quarterly (4 times per year)
+    *   Time ($t$): 3 years
+    *   Goal: Find the final amount ($A$).
+
+    *   The formula for compound interest is: $A = P(1 + \frac{r}{n})^{nt}$
+
+    *   $P = 10,000$
+    *   $r = 0.05$
+    *   $n = 4$
+    *   $t = 3$
+
+    *   *Step 1: Calculate the periodic interest rate ($r/n$)*
+        $0.05 / 4 = 0.0125$
+
+    *   *St"
+gemma-4-26b-a4b-it,mlx,metal,int4,reasoning,circular_seating,3,3,True,17.67,66.4,1173.0,"<|channel>thought
+*   Total people: 6 (let's call them A, B, C, D, E, F).
+    *   Constraint: Alice (A) and Bob (B) must *not* sit next to each other.
+    *   Setting: Circular table.
+
+    *   In circular permutations, the number of ways to arrange $n$ distinct objects is $(n-1)!$.
+    *   This is because rotating the table doesn't create a new arrangement. We fix one person to break the symmetry.
+
+    *   Total ways to seat 6 people around a circular table:
+        $$(6-1)! = 5! = 120$$
+
+    * "
+gemma-4-26b-a4b-it,mlx,metal,int4,reasoning,logic_puzzle,3,3,True,28.81,65.5,1887.0,"<|channel>thought
+*   Three people: A, B, and C.
+    *   Each is either a Truth-teller (T) or a Liar (L).
+    *   Statements:
+        *   A: ""B is a liar.""
+        *   B: ""C is a liar.""
+        *   C: ""A and B are both liars.""
+
+    *   There are 3 people, each with 2 possibilities (T or L).
+    *   Total cases = $2^3 = 8$.
+
+    *   **Case 1: A is T, B is T, C is T**
+        *   A says B is L. (Contradiction: A is T, so B must be L, but we assumed B is T).
+        *   *Invalid.*
+
+    *   **Case 2"
+gemma-4-26b-a4b-it,mlx,metal,int4,reasoning,bayes_theorem,3,3,True,17.78,66.9,1189.0,"<|channel>thought
+*   Prevalence of disease ($P(D)$): 1% = 0.01
+    *   Sensitivity ($P(T+|D)$): 95% = 0.95
+    *   Specificity ($P(T-|D^c)$): 95% = 0.95
+    *   False Positive Rate ($P(T+|D^c)$): 1 - Specificity = 5% = 0.05
+    *   Goal: Find the probability of having the disease given a positive test result ($P(D|T+)$).
+
+    *   Bayes' Theorem formula: $P(A|B) = \frac{P(B|A) \cdot P(A)}{P(B)}$
+    *   In this context: $P(D|T+) = \frac{P(T+|D) \cdot P(D)}{P(T+)}$
+
+    *   $P(T+)$ is the total p"
+gemma-4-26b-a4b-it,mlx,metal,int4,reasoning,proof_bug,3,3,True,11.05,67.5,746.0,"<|channel>thought
+
+*   Premise: $a = b$
+*   Step 1: $a^2 = ab$ (Multiply both sides by $a$)
+*   Step 2: $a^2 - b^2 = ab - b^2$ (Subtract $b^2$ from both sides)
+*   Step 3: $(a + b)(a - b) = b(a - b)$ (Factor both sides)
+*   Step 4: $a + b = b$ (Divide both sides by $(a - b)$)
+*   Step 5: Since $a = b$, substitute $a$ with $b$: $b + b = b \implies 2b = b \implies 2 = 1$.
+
+    *   Step 1: $a = b \implies a^2 = ab$. This is valid.
+    *   Step 2: $a^2 - b^2 = ab - b^2$. This is valid.
+    *   Step "
+gemma-4-26b-a4b-it,mlx,metal,int4,math,modular_arithmetic,0,3,False,15.97,66.8,1067.0,"<|channel>thought
+The objective is to find the remainder of $2^{100}$ when divided by $7$. This is equivalent to finding $2^{100} \pmod{7}$.
+
+    *   $2^1 = 2 \equiv 2 \pmod{7}$
+    *   $2^2 = 4 \equiv 4 \pmod{7}$
+    *   $2^3 = 8 \equiv 1 \pmod{7}$
+    *   $2^4 = 16 \equiv 2 \pmod{7}$ (The pattern repeats)
+    *   $2^5 = 32 \equiv 4 \pmod{7}$
+    *   $2^6 = 64 \equiv 1 \pmod{7}$
+
+    *   The remainders are $2, 4, 1, 2, 4, 1, \dots$
+    *   The cycle length (period) is $3$.
+    *   The pattern i"
+gemma-4-26b-a4b-it,mlx,metal,int4,math,inclusion_exclusion,3,3,True,24.57,66.1,1623.0,"<|channel>thought
+The objective is to find the number of integers in the range $[1, 1000]$ that are divisible by at least one of the numbers 2, 3, or 5.
+
+    *   Let $S = \{1, 2, 3, \dots, 1000\}$. The size of the set is $|S| = 1000$.
+    *   Let $A$ be the set of integers in $S$ divisible by 2.
+    *   Let $B$ be the set of integers in $S$ divisible by 3.
+    *   Let $C$ be the set of integers in $S$ divisible by 5.
+    *   We need to find $|A \cup B \cup C|$.
+
+    *   The formula for the union"
+gemma-4-26b-a4b-it,mlx,metal,int4,math,bouncing_ball,3,3,True,25.53,66.8,1705.0,"<|channel>thought
+*   Initial height ($h_0$): 10 meters.
+    *   Rebound ratio ($r$): 3/4.
+    *   Goal: Find the total distance traveled before coming to rest.
+    *   Constraint: Use geometric series to show the work.
+
+    *   *Initial drop:* The ball falls 10 meters.
+    *   *First bounce:* The ball goes up $10 \times (3/4)$ and then down $10 \times (3/4)$.
+    *   *Second bounce:* The ball goes up $10 \times (3/4)^2$ and then down $10 \times (3/4)^2$.
+    *   *General case:* For the $n$-th b"
+gemma-4-26b-a4b-it,mlx,metal,int4,coding,markdown_to_html,3,3,True,31.48,65.1,2048.0,"<|channel>thought
+
+*   Goal: Write a Python function `markdown_to_html(text)` to convert a subset of Markdown to HTML.
+*   Supported features:
+    1.  `**bold**` $\rightarrow$ `<strong>bold</strong>`
+    2.  `*italic*` $\rightarrow$ `<em>italic</em>`
+    3.  `` `code` `` $\rightarrow$ `<code>code</code>`
+    4.  `[text](url)` $\rightarrow$ `<a href=""url"">text</a>`
+*   Requirements: Handle nesting, multiple occurrences, and escaped characters.
+*   Output: Python code with test cases.
+
+    *   *Re"
+gemma-4-26b-a4b-it,mlx,metal,int4,coding,data_pipeline,3,3,True,31.37,65.3,2048.0,"<|channel>thought
+*   Input: A CSV string with columns `date`, `product`, `region`, `amount`, `quantity`.
+    *   Filtering criteria:
+        *   `amount > 100`
+        *   `region` is 'North' or 'West'
+        *   `quantity >= 5`
+    *   Grouping: By `product`.
+    *   Aggregations per product:
+        *   `total_amount`
+        *   `avg_amount`
+        *   `count`
+    *   Sorting: By `total_amount` descending.
+    *   Output: A JSON string.
+    *   Constraint: No `pandas`. Use `csv` and standa"
+gemma-4-26b-a4b-it,mlx,metal,int4,coding,retry_decorator,3,3,True,31.05,66.0,2048.0,"<|channel>thought
+
+*   Goal: Create a Python decorator `retry`.
+*   Parameters: `max_attempts` (int), `backoff_base` (int), `exceptions` (tuple of exception classes).
+*   Behavior:
+    *   Retry up to `max_attempts`.
+    *   Exponential backoff: `backoff_base ** attempt` seconds.
+    *   Catch only specified exceptions.
+    *   Log each attempt.
+    *   Return a `Result` dataclass.
+*   Output: `Result` object with `success`, `value`, `attempts`, `error`.
+*   Usage Example: A function that fails "
+gemma-4-26b-a4b-it,mlx,metal,int4,reasoning,einstein_riddle,3,3,True,63.8,64.2,4096.0,"<|channel>thought
+*   5 houses in a row (1-5).
+    *   Attributes: Person (Nationality), Color, Drink.
+    *   Goal: Assign each person to a house, color, and drink.
+
+    *   C1: Brit $\rightarrow$ Red house.
+    *   C2: Swede $\rightarrow$ Milk.
+    *   C3: Green house is immediately left of White house (Green, White).
+    *   C4: Dane $\rightarrow$ Tea.
+    *   C5: Green house $\rightarrow$ Coffee.
+    *   C6: Norwegian $\rightarrow$ House 1.
+    *   C7: Norwegian is next to Blue house.
+    * "
+gemma-4-26b-a4b-it,mlx,metal,int4,reasoning,three_urns,3,3,True,17.86,67.0,1197.0,"<|channel>thought
+*   Urn A: 3 Red (R), 2 Blue (B). Total = 5.
+    *   Urn B: 1 Red (R), 4 Blue (B). Total = 5.
+    *   Urn C: 4 Red (R), 1 Blue (B). Total = 5.
+
+    *   Step 1: Draw from Urn A.
+    *   Step 2:
+        *   If the ball from A is Red ($R_A$), draw from Urn B.
+        *   If the ball from A is Blue ($B_A$), draw from Urn C.
+
+    *   Find the probability that the second ball drawn is red ($R_2$).
+
+    *   The Law of Total Probability states that if $E_1, E_2, \dots, E_n$ are a parti"
+gemma-4-26b-a4b-it,mlx,metal,int4,reasoning,topological_sort,3,3,True,30.99,66.1,2048.0,"<|channel>thought
+
+    *   A → B
+    *   B → C
+    *   A → D
+    *   D → C
+    *   C → E
+
+    *   Nodes: {A, B, C, D, E}
+    *   Edges: {(A, B), (B, C), (A, D), (D, C), (C, E)}
+
+    *   A: 0
+    *   B: 1 (from A)
+    *   C: 2 (from B, D)
+    *   D: 1 (from A)
+    *   E: 1 (from C)
+
+    *   *Step 1: Find nodes with in-degree 0.*
+        *   Available: {A}
+        *   Pick A.
+        *   Update in-degrees:
+            *   B: 1 -> 0
+            *   D: 1 -> 0
+            *   C: 2 (remains 2)
+       "
+gemma-4-26b-a4b-it,mlx,metal,int4,instruction_following,constrained_factorial,3,3,True,31.09,65.9,2048.0,"<|channel>thought
+*   Goal: Write a Python function to compute the factorial of a non-negative integer.
+    *   Constraint 1: Every variable name must be exactly 4 characters long.
+    *   Constraint 2: No loops (for/while). Use recursion only.
+    *   Constraint 3: Include exactly 3 type hints.
+    *   Constraint 4: Correctness (factorial(5) = 120).
+
+    *   Standard recursive factorial:
+        ```python
+        def factorial(n):
+            if n == 0:
+                return 1
+            else"
+gemma-4-26b-a4b-it,mlx,metal,int4,instruction_following,library_schema,3,3,True,31.61,64.8,2048.0,"<|channel>thought
+
+*   Goal: Generate a JSON Schema for a library management system.
+*   Entities: `Book`, `Author`, `Loan`.
+*   Fields for `Book`: `id` (unique), `title`, `isbn`, `publication_year`, `author_id` (ref to Author).
+*   Fields for `Author`: `id` (unique), `name`, `birth_year`, `nationality`, `book_ids` (list of Book refs).
+*   Fields for `Loan`: `id` (unique), `book_id` (ref to Book), `borrower_name`, `due_date`, `returned` (boolean).
+*   Constraints:
+    *   Unique `id` for each.
+ "
+gemma-4-26b-a4b-it,mlx,metal,int4,instruction_following,adversarial_transform,3,3,True,31.34,65.3,2048.0,"<|channel>thought
+
+*   Input sentence: ""The quick brown fox jumps over the lazy dog""
+    *   Step 1: Translate to French.
+    *   Step 2: Reverse each word individually (keep word order).
+    *   Step 3: Wrap each reversed word in an XML tag: `<word original=""french_word"">reversed_word</word>`.
+
+    *   English: ""The quick brown fox jumps over the lazy dog""
+    *   French: ""Le renard brun rapide saute par-dessus le chien paresseux"" (Note: This is a common translation, though the English sentence"
+gemma-4-26b-a4b-it,mlx,metal,int4,writing,multi_doc_summary,3,3,True,15.35,66.7,1024.0,"<|channel>thought
+
+*   Input: Three paragraphs covering different topics (Quantum Computing, Climate Change, Gene Therapy).
+*   Task: Summarize all three into a single cohesive summary.
+*   Constraint 1: Cover ALL three topics.
+*   Constraint 2: Length must be 3-5 sentences.
+*   Constraint 3: Must be cohesive.
+
+    *   *Paragraph 1 (Quantum Computing):* Focuses on how qubits use superposition/entanglement to provide exponential speedups for complex problems.
+    *   *Paragraph 2 (Climate Change)"
+gemma-4-26b-a4b-it,mlx,metal,int4,writing,structured_meeting_notes,3,3,True,12.01,67.4,810.0,"<|channel>thought
+Fictional product team standup meeting notes.
+
+        1.  YAML frontmatter (date, attendees [list], meeting_type).
+        2.  '## Discussion' section (3 bullet points).
+        3.  '## Decisions' section (2 bullet points).
+        4.  '## Action Items' section (3 items, @name format).
+Proper Markdown.
+
+    *   *Date:* 2023-10-27
+    *   *Attendees:* Alex Chen, Sarah Miller, Jordan Smith, Taylor Reed
+    *   *Meeting Type:* Daily Standup
+
+    *   *Discussion:*
+        *   Stat"
+gemma-4-26b-a4b-it,mlx,metal,int4,writing,tone_rewrite,0,3,False,15.62,65.6,1024.0,"<|channel>thought
+
+*   *Original:* ""Deep neural networks utilize backpropagation with stochastic gradient descent to minimize the cross-entropy loss function across training epochs. The model's accuracy on the validation set plateaued at 94.3% after hyperparameter tuning of the learning rate and batch size, with the Adam optimizer achieving faster convergence than vanilla SGD.""
+    *   *Key Facts:*
+        1.  The AI uses a learning process (backpropagation/SGD) to reduce errors.
+        2.  The"
+gemma-4-26b-a4b-it,mlx,metal,int4,writing,contradiction_detection,3,3,True,11.72,67.7,794.0,"<|channel>thought
+
+*   Note 1: Apollo 11 landed July 20, 1969. Armstrong and Aldrin spent ~2.5 hours walking on the surface (EVA).
+*   Note 2: Armstrong and Aldrin remained on the lunar surface for ~21.5 hours in total after landing. They collected 47.5 pounds of samples.
+*   Goal: Identify factual contradictions and explain them.
+
+    *   *Time spent on the surface:*
+        *   Note 1 says: 2.5 hours walking (EVA).
+        *   Note 2 says: 21.5 hours total on the surface after landing.
+       "
+gemma-4-26b-a4b-it,mlx,metal,int4,tool_calling,simple_tool_call,3,3,True,0.9,70.8,64.0,"<|channel>thought
+The user wants to get the weather for San Francisco using the `get_weather` tool.
+The tool `get_weather` takes one parameter: `location`.
+I need to call `get_weather(location='San Francisco')`.<channel|>get_weather(location='San Francisco')"
+gemma-4-26b-a4b-it,mlx,metal,int4,tool_calling,calculator_tool,3,3,True,1.65,70.2,116.0,"<|channel>thought
+The user wants to calculate the product of 347 and 823 using the `calculate` tool.
+
+1.  **Identify the tool**: `calculate`
+2.  **Identify the parameter**: `expression`
+3.  **Formulate the expression**: ""347 * 823""
+4.  **Construct the tool call**: `calculate(expression=""347 * 823"")`<channel|>```python
+calculate(expression=""347 * 823"")
+```"
+gemma-4-26b-a4b-it,mlx,metal,int4,tool_calling,tool_with_json_args,3,3,True,2.32,69.7,162.0,"<|channel>thought
+The user wants to create a file named 'hello.py' with the content 'print(""Hello, World!"")' using the provided `create_file` tool.
+
+1.  **Identify the tool**: `create_file`
+2.  **Identify the arguments**:
+    *   `filename`: 'hello.py'
+    *   `content`: 'print(""Hello, World!"")'
+3.  **Format the tool call**: A JSON object containing the function name and the arguments.<channel|>```json
+{
+  ""name"": ""create_file"",
+  ""arguments"": {
+    ""filename"": ""hello.py"",
+    ""content"": ""print("
+gemma-4-26b-a4b-it,mlx,metal,int4,tool_calling,tool_selection,3,3,True,6.38,68.8,439.0,"<|channel>thought
+*   Tools available: `send_email`, `create_calendar_event`, `set_reminder`.
+    *   User input: ""Send Alice a message about the project deadline tomorrow.""
+    *   Goal: Identify the correct tool and arguments.
+
+    *   ""Send Alice a message"" -> This implies communication.
+    *   ""about the project deadline tomorrow"" -> This is the content/subject.
+    *   Looking at the tools:
+        *   `send_email(recipient, subject, body)`: Fits the ""send a message"" intent.
+        *   `c"
+gemma-4-26b-a4b-it,mlx,metal,int4,tool_calling,multi_step_tool_use,3,3,True,3.5,69.5,243.0,"<|channel>thought
+The user wants a summary of the latest news about AI regulation.
+I have two tools: `search_web` and `summarize_text`.
+
+1.  **Step 1: Get the information.** I need to find the latest news about AI regulation. I should use `search_web` for this.
+2.  **Step 2: Summarize the information.** Once I have the search results (which will be text), I need to summarize them. I should use `summarize_text` for this.
+
+Plan:
+1. Call `search_web(query=""latest news about AI regulation"")`.
+2. Tak"
+gemma-4-31b-it,mlx,metal,int4,coding,fizzbuzz,3,3,True,39.45,13.0,512.0,"<|channel>thought
+*   Goal: Write a Python function to print FizzBuzz from 1 to 100.
+    *   Rules:
+        *   Multiples of 3 $\rightarrow$ ""Fizz""
+        *   Multiples of 5 $\rightarrow$ ""Buzz""
+        *   Multiples of both (3 and 5) $\rightarrow$ ""FizzBuzz""
+        *   Otherwise $\rightarrow$ the number itself.
+
+    *   Loop from 1 to 100 (inclusive).
+    *   Check for the most restrictive condition first (multiples of both 3 and 5, which is the same as multiples of 15).
+    *   Check for mul"
+gemma-4-31b-it,mlx,metal,int4,coding,reverse_string,3,3,True,38.41,13.3,512.0,"<|channel>thought
+The objective is to write a function to reverse a string and provide at least two different implementation approaches.
+
+    *   Language: Python is the most common and readable choice for these types of requests, but I should make sure the logic is clear enough to be adapted to others.
+    *   Approach 1: Slicing (The ""Pythonic"" way).
+    *   Approach 2: Iterative/Looping (The ""Algorithmic"" way).
+    *   Approach 3: Recursion (The ""Computer Science"" way - optional but good for "
+gemma-4-31b-it,mlx,metal,int4,coding,fibonacci,3,3,True,38.8,12.9,502.0,"<|channel>thought
+*   Goal: Write a function to return the first 10 Fibonacci numbers as a list.
+    *   Output: Show the resulting list.
+
+    *   The Fibonacci sequence starts with 0 and 1 (usually).
+    *   Each subsequent number is the sum of the two preceding ones.
+    *   Sequence: 0, 1, 1, 2, 3, 5, 8, 13, 21, 34...
+
+    *   *Approach 1: Iterative (Looping)* - Most efficient for a small, fixed number of elements.
+    *   *Approach 2: Recursive* - Less efficient, but common in academic setti"
+gemma-4-31b-it,mlx,metal,int4,coding,binary_search,3,3,True,39.35,13.0,512.0,"<|channel>thought
+The objective is to implement the binary search algorithm in Python.
+
+    *   Input: A sorted list (`arr`) and a target value (`target`).
+    *   Output: The index of the target if it exists in the list; otherwise, -1.
+
+    *   Binary search works on the ""divide and conquer"" principle.
+    *   It requires the list to be sorted.
+    *   It maintains two pointers: `low` (start of the search range) and `high` (end of the search range).
+    *   In each step, it calculates the `mid`"
+gemma-4-31b-it,mlx,metal,int4,coding,palindrome,3,3,True,39.1,13.1,512.0,"<|channel>thought
+The objective is to write a function that checks if a given string is a palindrome.
+    *   *Constraint 1:* Ignore case (case-insensitive).
+    *   *Constraint 2:* Ignore non-alphanumeric characters (spaces, punctuation, etc.).
+
+    *   Input: A string (e.g., ""A man, a plan, a canal: Panama"").
+    *   Output: A boolean (`True` or `False`).
+
+    *   *Step 1: Cleaning.* Remove all non-alphanumeric characters and convert the string to lowercase.
+    *   *Step 2: Comparison.* Compa"
+gemma-4-31b-it,mlx,metal,int4,reasoning,train_problem,3,3,True,20.07,13.4,269.0,"<|channel>thought
+*   Distance between two trains: 200 km.
+    *   Train A speed: 60 km/h.
+    *   Train B speed: 40 km/h.
+    *   Direction: Moving toward each other.
+    *   Goal: Find the time until they meet.
+
+    *   When two objects move toward each other, their relative speed is the sum of their individual speeds.
+    *   Relative Speed = Speed of Train A + Speed of Train B.
+
+    *   Relative Speed = 60 km/h + 40 km/h = 100 km/h.
+
+    *   Time = Distance / Speed.
+    *   Time = 200 km / 1"
+gemma-4-31b-it,mlx,metal,int4,reasoning,coin_probability,3,3,True,68.07,12.9,875.0,"<|channel>thought
+*   Event: Flipping a fair coin 3 times.
+    *   Goal: Find the probability of getting *at least 2 heads*.
+
+    *   Each flip has 2 outcomes (H or T).
+    *   Total outcomes for 3 flips = $2^3 = 8$.
+    *   List of all possible outcomes:
+        1.  HHH
+        2.  HHT
+        3.  HTH
+        4.  THH
+        5.  HTT
+        6.  THT
+        7.  TTH
+        8.  TTT
+
+    *   ""At least 2 heads"" means 2 heads or 3 heads.
+    *   Looking at the list:
+        *   HHH (3 heads) - Yes
+ "
+gemma-4-31b-it,mlx,metal,int4,reasoning,workers_problem,3,3,True,29.28,12.9,379.0,"<|channel>thought
+*   Input: 5 workers can build a wall in 10 days.
+    *   Question: How long would it take 10 workers to build the same wall?
+
+    *   This is an inverse proportion problem. As the number of workers increases, the time taken to complete the task decreases (assuming they work at the same rate and don't get in each other's way).
+
+    *   Total work = Number of workers $\times$ Time taken.
+    *   Total work = $5 \text{ workers} \times 10 \text{ days} = 50 \text{ worker-days}$.
+
+ "
+gemma-4-31b-it,mlx,metal,int4,reasoning,age_problem,0,3,False,55.5,13.0,724.0,"<|channel>thought
+*   Tom's current age = $T$
+    *   Jerry's current age = $J$
+
+    *   Condition 1: ""Tom is twice as old as Jerry.""
+        *   Equation: $T = 2J$
+    *   Condition 2: ""In 5 years, Tom will be 1.5 times as old as Jerry.""
+        *   Tom's age in 5 years: $T + 5$
+        *   Jerry's age in 5 years: $J + 5$
+        *   Equation: $T + 5 = 1.5(J + 5)$
+
+    *   Substitute $T = 2J$ into the second equation:
+        $2J + 5 = 1.5(J + 5)$
+    *   Expand the right side:
+        $2J + 5 "
+gemma-4-31b-it,mlx,metal,int4,reasoning,sequence_pattern,3,3,True,47.46,13.0,617.0,"<|channel>thought
+*   Sequence: 2, 6, 12, 20, 30, ...
+    *   Goal: Find the next number.
+
+    *   6 - 2 = 4
+    *   12 - 6 = 6
+    *   20 - 12 = 8
+    *   30 - 20 = 10
+    *   The differences are: 4, 6, 8, 10.
+
+    *   The differences are increasing by 2 each time (4, 6, 8, 10).
+    *   The next difference should be 10 + 2 = 12.
+
+    *   Last number in sequence + next difference = 30 + 12 = 42.
+
+    *   $n^2 + n$ pattern:
+        *   $1^2 + 1 = 2$
+        *   $2^2 + 2 = 6$
+        *   $3^2 + 3 "
+gemma-4-31b-it,mlx,metal,int4,instruction_following,json_output,3,3,True,19.29,13.4,259.0,"<|channel>thought
+*   Goal: Output a JSON object.
+    *   Keys required: ""name"", ""age"", ""hobbies"" (list).
+    *   Content: Fictional person.
+    *   Constraint: Output ONLY the JSON, no other text.
+
+    *   Name: ""Elias Thorne""
+    *   Age: 34
+    *   Hobbies: [""Urban exploration"", ""Vintage clock repair"", ""Amateur astronomy""]
+
+    ```json
+    {
+      ""name"": ""Elias Thorne"",
+      ""age"": 34,
+      ""hobbies"": [""Urban exploration"", ""Vintage clock repair"", ""Amateur astronomy""]
+    }
+    ```
+
+    *  "
+gemma-4-31b-it,mlx,metal,int4,instruction_following,numbered_list,3,3,True,23.12,12.8,297.0,"<|channel>thought
+*   Topic: Benefits of regular exercise.
+    *   Quantity: 5 benefits.
+    *   Format: Numbered list (1. 2. 3. etc).
+
+    *   Weight management.
+    *   Improved cardiovascular health.
+    *   Better mood/mental health.
+    *   Increased energy levels.
+    *   Stronger muscles and bones.
+    *   Better sleep.
+    *   Reduced risk of chronic diseases (diabetes, etc.).
+
+    1.  Weight Management: Helps burn calories and maintain a healthy weight.
+    2.  Improved Heart Health: St"
+gemma-4-31b-it,mlx,metal,int4,instruction_following,word_constraint,3,3,True,20.4,13.2,270.0,"<|channel>thought
+*   Topic: Machine Learning.
+    *   Constraint: 50 words or fewer.
+    *   Goal: Explain what it is.
+
+    *   Subset of AI.
+    *   Learning from data.
+    *   Improving performance without explicit programming.
+    *   Pattern recognition.
+
+    Machine learning is a branch of artificial intelligence that allows computers to learn from data. Instead of being explicitly programmed for every task, the system identifies patterns and makes predictions or decisions based on experie"
+gemma-4-31b-it,mlx,metal,int4,instruction_following,code_with_comments,3,3,True,72.94,12.9,943.0,"<|channel>thought
+The objective is to write a Python function that calculates the area of a circle.
+
+    *   Formula: $Area = \pi \times r^2$
+    *   Input: Radius ($r$)
+    *   Constant: $\pi$ (Pi)
+
+    *   *Importing Math:* To get an accurate value of $\pi$, I should use the `math` module.
+    *   *Function Definition:* Define a function, e.g., `calculate_circle_area(radius)`.
+    *   *Input Validation:* It's good practice to ensure the radius is not negative.
+    *   *Calculation:* Apply the "
+gemma-4-31b-it,mlx,metal,int4,instruction_following,direct_answer,3,3,True,3.56,13.8,49.0,"<|channel>thought
+The user is asking for the capital of France.
+The user explicitly requested a direct answer with no explanation.
+
+1. Identify the capital of France: Paris.
+2. Format the response: ""Paris"".<channel|>Paris"
+gemma-4-31b-it,mlx,metal,int4,coding,lru_cache,3,3,True,160.69,12.7,2048.0,"<|channel>thought
+*   Goal: Implement an LRU Cache in Python.
+    *   Requirements:
+        *   `get(key)`: O(1) time.
+        *   `put(key, value)`: O(1) time.
+        *   Configurable capacity.
+        *   Evict least recently used (LRU) item when full.
+        *   Constraint: Do *not* use `collections.OrderedDict`.
+
+    *   To achieve O(1) lookup, a **Hash Map (Dictionary)** is necessary.
+    *   To achieve O(1) updates/evictions (maintaining order), a **Doubly Linked List** is necessary.
+   "
+gemma-4-31b-it,mlx,metal,int4,coding,flatten_nested,3,3,True,80.53,12.7,1024.0,"<|channel>thought
+The objective is to write a Python function `flatten(lst)` that takes a nested list (of any depth) and returns a single flat list containing all the elements.
+
+    *   Input: A list that can contain integers, other lists, strings, etc.
+    *   Output: A flat list.
+    *   Constraint 1: Arbitrary nesting (requires recursion or a stack).
+    *   Constraint 2: Strings should be treated as single elements, not as sequences of characters (since strings are iterable in Python).
+
+    "
+gemma-4-31b-it,mlx,metal,int4,coding,longest_palindrome_substring,3,3,True,113.09,12.8,1451.0,"<|channel>thought
+The objective is to write a Python function to find the longest palindromic substring in a given string.
+
+    *   Input: A string (e.g., ""babad"").
+    *   Output: A string (the longest palindrome, e.g., ""bab"").
+    *   Constraint: Time complexity $O(n^2)$ or better.
+
+    *   *Brute Force:* Check every possible substring. There are $O(n^2)$ substrings, and checking each takes $O(n)$. Total: $O(n^3)$. (Too slow).
+    *   *Dynamic Programming:* Create a 2D table where `dp[i][j]` i"
+gemma-4-31b-it,mlx,metal,int4,coding,calculator,3,3,True,146.57,12.7,1856.0,"<|channel>thought
+The objective is to build a basic calculator in Python that takes a string expression and evaluates it. It needs to handle:
+    *   Basic operators: `+`, `-`, `*`, `/`.
+    *   Parentheses: `()`.
+    *   Operator precedence: Multiplication/Division before Addition/Subtraction.
+    *   Non-negative integers.
+    *   Nested parentheses.
+
+    *   *Option 1: `eval()`.* (Too easy, often forbidden in coding interviews/assignments due to security risks).
+    *   *Option 2: Shunting-Ya"
+gemma-4-31b-it,mlx,metal,int4,coding,buggy_merge_sort,3,3,True,84.04,12.8,1074.0,"<|channel>thought
+*   Input: A Python implementation of Merge Sort.
+    *   Goal: Find the bug, explain it, and provide the fixed code.
+
+    *   `merge_sort(arr)`:
+        *   Base case: `if len(arr) <= 1: return arr` (Correct).
+        *   Splitting: `mid = len(arr) // 2`, `left = merge_sort(arr[:mid])`, `right = merge_sort(arr[mid:])` (Correct).
+        *   Merging: `return merge(left, right)` (Correct).
+    *   `merge(left, right)`:
+        *   Initialization: `result = []`, `i = j = 0` (Corr"
+gemma-4-31b-it,mlx,metal,int4,reasoning,compound_interest,3,3,True,73.74,12.9,953.0,"<|channel>thought
+*   Principal ($P$): $10,000
+    *   Annual Interest Rate ($r$): 5% (or 0.05 as a decimal)
+    *   Compounding Frequency ($n$): Quarterly (4 times per year)
+    *   Time ($t$): 3 years
+    *   Goal: Find the final amount ($A$).
+
+    *   The formula for compound interest is: $A = P(1 + r/n)^{nt}$
+    *   Where:
+        *   $A$ = the future value of the investment/loan, including interest
+        *   $P$ = the principal investment amount
+        *   $r$ = the annual interest rate"
+gemma-4-31b-it,mlx,metal,int4,reasoning,circular_seating,3,3,True,74.79,12.9,967.0,"<|channel>thought
+*   Total people: 6
+    *   Arrangement: Circular table.
+    *   Constraint: Alice and Bob must *not* sit next to each other.
+
+    *   The number of ways to arrange $n$ distinct objects in a circle is $(n-1)!$.
+    *   For 6 people, the total number of arrangements is $(6-1)! = 5!$.
+    *   $5! = 5 \times 4 \times 3 \times 2 \times 1 = 120$.
+
+    *   To find the number of ways Alice and Bob *do* sit next to each other, treat them as a single unit (a ""block"").
+    *   Now we hav"
+gemma-4-31b-it,mlx,metal,int4,reasoning,logic_puzzle,3,3,True,135.86,12.7,1728.0,"<|channel>thought
+*   Three people: A, B, C.
+    *   Each is either a Truth-teller (T) or a Liar (L).
+    *   A says: ""B is a liar.""
+    *   B says: ""C is a liar.""
+    *   C says: ""A and B are both liars.""
+
+    *   A is T $\iff$ B is L.
+    *   B is T $\iff$ C is L.
+    *   C is T $\iff$ (A is L AND B is L).
+
+    Since there are 3 people and 2 possibilities for each, there are $2^3 = 8$ possible combinations.
+
+    *   **Case 1: A=T, B=T, C=T**
+        *   A says ""B is L"". Since A is T, B must be"
+gemma-4-31b-it,mlx,metal,int4,reasoning,bayes_theorem,3,3,True,85.36,12.9,1098.0,"<|channel>thought
+*   Prevalence of disease ($P(D)$): 1% = 0.01
+    *   True Positive Rate (Sensitivity, $P(+|D)$): 95% = 0.95
+    *   True Negative Rate (Specificity, $P(-|D^c)$): 95% = 0.95
+    *   False Positive Rate ($P(+|D^c)$): 1 - Specificity = 5% = 0.05
+    *   Goal: Find the probability of having the disease given a positive test result ($P(D|+)$).
+
+    *   Bayes' Theorem: $P(A|B) = \frac{P(B|A) \cdot P(A)}{P(B)}$
+    *   In this context: $P(D|+) = \frac{P(+|D) \cdot P(D)}{P(+)}$
+
+    *"
+gemma-4-31b-it,mlx,metal,int4,reasoning,proof_bug,3,3,True,55.93,13.0,727.0,"<|channel>thought
+*   Goal: Find the error in a ""proof"" that $1 = 2$.
+    *   Steps of the proof:
+        1.  $a = b$
+        2.  $a^2 = ab$ (Multiply both sides by $a$)
+        3.  $a^2 - b^2 = ab - b^2$ (Subtract $b^2$ from both sides)
+        4.  $(a + b)(a - b) = b(a - b)$ (Factor both sides)
+        5.  $a + b = b$ (Divide both sides by $(a - b)$)
+        6.  $b + b = b$ (Substitute $a = b$)
+        7.  $2b = b$ (Simplify)
+        8.  $2 = 1$ (Divide both sides by $b$)
+
+    *   Step 1: $a ="
+gemma-4-31b-it,mlx,metal,int4,math,modular_arithmetic,0,3,False,76.02,12.9,977.0,"<|channel>thought
+The objective is to find the remainder of $2^{100}$ when divided by $7$. This is expressed as $2^{100} \pmod{7}$.
+
+    *   $2^1 = 2 \equiv 2 \pmod{7}$
+    *   $2^2 = 4 \equiv 4 \pmod{7}$
+    *   $2^3 = 8 \equiv 1 \pmod{7}$ (Crucial point: we found a 1!)
+    *   $2^4 = 16 \equiv 2 \pmod{7}$
+    *   $2^5 = 32 \equiv 4 \pmod{7}$
+    *   $2^6 = 64 \equiv 1 \pmod{7}$
+
+    *   The remainders are $2, 4, 1, 2, 4, 1, \dots$
+    *   The pattern repeats every 3 powers.
+    *   The cycle l"
+gemma-4-31b-it,mlx,metal,int4,math,inclusion_exclusion,3,3,True,125.9,12.8,1607.0,"<|channel>thought
+The objective is to find the number of integers from 1 to 1000 that are divisible by 2, 3, or 5.
+
+    *   Range: $1$ to $1000$.
+    *   Divisors: $2, 3, 5$.
+    *   Method: Inclusion-Exclusion Principle (PIE).
+
+    *   Let $S$ be the set of integers from 1 to 1000. $|S| = 1000$.
+    *   Let $A$ be the set of integers divisible by 2.
+    *   Let $B$ be the set of integers divisible by 3.
+    *   Let $C$ be the set of integers divisible by 5.
+    *   We want to find $|A \cup B \c"
+gemma-4-31b-it,mlx,metal,int4,math,bouncing_ball,3,3,True,99.4,12.7,1267.0,"<|channel>thought
+*   Initial height ($h_0$) = 10 meters.
+    *   Rebound ratio ($r$) = 3/4.
+    *   The ball is dropped (not thrown up).
+    *   Goal: Total distance traveled until it comes to rest.
+
+    *   *First drop:* The ball falls from 10m. (Distance = 10)
+    *   *First bounce:* The ball goes up to $10 \times (3/4)$ and then comes back down $10 \times (3/4)$. (Distance = $2 \times 10 \times (3/4)$)
+    *   *Second bounce:* The ball goes up to $10 \times (3/4)^2$ and then comes back down "
+gemma-4-31b-it,mlx,metal,int4,coding,markdown_to_html,3,3,True,162.17,12.6,2048.0,"<|channel>thought
+The objective is to write a Python function `markdown_to_html(text)` that converts specific Markdown patterns (bold, italic, code, links) into HTML tags.
+
+    *   `**bold**` $\rightarrow$ `<strong>bold</strong>`
+    *   `*italic*` $\rightarrow$ `<em>italic</em>`
+    *   `` `code` `` $\rightarrow$ `<code>code</code>`
+    *   `[text](url)` $\rightarrow$ `<a href=""url"">text</a>`
+
+    *   Nested formatting (e.g., `***bold-italic***`).
+    *   Multiple occurrences per line.
+    *   "
+gemma-4-31b-it,mlx,metal,int4,coding,data_pipeline,3,3,True,124.66,12.7,1589.0,"<|channel>thought
+*   Input: `csv_text` (a CSV string).
+    *   Columns: `date`, `product`, `region`, `amount`, `quantity`.
+    *   Filtering criteria:
+        *   `amount > 100`
+        *   `region` is 'North' or 'West'
+        *   `quantity >= 5`
+    *   Grouping: By `product`.
+    *   Aggregations per product:
+        *   `total_amount` (sum)
+        *   `avg_amount` (mean)
+        *   `count` (number of rows)
+    *   Sorting: By `total_amount` descending.
+    *   Output: JSON string.
+    *  "
+gemma-4-31b-it,mlx,metal,int4,coding,retry_decorator,3,3,True,132.83,12.7,1688.0,"<|channel>thought
+The objective is to create a Python decorator named `retry` with specific parameters (`max_attempts`, `backoff_base`, `exceptions`). It needs to implement exponential backoff, filter specific exceptions, log attempts, and return a specific `Result` dataclass.
+
+    *   `max_attempts`: Integer, default 3.
+    *   `backoff_base`: Integer/Float, default 2.
+    *   `exceptions`: Tuple of exception classes, default `(Exception,)`.
+
+    *   `success`: Boolean.
+    *   `value`: The ret"
+gemma-4-31b-it,mlx,metal,int4,reasoning,einstein_riddle,3,3,True,326.66,12.5,4096.0,"<|channel>thought
+*   5 houses in a row (1-5).
+    *   Attributes to determine: Nationality, House Color, Drink.
+    *   Constraints:
+        1. Brit = Red house.
+        2. Swede = Milk.
+        3. Green house is immediately left of White house (Green, White).
+        4. Dane = Tea.
+        5. Green house owner = Coffee.
+        6. Norwegian = House 1.
+        7. Norwegian lives next to the Blue house.
+        8. German = House 3.
+
+    *   House 1: Norwegian (Constraint 6).
+    *   House 3: Ger"
+gemma-4-31b-it,mlx,metal,int4,reasoning,three_urns,3,3,True,88.1,12.8,1132.0,"<|channel>thought
+*   Urn A: 3 Red (R), 2 Blue (B). Total = 5.
+    *   Urn B: 1 Red (R), 4 Blue (B). Total = 5.
+    *   Urn C: 4 Red (R), 1 Blue (B). Total = 5.
+
+    *   Step 1: Draw a ball from Urn A.
+    *   Step 2:
+        *   If the ball from Urn A is Red, draw a ball from Urn B.
+        *   If the ball from Urn A is Blue, draw a ball from Urn C.
+
+    *   What is the probability that the second ball drawn is red?
+
+    *   Let $R_1$ be the event that the first ball (from Urn A) is red.
+    * "
+gemma-4-31b-it,mlx,metal,int4,reasoning,topological_sort,3,3,True,140.31,12.7,1787.0,"<|channel>thought
+*   Nodes: A, B, C, D, E
+    *   Edges (Dependencies):
+        *   A → B
+        *   B → C
+        *   A → D
+        *   D → C
+        *   C → E
+
+    *   A: 0 (No incoming edges)
+    *   B: 1 (from A)
+    *   C: 2 (from B and D)
+    *   D: 1 (from A)
+    *   E: 1 (from C)
+
+    *   A node can be placed in the ordering if its in-degree is 0.
+
+    *   **Step 1: Start**
+        *   In-degrees: A:0, B:1, C:2, D:1, E:1
+        *   Available: {A}
+        *   Action: Pick **A**.
+      "
+gemma-4-31b-it,mlx,metal,int4,instruction_following,constrained_factorial,3,3,True,161.43,12.7,2048.0,"<|channel>thought
+*   Goal: Python function to compute the factorial of a non-negative integer.
+    *   Constraint 1: Every variable name must be exactly 4 characters long.
+    *   Constraint 2: No loops (for/while); use recursion only.
+    *   Constraint 3: Exactly 3 type hints.
+    *   Constraint 4: Correct logic (factorial(5) = 120).
+
+    *   Standard recursive factorial: `def fact(n): if n == 0: return 1 else: return n * fact(n-1)`
+
+    *   Function name: `fact` (4 chars) - OK.
+    *   Input"
+gemma-4-31b-it,mlx,metal,int4,instruction_following,library_schema,3,3,True,142.04,12.8,1822.0,"<|channel>thought
+Library Management System.
+
+        *   `Book`: title, isbn, publication_year, author_id.
+        *   `Author`: name, birth_year, nationality, book_ids.
+        *   `Loan`: book_id, borrower_name, due_date, returned.
+
+        *   Unique `id` field for each entity.
+        *   Cross-references via IDs.
+        *   `required` fields and `type` constraints.
+        *   Valid JSON Schema (Draft 2020-12 or later).
+
+    *   *Book*:
+        *   `id`: string (UUID or similar).
+        "
+gemma-4-31b-it,mlx,metal,int4,instruction_following,adversarial_transform,3,3,True,161.16,12.7,2048.0,"<|channel>thought
+*   Input sentence: ""The quick brown fox jumps over the lazy dog""
+    *   Step 1: Translate to French.
+    *   Step 2: Reverse each word individually (keep word order).
+    *   Step 3: Wrap each reversed word in an XML tag `<word original=""french_word"">reversed_word</word>`.
+
+    *   English: ""The quick brown fox jumps over the lazy dog""
+    *   French: ""Le rapide renard brun saute au-dessus du chien paresseux"" (Standard translation).
+    *   *Alternative:* ""Le renard brun rapi"
+gemma-4-31b-it,mlx,metal,int4,writing,multi_doc_summary,3,3,True,44.95,12.8,577.0,"<|channel>thought
+*   Task: Summarize three paragraphs into a single cohesive summary.
+    *   Constraint 1: Cover ALL three topics (Quantum computing, Climate change, Gene therapy).
+    *   Constraint 2: Length must be 3-5 sentences.
+    *   Constraint 3: Must be cohesive.
+
+    *   P1: Quantum computing (superposition/entanglement, qubits, speedups in cryptography/drug discovery).
+    *   P2: Climate change (accelerating, 1.2°C rise, IPCC warning about 1.5°C tipping points).
+    *   P3: Gene th"
+gemma-4-31b-it,mlx,metal,int4,writing,structured_meeting_notes,3,3,True,51.64,13.0,669.0,"<|channel>thought
+*   Task: Write meeting notes for a fictional product team standup.
+    *   Requirement 1: YAML frontmatter (date, attendees [list], meeting_type).
+    *   Requirement 2: '## Discussion' section (3 bullet points).
+    *   Requirement 3: '## Decisions' section (2 bullet points).
+    *   Requirement 4: '## Action Items' section (3 items, @name format).
+    *   Formatting: Proper Markdown.
+
+    *   Product: ""NebulaTask"" (a fictional project management tool).
+    *   Attendees: Sar"
+gemma-4-31b-it,mlx,metal,int4,writing,tone_rewrite,3,3,True,73.58,13.0,953.0,"<|channel>thought
+*   *Original:* ""Deep neural networks utilize backpropagation with stochastic gradient descent to minimize the cross-entropy loss function across training epochs. The model's accuracy on the validation set plateaued at 94.3% after hyperparameter tuning of the learning rate and batch size, with the Adam optimizer achieving faster convergence than vanilla SGD.""
+    *   *Key Facts:*
+        1.  The system uses a specific learning process (deep neural networks, backpropagation, SGD"
+gemma-4-31b-it,mlx,metal,int4,writing,contradiction_detection,3,3,True,39.27,12.9,506.0,"<|channel>thought
+*   Note 1: Apollo 11 landed July 20, 1969. Armstrong and Aldrin spent ~2.5 hours walking on the surface (EVA). They collected rock samples and deployed instruments.
+    *   Note 2: Armstrong and Aldrin remained on the lunar surface for ~21.5 hours in total after landing. They collected 47.5 lbs of lunar samples during their moonwalk.
+
+    *   *Landing Date:* Note 1 says July 20, 1969. Note 2 doesn't mention the date. (No contradiction).
+    *   *Time on Surface (Walking vs. To"
+gemma-4-31b-it,mlx,metal,int4,tool_calling,simple_tool_call,3,3,True,4.75,13.7,65.0,"<|channel>thought
+The user wants to get the weather for San Francisco.
+I have a tool `get_weather` which takes a `location` parameter.
+I should call `get_weather` with `location=""San Francisco""`.<channel|><|tool_call>call:get_weather{location: 'San Francisco'}<tool_call|>"
+gemma-4-31b-it,mlx,metal,int4,tool_calling,calculator_tool,3,3,True,4.61,13.7,63.0,"<|channel>thought
+The user wants to calculate the product of 347 and 823.
+I should use the `calculate` tool with the expression ""347 * 823"".<channel|><|tool_call>call:calculate{expression: '347 * 823'}<tool_call|>"
+gemma-4-31b-it,mlx,metal,int4,tool_calling,tool_with_json_args,3,3,True,10.75,13.1,141.0,"<|channel>thought
+The user wants to create a file named 'hello.py' with the content 'print(""Hello, World!"")'.
+I have a tool `create_file` that takes `filename` and `content` as arguments.
+
+Plan:
+1. Identify the tool to use: `create_file`.
+2. Identify the arguments: `filename='hello.py'`, `content='print(""Hello, World!"")'`.
+3. Construct the tool call in JSON format.<channel|>```json
+{""name"": ""create_file"", ""arguments"": {""filename"": ""hello.py"", ""content"": ""print(\""Hello, World!\"")""}}
+```"
+gemma-4-31b-it,mlx,metal,int4,tool_calling,tool_selection,3,3,True,24.82,12.8,317.0,"<|channel>thought
+The user wants to send a message to Alice about a project deadline tomorrow.
+Looking at the available tools:
+1. `send_email(recipient, subject, body)`: This is for sending emails.
+2. `create_calendar_event(title, date, time)`: This is for calendar events.
+3. `set_reminder(message, time)`: This is for reminders.
+
+The request ""Send Alice a message"" most closely aligns with `send_email`.
+Arguments needed for `send_email`:
+- `recipient`: ""Alice""
+- `subject`: Something related to th"
+gemma-4-31b-it,mlx,metal,int4,tool_calling,multi_step_tool_use,3,3,True,13.36,13.2,176.0,"<|channel>thought
+The user wants a summary of the latest news about AI regulation.
+I have two tools: `search_web` and `summarize_text`.
+
+1.  First, I need to find the latest news about AI regulation. The `search_web` tool is appropriate for this.
+2.  Once I have the search results (which will be a collection of text/articles), I need to summarize them. The `summarize_text` tool is appropriate for this.
+
+Plan:
+1. Call `search_web(query=""latest news about AI regulation"")`.
+2. Call `summarize_text("
