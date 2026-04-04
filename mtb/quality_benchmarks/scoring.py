@@ -10,11 +10,98 @@ Formula: weighted_score = sum(weight * passed_count) / sum(weight * total_count)
 
 The scoring function takes pass/fail results per problem and returns both
 a weighted score and a raw (unweighted) pass rate.
+
+Also provides the pluggable ProblemSource interface and StaticProblemSource.
 """
 
-from typing import Dict
+from abc import ABC, abstractmethod
+from typing import Dict, List
 
 from mtb.quality_benchmarks.eval_problem import EvalProblem
+
+
+# ---------------------------------------------------------------------------
+# Pluggable problem source interface
+# ---------------------------------------------------------------------------
+
+
+class ProblemSource(ABC):
+    """Abstract base class for pluggable problem sources.
+
+    Provides a unified interface for retrieving evaluation problems.
+    Built-in implementations include ``StaticProblemSource`` which wraps
+    the existing hardcoded problem lists. Future implementations may
+    include dynamic sources such as LiveCodeBench for fresh, uncontaminated
+    problems fetched from an online repository.
+
+    Subclass this to create custom problem sources — for example, pulling
+    problems from a database, an API, or generating them procedurally.
+    """
+
+    @abstractmethod
+    def get_problems(self, difficulty: str = "all") -> List[EvalProblem]:
+        """Return a list of evaluation problems.
+
+        Args:
+            difficulty: Filter by difficulty tier. One of ``"easy"``,
+                ``"hard"``, ``"expert"``, ``"tool_calling"``, or ``"all"``
+                (default). ``"all"`` returns every problem across all tiers.
+
+        Returns:
+            List of EvalProblem instances matching the requested difficulty.
+        """
+        ...
+
+
+class StaticProblemSource(ProblemSource):
+    """Problem source that wraps the existing static problem lists.
+
+    Returns problems from EVAL_PROBLEMS, HARD_EVAL_PROBLEMS,
+    EXPERT_EVAL_PROBLEMS, and TOOL_CALLING_PROBLEMS.
+    """
+
+    def get_problems(self, difficulty: str = "all") -> List[EvalProblem]:
+        """Return static problems filtered by difficulty tier.
+
+        Args:
+            difficulty: One of ``"easy"``, ``"hard"``, ``"expert"``,
+                ``"tool_calling"``, or ``"all"`` (default).
+
+        Returns:
+            List of EvalProblem instances for the requested tier.
+
+        Raises:
+            ValueError: If difficulty is not a recognized value.
+        """
+        # Import here to avoid circular imports
+        from mtb.quality_benchmarks import (
+            EVAL_PROBLEMS,
+            EXPERT_EVAL_PROBLEMS,
+            HARD_EVAL_PROBLEMS,
+            TOOL_CALLING_PROBLEMS,
+        )
+
+        if difficulty == "easy":
+            return list(EVAL_PROBLEMS)
+        elif difficulty == "hard":
+            return list(HARD_EVAL_PROBLEMS)
+        elif difficulty == "expert":
+            return list(EXPERT_EVAL_PROBLEMS)
+        elif difficulty == "tool_calling":
+            return list(TOOL_CALLING_PROBLEMS)
+        elif difficulty == "all":
+            return list(
+                EVAL_PROBLEMS
+                + HARD_EVAL_PROBLEMS
+                + EXPERT_EVAL_PROBLEMS
+                + TOOL_CALLING_PROBLEMS
+            )
+        else:
+            raise ValueError(
+                f"Unknown difficulty '{difficulty}', must be 'easy', 'hard', "
+                f"'expert', 'tool_calling', or 'all'"
+            )
+
 
 # ---------------------------------------------------------------------------
 # Weight constants (importable)

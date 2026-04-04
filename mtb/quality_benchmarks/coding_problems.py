@@ -11,14 +11,16 @@ Each problem defines:
 - test_cases: 5-10 deterministic (input, expected_output) pairs with boundary cases
 - _correct_impl: reference implementation that passes all test cases
 - _incorrect_impl: deliberately wrong implementation that fails at least one test case
+
+Select problems include generate_variant() callables for contamination resistance.
 """
 
+import random
 from typing import List
-
-from mtb.quality_benchmarks.utils import _contains_any, _strip_thinking
 
 # Import EvalProblem from the canonical location to avoid circular imports.
 from mtb.quality_benchmarks.eval_problem import EvalProblem
+from mtb.quality_benchmarks.utils import _contains_any, _strip_thinking
 
 
 # =============================================================================
@@ -405,6 +407,190 @@ def _check_retry_decorator(response: str) -> bool:
         ],
     )
     return has_decorator and has_backoff and has_exception and has_result
+
+
+# =============================================================================
+# VARIANT GENERATORS
+# =============================================================================
+
+
+def _generate_fizzbuzz_variant() -> EvalProblem:
+    """Generate a FizzBuzz variant with different divisors and words."""
+    word_pairs = [
+        (3, "Fizz", 5, "Buzz"),
+        (2, "Foo", 7, "Bar"),
+        (4, "Ping", 6, "Pong"),
+        (3, "Zip", 7, "Zap"),
+        (5, "Bling", 3, "Blang"),
+        (2, "Tick", 5, "Tock"),
+    ]
+    div_a, word_a, div_b, word_b = random.choice(word_pairs)
+    # Avoid original (3, Fizz, 5, Buzz)
+    if div_a == 3 and word_a == "Fizz" and div_b == 5 and word_b == "Buzz":
+        div_a, word_a, div_b, word_b = random.choice(word_pairs[1:])
+
+    combined = word_a + word_b
+    func_name = f"{word_a.lower()}{word_b.lower()}"
+
+    def _check(response: str) -> bool:
+        response = _strip_thinking(response)
+        has_words = _contains_any(response, [word_a.lower(), word_b.lower(), func_name])
+        has_mod = _contains_any(response, ["%", "mod", "divisible"])
+        return has_words and has_mod
+
+    return EvalProblem(
+        category="coding",
+        name="fizzbuzz",
+        prompt=(
+            f"Write a Python function `{func_name}(n: int) -> str` that returns "
+            f"'{word_a}' for multiples of {div_a}, '{word_b}' for multiples of "
+            f"{div_b}, '{combined}' for multiples of both, or the number as a "
+            f"string otherwise."
+        ),
+        check=_check,
+        max_tokens=512,
+        function_signature=f"def {func_name}(n: int) -> str:",
+    )
+
+
+def _generate_fibonacci_variant() -> EvalProblem:
+    """Generate a Fibonacci variant with different starting values."""
+    starts = [
+        (1, 1, "standard Fibonacci starting from 1, 1"),
+        (2, 1, "Lucas-like starting from 2, 1"),
+        (0, 2, "starting from 0, 2"),
+        (1, 3, "starting from 1, 3"),
+        (3, 5, "starting from 3, 5"),
+    ]
+    a, b, desc = random.choice(starts)
+    # Avoid the original (0, 1)
+    if a == 0 and b == 1:
+        a, b, desc = random.choice(starts[1:])
+
+    # Compute first 10 numbers of the sequence
+    seq = []
+    x, y = a, b
+    for _ in range(10):
+        seq.append(x)
+        x, y = y, x + y
+
+    # Expected output for n=8
+    expected_8 = seq[:8]
+
+    def _check(response: str) -> bool:
+        response = _strip_thinking(response)
+        # Check for the sequence beginning
+        seq_str = ", ".join(str(x) for x in seq[:5])
+        return _contains_any(response, [seq_str])
+
+    return EvalProblem(
+        category="coding",
+        name="fibonacci",
+        prompt=(
+            f"Write a Python function `fib_seq(n: int) -> list` that returns the first "
+            f"n numbers of a Fibonacci-like sequence {desc}. For example, "
+            f"fib_seq(5) should return {seq[:5]}."
+        ),
+        check=_check,
+        max_tokens=512,
+        function_signature="def fib_seq(n: int) -> list:",
+    )
+
+
+def _generate_binary_search_variant() -> EvalProblem:
+    """Generate a binary search variant searching for a different target type."""
+    variants = [
+        (
+            "find_first_ge",
+            "finds the index of the first element >= target",
+            "find_first_ge(arr: list, target: int) -> int",
+        ),
+        (
+            "search_rotated",
+            "finds the target in a rotated sorted array",
+            "search_rotated(arr: list, target: int) -> int",
+        ),
+        (
+            "count_occurrences",
+            "counts how many times target appears in a sorted list using binary search",
+            "count_occurrences(arr: list, target: int) -> int",
+        ),
+    ]
+    name, desc, sig = random.choice(variants)
+
+    def _check(response: str) -> bool:
+        response = _strip_thinking(response)
+        has_mid = _contains_any(response, ["mid", "middle"])
+        has_halving = _contains_any(
+            response, ["// 2", "/ 2", ">> 1", "low", "high", "left", "right"]
+        )
+        return has_mid and has_halving
+
+    return EvalProblem(
+        category="coding",
+        name="binary_search",
+        prompt=(
+            f"Write a Python function `{sig}` that {desc}. "
+            f"Return -1 if the target is not found. Use binary search."
+        ),
+        check=_check,
+        max_tokens=512,
+        function_signature=f"def {sig}:",
+    )
+
+
+def _generate_flatten_nested_variant() -> EvalProblem:
+    """Generate a flatten variant with different function names and examples."""
+    func_names = [
+        "deep_flatten",
+        "unnest",
+        "squash",
+        "flatten_all",
+        "linearize",
+    ]
+    func_name = random.choice(func_names)
+    # Generate a random nested list example
+    examples = [
+        ("[1, [2, [3, [4]]]]", "[1, 2, 3, 4]"),
+        ("[[1, 2], [3, [4, 5]]]", "[1, 2, 3, 4, 5]"),
+        ("[[[1]], 2, [3, [4, [5, 6]]]]", "[1, 2, 3, 4, 5, 6]"),
+        ("['a', ['b', ['c', 'd']], 'e']", "['a', 'b', 'c', 'd', 'e']"),
+        ("[[], [1, []], [2, [3]]]", "[1, 2, 3]"),
+    ]
+    example_in, example_out = random.choice(examples)
+
+    def _check(response: str) -> bool:
+        response = _strip_thinking(response)
+        has_recursion = _contains_any(
+            response,
+            [
+                "isinstance",
+                "type(",
+                "hasattr",
+                "iter(",
+                "yield from",
+                "yield",
+                "extend",
+                "recursiv",
+            ],
+        )
+        has_check = _contains_any(
+            response, ["list", "tuple", "Iterable", "iterable", "sequence"]
+        )
+        return has_recursion and has_check
+
+    return EvalProblem(
+        category="coding",
+        name="flatten_nested",
+        prompt=(
+            f"Write a Python function `{func_name}(lst: list) -> list` that takes an "
+            f"arbitrarily nested list and returns a flat list of all values. "
+            f"For example, {func_name}({example_in}) should return {example_out}."
+        ),
+        check=_check,
+        max_tokens=1024,
+        function_signature=f"def {func_name}(lst: list) -> list:",
+    )
 
 
 # =============================================================================
@@ -1045,6 +1231,7 @@ CODING_EASY_PROBLEMS: List[EvalProblem] = [
         test_cases=_FIZZBUZZ_TEST_CASES,
         _correct_impl=_FIZZBUZZ_CORRECT,
         _incorrect_impl=_FIZZBUZZ_INCORRECT,
+        generate_variant=_generate_fizzbuzz_variant,
     ),
     EvalProblem(
         category="coding",
@@ -1065,6 +1252,7 @@ CODING_EASY_PROBLEMS: List[EvalProblem] = [
         test_cases=_FIBONACCI_TEST_CASES,
         _correct_impl=_FIBONACCI_CORRECT,
         _incorrect_impl=_FIBONACCI_INCORRECT,
+        generate_variant=_generate_fibonacci_variant,
     ),
     EvalProblem(
         category="coding",
@@ -1075,6 +1263,7 @@ CODING_EASY_PROBLEMS: List[EvalProblem] = [
         test_cases=_BINARY_SEARCH_TEST_CASES,
         _correct_impl=_BINARY_SEARCH_CORRECT,
         _incorrect_impl=_BINARY_SEARCH_INCORRECT,
+        generate_variant=_generate_binary_search_variant,
     ),
     EvalProblem(
         category="coding",
@@ -1117,6 +1306,7 @@ CODING_HARD_PROBLEMS: List[EvalProblem] = [
         test_cases=_FLATTEN_NESTED_TEST_CASES,
         _correct_impl=_FLATTEN_NESTED_CORRECT,
         _incorrect_impl=_FLATTEN_NESTED_INCORRECT,
+        generate_variant=_generate_flatten_nested_variant,
     ),
     EvalProblem(
         category="coding",

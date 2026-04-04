@@ -4,13 +4,16 @@ Contains check functions and EvalProblem instances for reasoning problems:
 - Easy (5): train_problem, coin_probability, workers_problem, age_problem, sequence_pattern
 - Hard (5): compound_interest, circular_seating, logic_puzzle, bayes_theorem, proof_bug
 - Expert (3): einstein_riddle, three_urns, topological_sort
+
+Select problems include generate_variant() callables for contamination resistance.
 """
 
+import random
 import re
 from typing import List
 
-from mtb.quality_benchmarks.utils import _contains_any, _strip_thinking
 from mtb.quality_benchmarks.eval_problem import EvalProblem
+from mtb.quality_benchmarks.utils import _contains_any, _strip_thinking
 
 
 # =============================================================================
@@ -290,6 +293,246 @@ def _check_topological_sort(response: str) -> bool:
 
 
 # =============================================================================
+# VARIANT GENERATORS
+# =============================================================================
+
+
+def _generate_train_variant() -> EvalProblem:
+    """Generate a train problem variant with different distances and speeds."""
+    distance = random.choice([150, 180, 240, 300, 360, 400, 500])
+    speed_a = random.choice([40, 50, 60, 70, 80, 90])
+    speed_b = random.choice([30, 40, 50, 60, 70])
+    # Ensure nice answer: distance must be divisible by (speed_a + speed_b)
+    total_speed = speed_a + speed_b
+    # Adjust distance to be divisible
+    distance = total_speed * random.randint(2, 6)
+    # Avoid the original (200, 60, 40)
+    if distance == 200 and speed_a == 60 and speed_b == 40:
+        distance = total_speed * 3
+
+    answer = distance / total_speed
+    if answer == int(answer):
+        answer_int = int(answer)
+        answer_strs = [
+            f"{answer_int} hour",
+            f"{answer_int}.0 hour",
+            f"= {answer_int}",
+            f"**{answer_int}**",
+        ]
+    else:
+        answer_strs = [f"{answer:.1f}", f"{answer}"]
+
+    def _check(response: str) -> bool:
+        response = _strip_thinking(response)
+        return _contains_any(response, answer_strs)
+
+    return EvalProblem(
+        category="reasoning",
+        name="train_problem",
+        prompt=(
+            f"Two trains are {distance} km apart and moving toward each other. "
+            f"Train A moves at {speed_a} km/h and Train B at {speed_b} km/h. "
+            f"How long until they meet?"
+        ),
+        check=_check,
+        max_tokens=1024,
+    )
+
+
+def _generate_workers_variant() -> EvalProblem:
+    """Generate a workers problem variant with different numbers."""
+    workers_1 = random.choice([3, 4, 6, 7, 8, 12])
+    days_1 = random.choice([6, 8, 10, 12, 15, 20])
+    # total work = workers_1 * days_1
+    total_work = workers_1 * days_1
+    # Choose workers_2 that divides total_work evenly
+    possible_workers = [
+        w
+        for w in [2, 3, 4, 5, 6, 8, 10, 12, 15, 20]
+        if total_work % w == 0 and w != workers_1
+    ]
+    if not possible_workers:
+        possible_workers = [total_work // random.randint(2, 5)]
+    workers_2 = random.choice(possible_workers)
+    answer = total_work // workers_2
+
+    answer_strs = [f"{answer} day", f"= {answer}", f"**{answer}**"]
+    # Add word form for small numbers
+    word_map = {
+        1: "one",
+        2: "two",
+        3: "three",
+        4: "four",
+        5: "five",
+        6: "six",
+        7: "seven",
+        8: "eight",
+        9: "nine",
+        10: "ten",
+    }
+    if answer in word_map:
+        answer_strs.append(f"{word_map[answer]} day")
+
+    def _check(response: str) -> bool:
+        response = _strip_thinking(response)
+        return _contains_any(response, answer_strs)
+
+    return EvalProblem(
+        category="reasoning",
+        name="workers_problem",
+        prompt=(
+            f"If {workers_1} workers can build a wall in {days_1} days, "
+            f"how long would it take {workers_2} workers to build the same wall?"
+        ),
+        check=_check,
+        max_tokens=1024,
+    )
+
+
+def _generate_age_variant() -> EvalProblem:
+    """Generate an age problem variant with different multipliers and time offsets."""
+    # Person A is K times as old as Person B
+    # In Y years, Person A will be M times as old as Person B
+    # A = K*B, A+Y = M*(B+Y) => K*B + Y = M*B + M*Y
+    # B*(K-M) = M*Y - Y => B = Y*(M-1)/(K-M)
+    # Need integer ages, so pick carefully
+    names_a = ["Alice", "Sam", "Maria", "David", "Emma"]
+    names_b = ["Bob", "Kim", "Carlos", "Lily", "Jake"]
+    idx = random.randint(0, len(names_a) - 1)
+    name_a, name_b = names_a[idx], names_b[idx]
+
+    # K > M > 1 for ages to be positive
+    k = random.choice([2, 3, 4])
+    years = random.choice([3, 4, 5, 6, 8, 10])
+    # M must satisfy: B = years*(M-1)/(K-M) is a positive integer
+    # Try a few values
+    m_options = []
+    for m_num, m_den in [(3, 2), (5, 3), (4, 3), (7, 4), (5, 4)]:
+        m_float = m_num / m_den
+        if m_float < k:
+            b_num = years * (m_float - 1)
+            b_den = k - m_float
+            if b_den > 0:
+                b = b_num / b_den
+                if b == int(b) and b > 0:
+                    m_options.append((m_num, m_den, int(b)))
+    if not m_options:
+        # Fallback to safe values
+        m_num, m_den = 3, 2
+        b_val = 5
+        k = 2
+        years = 5
+    else:
+        m_num, m_den, b_val = random.choice(m_options)
+
+    a_val = k * b_val
+    m_str = f"{m_num}/{m_den}" if m_den != 1 else str(m_num)
+    m_decimal = m_num / m_den
+
+    answer_strs = [
+        f"{name_b.lower()} is {b_val}",
+        f"{name_b.lower()}'s age is {b_val}",
+        f"{name_b.lower()} = {b_val}",
+        f"{name_a.lower()} is {a_val}",
+        f"{name_a.lower()}'s age is {a_val}",
+        f"{name_a.lower()} = {a_val}",
+        f"{b_val} and {a_val}",
+        f"{a_val} and {b_val}",
+        f"{name_b}: {b_val}",
+        f"{name_a}: {a_val}",
+    ]
+
+    def _check(response: str) -> bool:
+        response = _strip_thinking(response)
+        return _contains_any(response, answer_strs)
+
+    return EvalProblem(
+        category="reasoning",
+        name="age_problem",
+        prompt=(
+            f"{name_a} is {k} times as old as {name_b}. In {years} years, "
+            f"{name_a} will be {m_str} times as old as {name_b}. "
+            f"How old are {name_a} and {name_b} now?"
+        ),
+        check=_check,
+        max_tokens=1024,
+    )
+
+
+def _generate_compound_interest_variant() -> EvalProblem:
+    """Generate a compound interest variant with different parameters."""
+    principal = random.choice([5000, 8000, 10000, 15000, 20000, 25000])
+    rate_pct = random.choice([3, 4, 5, 6, 7, 8])
+    years = random.choice([2, 3, 4, 5])
+    compound_freq = random.choice([4, 12])  # quarterly or monthly
+    freq_word = "quarterly" if compound_freq == 4 else "monthly"
+
+    # Avoid the original (10000, 5%, 3 years, quarterly)
+    if principal == 10000 and rate_pct == 5 and years == 3 and compound_freq == 4:
+        principal = 15000
+
+    rate = rate_pct / 100
+    amount = principal * (1 + rate / compound_freq) ** (compound_freq * years)
+    amount_rounded = round(amount, 2)
+    # Use multiple format strings for matching
+    amount_int = int(amount_rounded)
+    amount_str1 = f"{amount_int}"
+    amount_str2 = f"{amount_int:,}"
+
+    def _check(response: str) -> bool:
+        response = _strip_thinking(response)
+        return _contains_any(response, [amount_str1, amount_str2])
+
+    return EvalProblem(
+        category="reasoning",
+        name="compound_interest",
+        prompt=(
+            f"You invest ${principal:,} at {rate_pct}% annual interest rate, "
+            f"compounded {freq_word}, for {years} years. What is the final amount? "
+            f"Show your work step by step."
+        ),
+        check=_check,
+        max_tokens=2048,
+    )
+
+
+def _generate_circular_seating_variant() -> EvalProblem:
+    """Generate a circular seating variant with different number of people."""
+    n = random.choice([5, 7, 8, 9, 10])
+    # Avoid original n=6
+    if n == 6:
+        n = 7
+
+    import math
+
+    # Total circular = (n-1)!
+    total = math.factorial(n - 1)
+    # Adjacent = 2 * (n-2)!
+    adjacent = 2 * math.factorial(n - 2)
+    answer = total - adjacent
+
+    def _check(response: str) -> bool:
+        response = _strip_thinking(response)
+        return bool(re.search(rf"\b{answer}\b", response))
+
+    names = random.sample(
+        ["Alice", "Bob", "Charlie", "Diana", "Eve", "Frank", "Grace"], 2
+    )
+
+    return EvalProblem(
+        category="reasoning",
+        name="circular_seating",
+        prompt=(
+            f"In how many ways can {n} people be seated around a circular table if "
+            f"2 specific people ({names[0]} and {names[1]}) must NOT sit next to each other? "
+            f"Show your reasoning."
+        ),
+        check=_check,
+        max_tokens=2048,
+    )
+
+
+# =============================================================================
 # PROBLEM LISTS BY TIER
 # =============================================================================
 
@@ -300,6 +543,7 @@ REASONING_EASY_PROBLEMS: List[EvalProblem] = [
         prompt="Two trains are 200 km apart and moving toward each other. Train A moves at 60 km/h and Train B at 40 km/h. How long until they meet?",
         check=_check_train_problem,
         max_tokens=1024,
+        generate_variant=_generate_train_variant,
     ),
     EvalProblem(
         category="reasoning",
@@ -314,6 +558,7 @@ REASONING_EASY_PROBLEMS: List[EvalProblem] = [
         prompt="If 5 workers can build a wall in 10 days, how long would it take 10 workers to build the same wall?",
         check=_check_workers_problem,
         max_tokens=1024,
+        generate_variant=_generate_workers_variant,
     ),
     EvalProblem(
         category="reasoning",
@@ -321,6 +566,7 @@ REASONING_EASY_PROBLEMS: List[EvalProblem] = [
         prompt="Tom is twice as old as Jerry. In 5 years, Tom will be 1.5 times as old as Jerry. How old are Tom and Jerry now?",
         check=_check_age_problem,
         max_tokens=1024,
+        generate_variant=_generate_age_variant,
     ),
     EvalProblem(
         category="reasoning",
@@ -341,6 +587,7 @@ REASONING_HARD_PROBLEMS: List[EvalProblem] = [
         ),
         check=_check_compound_interest,
         max_tokens=2048,
+        generate_variant=_generate_compound_interest_variant,
     ),
     EvalProblem(
         category="reasoning",
@@ -352,6 +599,7 @@ REASONING_HARD_PROBLEMS: List[EvalProblem] = [
         ),
         check=_check_circular_seating,
         max_tokens=2048,
+        generate_variant=_generate_circular_seating_variant,
     ),
     EvalProblem(
         category="reasoning",

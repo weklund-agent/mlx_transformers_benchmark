@@ -43,6 +43,7 @@ def main(
     run_only_benchmarks: Optional[Iterable[str]] = None,
     run_mlx_metal: bool = True,
     run_ollama_metal: bool = False,
+    use_variants: bool = False,
 ):
     """Run quality evaluation benchmarks.
 
@@ -55,6 +56,11 @@ def main(
         hf_cache_dir: HuggingFace cache directory.
         run_only_benchmarks: Optional list of model names to run.
         run_mlx_metal: Whether to run MLX with Metal backend.
+        run_ollama_metal: Whether to run Ollama with Metal backend.
+        use_variants: Replace problems that have generate_variant() with
+            a freshly generated variant. Helps resist benchmark contamination
+            by changing concrete values (numbers, names, constraints) while
+            preserving problem structure.
 
     """
     from mtb.hf_utils import set_hf_home
@@ -81,6 +87,16 @@ def main(
         raise ValueError(
             f"Unknown difficulty '{difficulty}', must be 'easy', 'hard', 'expert', 'tool_calling', or 'all'"
         )
+
+    # Apply variant generation for contamination resistance
+    if use_variants:
+        variant_problems = []
+        for p in problems:
+            if p.generate_variant is not None:
+                variant_problems.append(p.generate_variant())
+            else:
+                variant_problems.append(p)
+        problems = variant_problems
 
     model_specs: List[ModelSpec] = list(mtb.llm_benchmarks.MODEL_SPECS)
 
