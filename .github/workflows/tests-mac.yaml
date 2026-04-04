@@ -1,22 +1,49 @@
-# This workflow runs unittests on linux and - if indicated - a local Mac runner
+# This workflow runs tests on a local Mac runner.
+# Fast tests (unit) run on every dispatch.
+# Slow tests (integration) require real model weights and run separately.
 name: tests-mac
 
 on:
   workflow_dispatch:
+    inputs:
+      run_integration:
+        description: 'Run integration tests (requires model weights)'
+        required: false
+        default: 'false'
+        type: choice
+        options:
+          - 'false'
+          - 'true'
 
 jobs:
-  # Testing on a local macOS runner
-  tests-mac:
-    if: github.event_name == 'workflow_dispatch' 
+  # Fast tests: unit tests excluding integration (no model weights needed)
+  unit-tests:
     runs-on: [self-hosted, macOS]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Install dependencies, assuming uv is available
+      - name: Install dependencies
         run: |
           uv sync --group=dev
 
-      - name: Run tests with pytest
+      - name: Run unit tests
         run: |
           uv run pytest --cov --cov-report=term-missing --cov-report=html --disable-warnings -v
+
+  # Slow tests: integration tests with real model weights (~10-20 min)
+  integration-tests:
+    if: inputs.run_integration == 'true'
+    runs-on: [self-hosted, macOS]
+    needs: unit-tests
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          uv sync --group=dev
+
+      - name: Run integration tests
+        run: |
+          uv run pytest tests/integration/ -m integration -v --tb=short --timeout=600

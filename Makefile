@@ -149,9 +149,13 @@ export-to-mlx-stack:
 
 ## Testing
 
-# Run unit tests with coverage
+# Run unit tests with coverage (excludes integration tests)
 test:
 	uv run pytest --cov --cov-report=term-missing --cov-report=html --disable-warnings -v
+
+# Run integration tests (requires real model weights, ~10-20 min)
+test_integration:
+	uv run pytest tests/integration/ -m integration -v --tb=short --timeout=600
 
 ## Downloading and converting models
 
