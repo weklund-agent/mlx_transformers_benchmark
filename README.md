@@ -218,14 +218,7 @@ Results can be found at
 
 ## Quality Benchmarks
 
-Quality scores measure how well each model handles agentic coding tasks. The suite includes **81 problems** across coding, reasoning, math, instruction following, writing, and tool calling.
-
-**Methodology:**
-- **Code execution:** 18 coding problems use real test cases executed in a sandbox — no keyword matching
-- **Tool calling:** 40 structured tests across 5 categories (Tool Selection, Argument Accuracy, Multi-Tool, Edge Cases, Format Compliance)
-- **Weighted scoring:** Easy (1×), Hard (2×), Expert (3×), Tool Calling (3×) — harder problems count more
-- **Contamination resistance:** 12 problems support parameterized variants (`--use_variants` flag) to reduce memorization effects
-- **Pluggable problem source:** `ProblemSource` interface supports future integration with LiveCodeBench for fresh problems
+Quality scores measure how well each model handles agentic coding tasks. The suite includes **81 problems** across 6 categories (coding, reasoning, math, instruction following, writing, tool calling), evaluated through code execution, structured tool call parsing, and pattern matching. Scores are weighted by difficulty — Easy (1×), Hard (2×), Expert (3×), Tool Calling (3×) — so harder problems count more. For detailed methodology, see [Quality Benchmark Methodology](QUALITY_METHODOLOGY.md).
 
 **Running quality benchmarks:**
 ```bash
