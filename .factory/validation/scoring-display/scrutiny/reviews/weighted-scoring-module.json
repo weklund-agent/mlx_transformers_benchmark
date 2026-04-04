@@ -1,0 +1,26 @@
+{
+  "featureId": "weighted-scoring-module",
+  "reviewedAt": "2026-04-04T20:27:06.914207+00:00",
+  "commitId": "b84edc5",
+  "transcriptSkeletonReviewed": true,
+  "diffReviewed": true,
+  "status": "pass",
+  "codeReview": {
+    "summary": "The implementation matches the feature requirements: tier-based weighted scoring constants, dynamic problem-to-tier mapping, weighted and raw outputs, per-category weighted scores, and broad test coverage (31 tests) for required behaviors and edge cases.",
+    "issues": []
+  },
+  "sharedStateObservations": [
+    {
+      "area": "knowledge",
+      "observation": "Shared architecture docs appear stale for scoring semantics: architecture.md documents category-weighted composite scoring, while the implemented scoring module uses tier weights (easy/hard/expert/tool_calling).",
+      "evidence": ".factory/library/architecture.md:144-151 shows CATEGORY_WEIGHTS-based scoring; mtb/quality_benchmarks/scoring.py:22-26 defines TIER_WEIGHTS and compute_weighted_score uses tier weighting at lines 130-133."
+    },
+    {
+      "area": "skills",
+      "observation": "python-worker skill procedure requires running tests/test_quality_benchmarks.py, but this feature handoff marks followedProcedure=true without that command in verification evidence.",
+      "evidence": ".factory/skills/python-worker/SKILL.md:66 requires `uv run pytest tests/test_quality_benchmarks.py -v --tb=short`; handoff commands in mission handoff file lines 14-36 do not include it, while skillFeedback.followedProcedure is true at lines 178-180."
+    }
+  ],
+  "addressesFailureFrom": null,
+  "summary": "Reviewed feature weighted-scoring-module at commit b84edc5. Code and tests satisfy expected behavior with no blocking or non-blocking defects found; report includes shared-state observations for architecture-doc drift and skill-procedure/evidence mismatch."
+}

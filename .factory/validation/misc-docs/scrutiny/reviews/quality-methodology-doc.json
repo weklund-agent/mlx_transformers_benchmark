@@ -1,0 +1,26 @@
+{
+  "featureId": "quality-methodology-doc",
+  "reviewedAt": "2026-04-04T22:59:50Z",
+  "commitId": "40b2555",
+  "transcriptSkeletonReviewed": true,
+  "diffReviewed": true,
+  "status": "pass",
+  "codeReview": {
+    "summary": "Feature implementation matches the requested scope: QUALITY_METHODOLOGY.md was added and README quality section was replaced with a concise summary + methodology link while keeping run commands. The methodology document covers all required sections (overview, categories, tiers, formula with worked example, evaluation approaches, tool-calling deep dive, contamination resistance, majority voting, CLI flags, extension guidance), and VAL-DOCS-001..005 expectations are satisfied.",
+    "issues": []
+  },
+  "sharedStateObservations": [
+    {
+      "area": "skills",
+      "observation": "python-worker skill procedure is overly strict for documentation-only features: it mandates TDD even when the task has no code logic. The worker had to explicitly deviate and note this in handoff feedback.",
+      "evidence": "/Users/weae1504/.factory/missions/7a98117d-95dc-4445-8b4e-9c6c1c89f9a0/handoffs/2026-04-04T22-55-57-761Z__quality-methodology-doc__5b3b2b26-fb23-4534-b02b-72d88803d6f4.json -> handoff.skillFeedback.deviations[0] and handoff.skillFeedback.suggestedChanges[0]"
+    },
+    {
+      "area": "knowledge",
+      "observation": "Shared architecture reference appears stale and no longer matches the current codebase structure, which can mislead workers during feature implementation/review.",
+      "evidence": ".factory/library/architecture.md:25-38,60-71,149 describes a problems/ package, CodeExecutionProblem, problem_source.py, and category-weight scoring, but current tree uses top-level *_problems.py files (mtb/quality_benchmarks directory listing), and scoring uses tier weights in mtb/quality_benchmarks/scoring.py:109 (TIER_WEIGHTS)."
+    }
+  ],
+  "addressesFailureFrom": null,
+  "summary": "PASS: documentation feature is complete and aligned with expected behavior/VAL-DOCS assertions; no blocking or non-blocking defects found in the implemented docs changes."
+}

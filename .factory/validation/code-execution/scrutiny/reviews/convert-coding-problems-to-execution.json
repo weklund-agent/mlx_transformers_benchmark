@@ -1,0 +1,39 @@
+{
+  "featureId": "convert-coding-problems-to-execution",
+  "reviewedAt": "2026-04-04T18:14:22Z",
+  "commitId": "e56b044",
+  "transcriptSkeletonReviewed": true,
+  "diffReviewed": true,
+  "status": "fail",
+  "codeReview": {
+    "summary": "The feature adds substantial code-execution scaffolding and tests, but two scoped requirements are not fully met: five listed existing expert problems were duplicated instead of converted in place, and one problem's test cases do not provide boundary/edge coverage.",
+    "issues": [
+      {
+        "file": "mtb/quality_benchmarks/coding_problems.py",
+        "line": 1682,
+        "severity": "blocking",
+        "description": "The 5 listed existing expert problems (topological_sort, constrained_factorial, code_with_comments, library_schema, adversarial_transform) were added as new cloned entries in _CROSS_CATEGORY_EXPERT_CODING instead of converting their existing definitions. The original problems in reasoning_problems.py:441 and instruction_problems.py:228/245/260/277 still have no function_signature/test_cases, so expert/all benchmark paths continue to evaluate those originals via pattern checks rather than code execution."
+      },
+      {
+        "file": "mtb/quality_benchmarks/coding_problems.py",
+        "line": 1312,
+        "severity": "blocking",
+        "description": "_LIBRARY_SCHEMA_TEST_CASES repeats the same empty input and identical expected_output five times (lines 1314, 1348, 1382, 1416, 1450), which does not satisfy the requirement to include boundary/edge cases for each problem."
+      }
+    ]
+  },
+  "sharedStateObservations": [
+    {
+      "area": "conventions",
+      "observation": "Shared guidance does not define how to convert cross-category coding-style problems while preserving backward-compatible tier lists, which led to an in-flight strategy change and the duplicate-list workaround.",
+      "evidence": "Transcript skeleton shows: initial integration caused backward-compat test failures (duplicate expert entries), then worker refactored to keep originals and add _CROSS_CATEGORY_EXPERT_CODING only for CODING_PROBLEMS."
+    },
+    {
+      "area": "knowledge",
+      "observation": "Architecture shared-state docs are out of sync with the actual code layout and interfaces.",
+      "evidence": ".factory/library/architecture.md lines 25-26 and 60 describe a problems/ package and CodeExecutionProblem type, but mtb/quality_benchmarks/ currently uses flat modules and no CodeExecutionProblem class."
+    }
+  ],
+  "addressesFailureFrom": null,
+  "summary": "Review failed with 2 blocking findings: (1) five named existing expert problems were not converted in place for runtime code-execution paths, and (2) library_schema test cases lack boundary/edge variation. Report written for scrutiny triage."
+}

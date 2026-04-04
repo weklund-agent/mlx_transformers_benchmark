@@ -1,0 +1,9 @@
+commands:
+  install: uv sync
+  test: uv run pytest tests/ --ignore=tests/quality_benchmarks --ignore=tests/llm_benchmarks --ignore=tests/system -v --tb=short -q
+  test_quality: uv run pytest tests/test_quality_benchmarks.py -v --tb=short
+  test_all: uv run pytest tests/ --ignore=tests/quality_benchmarks --ignore=tests/llm_benchmarks --ignore=tests/system -v --tb=short
+  test_integration: uv run pytest tests/ -m integration -v --tb=short --timeout=600
+  lint: uv run black --check mtb/ tests/ scripts/
+  format: uv run black mtb/ tests/ scripts/
+  typecheck: uv run python -c "print('No typecheck configured')"

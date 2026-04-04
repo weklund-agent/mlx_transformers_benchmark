@@ -1,0 +1,21 @@
+{
+  "featureId": "fix-tool-calling-scrutiny-issues",
+  "reviewedAt": "2026-04-04T19:44:42Z",
+  "commitId": "ecfe702",
+  "transcriptSkeletonReviewed": true,
+  "diffReviewed": true,
+  "status": "pass",
+  "codeReview": {
+    "summary": "The fix commit directly addresses all three prior blocking findings and the non-blocking hardcoded-path issue. In mtb/quality_benchmarks/tool_call_parser.py, _fix_single_quotes now protects escaped apostrophes before quote normalization and restores them after, preventing corruption of values like it\\'s. In mtb/quality_benchmarks/tool_calling_problems.py, _check_aa_preserve_exact_strings now enforces normalized exact command equality instead of permissive substring checks, and _check_fc_null_argument now requires an explicit bio key with null (None), rejecting omitted/empty-string cases. tests/test_runner_integration.py now derives script paths from _REPO_ROOT rather than hardcoded absolute paths. Added/updated tests in tests/test_tool_call_parser.py and tests/test_tool_calling_problems.py cover the previously failing edge cases.",
+    "issues": []
+  },
+  "sharedStateObservations": [
+    {
+      "area": "skills",
+      "observation": "python-worker still appears to be marked as followedProcedure despite not following the skill's explicit TDD ordering (tests first, then implementation).",
+      "evidence": "Skill Step 3 in .factory/skills/python-worker/SKILL.md requires creating/updating failing tests before implementation, but transcript skeleton for workerSessionId 87a488e9-b0b1-4eaf-92be-66f28f2a9b77 shows implementation edits in mtb/quality_benchmarks/tool_call_parser.py and mtb/quality_benchmarks/tool_calling_problems.py before test additions/updates, while handoff.skillFeedback.followedProcedure=true."
+    }
+  ],
+  "addressesFailureFrom": "/Users/weae1504/Projects/mlx_transformers_benchmark/.factory/validation/tool-calling/scrutiny/synthesis.json",
+  "summary": "Reviewed fix feature fix-tool-calling-scrutiny-issues (commit ecfe702) against prior failed reviews for tool-call-parser, tool-calling-problems-selection-accuracy, and tool-calling-problems-multi-edge-format. The implementation resolves each blocking correctness issue and the previously noted hardcoded-path portability issue, with corresponding test coverage updates and no new blocking defects identified."
+}

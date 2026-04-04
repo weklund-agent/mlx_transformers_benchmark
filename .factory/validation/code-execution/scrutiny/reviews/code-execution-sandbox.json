@@ -1,0 +1,28 @@
+{
+  "featureId": "code-execution-sandbox",
+  "reviewedAt": "2026-04-04T18:14:09Z",
+  "commitId": "50b911856fddae9f58b7d9c04e4b181c115eebfc",
+  "transcriptSkeletonReviewed": true,
+  "diffReviewed": true,
+  "status": "fail",
+  "codeReview": {
+    "summary": "The feature largely implements the required sandbox behavior and broad test coverage, but there is a contract-breaking bug in timeout handling: timed-out executions can return bytes in stdout/stderr, violating the SandboxResult str field contract.",
+    "issues": [
+      {
+        "file": "mtb/quality_benchmarks/sandbox.py",
+        "line": 139,
+        "severity": "blocking",
+        "description": "In the timeout path, `stdout=e.stdout or \"\"` and `stderr=e.stderr or \"\"` forward values from `subprocess.TimeoutExpired` without decoding. On current Python (3.14), `e.stdout`/`e.stderr` are bytes even with `text=True` when partial output exists, so `SandboxResult.stdout`/`stderr` become bytes instead of str. This breaks the declared dataclass type contract and can break downstream string operations for timed-out runs."
+      }
+    ]
+  },
+  "sharedStateObservations": [
+    {
+      "area": "knowledge",
+      "observation": "The architecture reference documents a different sandbox API than the implemented/contracted one, which can mislead future workers.",
+      "evidence": ".factory/library/architecture.md:82-95 defines `SandboxResult` as `passed/exit_code/timed_out/duration_sec` and `sandbox.run(...)`, but this feature and mission contract use `success/error_type/return_code/execution_time_sec` with `execute_code(...)`."
+    }
+  ],
+  "addressesFailureFrom": null,
+  "summary": "Reviewed feature code-execution-sandbox via features metadata, handoff, transcript skeleton, skill procedure, and commit diff (50b911856fddae9f58b7d9c04e4b181c115eebfc). Found one blocking correctness issue in timeout output typing; therefore review status is fail."
+}

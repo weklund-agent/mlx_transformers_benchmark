@@ -1,0 +1,45 @@
+{
+  "featureId": "contamination-variant-system",
+  "reviewedAt": "2026-04-04T21:14:48Z",
+  "commitId": "73207123ea14e51cd2af12290e833109b6a19241",
+  "transcriptSkeletonReviewed": true,
+  "diffReviewed": true,
+  "status": "pass",
+  "codeReview": {
+    "summary": "Implementation covers the requested feature scope: 12 parameterized generate_variant implementations across math/reasoning/coding, ProblemSource/StaticProblemSource in scoring, and --use_variants flag wiring in the quality benchmark CLI. I found test coverage weaknesses that reduce confidence in two stated acceptance criteria, but no blocking correctness defect in the implementation itself.",
+    "issues": [
+      {
+        "file": "tests/test_contamination.py",
+        "line": 137,
+        "severity": "non_blocking",
+        "description": "test_variant_prompt_no_template_placeholders computes placeholder matches/suspicious values but never asserts on them; it only checks prompt length (>20). This means VAL-CONTAM-002's 'no template placeholders' condition is not actually enforced by the test."
+      },
+      {
+        "file": "tests/test_contamination.py",
+        "line": 273,
+        "severity": "non_blocking",
+        "description": "test_math_variant_check_validates_new_answer only asserts callable(variant.check) and does not verify the check function validates new parameterized answers. This weakens coverage of VAL-CONTAM-003/006."
+      },
+      {
+        "file": "tests/test_contamination.py",
+        "line": 311,
+        "severity": "non_blocking",
+        "description": "test_coding_variant_check_adapts only asserts callable(variant.check) and does not validate behavior against variant-specific constraints. This weakens coverage of VAL-CONTAM-003/007."
+      }
+    ]
+  },
+  "sharedStateObservations": [
+    {
+      "area": "skills",
+      "observation": "python-worker procedure still instructs a --help smoke test for runner changes, but AGENTS documents a known fire/IPython incompatibility where --help crashes. Worker had to use inspect-based fallback in transcript.",
+      "evidence": ".factory/skills/python-worker/SKILL.md (Step 7: 'For runner changes: do a smoke test with --help flag') vs mission AGENTS.md ('fire.Fire --help crashes...') and worker transcript skeleton noting fallback inspection instead of --help."
+    },
+    {
+      "area": "knowledge",
+      "observation": "architecture.md documents ProblemSource as a Protocol in problem_source.py, but the implemented interface lives in scoring.py as an ABC. Shared architecture docs appear stale versus actual code paths.",
+      "evidence": ".factory/library/architecture.md ('problem_source.py # ProblemSource interface') vs commit 73207123... changes in mtb/quality_benchmarks/scoring.py adding ProblemSource/StaticProblemSource."
+    }
+  ],
+  "addressesFailureFrom": null,
+  "summary": "Reviewed feature contamination-variant-system for worker session 79f1529f-9ec3-4bf4-be49-d71636680c8d at commit 73207123ea14e51cd2af12290e833109b6a19241. Feature implementation is complete and functionally aligned with requirements; status is pass. Noted three non-blocking test-coverage gaps and two shared-state documentation/skill alignment observations."
+}

@@ -1,0 +1,246 @@
+{
+  "groupId": "contam-variants",
+  "testedAt": "2026-04-04T21:34:26.857240+00:00",
+  "isolation": {
+    "surface": "shell-pytest",
+    "repoRoot": "/Users/weae1504/Projects/mlx_transformers_benchmark",
+    "missionDir": "/Users/weae1504/.factory/missions/7a98117d-95dc-4445-8b4e-9c6c1c89f9a0"
+  },
+  "toolsUsed": [
+    "shell",
+    "pytest"
+  ],
+  "assertions": [
+    {
+      "id": "VAL-CONTAM-001",
+      "title": "EvalProblem supports generate_variant() method",
+      "status": "pass",
+      "steps": [
+        {
+          "action": "Run pytest node TestEvalProblemGenerateVariant::test_generate_variant_callable_produces_new_eval_problem with -p no:cacheprovider",
+          "expected": "Test passes and confirms generate_variant returns a new EvalProblem with different prompt",
+          "observed": "PASSED in contamination test run"
+        }
+      ],
+      "evidence": {
+        "terminalSnapshots": [
+          "contamination-integration/contam-variants/pytest_test_contamination.log"
+        ],
+        "command": "uv run pytest -p no:cacheprovider tests/test_contamination.py -vv --tb=short"
+      },
+      "issues": null
+    },
+    {
+      "id": "VAL-CONTAM-002",
+      "title": "Generated variant has valid prompt",
+      "status": "pass",
+      "steps": [
+        {
+          "action": "Run pytest nodes TestVariantValidPrompt::test_variant_prompt_non_empty and ::test_variant_prompt_no_template_placeholders",
+          "expected": "Variant prompts are non-empty and valid",
+          "observed": "Both tests PASSED"
+        }
+      ],
+      "evidence": {
+        "terminalSnapshots": [
+          "contamination-integration/contam-variants/pytest_test_contamination.log"
+        ],
+        "command": "uv run pytest -p no:cacheprovider tests/test_contamination.py -vv --tb=short"
+      },
+      "issues": null
+    },
+    {
+      "id": "VAL-CONTAM-003",
+      "title": "Generated variant has correct test/check function",
+      "status": "pass",
+      "steps": [
+        {
+          "action": "Run pytest nodes TestVariantCheckFunction::test_variant_check_is_callable and ::test_variant_check_rejects_wrong_answer",
+          "expected": "Variant check functions are callable and reject wrong answers",
+          "observed": "Both tests PASSED"
+        }
+      ],
+      "evidence": {
+        "terminalSnapshots": [
+          "contamination-integration/contam-variants/pytest_test_contamination.log"
+        ],
+        "command": "uv run pytest -p no:cacheprovider tests/test_contamination.py -vv --tb=short"
+      },
+      "issues": null
+    },
+    {
+      "id": "VAL-CONTAM-004",
+      "title": "At least 10 problems have parameterized variants",
+      "status": "pass",
+      "steps": [
+        {
+          "action": "Run pytest node TestVariantCount::test_at_least_10_problems_have_variants",
+          "expected": "Count of problems with generate_variant is >= 10",
+          "observed": "Test PASSED"
+        }
+      ],
+      "evidence": {
+        "terminalSnapshots": [
+          "contamination-integration/contam-variants/pytest_test_contamination.log"
+        ],
+        "command": "uv run pytest -p no:cacheprovider tests/test_contamination.py -vv --tb=short"
+      },
+      "issues": null
+    },
+    {
+      "id": "VAL-CONTAM-005",
+      "title": "Variant randomness \u2014 two calls produce different instances",
+      "status": "pass",
+      "steps": [
+        {
+          "action": "Run pytest node TestVariantRandomness::test_two_calls_produce_different_variants",
+          "expected": "Generating 5 variants yields at least 2 distinct prompts",
+          "observed": "Test PASSED"
+        }
+      ],
+      "evidence": {
+        "terminalSnapshots": [
+          "contamination-integration/contam-variants/pytest_test_contamination.log"
+        ],
+        "command": "uv run pytest -p no:cacheprovider tests/test_contamination.py -vv --tb=short"
+      },
+      "issues": null
+    },
+    {
+      "id": "VAL-CONTAM-006",
+      "title": "Template substitution for math problems \u2014 numbers change",
+      "status": "pass",
+      "steps": [
+        {
+          "action": "Run pytest nodes TestMathVariants::test_math_variants_have_different_numbers and ::test_math_variant_check_validates_new_answer",
+          "expected": "Math variants substitute numbers and validate with variant check",
+          "observed": "Both tests PASSED"
+        }
+      ],
+      "evidence": {
+        "terminalSnapshots": [
+          "contamination-integration/contam-variants/pytest_test_contamination.log"
+        ],
+        "command": "uv run pytest -p no:cacheprovider tests/test_contamination.py -vv --tb=short"
+      },
+      "issues": null
+    },
+    {
+      "id": "VAL-CONTAM-007",
+      "title": "Template substitution for coding problems \u2014 names/constraints change",
+      "status": "pass",
+      "steps": [
+        {
+          "action": "Run pytest nodes TestCodingVariants::test_coding_variants_have_different_constraints and ::test_coding_variant_check_adapts",
+          "expected": "Coding variants modify prompt constraints/identifiers and keep check callable",
+          "observed": "Both tests PASSED"
+        }
+      ],
+      "evidence": {
+        "terminalSnapshots": [
+          "contamination-integration/contam-variants/pytest_test_contamination.log"
+        ],
+        "command": "uv run pytest -p no:cacheprovider tests/test_contamination.py -vv --tb=short"
+      },
+      "issues": null
+    },
+    {
+      "id": "VAL-CONTAM-008",
+      "title": "Pluggable problem source \u2014 abstract base class exists",
+      "status": "pass",
+      "steps": [
+        {
+          "action": "Run pytest nodes in TestProblemSourceABC",
+          "expected": "ProblemSource is an ABC, cannot be directly instantiated, and has get_problems()",
+          "observed": "All TestProblemSourceABC tests PASSED"
+        }
+      ],
+      "evidence": {
+        "terminalSnapshots": [
+          "contamination-integration/contam-variants/pytest_test_contamination.log"
+        ],
+        "command": "uv run pytest -p no:cacheprovider tests/test_contamination.py -vv --tb=short"
+      },
+      "issues": null
+    },
+    {
+      "id": "VAL-CONTAM-009",
+      "title": "Built-in source wraps static problem library",
+      "status": "pass",
+      "steps": [
+        {
+          "action": "Run pytest nodes in TestStaticProblemSource",
+          "expected": "StaticProblemSource returns expected EvalProblem lists including all tiers",
+          "observed": "All TestStaticProblemSource tests PASSED"
+        }
+      ],
+      "evidence": {
+        "terminalSnapshots": [
+          "contamination-integration/contam-variants/pytest_test_contamination.log"
+        ],
+        "command": "uv run pytest -p no:cacheprovider tests/test_contamination.py -vv --tb=short"
+      },
+      "issues": null
+    },
+    {
+      "id": "VAL-CONTAM-010",
+      "title": "ProblemSource interface documented for LiveCodeBench",
+      "status": "pass",
+      "steps": [
+        {
+          "action": "Run pytest nodes in TestProblemSourceDocstring",
+          "expected": "ProblemSource docstring exists and mentions pluggable/interface and LiveCodeBench",
+          "observed": "All TestProblemSourceDocstring tests PASSED"
+        }
+      ],
+      "evidence": {
+        "terminalSnapshots": [
+          "contamination-integration/contam-variants/pytest_test_contamination.log"
+        ],
+        "command": "uv run pytest -p no:cacheprovider tests/test_contamination.py -vv --tb=short"
+      },
+      "issues": null
+    },
+    {
+      "id": "VAL-CROSS-003",
+      "title": "Parameterized variant expands through full pipeline",
+      "status": "fail",
+      "steps": [
+        {
+          "action": "Run custom shell validation script that applies current --use_variants expansion logic to one parameterized template and executes run_quality_benchmark with mocked benchmark backend",
+          "expected": "3 generated variants should produce 3 DataFrame rows with distinct problem names",
+          "observed": "Only 1 variant was expanded and only 1 CSV/DataFrame row was produced (template_variant_1)"
+        }
+      ],
+      "evidence": {
+        "terminalSnapshots": [
+          "contamination-integration/contam-variants/cross_003_variant_pipeline_check.log"
+        ],
+        "command": "uv run python (custom variant pipeline check script)"
+      },
+      "issues": "Current --use_variants logic replaces each problem with exactly one generated variant and does not expand a single template into N variants in one run."
+    }
+  ],
+  "frictions": [
+    {
+      "description": "Guidance file was not present at ~/.factory/library/user-testing.md; project-local .factory/library/user-testing.md was used.",
+      "resolved": true,
+      "resolution": "Loaded guidance from /Users/weae1504/Projects/mlx_transformers_benchmark/.factory/library/user-testing.md and proceeded within assigned boundary.",
+      "affectedAssertions": [
+        "VAL-CONTAM-001",
+        "VAL-CONTAM-002",
+        "VAL-CONTAM-003",
+        "VAL-CONTAM-004",
+        "VAL-CONTAM-005",
+        "VAL-CONTAM-006",
+        "VAL-CONTAM-007",
+        "VAL-CONTAM-008",
+        "VAL-CONTAM-009",
+        "VAL-CONTAM-010",
+        "VAL-CROSS-003"
+      ]
+    }
+  ],
+  "blockers": [],
+  "summary": "Tested 11 assertions: 10 passed, 1 failed (VAL-CROSS-003)."
+}

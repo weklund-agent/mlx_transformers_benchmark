@@ -1,0 +1,40 @@
+{
+  "milestone": "tool-calling",
+  "round": 2,
+  "status": "pass",
+  "validatorsRun": {
+    "test": {
+      "passed": true,
+      "command": "uv run pytest tests/ --ignore=tests/quality_benchmarks --ignore=tests/llm_benchmarks --ignore=tests/system -v --tb=short -q",
+      "exitCode": 0
+    },
+    "typecheck": {
+      "passed": true,
+      "command": "uv run python -c \"print('No typecheck configured')\"",
+      "exitCode": 0
+    },
+    "lint": {
+      "passed": true,
+      "command": "uv run black --check mtb/ tests/ scripts/",
+      "exitCode": 0
+    }
+  },
+  "reviewsSummary": {
+    "total": 1,
+    "passed": 1,
+    "failed": 0,
+    "failedFeatures": []
+  },
+  "blockingIssues": [],
+  "appliedUpdates": [],
+  "suggestedGuidanceUpdates": [
+    {
+      "target": "skills/python-worker",
+      "suggestion": "Tighten guidance and validation around TDD-order compliance so handoff.skillFeedback.followedProcedure aligns with observed execution order.",
+      "evidence": "Rerun review for fix-tool-calling-scrutiny-issues again found implementation edits before tests despite reporting followedProcedure=true.",
+      "isSystemic": true
+    }
+  ],
+  "rejectedObservations": [],
+  "previousRound": ".factory/validation/tool-calling/scrutiny/synthesis.round1.json"
+}

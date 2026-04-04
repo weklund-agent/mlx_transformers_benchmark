@@ -1,0 +1,33 @@
+{
+  "featureId": "tool-calling-problems-selection-accuracy",
+  "reviewedAt": "2026-04-04T19:32:40Z",
+  "commitId": "3c09a7b",
+  "transcriptSkeletonReviewed": true,
+  "diffReviewed": true,
+  "status": "fail",
+  "codeReview": {
+    "summary": "Implementation largely matches scope (16 new problems + tests), but one argument-accuracy checker is too permissive and accepts modified commands that should fail the 'preserve exact strings' requirement.",
+    "issues": [
+      {
+        "file": "mtb/quality_benchmarks/tool_calling_problems.py",
+        "line": 714,
+        "severity": "blocking",
+        "description": "_check_aa_preserve_exact_strings only checks for substrings ('grep', '-rn', 'TODO', 'src/') instead of exact command equality, so altered commands can incorrectly pass. Reproduced against this commit with response command \"grep -rn 'TODO' src/ && echo injected\", which returns True even though the string was modified."
+      }
+    ]
+  },
+  "sharedStateObservations": [
+    {
+      "area": "conventions",
+      "observation": "AGENTS.md states \"Existing test suite must pass unchanged,\" but this feature required changing hardcoded count assertions in existing tests after adding new tool-calling problems.",
+      "evidence": "Transcript explicitly notes this conflict before editing tests/test_quality_benchmarks.py; commit 3c09a7b updates tests/test_quality_benchmarks.py and tests/test_module_structure.py counts (5->21, 46->62)."
+    },
+    {
+      "area": "skills",
+      "observation": "python-worker skill requires test-first workflow (write failing tests before implementation), but transcript shows implementation file creation happened before test file creation while handoff marks followedProcedure=true.",
+      "evidence": "Transcript skeleton sequence: Create mtb/quality_benchmarks/tool_calling_problems.py, then Create tests/test_tool_calling_problems.py; no failing test run before implementation step."
+    }
+  ],
+  "addressesFailureFrom": null,
+  "summary": "Reviewed feature tool-calling-problems-selection-accuracy (commit 3c09a7b), including handoff, transcript skeleton, and diff. Feature scope is mostly implemented, but a blocking false-positive exists in exact-string argument validation, so this review fails."
+}

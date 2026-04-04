@@ -1,0 +1,55 @@
+{
+  "groupId": "contam-variants-rerun",
+  "testedAt": "2026-04-04T21:42:31Z",
+  "isolation": {
+    "surface": "shell-pytest",
+    "repoRoot": "/Users/weae1504/Projects/mlx_transformers_benchmark",
+    "missionDir": "/Users/weae1504/.factory/missions/7a98117d-95dc-4445-8b4e-9c6c1c89f9a0"
+  },
+  "toolsUsed": [
+    "shell",
+    "pytest"
+  ],
+  "assertions": [
+    {
+      "id": "VAL-CROSS-003",
+      "title": "Parameterized problem expands to N variants, each as separate row",
+      "status": "pass",
+      "steps": [
+        {
+          "action": "Run assigned minimum command: uv run pytest -p no:cacheprovider tests/test_contamination.py::TestCross003MultiVariantExpansion -vv --tb=short",
+          "expected": "Targeted VAL-CROSS-003 tests execute",
+          "observed": "No tests collected because class path was outdated (not found)"
+        },
+        {
+          "action": "Run targeted VAL-CROSS-003 class: uv run pytest -p no:cacheprovider tests/test_contamination.py::TestMultiVariantExpansion -vv --tb=short",
+          "expected": "Checks for N=3 variant expansion, distinct variant names, and separate-row execution pass",
+          "observed": "8/8 tests passed, including test_parameterized_problem_generates_n_variants, test_variant_names_are_distinct, test_each_variant_runs_as_separate_row, and test_real_problems_multi_variant_expansion"
+        }
+      ],
+      "evidence": {
+        "commands": [
+          "uv run pytest -p no:cacheprovider tests/test_contamination.py::TestCross003MultiVariantExpansion -vv --tb=short",
+          "uv run pytest -p no:cacheprovider tests/test_contamination.py::TestMultiVariantExpansion -vv --tb=short"
+        ],
+        "terminalSnapshots": [
+          "contamination-integration/contam-variants-rerun/VAL-CROSS-003-pytest-output.txt",
+          "contamination-integration/contam-variants-rerun/VAL-CROSS-003-pytest-output-rerun.txt"
+        ]
+      },
+      "issues": null
+    }
+  ],
+  "frictions": [
+    {
+      "description": "Assigned minimum pytest node id referenced TestCross003MultiVariantExpansion, but current test class is TestMultiVariantExpansion.",
+      "resolved": true,
+      "resolution": "Located current VAL-CROSS-003 test class in tests/test_contamination.py and reran targeted pytest against that node id.",
+      "affectedAssertions": [
+        "VAL-CROSS-003"
+      ]
+    }
+  ],
+  "blockers": [],
+  "summary": "VAL-CROSS-003 rerun passed: multi-variant expansion generates default N=3 variants with distinct names and runs each variant as a separate pipeline row."
+}

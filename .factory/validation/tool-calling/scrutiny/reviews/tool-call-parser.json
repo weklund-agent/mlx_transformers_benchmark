@@ -1,0 +1,28 @@
+{
+  "featureId": "tool-call-parser",
+  "reviewedAt": "2026-04-04T19:32:30Z",
+  "commitId": "3f5afab",
+  "transcriptSkeletonReviewed": true,
+  "diffReviewed": true,
+  "status": "fail",
+  "codeReview": {
+    "summary": "Implementation covers required formats and priority chain, but single-quote recovery corrupts escaped apostrophes in argument strings, so extracted arguments are not faithfully preserved.",
+    "issues": [
+      {
+        "file": "mtb/quality_benchmarks/tool_call_parser.py",
+        "line": 245,
+        "severity": "blocking",
+        "description": "_fix_single_quotes replaces every single quote outside double-quoted strings, including escaped apostrophes within single-quoted values. For input <tool_call>{'name':'say','arguments':{'text':'it\\'s ok'}}</tool_call>, parse_tool_calls returns arguments {'text': 'it\"s ok'} instead of preserving \"it's ok\", violating structured extraction fidelity."
+      }
+    ]
+  },
+  "sharedStateObservations": [
+    {
+      "area": "skills",
+      "observation": "The python-worker skill prescribes test-first (Step 3), but the transcript shows implementation file creation before test creation while handoff.skillFeedback.followedProcedure is true. Procedure compliance criteria appear inconsistent.",
+      "evidence": "Transcript skeleton for workerSessionId ac4d778e-b5e3-4b9b-91e3-33b930041c51 shows Create mtb/quality_benchmarks/tool_call_parser.py before Create tests/test_tool_call_parser.py; handoff.skillFeedback.followedProcedure=true."
+    }
+  ],
+  "addressesFailureFrom": null,
+  "summary": "Reviewed handoff, transcript skeleton, skill, and commit 3f5afab for feature tool-call-parser. Found one blocking correctness bug in single-quote normalization that mutates escaped apostrophes in parsed arguments; feature should be fixed before acceptance."
+}

@@ -48,6 +48,13 @@ uv run python scripts/run_quality_benchmarks.py \
 
 Quality benchmarks take much longer than speed benchmarks (~40 min per MoE model, hours for large dense models).
 
+81 problems total: 15 easy (1×), 10 hard (2×), 16 expert (3×), 40 tool calling (3×). Coding problems (18) use code execution with real test cases in a sandbox. Use `--use_variants` for parameterized problem variants (12 problems) to resist contamination.
+
+**Integration tests** (requires Gemma 4 E2B-it int4 model):
+```bash
+uv run pytest tests/ -m integration
+```
+
 ### 3. Update README table
 
 ```bash
@@ -79,5 +86,5 @@ measurements/                  # All benchmark results (CSV)
 - Model names are lowercase with hyphens (e.g. `gemma-4-e2b-it`)
 - MoE models use active param count for `num_params`, not total
 - int4 is the primary quantization for README tables (what most people run)
-- Speed measured at 1024 prompt tokens, quality uses all difficulty levels
+- Speed measured at 1024 prompt tokens, quality uses all difficulty levels with weighted scoring (Easy 1×, Hard 2×, Expert 3×, Tool Calling 3×)
 - The `<!-- BEGIN/END BENCHMARK TABLE -->` markers in README.md are auto-managed by `update_readme_table.py` — don't hand-edit between them

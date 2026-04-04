@@ -1,0 +1,33 @@
+{
+  "featureId": "runner-tool-call-support",
+  "reviewedAt": "2026-04-04T19:32:41Z",
+  "commitId": "6a1249f",
+  "transcriptSkeletonReviewed": true,
+  "diffReviewed": true,
+  "status": "pass",
+  "codeReview": {
+    "summary": "The feature implementation covers the requested behavior: tool_calling responses are parsed via parse_tool_calls() before check(), parsed calls are logged to CSV via parsed_tool_calls, CLI summary now includes tool-calling subcategory breakdowns, and the README-table annotation was updated to 81 total problems. Added integration tests provide strong coverage for runner dispatch, parser/check flow, CSV output, and problem-count assertions.",
+    "issues": [
+      {
+        "file": "tests/test_runner_integration.py",
+        "line": 1142,
+        "severity": "non_blocking",
+        "description": "New tests use hardcoded absolute filesystem paths to load scripts (also at line 1156), which reduces portability across environments/workspaces. Prefer deriving paths from the repo root or test file location."
+      }
+    ]
+  },
+  "sharedStateObservations": [
+    {
+      "area": "skills",
+      "observation": "The python-worker skill mandates TDD (write failing tests before implementation), but this run implemented production code first and added tests afterward while still reporting followedProcedure=true.",
+      "evidence": ".factory/skills/python-worker/SKILL.md Step 3 says \"Write Tests First (TDD)\"; transcript skeleton shows edits to mtb/quality_benchmarks/run_quality_benchmark.py and scripts/* before test additions in tests/test_runner_integration.py."
+    },
+    {
+      "area": "knowledge",
+      "observation": "Tool-calling subcategory derivation via name prefixes (ts_/aa_/mt_/ec_/fc_) appears implicit in problem naming and not explicitly documented in shared docs, causing extra discovery work.",
+      "evidence": "Transcript skeleton includes exploratory grep/python steps to infer subcategory prefixes; AGENTS.md and .factory/library/architecture.md describe tool-calling category but not the prefix-to-subcategory mapping used by the summary."
+    }
+  ],
+  "addressesFailureFrom": null,
+  "summary": "Reviewed feature runner-tool-call-support (commit 6a1249f): implementation satisfies core requirements with no blocking defects found. One non-blocking test portability issue (hardcoded absolute paths) was noted, along with shared-state observations about TDD procedure adherence and undocumented subcategory prefix mapping."
+}

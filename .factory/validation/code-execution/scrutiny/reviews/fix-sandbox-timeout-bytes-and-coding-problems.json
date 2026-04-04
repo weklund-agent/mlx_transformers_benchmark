@@ -1,0 +1,21 @@
+{
+  "featureId": "fix-sandbox-timeout-bytes-and-coding-problems",
+  "reviewedAt": "2026-04-04T18:35:09Z",
+  "commitId": "19ba5c2",
+  "transcriptSkeletonReviewed": true,
+  "diffReviewed": true,
+  "status": "pass",
+  "codeReview": {
+    "summary": "Reviewed both prior failed features and the fix commit. The fix resolves all previously blocking findings: timeout stdout/stderr are decoded to str in sandbox timeout handling, cross-category expert problems are now referenced from original reasoning/instruction definitions (with function_signature and test_cases added in place), duplicate cloned definitions were removed from coding_problems.py, and library_schema test cases were redesigned into five distinct structural checks.",
+    "issues": []
+  },
+  "sharedStateObservations": [
+    {
+      "area": "knowledge",
+      "observation": "Architecture shared-state documentation remains out of sync with the implemented quality-benchmark structure and sandbox interface.",
+      "evidence": ".factory/library/architecture.md describes a problems/ package and SandboxResult fields `passed/exit_code/timed_out/duration_sec` with `sandbox.run(...)`, while code uses flat modules and `SandboxResult(success, stdout, stderr, error_type, return_code, execution_time_sec)` via `execute_code(...)`."
+    }
+  ],
+  "addressesFailureFrom": ".factory/validation/code-execution/scrutiny/reviews/code-execution-sandbox.json, .factory/validation/code-execution/scrutiny/reviews/convert-coding-problems-to-execution.json",
+  "summary": "Pass: fix feature commit 19ba5c2 adequately addresses both prior failed reviews (code-execution-sandbox and convert-coding-problems-to-execution). Transcript skeleton and original+fix diffs were reviewed; no remaining blocking defects found in scope."
+}

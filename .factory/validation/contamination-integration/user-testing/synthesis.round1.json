@@ -1,0 +1,42 @@
+{
+  "milestone": "contamination-integration",
+  "round": 1,
+  "status": "fail",
+  "assertionsSummary": {
+    "total": 21,
+    "passed": 20,
+    "failed": 1,
+    "blocked": 0
+  },
+  "passedAssertions": [
+    "VAL-CONTAM-001",
+    "VAL-CONTAM-002",
+    "VAL-CONTAM-003",
+    "VAL-CONTAM-004",
+    "VAL-CONTAM-005",
+    "VAL-CONTAM-006",
+    "VAL-CONTAM-007",
+    "VAL-CONTAM-008",
+    "VAL-CONTAM-009",
+    "VAL-CONTAM-010",
+    "VAL-INTEG-001",
+    "VAL-INTEG-002",
+    "VAL-INTEG-003",
+    "VAL-INTEG-004",
+    "VAL-INTEG-005",
+    "VAL-INTEG-006",
+    "VAL-INTEG-007",
+    "VAL-INTEG-008",
+    "VAL-INTEG-009",
+    "VAL-INTEG-010"
+  ],
+  "failedAssertions": [
+    {
+      "id": "VAL-CROSS-003",
+      "reason": "Variant expansion does not generate N concrete variants in one run: user-testing flow observed 1 expanded variant/row where assertion expects 3."
+    }
+  ],
+  "blockedAssertions": [],
+  "appliedUpdates": [],
+  "previousRound": null
+}

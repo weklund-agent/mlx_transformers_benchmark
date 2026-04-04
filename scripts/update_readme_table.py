@@ -47,15 +47,24 @@ MODEL_META = {
     "lfm2-24b-a2b": {"display": "LFM2-24B-A2B", "arch": "2B MoE"},
     "qwen-3.5-35b-a3b": {"display": "Qwen 3.5-35B-A3B", "arch": "3B MoE"},
     "qwen-3.5-27b": {"display": "Qwen 3.5-27B", "arch": "27B dense"},
-    "qwen-3.5-27b-claude-opus-distilled": {"display": "Qwen 3.5-27B Opus Distilled", "arch": "27B dense"},
+    "qwen-3.5-27b-claude-opus-distilled": {
+        "display": "Qwen 3.5-27B Opus Distilled",
+        "arch": "27B dense",
+    },
     "qwen-3.5-9b": {"display": "Qwen 3.5-9B", "arch": "9B dense"},
     "qwen-3.5-4b": {"display": "Qwen 3.5-4B", "arch": "4B dense"},
     "qwen-3.5-2b": {"display": "Qwen 3.5-2B", "arch": "2B dense"},
     "qwen-3.5-0.8b": {"display": "Qwen 3.5-0.8B", "arch": "0.8B dense"},
     "nemotron-nano-9b-v2": {"display": "Nemotron-Nano-9B-v2", "arch": "9B dense"},
     "nemotron-3-nano-4b": {"display": "Nemotron-3-Nano-4B", "arch": "4B dense"},
-    "nemotron-cascade-2-30b-a3b": {"display": "Nemotron-Cascade-2-30B-A3B", "arch": "3B MoE"},
-    "Deepseek-R1-0528_Qwen3-8B": {"display": "DeepSeek-R1-0528-Qwen3-8B", "arch": "8B dense"},
+    "nemotron-cascade-2-30b-a3b": {
+        "display": "Nemotron-Cascade-2-30B-A3B",
+        "arch": "3B MoE",
+    },
+    "Deepseek-R1-0528_Qwen3-8B": {
+        "display": "DeepSeek-R1-0528-Qwen3-8B",
+        "arch": "8B dense",
+    },
     "Deepseek-R1-Distill-7B": {"display": "DeepSeek-R1-Distill-7B", "arch": "7B dense"},
     "gemma-3-4b-it": {"display": "Gemma 3-4B-it", "arch": "4B dense"},
     "gemma-3-4b-it-qat": {"display": "Gemma 3-4B-it QAT", "arch": "4B dense"},
@@ -132,11 +141,16 @@ def load_speed_data(
         all_df = all_df[all_df["name"].isin(models)]
 
     # Keep latest per model/dtype/hardware
-    all_df = all_df.sort_values("_source_dir").groupby(
-        ["hardware", "name", "dtype"]
-    ).last().reset_index()
+    all_df = (
+        all_df.sort_values("_source_dir")
+        .groupby(["hardware", "name", "dtype"])
+        .last()
+        .reset_index()
+    )
 
-    return all_df[["hardware", "name", "dtype", "generation_tps", "prompt_tps", "peak_memory_gib"]]
+    return all_df[
+        ["hardware", "name", "dtype", "generation_tps", "prompt_tps", "peak_memory_gib"]
+    ]
 
 
 def load_quality_data(
@@ -160,35 +174,79 @@ def load_quality_data(
         all_df = all_df[all_df["model"].isin(models)]
 
     # Keep latest per model/dtype/hardware/problem
-    all_df = all_df.sort_values("_source_dir").groupby(
-        ["hardware", "model", "dtype", "category", "problem"]
-    ).last().reset_index()
+    all_df = (
+        all_df.sort_values("_source_dir")
+        .groupby(["hardware", "model", "dtype", "category", "problem"])
+        .last()
+        .reset_index()
+    )
 
     return all_df
 
 
-def compute_quality_summary(quality_df: pd.DataFrame, hardware: str, dtype: str = "int4") -> pd.DataFrame:
-    df = quality_df[(quality_df["dtype"] == dtype) & (quality_df["hardware"] == hardware)].copy()
+def compute_quality_summary(
+    quality_df: pd.DataFrame, hardware: str, dtype: str = "int4"
+) -> pd.DataFrame:
+    if quality_df.empty or "dtype" not in quality_df.columns:
+        return pd.DataFrame()
+
+    df = quality_df[
+        (quality_df["dtype"] == dtype) & (quality_df["hardware"] == hardware)
+    ].copy()
     if df.empty:
         return pd.DataFrame()
 
-    overall = df.groupby("model").agg(
-        passed=("passed", "sum"), total=("passed", "count")
-    ).reset_index()
+    # Raw (flat) pass rate
+    overall = (
+        df.groupby("model")
+        .agg(passed=("passed", "sum"), total=("passed", "count"))
+        .reset_index()
+    )
     overall["quality_pct"] = (overall["passed"] / overall["total"] * 100).round(1)
 
+    # Weighted score via scoring module
+    from mtb.quality_benchmarks.scoring import (
+        compute_weighted_score,
+        _build_problem_tier_map,
+    )
+
+    tier_map = _build_problem_tier_map()
+
+    weighted_scores = []
+    for model_name in overall["model"]:
+        model_df = df[df["model"] == model_name]
+        results = {
+            row["problem"]: bool(row["passed"]) for _, row in model_df.iterrows()
+        }
+
+        # Count how many CSV problems are recognized by the tier mapping
+        recognized = sum(1 for name in results if name in tier_map)
+        total_in_csv = len(results)
+
+        # If fewer than half the problems are recognized, the weighted score
+        # is unreliable (legacy/unknown problem IDs).  Fall back to flat rate.
+        if total_in_csv > 0 and recognized / total_in_csv < 0.5:
+            weighted_scores.append(float("nan"))
+        else:
+            score = compute_weighted_score(results)
+            weighted_scores.append(round(score["weighted_score"] * 100, 1))
+    overall["weighted_pct"] = weighted_scores
+
+    # Per-category breakdowns
     cats = {}
     for cat in ["coding", "tool_calling", "reasoning"]:
         cat_df = df[df["category"] == cat]
         if cat_df.empty:
             continue
-        cat_sum = cat_df.groupby("model").agg(
-            p=("passed", "sum"), t=("passed", "count")
-        ).reset_index()
+        cat_sum = (
+            cat_df.groupby("model")
+            .agg(p=("passed", "sum"), t=("passed", "count"))
+            .reset_index()
+        )
         cat_sum[cat] = cat_sum.apply(lambda r: f"{int(r['p'])}/{int(r['t'])}", axis=1)
         cats[cat] = cat_sum[["model", cat]]
 
-    result = overall[["model", "quality_pct"]].copy()
+    result = overall[["model", "weighted_pct", "quality_pct"]].copy()
     for cat, cat_df in cats.items():
         result = result.merge(cat_df, on="model", how="left")
 
@@ -200,14 +258,20 @@ def pick_quick_picks(combined: pd.DataFrame) -> List[dict]:
     if combined.empty:
         return picks
 
-    has_quality = "quality_pct" in combined.columns and combined["quality_pct"].notna().any()
+    # Use weighted_pct as primary quality metric, fall back to quality_pct
+    qual_col = (
+        "weighted_pct"
+        if "weighted_pct" in combined.columns and combined["weighted_pct"].notna().any()
+        else "quality_pct"
+    )
+    has_quality = qual_col in combined.columns and combined[qual_col].notna().any()
 
     if has_quality:
         # Best overall: highest quality, then fastest
-        with_quality = combined[combined["quality_pct"].notna()]
+        with_quality = combined[combined[qual_col].notna()]
         if not with_quality.empty:
             best = with_quality.sort_values(
-                ["quality_pct", "generation_tps"], ascending=[False, False]
+                [qual_col, "generation_tps"], ascending=[False, False]
             ).iloc[0]
             picks.append({"use_case": "Best overall", "row": best})
 
@@ -215,14 +279,14 @@ def pick_quick_picks(combined: pd.DataFrame) -> List[dict]:
             moe = with_quality[with_quality["arch"].str.contains("MoE")]
             if not moe.empty:
                 best_moe = moe.sort_values(
-                    ["quality_pct", "generation_tps"], ascending=[False, False]
+                    [qual_col, "generation_tps"], ascending=[False, False]
                 ).iloc[0]
                 if best_moe["name"] != best["name"]:
                     picks.append({"use_case": "Best MoE", "row": best_moe})
 
             # Best coder: not yet picked, highest quality then fastest
             for _, row in with_quality.sort_values(
-                ["quality_pct", "generation_tps"], ascending=[False, False]
+                [qual_col, "generation_tps"], ascending=[False, False]
             ).iterrows():
                 if row["name"] not in [p["row"]["name"] for p in picks]:
                     picks.append({"use_case": "Best coder", "row": row})
@@ -230,7 +294,7 @@ def pick_quick_picks(combined: pd.DataFrame) -> List[dict]:
 
             # Best reasoning: not yet picked
             for _, row in with_quality.sort_values(
-                ["quality_pct", "generation_tps"], ascending=[False, False]
+                [qual_col, "generation_tps"], ascending=[False, False]
             ).iterrows():
                 if row["name"] not in [p["row"]["name"] for p in picks]:
                     picks.append({"use_case": "Best reasoning", "row": row})
@@ -241,6 +305,38 @@ def pick_quick_picks(combined: pd.DataFrame) -> List[dict]:
         picks.append({"use_case": "Fastest", "row": best})
 
     return picks
+
+
+def _format_quality_cell(row, top_quality: float, has_weighted: bool) -> str:
+    """Format the Quality column cell.
+
+    Shows weighted score as primary percentage.  When a raw pass rate
+    (quality_pct) is also available and differs from the weighted score,
+    it is shown as a parenthetical like ``(raw 81/81)``.
+    """
+    weighted = row.get("weighted_pct") if has_weighted else None
+    raw = row.get("quality_pct")
+
+    if pd.notna(weighted):
+        primary = weighted
+    elif pd.notna(raw):
+        primary = raw
+    else:
+        return "--"
+
+    # Build raw pass-rate footnote when we have both weighted and raw
+    raw_note = ""
+    if has_weighted and pd.notna(weighted) and pd.notna(raw):
+        # Compute passed/total from raw pct stored in quality_pct
+        # quality_pct = passed/total * 100, but we don't have total here.
+        # Instead just show raw % in parenthetical when it differs from weighted
+        if abs(weighted - raw) > 0.05:
+            raw_note = f" (raw {raw}%)"
+
+    is_top = top_quality is not None and primary >= top_quality - 0.1
+    if is_top:
+        return f"**{primary}%**{raw_note}"
+    return f"{primary}%{raw_note}"
 
 
 def generate_hardware_table(
@@ -267,6 +363,7 @@ def generate_hardware_table(
     if not quality_summary.empty:
         combined = combined.merge(quality_summary, on="model", how="left")
     else:
+        combined["weighted_pct"] = None
         combined["quality_pct"] = None
 
     combined["arch"] = combined["model"].map(get_arch)
@@ -276,17 +373,24 @@ def generate_hardware_table(
     combined = combined.rename(columns={"model": "name"})
     combined = combined.sort_values("generation_tps", ascending=False)
 
-    has_quality = combined["quality_pct"].notna().any()
+    has_weighted = (
+        "weighted_pct" in combined.columns and combined["weighted_pct"].notna().any()
+    )
+    has_quality = (
+        "quality_pct" in combined.columns and combined["quality_pct"].notna().any()
+    )
     has_coding = "coding" in combined.columns
     has_tool = "tool_calling" in combined.columns
     has_reasoning = "reasoning" in combined.columns
 
     lines = []
 
-    if has_quality and has_coding and has_tool and has_reasoning:
-        lines.append("| Model | Arch | Gen tok/s | Quality | Coding | Tool Calling | Reasoning | Memory | Min HW |")
+    if (has_weighted or has_quality) and has_coding and has_tool and has_reasoning:
+        lines.append(
+            "| Model | Arch | Gen tok/s | Quality | Coding | Tool Calling | Reasoning | Memory | Min HW |"
+        )
         lines.append("|---|---|---:|---:|---|---|---|---:|---|")
-    elif has_quality:
+    elif has_weighted or has_quality:
         lines.append("| Model | Arch | Gen tok/s | Quality | Memory | Min HW |")
         lines.append("|---|---|---:|---:|---:|---|")
     else:
@@ -294,25 +398,33 @@ def generate_hardware_table(
         lines.append("|---|---|---:|---:|---:|---|")
 
     max_tps = combined["generation_tps"].max()
-    top_quality = combined["quality_pct"].max() if has_quality else None
+    # Top quality uses weighted_pct for bolding when available
+    if has_weighted:
+        top_quality = combined["weighted_pct"].max()
+    elif has_quality:
+        top_quality = combined["quality_pct"].max()
+    else:
+        top_quality = None
 
     for _, r in combined.iterrows():
         name = format_model_name(r["name"])
         tps = r["generation_tps"]
         tps_str = f"**{tps:.0f}**" if tps >= max_tps * 0.7 else f"{tps:.0f}"
 
-        if has_quality and has_coding and has_tool and has_reasoning:
-            qual = r.get("quality_pct")
-            qual_str = f"**{qual}%**" if pd.notna(qual) and qual >= top_quality - 0.1 else (f"{qual}%" if pd.notna(qual) else "--")
+        if (has_weighted or has_quality) and has_coding and has_tool and has_reasoning:
+            qual_str = _format_quality_cell(r, top_quality, has_weighted)
             coding = r.get("coding", "--") if pd.notna(r.get("coding")) else "--"
-            tool_calling = r.get("tool_calling", "--") if pd.notna(r.get("tool_calling")) else "--"
-            reasoning = r.get("reasoning", "--") if pd.notna(r.get("reasoning")) else "--"
+            tool_calling = (
+                r.get("tool_calling", "--") if pd.notna(r.get("tool_calling")) else "--"
+            )
+            reasoning = (
+                r.get("reasoning", "--") if pd.notna(r.get("reasoning")) else "--"
+            )
             lines.append(
                 f"| {name} | {r['arch']} | {tps_str} | {qual_str} | {coding} | {tool_calling} | {reasoning} | {r['peak_memory_gib']:.1f} GiB | {r['min_hw']} |"
             )
-        elif has_quality:
-            qual = r.get("quality_pct")
-            qual_str = f"**{qual}%**" if pd.notna(qual) and qual >= top_quality - 0.1 else (f"{qual}%" if pd.notna(qual) else "--")
+        elif has_weighted or has_quality:
+            qual_str = _format_quality_cell(r, top_quality, has_weighted)
             lines.append(
                 f"| {name} | {r['arch']} | {tps_str} | {qual_str} | {r['peak_memory_gib']:.1f} GiB | {r['min_hw']} |"
             )
@@ -334,7 +446,11 @@ def generate_hardware_table(
             name = format_model_name(r["name"])
             arch = get_arch(r["name"])
             min_hw = _min_hw_from_memory(r["peak_memory_gib"])
-            tps_str = f"**{r['generation_tps']:.1f}**" if r["generation_tps"] >= int8_speed["generation_tps"].max() * 0.7 else f"{r['generation_tps']:.1f}"
+            tps_str = (
+                f"**{r['generation_tps']:.1f}**"
+                if r["generation_tps"] >= int8_speed["generation_tps"].max() * 0.7
+                else f"{r['generation_tps']:.1f}"
+            )
             lines.append(
                 f"| {name} | {arch} | {tps_str} | {r['prompt_tps']:.0f} | {r['peak_memory_gib']:.1f} GiB | {min_hw} |"
             )
@@ -360,6 +476,7 @@ def _get_combined_for_hardware(
     if not quality_summary.empty:
         combined = combined.merge(quality_summary, on="model", how="left")
     else:
+        combined["weighted_pct"] = None
         combined["quality_pct"] = None
 
     combined["arch"] = combined["model"].map(get_arch)
@@ -389,16 +506,23 @@ def generate_cross_hardware_summary(
         if combined.empty:
             continue
 
-        has_quality = combined["quality_pct"].notna().any()
+        # Use weighted_pct as primary quality metric, fall back to quality_pct
+        qual_col = (
+            "weighted_pct"
+            if "weighted_pct" in combined.columns
+            and combined["weighted_pct"].notna().any()
+            else "quality_pct"
+        )
+        has_quality = qual_col in combined.columns and combined[qual_col].notna().any()
 
         # Best overall: highest quality then fastest (or just fastest if no quality)
         if has_quality:
-            with_quality = combined[combined["quality_pct"].notna()]
+            with_quality = combined[combined[qual_col].notna()]
             if not with_quality.empty:
                 best = with_quality.sort_values(
-                    ["quality_pct", "generation_tps"], ascending=[False, False]
+                    [qual_col, "generation_tps"], ascending=[False, False]
                 ).iloc[0]
-                best_str = f"{format_model_name(best['name'])} ({best['generation_tps']:.0f} tok/s, {best['quality_pct']}%)"
+                best_str = f"{format_model_name(best['name'])} ({best['generation_tps']:.0f} tok/s, {best[qual_col]}%)"
             else:
                 best = combined.iloc[0]
                 best_str = f"{format_model_name(best['name'])} ({best['generation_tps']:.0f} tok/s)"
@@ -409,7 +533,7 @@ def generate_cross_hardware_summary(
         # Best fast: fastest model with quality >= 90% if available, else just fastest
         # Must be different from best overall
         if has_quality:
-            fast_candidates = combined[combined["quality_pct"] >= 90.0]
+            fast_candidates = combined[combined[qual_col] >= 90.0]
             if fast_candidates.empty:
                 fast_candidates = combined
         else:
@@ -417,17 +541,23 @@ def generate_cross_hardware_summary(
         fastest = fast_candidates.sort_values("generation_tps", ascending=False).iloc[0]
         # Try to pick a different model than best overall
         if fastest["name"] == best["name"] and len(fast_candidates) > 1:
-            fastest = fast_candidates.sort_values("generation_tps", ascending=False).iloc[1]
-        if has_quality and pd.notna(fastest.get("quality_pct")):
-            fast_str = f"{format_model_name(fastest['name'])} ({fastest['generation_tps']:.0f} tok/s, {fastest['quality_pct']}%)"
+            fastest = fast_candidates.sort_values(
+                "generation_tps", ascending=False
+            ).iloc[1]
+        if has_quality and pd.notna(fastest.get(qual_col)):
+            fast_str = f"{format_model_name(fastest['name'])} ({fastest['generation_tps']:.0f} tok/s, {fastest[qual_col]}%)"
         else:
             fast_str = f"{format_model_name(fastest['name'])} ({fastest['generation_tps']:.0f} tok/s)"
 
         # Best coder: highest quality with perfect coding, then fastest
-        if has_quality and "coding" in combined.columns and combined["coding"].notna().any():
-            with_quality = combined[combined["quality_pct"].notna()]
+        if (
+            has_quality
+            and "coding" in combined.columns
+            and combined["coding"].notna().any()
+        ):
+            with_quality = combined[combined[qual_col].notna()]
             coders = with_quality.sort_values(
-                ["quality_pct", "generation_tps"], ascending=[False, False]
+                [qual_col, "generation_tps"], ascending=[False, False]
             )
             # Pick first one not already used as best overall
             coder = coders.iloc[0]
@@ -435,7 +565,7 @@ def generate_cross_hardware_summary(
                 if c["name"] != best["name"]:
                     coder = c
                     break
-            coder_str = f"{format_model_name(coder['name'])} ({coder['generation_tps']:.0f} tok/s, {coder['quality_pct']}%)"
+            coder_str = f"{format_model_name(coder['name'])} ({coder['generation_tps']:.0f} tok/s, {coder[qual_col]}%)"
         else:
             coder_str = "--"
 
@@ -470,7 +600,9 @@ def generate_tables(
     lines = []
     lines.append(f"> MLX Metal | int4 quantization | {today}")
     lines.append("> Speed: 1024 prompt tokens, 100 generated tokens")
-    lines.append("> Quality: 46 problems across coding, reasoning, tool calling, math, writing (3 runs each, majority vote)")
+    lines.append(
+        "> Quality: 81 problems across coding, reasoning, tool calling, math, writing (3 runs each, majority vote)"
+    )
     lines.append("")
 
     # Cross-hardware summary at top
@@ -537,10 +669,13 @@ def update_readme(
                 readme[:start_idx]
                 + f"## Agentic Coding Model Benchmarks (MLX on Apple Silicon)\n\n"
                 + f"{BEGIN_MARKER}\n\n{table_content}\n\n{END_MARKER}\n\n"
-                + readme[heading_after + 1:]
+                + readme[heading_after + 1 :]
             )
         else:
-            new_readme = readme + f"\n\n## Agentic Coding Model Benchmarks (MLX on Apple Silicon)\n\n{BEGIN_MARKER}\n\n{table_content}\n\n{END_MARKER}\n"
+            new_readme = (
+                readme
+                + f"\n\n## Agentic Coding Model Benchmarks (MLX on Apple Silicon)\n\n{BEGIN_MARKER}\n\n{table_content}\n\n{END_MARKER}\n"
+            )
 
     if dry_run:
         print("=== DRY RUN — would write: ===")

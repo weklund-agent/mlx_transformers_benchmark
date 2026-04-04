@@ -1,0 +1,75 @@
+{
+  "milestone": "tool-calling",
+  "round": 1,
+  "status": "fail",
+  "validatorsRun": {
+    "test": {
+      "passed": true,
+      "command": "uv run pytest tests/ --ignore=tests/quality_benchmarks --ignore=tests/llm_benchmarks --ignore=tests/system -v --tb=short -q",
+      "exitCode": 0
+    },
+    "typecheck": {
+      "passed": true,
+      "command": "uv run python -c \"print('No typecheck configured')\"",
+      "exitCode": 0
+    },
+    "lint": {
+      "passed": true,
+      "command": "uv run black --check mtb/ tests/ scripts/",
+      "exitCode": 0
+    }
+  },
+  "reviewsSummary": {
+    "total": 4,
+    "passed": 1,
+    "failed": 3,
+    "failedFeatures": [
+      "tool-call-parser",
+      "tool-calling-problems-selection-accuracy",
+      "tool-calling-problems-multi-edge-format"
+    ]
+  },
+  "blockingIssues": [
+    {
+      "featureId": "tool-call-parser",
+      "severity": "blocking",
+      "description": "mtb/quality_benchmarks/tool_call_parser.py:245 single-quote recovery mutates escaped apostrophes in argument strings (e.g., it\\'s -> it\\\"s), corrupting extracted tool-call arguments."
+    },
+    {
+      "featureId": "tool-calling-problems-selection-accuracy",
+      "severity": "blocking",
+      "description": "mtb/quality_benchmarks/tool_calling_problems.py:714 _check_aa_preserve_exact_strings uses substring checks and accepts altered commands (e.g., appended shell fragments), creating false positives."
+    },
+    {
+      "featureId": "tool-calling-problems-multi-edge-format",
+      "severity": "blocking",
+      "description": "mtb/quality_benchmarks/tool_calling_problems.py:1668 fc_null_argument accepts empty-string or omitted values even though the problem requires null-argument format compliance."
+    }
+  ],
+  "appliedUpdates": [],
+  "suggestedGuidanceUpdates": [
+    {
+      "target": "skills/python-worker",
+      "suggestion": "Clarify how TDD compliance is assessed and when handoff.skillFeedback.followedProcedure may be true, because multiple runs implemented code before tests while still reporting compliance.",
+      "evidence": "Same pattern observed in reviews for tool-call-parser, tool-calling-problems-selection-accuracy, tool-calling-problems-multi-edge-format, and runner-tool-call-support.",
+      "isSystemic": true
+    },
+    {
+      "target": "AGENTS.md",
+      "suggestion": "Refine \"Existing test suite must pass unchanged\" guidance to allow intentional updates to existing assertions when mission scope explicitly changes benchmark/problem counts.",
+      "evidence": "Feature tool-calling-problems-selection-accuracy needed updates to existing count assertions in tests/test_quality_benchmarks.py and tests/test_module_structure.py to reflect expanded tool-calling coverage.",
+      "isSystemic": false
+    }
+  ],
+  "rejectedObservations": [
+    {
+      "observation": "python-worker TDD compliance mismatch (duplicate instances)",
+      "reason": "duplicate"
+    },
+    {
+      "observation": "Undocumented ts_/aa_/mt_/ec_/fc_ prefix mapping in shared docs",
+      "reason": "ambiguous"
+    }
+  ],
+  "previousRound": null
+}

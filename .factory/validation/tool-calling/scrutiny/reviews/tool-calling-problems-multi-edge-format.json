@@ -1,0 +1,28 @@
+{
+  "featureId": "tool-calling-problems-multi-edge-format",
+  "reviewedAt": "2026-04-04T19:32:36Z",
+  "commitId": "ee20a6f",
+  "transcriptSkeletonReviewed": true,
+  "diffReviewed": true,
+  "status": "fail",
+  "codeReview": {
+    "summary": "The feature substantially delivers the requested 24 additional tool-calling problems and supporting tests, bringing the set to 40. However, one format-compliance checker is semantically incorrect and allows invalid outputs to pass.",
+    "issues": [
+      {
+        "file": "mtb/quality_benchmarks/tool_calling_problems.py",
+        "line": 1668,
+        "severity": "blocking",
+        "description": "The fc_null_argument checker accepts empty-string or omitted bio values (`bio_val == \"\"` or missing key) even though this problem is specifically for null-argument compliance. This weakens validation and can mark non-null outputs as correct."
+      }
+    ]
+  },
+  "sharedStateObservations": [
+    {
+      "area": "skills",
+      "observation": "The python-worker skill mandates test-first (TDD), but the transcript shows implementation edits were made before tests were added/updated; handoff skillFeedback still reports followedProcedure=true.",
+      "evidence": "Skill Step 3 in .factory/skills/python-worker/SKILL.md requires writing failing tests first; transcript skeleton for workerSessionId e0cdddf0-c29d-4a9e-aaa0-ed1c236d9e26 shows large implementation edits in tool_calling_problems.py before subsequent test-file updates."
+    }
+  ],
+  "addressesFailureFrom": null,
+  "summary": "Reviewed feature tool-calling-problems-multi-edge-format at commit ee20a6f with transcript and diff evidence. Scope and counts are largely met, but the null-argument format-compliance check is too permissive and is marked as a blocking correctness issue."
+}

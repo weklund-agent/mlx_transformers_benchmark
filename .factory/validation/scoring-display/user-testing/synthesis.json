@@ -1,0 +1,41 @@
+{
+  "milestone": "scoring-display",
+  "round": 1,
+  "generatedAt": "2026-04-04T20:47:48.373164+00:00",
+  "status": "pass",
+  "assertionsSummary": {
+    "total": 23,
+    "passed": 23,
+    "failed": 0,
+    "blocked": 0
+  },
+  "passedAssertions": [
+    "VAL-DISPLAY-001",
+    "VAL-DISPLAY-002",
+    "VAL-DISPLAY-003",
+    "VAL-DISPLAY-004",
+    "VAL-DISPLAY-005",
+    "VAL-DISPLAY-006",
+    "VAL-DISPLAY-007",
+    "VAL-DISPLAY-008",
+    "VAL-DISPLAY-009",
+    "VAL-DISPLAY-010",
+    "VAL-CROSS-008",
+    "VAL-SCORING-001",
+    "VAL-SCORING-002",
+    "VAL-SCORING-003",
+    "VAL-SCORING-004",
+    "VAL-SCORING-005",
+    "VAL-SCORING-006",
+    "VAL-SCORING-007",
+    "VAL-SCORING-008",
+    "VAL-SCORING-009",
+    "VAL-SCORING-010",
+    "VAL-MODULE-004",
+    "VAL-RUNNER-007"
+  ],
+  "failedAssertions": [],
+  "blockedAssertions": [],
+  "appliedUpdates": [],
+  "previousRound": null
+}

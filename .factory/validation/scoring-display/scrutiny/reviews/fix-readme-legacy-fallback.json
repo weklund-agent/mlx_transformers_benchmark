@@ -1,0 +1,21 @@
+{
+  "featureId": "fix-readme-legacy-fallback",
+  "reviewedAt": "2026-04-04T20:40:43Z",
+  "commitId": "3cc683f",
+  "transcriptSkeletonReviewed": true,
+  "diffReviewed": true,
+  "status": "pass",
+  "codeReview": {
+    "summary": "The fix directly addresses the prior blocking issue. `compute_quality_summary()` now detects low recognition coverage for legacy CSV problem IDs and sets `weighted_pct` to NaN so `_format_quality_cell()` falls back to flat `quality_pct` as primary. Added regression coverage validates all-unknown, mostly-unknown, rendered-cell fallback, and recognized-problem non-fallback behavior.",
+    "issues": []
+  },
+  "sharedStateObservations": [
+    {
+      "area": "knowledge",
+      "observation": "Architecture docs remain out of sync with current scoring implementation details.",
+      "evidence": ".factory/library/architecture.md:146-153 documents category-weighted `CATEGORY_WEIGHTS`, while actual code uses tier-weighted `TIER_WEIGHTS` and problem-tier mapping in mtb/quality_benchmarks/scoring.py:22-31,61-83."
+    }
+  ],
+  "addressesFailureFrom": ".factory/validation/scoring-display/scrutiny/reviews/readme-table-weighted-scoring.json",
+  "summary": "Reviewed fix feature commit 3cc683f against the original failure in readme-table-weighted-scoring (commit 40e03a7). The implemented fallback logic and new regression tests adequately resolve the blocking legacy-CSV quality-cell issue; review passes."
+}

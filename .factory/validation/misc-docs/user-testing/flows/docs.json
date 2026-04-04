@@ -1,0 +1,132 @@
+{
+  "groupId": "docs",
+  "testedAt": "2026-04-04T23:04:29Z",
+  "isolation": {
+    "surface": "shell-pytest",
+    "repoRoot": "/Users/weae1504/Projects/mlx_transformers_benchmark",
+    "missionDir": "/Users/weae1504/.factory/missions/7a98117d-95dc-4445-8b4e-9c6c1c89f9a0",
+    "sourceEdits": false,
+    "pytestFlags": [
+      "-p",
+      "no:cacheprovider"
+    ]
+  },
+  "toolsUsed": [
+    "shell",
+    "uv run python",
+    "pytest"
+  ],
+  "assertions": [
+    {
+      "id": "VAL-DOCS-001",
+      "title": "QUALITY_METHODOLOGY.md exists and covers categories/scoring/code execution",
+      "status": "pass",
+      "steps": [
+        {
+          "action": "Run Python content checks on QUALITY_METHODOLOGY.md",
+          "expected": "File exists and includes 6 categories, weighted formula, and code execution+sandbox approach",
+          "observed": "File exists; categories found: coding/reasoning/math/instruction following/writing/tool calling; weighted formula present; code execution+sandbox terms present"
+        }
+      ],
+      "evidence": {
+        "terminalSnapshots": [
+          "misc-docs/docs/VAL-DOCS-python-checks.txt"
+        ]
+      },
+      "issues": null
+    },
+    {
+      "id": "VAL-DOCS-002",
+      "title": "Scoring formula and tier weights in doc match implementation",
+      "status": "pass",
+      "steps": [
+        {
+          "action": "Compare QUALITY_METHODOLOGY.md tier weights/formula against mtb.quality_benchmarks.scoring.TIER_WEIGHTS",
+          "expected": "Easy=1x, Hard=2x, Expert=3x, Tool Calling=3x and matching weighted-score formula",
+          "observed": "Doc weight rows matched 1x/2x/3x/3x and implementation TIER_WEIGHTS={'easy':1,'hard':2,'expert':3,'tool_calling':3}; formula text matched"
+        },
+        {
+          "action": "Run targeted pytest scoring test",
+          "expected": "Weight constants test passes",
+          "observed": "tests/test_scoring.py::TestTierWeights::test_weight_constants_match_specification passed"
+        }
+      ],
+      "evidence": {
+        "terminalSnapshots": [
+          "misc-docs/docs/VAL-DOCS-python-checks.txt",
+          "misc-docs/docs/VAL-DOCS-targeted-pytest.txt"
+        ]
+      },
+      "issues": null
+    },
+    {
+      "id": "VAL-DOCS-003",
+      "title": "Documented problem counts match code lists (15/10/16/40=81)",
+      "status": "pass",
+      "steps": [
+        {
+          "action": "Import problem lists and count per tier",
+          "expected": "15 easy, 10 hard, 16 expert, 40 tool calling, total 81",
+          "observed": "Counts from code: easy=15, hard=10, expert=16, tool_calling=40, total=81"
+        },
+        {
+          "action": "Run targeted module-structure test for list counts",
+          "expected": "Count assertions pass",
+          "observed": "tests/test_module_structure.py::TestEvalProblemsBackwardCompat::test_import_problem_lists passed"
+        }
+      ],
+      "evidence": {
+        "terminalSnapshots": [
+          "misc-docs/docs/VAL-DOCS-python-checks.txt",
+          "misc-docs/docs/VAL-DOCS-targeted-pytest.txt"
+        ]
+      },
+      "issues": null
+    },
+    {
+      "id": "VAL-DOCS-004",
+      "title": "README Quality section links to QUALITY_METHODOLOGY.md",
+      "status": "pass",
+      "steps": [
+        {
+          "action": "Check README Quality Benchmarks section for methodology link",
+          "expected": "A markdown link to QUALITY_METHODOLOGY.md exists in quality section",
+          "observed": "README contains 'For detailed methodology, see [Quality Benchmark Methodology](QUALITY_METHODOLOGY.md)' under Quality Benchmarks"
+        }
+      ],
+      "evidence": {
+        "terminalSnapshots": [
+          "misc-docs/docs/VAL-DOCS-python-checks.txt"
+        ]
+      },
+      "issues": null
+    },
+    {
+      "id": "VAL-DOCS-005",
+      "title": "Contamination resistance docs include variants and ProblemSource extensibility",
+      "status": "pass",
+      "steps": [
+        {
+          "action": "Check QUALITY_METHODOLOGY.md contamination section",
+          "expected": "Docs mention parameterized variants and ProblemSource pluggable interface/extensibility",
+          "observed": "Contamination Resistance section present; Parameterized Variant System documented; ProblemSource abstract pluggable interface documented"
+        },
+        {
+          "action": "Run targeted pytest docstring checks for ProblemSource",
+          "expected": "Docstring includes pluggable/interface and LiveCodeBench",
+          "observed": "tests/test_contamination.py::TestProblemSourceDocstring::test_docstring_mentions_pluggable and ::test_docstring_mentions_livecode_bench passed"
+        }
+      ],
+      "evidence": {
+        "terminalSnapshots": [
+          "misc-docs/docs/VAL-DOCS-python-checks.txt",
+          "misc-docs/docs/VAL-DOCS-targeted-pytest.txt"
+        ]
+      },
+      "issues": null
+    }
+  ],
+  "frictions": [],
+  "blockers": [],
+  "summary": "Tested 5 assertions (VAL-DOCS-001..005): 5 passed, 0 failed, 0 blocked."
+}

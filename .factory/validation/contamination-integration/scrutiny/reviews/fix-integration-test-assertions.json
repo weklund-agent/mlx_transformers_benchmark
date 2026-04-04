@@ -1,0 +1,15 @@
+{
+  "featureId": "fix-integration-test-assertions",
+  "reviewedAt": "2026-04-04T21:26:56Z",
+  "commitId": "09ce519",
+  "transcriptSkeletonReviewed": true,
+  "diffReviewed": true,
+  "status": "pass",
+  "codeReview": {
+    "summary": "The fix commit addresses both blocking findings from integration-tests-real-model. In tests/integration/test_full_pipeline.py, tool-call validation now requires successful structured extraction (no has_tool_content bypass), and cleanup validation now explicitly invokes teardown() and asserts model/tokenizer are cleared. The fixture finalizer and test ordering were updated to keep lifecycle behavior consistent after explicit teardown invocation.",
+    "issues": []
+  },
+  "sharedStateObservations": [],
+  "addressesFailureFrom": "integration-tests-real-model",
+  "summary": "Reviewed prior failing feature (725a937) and fix feature (09ce519), including handoff, transcript skeleton, skill instructions, and both diffs. The two original blocking issues are adequately fixed and no new blocking defects were identified."
+}
