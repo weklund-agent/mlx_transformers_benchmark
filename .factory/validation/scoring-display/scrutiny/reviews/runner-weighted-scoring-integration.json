@@ -1,0 +1,15 @@
+{
+  "featureId": "runner-weighted-scoring-integration",
+  "reviewedAt": "2026-04-04T20:26:54Z",
+  "commitId": "2037237c95ab59b35f053def6b61b60fd1f8fa1f",
+  "transcriptSkeletonReviewed": true,
+  "diffReviewed": true,
+  "status": "pass",
+  "codeReview": {
+    "summary": "Implementation satisfies the feature intent: CLI summary now uses scoring.py to show weighted and raw overall scores per model+dtype and includes per-category weighted breakdowns. Added tests cover presence of weighted/raw summary output, category weighted section, multi-model display, and a case where weighted and raw diverge.",
+    "issues": []
+  },
+  "sharedStateObservations": [],
+  "addressesFailureFrom": null,
+  "summary": "Reviewed handoff, transcript skeleton, commit diff, and related skill/shared-state docs for feature runner-weighted-scoring-integration. No blocking or non-blocking defects were identified in commit 2037237; feature review passes."
+}

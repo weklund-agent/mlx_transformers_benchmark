@@ -1,0 +1,34 @@
+{
+  "featureId": "readme-table-weighted-scoring",
+  "reviewedAt": "2026-04-04T20:28:26Z",
+  "commitId": "40e03a7",
+  "transcriptSkeletonReviewed": true,
+  "diffReviewed": true,
+  "status": "fail",
+  "codeReview": {
+    "summary": "The feature mostly implements weighted-score display and adds broad tests, but it misses the required flat-pass-rate fallback for historical/unknown problem rows. In old/mixed data, weighted_pct can be computed from only a subset (or zero) of rows and is still shown as the primary Quality value, which violates VAL-DISPLAY-004 behavior.",
+    "issues": [
+      {
+        "file": "scripts/update_readme_table.py",
+        "line": 306,
+        "severity": "blocking",
+        "description": "Old CSV fallback is incorrect: `_format_quality_cell()` always prioritizes `weighted_pct` when present, but `compute_weighted_score()` silently ignores unknown problem names. For historical rows with legacy tool-calling problem IDs, this yields misleading primary output (e.g., `0.0% (raw 50.0%)`) instead of the required flat-pass-rate fallback. Related logic: `scripts/update_readme_table.py:216-218`, `scripts/update_readme_table.py:306-319`, and `mtb/quality_benchmarks/scoring.py:66,109-110`."
+      },
+      {
+        "file": "tests/test_update_readme_table.py",
+        "line": 278,
+        "severity": "non_blocking",
+        "description": "The fallback test does not verify rendered fallback behavior. `test_old_csv_uses_flat_rate_as_fallback` only asserts `quality_pct` (raw) and never asserts that the table's primary Quality display falls back from weighted to flat for legacy/unknown problems, allowing the blocking regression above to pass."
+      }
+    ]
+  },
+  "sharedStateObservations": [
+    {
+      "area": "knowledge",
+      "observation": "The shared architecture doc is stale on scoring semantics and README integration details.",
+      "evidence": ".factory/library/architecture.md:146-159 documents CATEGORY_WEIGHTS and says update_readme_table uses CSV `weighted_score`; actual implementation uses tier weights in `mtb/quality_benchmarks/scoring.py:22-27` and computes weighted values from problem-level pass/fail in `scripts/update_readme_table.py:208-218`."
+    }
+  ],
+  "addressesFailureFrom": null,
+  "summary": "Reviewed commit 40e03a7 for readme-table-weighted-scoring. Found one blocking correctness issue: historical/unknown-problem rows do not fall back to flat pass rate as required, so Quality can display an invalid weighted primary value. Also noted a non-blocking test gap and a shared architecture-doc drift observation."
+}
