@@ -205,7 +205,12 @@ def compute_quality_summary(
     overall["quality_pct"] = (overall["passed"] / overall["total"] * 100).round(1)
 
     # Weighted score via scoring module
-    from mtb.quality_benchmarks.scoring import compute_weighted_score
+    from mtb.quality_benchmarks.scoring import (
+        compute_weighted_score,
+        _build_problem_tier_map,
+    )
+
+    tier_map = _build_problem_tier_map()
 
     weighted_scores = []
     for model_name in overall["model"]:
@@ -213,8 +218,18 @@ def compute_quality_summary(
         results = {
             row["problem"]: bool(row["passed"]) for _, row in model_df.iterrows()
         }
-        score = compute_weighted_score(results)
-        weighted_scores.append(round(score["weighted_score"] * 100, 1))
+
+        # Count how many CSV problems are recognized by the tier mapping
+        recognized = sum(1 for name in results if name in tier_map)
+        total_in_csv = len(results)
+
+        # If fewer than half the problems are recognized, the weighted score
+        # is unreliable (legacy/unknown problem IDs).  Fall back to flat rate.
+        if total_in_csv > 0 and recognized / total_in_csv < 0.5:
+            weighted_scores.append(float("nan"))
+        else:
+            score = compute_weighted_score(results)
+            weighted_scores.append(round(score["weighted_score"] * 100, 1))
     overall["weighted_pct"] = weighted_scores
 
     # Per-category breakdowns

@@ -635,3 +635,168 @@ class TestWeightedScoringIntegration:
         )
         assert len(summary) == 2
         assert set(summary["model"].tolist()) == {"model-a", "model-b"}
+
+
+# ---------------------------------------------------------------------------
+# Regression: Legacy CSV data with unknown problem names falls back to flat
+# ---------------------------------------------------------------------------
+class TestLegacyCSVFallback:
+    """When CSV rows contain problem names not in the current problem registry,
+    the quality cell must fall back to the flat pass rate instead of displaying
+    a misleading weighted score computed from only the few recognized problems.
+    """
+
+    def test_all_unknown_problems_uses_flat_rate(self):
+        """Quality cell must show flat pass rate when ALL problems are unknown/legacy."""
+        # Simulate a legacy CSV where none of the problem names match the registry
+        legacy_quality_df = pd.DataFrame(
+            [
+                {
+                    "hardware": "Apple_M4_Pro_10P+4E+20GPU_64GB",
+                    "model": "model-a",
+                    "dtype": "int4",
+                    "category": "coding",
+                    "problem": "old_problem_alpha",
+                    "passed": True,
+                    "pass_count": 3,
+                    "num_runs": 3,
+                    "_source_dir": "2025-01-01__00:00:00",
+                },
+                {
+                    "hardware": "Apple_M4_Pro_10P+4E+20GPU_64GB",
+                    "model": "model-a",
+                    "dtype": "int4",
+                    "category": "coding",
+                    "problem": "old_problem_beta",
+                    "passed": True,
+                    "pass_count": 3,
+                    "num_runs": 3,
+                    "_source_dir": "2025-01-01__00:00:00",
+                },
+                {
+                    "hardware": "Apple_M4_Pro_10P+4E+20GPU_64GB",
+                    "model": "model-a",
+                    "dtype": "int4",
+                    "category": "reasoning",
+                    "problem": "old_problem_gamma",
+                    "passed": False,
+                    "pass_count": 0,
+                    "num_runs": 3,
+                    "_source_dir": "2025-01-01__00:00:00",
+                },
+            ]
+        )
+        summary = urt.compute_quality_summary(
+            legacy_quality_df, "Apple_M4_Pro_10P+4E+20GPU_64GB", "int4"
+        )
+        assert not summary.empty
+        row = summary[summary["model"] == "model-a"].iloc[0]
+
+        # Flat pass rate: 2/3 = 66.7%
+        assert row["quality_pct"] == pytest.approx(66.7, abs=0.1)
+
+        # weighted_pct should be NaN (fallen back) since all problems are unknown
+        assert pd.isna(
+            row["weighted_pct"]
+        ), f"weighted_pct should be NaN for all-unknown-problem CSVs, got {row['weighted_pct']}"
+
+    def test_rendered_cell_uses_flat_for_legacy(self):
+        """The rendered quality table cell must show flat % as primary for legacy data."""
+        speed_df = _make_speed_df(models=("model-a",))
+        legacy_quality_df = pd.DataFrame(
+            [
+                {
+                    "hardware": "Apple_M4_Pro_10P+4E+20GPU_64GB",
+                    "model": "model-a",
+                    "dtype": "int4",
+                    "category": "coding",
+                    "problem": f"legacy_prob_{i}",
+                    "passed": i < 7,  # 7 of 10 pass
+                    "pass_count": 3 if i < 7 else 0,
+                    "num_runs": 3,
+                    "_source_dir": "2025-01-01__00:00:00",
+                }
+                for i in range(10)
+            ]
+        )
+        table = urt.generate_hardware_table(
+            speed_df, legacy_quality_df, "Apple_M4_Pro_10P+4E+20GPU_64GB"
+        )
+        # The cell should show 70.0% as the PRIMARY value (not in parenthetical)
+        # It must NOT show "0.0%" as primary (which would be the misleading weighted score)
+        assert (
+            "70.0%" in table
+        ), f"Expected flat pass rate 70.0% in table for legacy data, got:\n{table}"
+        # Must NOT show the misleading weighted score as a separate "0.0%" entry.
+        # Find the quality cell content in the data row (skip header/separator)
+        data_lines = [
+            l for l in table.strip().split("\n") if l.startswith("|") and "model-a" in l
+        ]
+        assert len(data_lines) == 1
+        quality_cell = data_lines[0].split("|")[4].strip()  # Quality is 4th column
+        # Quality cell should start with 70.0% (flat rate), not 0.0% (weighted)
+        assert quality_cell.startswith("70.0%") or quality_cell.startswith(
+            "**70.0%"
+        ), f"Quality cell should show flat 70.0% as primary, got: '{quality_cell}'"
+
+    def test_mostly_unknown_problems_falls_back(self):
+        """When most problems are unrecognized, weighted_pct should be NaN (fallback)."""
+        from mtb.quality_benchmarks import EVAL_PROBLEMS
+
+        rows = []
+        # Include 1 recognized problem (from easy tier)
+        p = EVAL_PROBLEMS[0]
+        rows.append(
+            {
+                "hardware": "Apple_M4_Pro_10P+4E+20GPU_64GB",
+                "model": "model-a",
+                "dtype": "int4",
+                "category": p.category,
+                "problem": p.name,
+                "passed": True,
+                "pass_count": 3,
+                "num_runs": 3,
+                "_source_dir": "2025-01-01__00:00:00",
+            }
+        )
+        # Add 19 unrecognized problems
+        for i in range(19):
+            rows.append(
+                {
+                    "hardware": "Apple_M4_Pro_10P+4E+20GPU_64GB",
+                    "model": "model-a",
+                    "dtype": "int4",
+                    "category": "coding",
+                    "problem": f"unknown_legacy_{i}",
+                    "passed": True,
+                    "pass_count": 3,
+                    "num_runs": 3,
+                    "_source_dir": "2025-01-01__00:00:00",
+                }
+            )
+        legacy_quality_df = pd.DataFrame(rows)
+        summary = urt.compute_quality_summary(
+            legacy_quality_df, "Apple_M4_Pro_10P+4E+20GPU_64GB", "int4"
+        )
+        row = summary[summary["model"] == "model-a"].iloc[0]
+
+        # Only 1 of 20 problems recognized (5%), well below threshold
+        # weighted_pct should be NaN (fallen back to flat)
+        assert pd.isna(
+            row["weighted_pct"]
+        ), f"weighted_pct should be NaN when most problems are unknown, got {row['weighted_pct']}"
+        # Flat pass rate: 20/20 = 100.0%
+        assert row["quality_pct"] == 100.0
+
+    def test_recognized_problems_show_weighted(self):
+        """When all/most problems are recognized, weighted_pct should be used (not NaN)."""
+        quality_df = _make_quality_df_with_real_problems(model="model-a", pass_all=True)
+        summary = urt.compute_quality_summary(
+            quality_df, "Apple_M4_Pro_10P+4E+20GPU_64GB", "int4"
+        )
+        row = summary[summary["model"] == "model-a"].iloc[0]
+        # All problems recognized → weighted_pct should NOT be NaN
+        assert pd.notna(
+            row["weighted_pct"]
+        ), "weighted_pct should be a real value when all problems are recognized"
+        assert row["weighted_pct"] == 100.0
