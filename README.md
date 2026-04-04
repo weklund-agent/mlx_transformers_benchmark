@@ -29,7 +29,7 @@ Results can be found at
 | Hardware | Best Overall | Best Fast | Best Coder |
 |---|---|---|---|
 | **M4 Pro 64GB** | Qwen 3.5-9B (39 tok/s, 100.0%) | Gemma 4 E2B-it (121 tok/s, 95.7%) | Qwen 3.5-35B-A3B (26 tok/s, 100.0%) |
-| **M5 Max 128GB** | Qwen 3.5-27B Opus Distilled (28 tok/s, 100.0%) | Qwen 3.5-27B (25 tok/s, 100.0%) | Qwen 3.5-27B (25 tok/s, 100.0%) |
+| **M5 Max 128GB** | Qwen 3.5-27B Opus Distilled (28 tok/s, 100.0%) | Gemma 4 E2B-it (205 tok/s, 95.7%) | Qwen 3.5-27B (25 tok/s, 100.0%) |
 
 ### M4 Pro 64GB
 
@@ -103,30 +103,37 @@ Results can be found at
 
 ### M5 Max 128GB
 
-| Model | Arch | Gen tok/s | Quality | Memory | Min HW |
-|---|---|---:|---:|---:|---|
-| Qwen 2.5-Coder-0.5B | 0.5B dense | **611** | -- | 1.1 GiB | Any Mac |
-| Qwen 2.5-0.5B-it | 0.5B dense | **542** | -- | 1.1 GiB | Any Mac |
-| Qwen 3-0.6B-it | 0.6B dense | **527** | -- | 1.3 GiB | Any Mac |
-| Qwen 3.5-0.8B | 0.8B dense | 409 | -- | 2.5 GiB | Any Mac |
-| Gemma 3-1B-it QAT | 1B dense | 373 | -- | 1.6 GiB | Any Mac |
-| Gemma 3-1B-it | 1B dense | 371 | -- | 1.6 GiB | Any Mac |
-| Qwen 3.5-2B | 2B dense | 235 | -- | 3.3 GiB | Any Mac |
-| Qwen 2.5-Coder-3B | 3B dense | 226 | -- | 2.6 GiB | Any Mac |
-| Qwen 2.5-3B-it | 3B dense | 209 | -- | 2.6 GiB | Any Mac |
-| Gemma 3-4B-it QAT | 4B dense | 172 | -- | 3.5 GiB | Any Mac |
-| Gemma 3-4B-it | 4B dense | 171 | -- | 3.5 GiB | Any Mac |
-| Qwen 3.5-4B | 4B dense | 131 | -- | 4.9 GiB | Any Mac |
-| DeepSeek-R1-Distill-7B | 7B dense | 114 | -- | 5.1 GiB | Any Mac |
-| DeepSeek-R1-0528-Qwen3-8B | 8B dense | 104 | -- | 5.4 GiB | Any Mac |
-| Qwen 3-8B-it | 8B dense | 103 | -- | 5.4 GiB | Any Mac |
-| Qwen 3.5-9B | 9B dense | 79 | -- | 7.3 GiB | Any Mac |
-| Nemotron-Nano-9B-v2 | 9B dense | 67 | -- | 8.1 GiB | 16GB+ |
-| Qwen 3-14B-it | 14B dense | 60 | -- | 9.1 GiB | 16GB+ |
-| Gemma 3-12B-it QAT | 12B dense | 48 | -- | 8.2 GiB | 16GB+ |
-| Qwen 3.5-35B-A3B | 3B MoE | 44 | 87.5% | 21.9 GiB | 24GB+ |
-| Qwen 3.5-27B Opus Distilled | 27B dense | 28 | **100.0%** | 16.9 GiB | 24GB+ |
-| Qwen 3.5-27B | 27B dense | 25 | **100.0%** | 18.8 GiB | 24GB+ |
+| Model | Arch | Gen tok/s | Quality | Coding | Tool Calling | Reasoning | Memory | Min HW |
+|---|---|---:|---:|---|---|---|---:|---|
+| Qwen 2.5-Coder-0.5B | 0.5B dense | **611** | -- | -- | -- | -- | 1.1 GiB | Any Mac |
+| Qwen 2.5-0.5B-it | 0.5B dense | **542** | -- | -- | -- | -- | 1.1 GiB | Any Mac |
+| Qwen 3-0.6B-it | 0.6B dense | **527** | -- | -- | -- | -- | 1.3 GiB | Any Mac |
+| Qwen 3.5-0.8B | 0.8B dense | 409 | -- | -- | -- | -- | 2.5 GiB | Any Mac |
+| Gemma 3-1B-it QAT | 1B dense | 373 | -- | -- | -- | -- | 1.6 GiB | Any Mac |
+| Gemma 3-1B-it | 1B dense | 371 | -- | -- | -- | -- | 1.6 GiB | Any Mac |
+| Qwen 3.5-2B | 2B dense | 235 | -- | -- | -- | -- | 3.3 GiB | Any Mac |
+| Qwen 2.5-Coder-3B | 3B dense | 226 | -- | -- | -- | -- | 2.6 GiB | Any Mac |
+| Qwen 2.5-3B-it | 3B dense | 209 | -- | -- | -- | -- | 2.6 GiB | Any Mac |
+| Gemma 4 E2B-it | 2.3B dense | 205 | 95.7% | 13/13 | 4/5 | 13/13 | 3.5 GiB | Any Mac |
+| LFM2-24B-A2B | 2B MoE | 180 | 93.5% | 13/13 | 5/5 | 12/13 | 14.2 GiB | 24GB+ |
+| Gemma 3-4B-it QAT | 4B dense | 172 | -- | -- | -- | -- | 3.5 GiB | Any Mac |
+| Gemma 3-4B-it | 4B dense | 171 | -- | -- | -- | -- | 3.5 GiB | Any Mac |
+| Qwen 3.5-4B | 4B dense | 131 | -- | -- | -- | -- | 4.9 GiB | Any Mac |
+| Gemma 4 E4B-it | 4.5B dense | 130 | 95.7% | 13/13 | 5/5 | 12/13 | 5.0 GiB | Any Mac |
+| Qwen3-Coder-30B-A3B | 3B MoE | 129 | 91.3% | 13/13 | 5/5 | 11/13 | 17.8 GiB | 24GB+ |
+| DeepSeek-R1-Distill-7B | 7B dense | 114 | -- | -- | -- | -- | 5.1 GiB | Any Mac |
+| Gemma 4 26B-A4B-it | 3.8B MoE | 110 | 95.7% | 13/13 | 5/5 | 13/13 | 15.3 GiB | 24GB+ |
+| DeepSeek-R1-0528-Qwen3-8B | 8B dense | 104 | -- | -- | -- | -- | 5.4 GiB | Any Mac |
+| Qwen 3-8B-it | 8B dense | 103 | -- | -- | -- | -- | 5.4 GiB | Any Mac |
+| GLM-4.7-Flash | 3B MoE | 96 | 78.3% | 13/13 | 5/5 | 8/13 | 17.6 GiB | 24GB+ |
+| Qwen 3.5-9B | 9B dense | 79 | -- | -- | -- | -- | 7.3 GiB | Any Mac |
+| Nemotron-Nano-9B-v2 | 9B dense | 67 | -- | -- | -- | -- | 8.1 GiB | 16GB+ |
+| Qwen 3-14B-it | 14B dense | 60 | -- | -- | -- | -- | 9.1 GiB | 16GB+ |
+| Gemma 3-12B-it QAT | 12B dense | 48 | -- | -- | -- | -- | 8.2 GiB | 16GB+ |
+| Qwen 3.5-35B-A3B | 3B MoE | 44 | 87.5% | 2/3 | -- | 3/3 | 21.9 GiB | 24GB+ |
+| Qwen 3.5-27B Opus Distilled | 27B dense | 28 | **100.0%** | 3/3 | -- | 3/3 | 16.9 GiB | 24GB+ |
+| Qwen 3.5-27B | 27B dense | 25 | **100.0%** | 3/3 | -- | 3/3 | 18.8 GiB | 24GB+ |
+| Gemma 4 31B-it | 31B dense | 17 | 93.5% | 13/13 | 5/5 | 12/13 | 18.9 GiB | 24GB+ |
 
 <details>
 <summary>int8 speed results</summary>
@@ -140,11 +147,17 @@ Results can be found at
 | Gemma 3-1B-it | 1B dense | 277.4 | 14773 | 2.2 GiB | Any Mac |
 | Gemma 3-1B-it QAT | 1B dense | 276.3 | 14428 | 2.2 GiB | Any Mac |
 | Qwen 3.5-2B | 2B dense | 150.9 | 5177 | 4.0 GiB | Any Mac |
+| Gemma 4 E2B-it | 2.3B dense | 146.9 | 14893 | 5.8 GiB | Any Mac |
 | Qwen 2.5-Coder-3B | 3B dense | 143.9 | 6504 | 4.0 GiB | Any Mac |
 | Qwen 2.5-3B-it | 3B dense | 133.6 | 6342 | 4.0 GiB | Any Mac |
+| LFM2-24B-A2B | 2B MoE | 132.0 | 5297 | 25.9 GiB | 36GB+ |
 | Gemma 3-4B-it QAT | 4B dense | 104.1 | 5157 | 5.6 GiB | Any Mac |
 | Gemma 3-4B-it | 4B dense | 103.5 | 5087 | 5.6 GiB | Any Mac |
+| Qwen3-Coder-30B-A3B | 3B MoE | 96.1 | 3353 | 33.1 GiB | 48GB+ |
+| Gemma 4 26B-A4B-it | 3.8B MoE | 85.3 | 3208 | 27.7 GiB | 36GB+ |
 | Qwen 3.5-4B | 4B dense | 85.3 | 2584 | 6.8 GiB | Any Mac |
+| Gemma 4 E4B-it | 4.5B dense | 84.7 | 6374 | 8.7 GiB | 16GB+ |
+| GLM-4.7-Flash | 3B MoE | 71.7 | 2565 | 32.5 GiB | 48GB+ |
 | Qwen 3-8B-it | 8B dense | 62.6 | 2818 | 9.5 GiB | 16GB+ |
 | DeepSeek-R1-0528-Qwen3-8B | 8B dense | 61.7 | 2719 | 9.5 GiB | 16GB+ |
 | Qwen 3.5-9B | 9B dense | 48.8 | 1511 | 11.7 GiB | 16GB+ |
@@ -153,6 +166,7 @@ Results can be found at
 | Gemma 3-12B-it QAT | 12B dense | 32.2 | 1060 | 14.6 GiB | 24GB+ |
 | Qwen 3.5-27B Opus Distilled | 27B dense | 17.4 | 434 | 30.3 GiB | 48GB+ |
 | Qwen 3.5-27B | 27B dense | 14.5 | 480 | 32.0 GiB | 48GB+ |
+| Gemma 4 31B-it | 31B dense | 9.4 | 544 | 34.1 GiB | 48GB+ |
 
 </details>
 
