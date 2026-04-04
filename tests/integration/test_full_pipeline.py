@@ -51,7 +51,8 @@ def benchmark():
     """Create and set up a real MLX benchmark for Gemma 4 E2B-it int4.
 
     The benchmark is loaded once per module and torn down after all tests
-    in this module have completed.
+    in this module have completed.  If teardown was already called (e.g. by
+    test_model_cleanup_after_tests), the finalizer skips a second call.
     """
     global _benchmark_instance
 
@@ -68,7 +69,9 @@ def benchmark():
     bm.setup()
     _benchmark_instance = bm
     yield bm
-    bm.teardown()
+    # Only tear down if model is still loaded (not already torn down by a test)
+    if bm.model is not None:
+        bm.teardown()
     _benchmark_instance = None
 
 
@@ -191,13 +194,13 @@ def test_model_generates_tool_calls(benchmark, tool_calling_problem):
 
     Validates: VAL-INTEG-003
 
-    Note: Small models (2.3B) may not always produce the exact expected format
-    (e.g., using "tool_name" instead of "name"). We give the model 3 attempts
-    and also verify the parser can extract tool-call-like content as a fallback.
+    The parser MUST actually extract structured output (parsed is not None)
+    for the test to pass. We give the small model (2.3B) up to 5 attempts
+    to produce a parseable tool call.
     """
-    max_attempts = 3
+    max_attempts = 5
     last_response = ""
-    check_passed = False
+    parsed_successfully = False
 
     for attempt in range(max_attempts):
         benchmark.max_num_tokens = tool_calling_problem.max_tokens
@@ -210,31 +213,21 @@ def test_model_generates_tool_calls(benchmark, tool_calling_problem):
 
         # Try the check function (uses parser internally)
         if tool_calling_problem.check(last_response):
-            check_passed = True
+            parsed_successfully = True
             break
 
-    if not check_passed:
-        # Fallback: verify the model at least generates tool-call-like content.
-        # The parser may not extract it if the model uses non-standard keys,
-        # but the model should still produce structured output.
+        # Even if the check function fails (e.g. wrong tool name),
+        # verify the parser can at least extract structured output
         parsed = parse_tool_calls(last_response)
-        tool_call_indicators = [
-            "search_flights",
-            "tool_call",
-            '"name"',
-            '"function"',
-            '"tool_name"',
-            "origin",
-            "destination",
-        ]
-        has_tool_content = any(
-            indicator in last_response for indicator in tool_call_indicators
-        )
+        if parsed is not None:
+            parsed_successfully = True
+            break
 
-        assert parsed is not None or has_tool_content, (
-            f"Model did not generate any tool-call-like content after "
-            f"{max_attempts} attempts. Last response: {last_response[:500]}"
-        )
+    assert parsed_successfully, (
+        f"Parser could not extract structured tool call output after "
+        f"{max_attempts} attempts. The parser returned None for all attempts. "
+        f"Last response: {last_response[:500]}"
+    )
 
 
 # ---------------------------------------------------------------------------
@@ -357,39 +350,6 @@ def test_integration_marker_present():
 
 
 # ---------------------------------------------------------------------------
-# VAL-INTEG-009: Model cleanup after tests (teardown called)
-# ---------------------------------------------------------------------------
-
-
-@pytest.mark.integration
-@pytest.mark.timeout(300)
-def test_model_cleanup_after_tests(benchmark):
-    """Test that model teardown is called and resources are released.
-
-    Validates: VAL-INTEG-009
-
-    The benchmark fixture's teardown is called automatically at module scope.
-    This test verifies that teardown() is callable and that model attributes
-    are set up correctly before teardown.
-    """
-    # Verify the benchmark has a working model loaded
-    assert hasattr(benchmark, "model"), "benchmark.model not set"
-    assert benchmark.model is not None, "benchmark.model is None before teardown"
-    assert hasattr(benchmark, "tokenizer"), "benchmark.tokenizer not set"
-    assert (
-        benchmark.tokenizer is not None
-    ), "benchmark.tokenizer is None before teardown"
-
-    # Verify teardown is callable
-    assert callable(benchmark.teardown), "benchmark.teardown is not callable"
-
-    # Note: The actual teardown is called by the module-scoped fixture's
-    # finalizer. We verify the model is loaded and teardown is callable.
-    # After all tests in this module complete, the fixture calls
-    # benchmark.teardown() which deletes model/tokenizer and clears caches.
-
-
-# ---------------------------------------------------------------------------
 # VAL-INTEG-010: Sandbox execution with real model output
 # ---------------------------------------------------------------------------
 
@@ -444,6 +404,42 @@ def test_sandbox_execution_with_real_model_output(benchmark, fizzbuzz_problem):
         assert (
             sandbox_result.stderr or sandbox_result.stdout
         ), "Sandbox failure with no output"
+
+
+# ---------------------------------------------------------------------------
+# VAL-INTEG-009: Model cleanup after tests (teardown called)
+# NOTE: This test MUST be the last test using the module-scoped benchmark
+# fixture because it invokes teardown() which clears the model.
+# ---------------------------------------------------------------------------
+
+
+@pytest.mark.integration
+@pytest.mark.timeout(300)
+def test_model_cleanup_after_tests(benchmark):
+    """Test that model teardown executes without error and releases resources.
+
+    Validates: VAL-INTEG-009
+
+    Calls benchmark.teardown() directly and verifies it completes without
+    raising an exception. Then checks that model/tokenizer attributes are
+    cleared (set to None) after teardown.
+    """
+    # Verify the benchmark has a working model loaded before teardown
+    assert hasattr(benchmark, "model"), "benchmark.model not set"
+    assert benchmark.model is not None, "benchmark.model is None before teardown"
+    assert hasattr(benchmark, "tokenizer"), "benchmark.tokenizer not set"
+    assert (
+        benchmark.tokenizer is not None
+    ), "benchmark.tokenizer is None before teardown"
+
+    # Actually invoke teardown and verify it executes without error
+    benchmark.teardown()
+
+    # Verify model and tokenizer are cleared after teardown
+    assert benchmark.model is None, "benchmark.model should be None after teardown"
+    assert (
+        benchmark.tokenizer is None
+    ), "benchmark.tokenizer should be None after teardown"
 
 
 # ---------------------------------------------------------------------------

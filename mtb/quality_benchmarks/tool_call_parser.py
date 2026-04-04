@@ -317,9 +317,9 @@ def _dict_to_tool_call(d: dict) -> Optional[ToolCall]:
             return ToolCall(name=name, arguments=arguments)
 
     # Pattern 1: Standard name + arguments
-    name = d.get("name")
+    name = d.get("name") or d.get("tool_name")
     if name and isinstance(name, str):
-        arguments = d.get("arguments") or d.get("parameters") or {}
+        arguments = d.get("arguments") or d.get("parameters") or d.get("params") or {}
         if isinstance(arguments, str):
             try:
                 arguments = json.loads(arguments)
@@ -332,7 +332,7 @@ def _dict_to_tool_call(d: dict) -> Optional[ToolCall]:
     # Pattern 2: function key as string
     func = d.get("function")
     if func and isinstance(func, str):
-        arguments = d.get("arguments") or d.get("parameters") or {}
+        arguments = d.get("arguments") or d.get("parameters") or d.get("params") or {}
         if isinstance(arguments, str):
             try:
                 arguments = json.loads(arguments)
