@@ -1327,7 +1327,7 @@ class TestExpertCheckFunctionsWithThinkBlocks:
 
 class TestToolCallingEvalProblems:
     def test_tool_calling_problems_count(self):
-        assert len(TOOL_CALLING_PROBLEMS) == 21
+        assert len(TOOL_CALLING_PROBLEMS) == 40
 
     def test_all_category_is_tool_calling(self):
         for p in TOOL_CALLING_PROBLEMS:

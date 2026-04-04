@@ -98,6 +98,9 @@ from mtb.quality_benchmarks.writing_problems import (
 # New structured tool calling problems from tool_calling_problems.py
 from mtb.quality_benchmarks.tool_calling_problems import (
     ARGUMENT_ACCURACY_PROBLEMS,
+    EDGE_CASES_PROBLEMS,
+    FORMAT_COMPLIANCE_PROBLEMS,
+    MULTI_TOOL_PROBLEMS,
     TOOL_CALLING_NEW_PROBLEMS,
     TOOL_SELECTION_PROBLEMS,
     _check_aa_all_required_args,
@@ -108,6 +111,30 @@ from mtb.quality_benchmarks.tool_calling_problems import (
     _check_aa_nested_objects,
     _check_aa_numeric_coercion,
     _check_aa_preserve_exact_strings,
+    _check_ec_deprecated_param,
+    _check_ec_handle_tool_error,
+    _check_ec_idempotency,
+    _check_ec_missing_required_params,
+    _check_ec_no_matching_tool,
+    _check_ec_optional_params,
+    _check_ec_refuse_trivial,
+    _check_ec_reject_harmful,
+    _check_fc_array_params,
+    _check_fc_consistent_format,
+    _check_fc_empty_string,
+    _check_fc_multiple_tools_single_response,
+    _check_fc_null_argument,
+    _check_fc_optional_included,
+    _check_fc_type_matching,
+    _check_fc_valid_json_format,
+    _check_mt_chain_of_three,
+    _check_mt_conditional_planning,
+    _check_mt_mixed,
+    _check_mt_multi_turn_with_result,
+    _check_mt_parallel_different,
+    _check_mt_parallel_independent,
+    _check_mt_sequential_dependent,
+    _check_mt_three_parallel,
     _check_ts_ambiguous_request,
     _check_ts_correct_tool,
     _check_ts_multiple_valid,
@@ -265,6 +292,13 @@ EXPERT_EVAL_PROBLEMS: List[EvalProblem] = (
     + WRITING_EXPERT_PROBLEMS
 )
 
+# Legacy tool calling problems (5 original problems).
+# These are subsumed by the new 40-problem structured set:
+# - simple_tool_call → subsumed by ts_correct_tool (better structured)
+# - calculator_tool → subsumed by mt_multi_turn_with_result (uses calculate tool)
+# - tool_with_json_args → subsumed by fc_valid_json_format (JSON format compliance)
+# - tool_selection → subsumed by ts_ambiguous_request, ts_multiple_valid
+# - multi_step_tool_use → subsumed by mt_sequential_dependent, mt_chain_of_three
 _LEGACY_TOOL_CALLING_PROBLEMS: List[EvalProblem] = [
     EvalProblem(
         category="tool_calling",
@@ -346,6 +380,7 @@ _LEGACY_TOOL_CALLING_PROBLEMS: List[EvalProblem] = [
     ),
 ]
 
-TOOL_CALLING_PROBLEMS: List[EvalProblem] = (
-    _LEGACY_TOOL_CALLING_PROBLEMS + TOOL_CALLING_NEW_PROBLEMS
-)
+# The TOOL_CALLING_PROBLEMS list contains exactly the 40 structured problems.
+# Legacy problems are preserved in _LEGACY_TOOL_CALLING_PROBLEMS for backward
+# compatibility of check functions but are subsumed by the new structured set.
+TOOL_CALLING_PROBLEMS: List[EvalProblem] = TOOL_CALLING_NEW_PROBLEMS
