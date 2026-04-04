@@ -26,6 +26,7 @@ from mtb.quality_benchmarks import (
     TOOL_CALLING_PROBLEMS,
     run_quality_benchmark,
 )
+from mtb.quality_benchmarks.scoring import compute_weighted_score
 from mtb.select_benchmarks import filter_llm_benchmarks
 
 DEFAULT_OUTPUT_ROOT = mtb.REPO_ROOT / "measurements" / "quality_benchmarks"
@@ -132,96 +133,160 @@ def main(
 
     # Print summary
     if output_path.exists():
-        df = pd.read_csv(output_path)
-        print("\n" + "=" * 70)
-        print("QUALITY BENCHMARK RESULTS")
-        print("=" * 70)
+        print_summary(output_path)
 
-        # Summary by model and dtype
-        summary = (
-            df.groupby(["model", "dtype"])
-            .agg(
-                total=("passed", "count"),
-                passed=("passed", "sum"),
-            )
+    print(f"\nResults saved to: {output_path}")
+
+
+def print_summary(output_path: Union[str, Path]) -> None:
+    """Print a comprehensive benchmark summary with weighted and raw scores.
+
+    Reads the CSV at output_path and prints:
+      - Overall weighted score and raw pass rate per model+dtype
+      - Per-category weighted breakdown
+      - Per-category raw pass counts
+      - Tool calling subcategory breakdowns
+      - Failed problems list
+
+    Args:
+        output_path: Path to the quality_results.csv file.
+    """
+    output_path = Path(output_path)
+    df = pd.read_csv(output_path)
+
+    print("\n" + "=" * 70)
+    print("QUALITY BENCHMARK RESULTS")
+    print("=" * 70)
+
+    # ---------------------------------------------------------------
+    # Weighted Score + Raw Pass Rate per model+dtype
+    # ---------------------------------------------------------------
+    model_dtype_groups = df.groupby(["model", "dtype"])
+
+    weighted_rows = []
+    for (model, dtype), group_df in model_dtype_groups:
+        # Build results dict for compute_weighted_score
+        results = {}
+        for _, row in group_df.iterrows():
+            results[row["problem"]] = bool(row["passed"])
+
+        scores = compute_weighted_score(results)
+        total = len(group_df)
+        passed = int(group_df["passed"].sum())
+
+        weighted_rows.append(
+            {
+                "model": model,
+                "dtype": dtype,
+                "weighted_score": f"{scores['weighted_score'] * 100:.1f}%",
+                "raw_pass_rate": f"{scores['raw_pass_rate'] * 100:.1f}% ({passed}/{total})",
+            }
+        )
+
+    ws_df = pd.DataFrame(weighted_rows)
+
+    print("\nWeighted Score (per model+dtype):")
+    ws_pivot = ws_df.pivot(index="model", columns="dtype", values="weighted_score")
+    print(ws_pivot.to_string())
+
+    print("\nRaw Pass Rate (per model+dtype):")
+    raw_pivot = ws_df.pivot(index="model", columns="dtype", values="raw_pass_rate")
+    print(raw_pivot.to_string())
+
+    # ---------------------------------------------------------------
+    # Per-category weighted breakdown
+    # ---------------------------------------------------------------
+    print("\nCategory Weighted Breakdown:")
+    for (model, dtype), group_df in model_dtype_groups:
+        results = {}
+        for _, row in group_df.iterrows():
+            results[row["problem"]] = bool(row["passed"])
+
+        scores = compute_weighted_score(results)
+        cat_scores = scores.get("category_scores", {})
+
+        if cat_scores:
+            print(f"\n  {model} ({dtype}):")
+            for cat_name in sorted(cat_scores.keys()):
+                cat_score = cat_scores[cat_name]
+                # Also show raw counts for this category
+                cat_df = group_df[group_df["category"] == cat_name]
+                cat_passed = int(cat_df["passed"].sum())
+                cat_total = len(cat_df)
+                print(
+                    f"    {cat_name.replace('_', ' ').title():30s} "
+                    f"Weighted: {cat_score * 100:.1f}%  "
+                    f"Raw: {cat_passed}/{cat_total}"
+                )
+
+    # ---------------------------------------------------------------
+    # By category (raw pass counts)
+    # ---------------------------------------------------------------
+    for category in df["category"].unique():
+        cat_df = df[df["category"] == category]
+        cat_summary = (
+            cat_df.groupby(["model", "dtype"])
+            .agg(passed=("passed", "sum"), total=("passed", "count"))
             .reset_index()
         )
-        summary["score"] = summary.apply(
+        cat_summary["score"] = cat_summary.apply(
             lambda r: f"{int(r['passed'])}/{int(r['total'])}", axis=1
         )
+        cat_pivot = cat_summary.pivot(index="model", columns="dtype", values="score")
+        print(f"\n{category.replace('_', ' ').title()}:")
+        print(cat_pivot.to_string())
 
-        # Pivot for easy comparison
-        pivot = summary.pivot(index="model", columns="dtype", values="score")
-        print("\nOverall Pass Rate (majority vote):")
-        print(pivot.to_string())
+    # ---------------------------------------------------------------
+    # Tool calling subcategory breakdowns
+    # ---------------------------------------------------------------
+    tc_df = df[df["category"] == "tool_calling"]
+    if not tc_df.empty:
+        _SUBCATEGORY_MAP = {
+            "ts_": "Tool Selection",
+            "aa_": "Argument Accuracy",
+            "mt_": "Multi-Tool",
+            "ec_": "Edge Cases",
+            "fc_": "Format Compliance",
+        }
 
-        # By category
-        for category in df["category"].unique():
-            cat_df = df[df["category"] == category]
-            cat_summary = (
-                cat_df.groupby(["model", "dtype"])
+        def _get_subcategory(name: str) -> str:
+            for prefix, label in _SUBCATEGORY_MAP.items():
+                if name.startswith(prefix):
+                    return label
+            return "Other"
+
+        tc_df = tc_df.copy()
+        tc_df["subcategory"] = tc_df["problem"].apply(_get_subcategory)
+        print("\nTool Calling Subcategory Breakdown:")
+        for subcat in _SUBCATEGORY_MAP.values():
+            sub_df = tc_df[tc_df["subcategory"] == subcat]
+            if sub_df.empty:
+                continue
+            sub_summary = (
+                sub_df.groupby(["model", "dtype"])
                 .agg(passed=("passed", "sum"), total=("passed", "count"))
                 .reset_index()
             )
-            cat_summary["score"] = cat_summary.apply(
+            sub_summary["score"] = sub_summary.apply(
                 lambda r: f"{int(r['passed'])}/{int(r['total'])}", axis=1
             )
-            cat_pivot = cat_summary.pivot(
+            sub_pivot = sub_summary.pivot(
                 index="model", columns="dtype", values="score"
             )
-            print(f"\n{category.replace('_', ' ').title()}:")
-            print(cat_pivot.to_string())
+            print(f"\n  {subcat}:")
+            print("  " + sub_pivot.to_string().replace("\n", "\n  "))
 
-        # Tool calling subcategory breakdowns
-        tc_df = df[df["category"] == "tool_calling"]
-        if not tc_df.empty:
-            # Determine subcategory from problem name prefix
-            _SUBCATEGORY_MAP = {
-                "ts_": "Tool Selection",
-                "aa_": "Argument Accuracy",
-                "mt_": "Multi-Tool",
-                "ec_": "Edge Cases",
-                "fc_": "Format Compliance",
-            }
-
-            def _get_subcategory(name: str) -> str:
-                for prefix, label in _SUBCATEGORY_MAP.items():
-                    if name.startswith(prefix):
-                        return label
-                return "Other"
-
-            tc_df = tc_df.copy()
-            tc_df["subcategory"] = tc_df["problem"].apply(_get_subcategory)
-            print("\nTool Calling Subcategory Breakdown:")
-            for subcat in _SUBCATEGORY_MAP.values():
-                sub_df = tc_df[tc_df["subcategory"] == subcat]
-                if sub_df.empty:
-                    continue
-                sub_summary = (
-                    sub_df.groupby(["model", "dtype"])
-                    .agg(passed=("passed", "sum"), total=("passed", "count"))
-                    .reset_index()
-                )
-                sub_summary["score"] = sub_summary.apply(
-                    lambda r: f"{int(r['passed'])}/{int(r['total'])}", axis=1
-                )
-                sub_pivot = sub_summary.pivot(
-                    index="model", columns="dtype", values="score"
-                )
-                print(f"\n  {subcat}:")
-                print("  " + sub_pivot.to_string().replace("\n", "\n  "))
-
-        # Show any failures
-        failures = df[~df["passed"]]
-        if not failures.empty:
-            print(f"\nFailed problems ({len(failures)}):")
-            for _, row in failures.iterrows():
-                print(
-                    f"  {row['model']} {row['dtype']}: {row['problem']} "
-                    f"({row['pass_count']}/{row['num_runs']} runs)"
-                )
-
-    print(f"\nResults saved to: {output_path}")
+    # ---------------------------------------------------------------
+    # Show any failures
+    # ---------------------------------------------------------------
+    failures = df[~df["passed"]]
+    if not failures.empty:
+        print(f"\nFailed problems ({len(failures)}):")
+        for _, row in failures.iterrows():
+            print(
+                f"  {row['model']} {row['dtype']}: {row['problem']} "
+                f"({row['pass_count']}/{row['num_runs']} runs)"
+            )
 
 
 if __name__ == "__main__":

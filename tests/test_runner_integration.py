@@ -12,9 +12,11 @@ Verifies:
 - Non-coding pattern-match problems produce identical results
 - Summary prints pass counts per category
 - Tool calling subcategory breakdowns in summary
+- Summary prints both weighted and raw scores per model+dtype
+- Per-category weighted breakdown shown in summary
 
 Maps to validation contract assertions:
-  VAL-RUNNER-001, -002, -003, -004, -005, -009, -010, -011, -012
+  VAL-RUNNER-001, -002, -003, -004, -005, -007, -009, -010, -011, -012
   VAL-CROSS-001, -002, -007, -008
   VAL-TOOLCALL-904
   VAL-MODULE-005
@@ -1325,3 +1327,285 @@ class TestMixedWithToolCalling:
         # Saved CSV also has the column
         saved_df = pd.read_csv(output_path)
         assert "parsed_tool_calls" in saved_df.columns
+
+
+# ---------------------------------------------------------------------------
+# VAL-RUNNER-007: Summary prints both weighted and raw scores
+# ---------------------------------------------------------------------------
+
+
+class TestWeightedScoringSummary:
+    """Runner summary prints weighted score and raw pass rate per model+dtype."""
+
+    def test_summary_contains_weighted_score(self, tmp_path, capsys):
+        """Summary output includes 'Weighted Score' text."""
+        # Create a minimal CSV with mixed results across tiers
+        from mtb.quality_benchmarks import (
+            EVAL_PROBLEMS,
+            HARD_EVAL_PROBLEMS,
+        )
+
+        # Build a DataFrame simulating benchmark results
+        rows = []
+        # Use first 3 easy problems (tier=easy, weight=1x)
+        for i, p in enumerate(EVAL_PROBLEMS[:3]):
+            rows.append(
+                {
+                    "model": "test-model",
+                    "dtype": "int4",
+                    "category": p.category,
+                    "problem": p.name,
+                    "pass_count": 2 if i < 2 else 0,
+                    "num_runs": 3,
+                    "passed": i < 2,  # 2/3 pass
+                }
+            )
+        # Use first 3 hard problems (tier=hard, weight=2x)
+        for i, p in enumerate(HARD_EVAL_PROBLEMS[:3]):
+            rows.append(
+                {
+                    "model": "test-model",
+                    "dtype": "int4",
+                    "category": p.category,
+                    "problem": p.name,
+                    "pass_count": 2 if i < 1 else 0,
+                    "num_runs": 3,
+                    "passed": i < 1,  # 1/3 pass
+                }
+            )
+
+        df = pd.DataFrame(rows)
+        output_path = tmp_path / "quality_results.csv"
+        df.to_csv(output_path, index=False)
+
+        # Import and call the summary function
+        import importlib.util
+
+        spec = importlib.util.spec_from_file_location(
+            "run_quality_benchmarks",
+            str(_REPO_ROOT / "scripts" / "run_quality_benchmarks.py"),
+        )
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+
+        module.print_summary(output_path)
+        captured = capsys.readouterr()
+
+        assert "Weighted Score" in captured.out
+
+    def test_summary_contains_raw_pass_rate(self, tmp_path, capsys):
+        """Summary output includes raw pass rate information."""
+        from mtb.quality_benchmarks import EVAL_PROBLEMS
+
+        rows = []
+        for i, p in enumerate(EVAL_PROBLEMS[:5]):
+            rows.append(
+                {
+                    "model": "test-model",
+                    "dtype": "int4",
+                    "category": p.category,
+                    "problem": p.name,
+                    "pass_count": 2 if i < 3 else 0,
+                    "num_runs": 3,
+                    "passed": i < 3,  # 3/5 pass
+                }
+            )
+
+        df = pd.DataFrame(rows)
+        output_path = tmp_path / "quality_results.csv"
+        df.to_csv(output_path, index=False)
+
+        import importlib.util
+
+        spec = importlib.util.spec_from_file_location(
+            "run_quality_benchmarks",
+            str(_REPO_ROOT / "scripts" / "run_quality_benchmarks.py"),
+        )
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+
+        module.print_summary(output_path)
+        captured = capsys.readouterr()
+
+        # Should contain raw pass rate as "X/Y" format
+        assert "3/5" in captured.out
+        assert "Raw" in captured.out
+
+    def test_summary_per_category_weighted_breakdown(self, tmp_path, capsys):
+        """Summary shows per-category weighted breakdown."""
+        from mtb.quality_benchmarks import (
+            EVAL_PROBLEMS,
+            HARD_EVAL_PROBLEMS,
+        )
+
+        rows = []
+        # Mix easy and hard coding + reasoning problems
+        easy_coding = [p for p in EVAL_PROBLEMS if p.category == "coding"]
+        hard_coding = [p for p in HARD_EVAL_PROBLEMS if p.category == "coding"]
+        easy_reasoning = [p for p in EVAL_PROBLEMS if p.category == "reasoning"]
+
+        for p in easy_coding[:2]:
+            rows.append(
+                {
+                    "model": "test-model",
+                    "dtype": "int4",
+                    "category": p.category,
+                    "problem": p.name,
+                    "pass_count": 2,
+                    "num_runs": 3,
+                    "passed": True,
+                }
+            )
+        for p in hard_coding[:2]:
+            rows.append(
+                {
+                    "model": "test-model",
+                    "dtype": "int4",
+                    "category": p.category,
+                    "problem": p.name,
+                    "pass_count": 0,
+                    "num_runs": 3,
+                    "passed": False,
+                }
+            )
+        for p in easy_reasoning[:2]:
+            rows.append(
+                {
+                    "model": "test-model",
+                    "dtype": "int4",
+                    "category": p.category,
+                    "problem": p.name,
+                    "pass_count": 2,
+                    "num_runs": 3,
+                    "passed": True,
+                }
+            )
+
+        df = pd.DataFrame(rows)
+        output_path = tmp_path / "quality_results.csv"
+        df.to_csv(output_path, index=False)
+
+        import importlib.util
+
+        spec = importlib.util.spec_from_file_location(
+            "run_quality_benchmarks",
+            str(_REPO_ROOT / "scripts" / "run_quality_benchmarks.py"),
+        )
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+
+        module.print_summary(output_path)
+        captured = capsys.readouterr()
+
+        # Should show per-category weighted breakdown
+        assert "Category Weighted Breakdown" in captured.out
+        # Should reference coding and reasoning categories
+        assert "coding" in captured.out.lower() or "Coding" in captured.out
+        assert "reasoning" in captured.out.lower() or "Reasoning" in captured.out
+
+    def test_weighted_and_raw_scores_differ(self, tmp_path, capsys):
+        """Weighted and raw scores differ when tier pass rates differ."""
+        from mtb.quality_benchmarks import EVAL_PROBLEMS, HARD_EVAL_PROBLEMS
+
+        rows = []
+        # Easy: all 5 pass (weight=1x)
+        for p in EVAL_PROBLEMS[:5]:
+            rows.append(
+                {
+                    "model": "test-model",
+                    "dtype": "int4",
+                    "category": p.category,
+                    "problem": p.name,
+                    "pass_count": 3,
+                    "num_runs": 3,
+                    "passed": True,
+                }
+            )
+        # Hard: all 5 fail (weight=2x)
+        for p in HARD_EVAL_PROBLEMS[:5]:
+            rows.append(
+                {
+                    "model": "test-model",
+                    "dtype": "int4",
+                    "category": p.category,
+                    "problem": p.name,
+                    "pass_count": 0,
+                    "num_runs": 3,
+                    "passed": False,
+                }
+            )
+
+        df = pd.DataFrame(rows)
+        output_path = tmp_path / "quality_results.csv"
+        df.to_csv(output_path, index=False)
+
+        import importlib.util
+
+        spec = importlib.util.spec_from_file_location(
+            "run_quality_benchmarks",
+            str(_REPO_ROOT / "scripts" / "run_quality_benchmarks.py"),
+        )
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+
+        module.print_summary(output_path)
+        captured = capsys.readouterr()
+
+        # Raw: 5/10 = 50.0%, Weighted: (1*5)/(1*5+2*5) = 5/15 = 33.3%
+        # Both should appear and be different
+        assert "50.0%" in captured.out  # raw pass rate
+        assert "33.3%" in captured.out  # weighted score
+
+    def test_summary_multiple_models(self, tmp_path, capsys):
+        """Summary shows weighted scores for multiple model+dtype combinations."""
+        from mtb.quality_benchmarks import EVAL_PROBLEMS
+
+        rows = []
+        for p in EVAL_PROBLEMS[:3]:
+            # Model A int4
+            rows.append(
+                {
+                    "model": "model-a",
+                    "dtype": "int4",
+                    "category": p.category,
+                    "problem": p.name,
+                    "pass_count": 3,
+                    "num_runs": 3,
+                    "passed": True,
+                }
+            )
+            # Model B int4
+            rows.append(
+                {
+                    "model": "model-b",
+                    "dtype": "int4",
+                    "category": p.category,
+                    "problem": p.name,
+                    "pass_count": 0,
+                    "num_runs": 3,
+                    "passed": False,
+                }
+            )
+
+        df = pd.DataFrame(rows)
+        output_path = tmp_path / "quality_results.csv"
+        df.to_csv(output_path, index=False)
+
+        import importlib.util
+
+        spec = importlib.util.spec_from_file_location(
+            "run_quality_benchmarks",
+            str(_REPO_ROOT / "scripts" / "run_quality_benchmarks.py"),
+        )
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+
+        module.print_summary(output_path)
+        captured = capsys.readouterr()
+
+        # Both models should appear in the output
+        assert "model-a" in captured.out
+        assert "model-b" in captured.out
+        # Model A should have 100% weighted score, Model B should have 0%
+        assert "100.0%" in captured.out
+        assert "0.0%" in captured.out
