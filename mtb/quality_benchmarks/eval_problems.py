@@ -95,7 +95,30 @@ from mtb.quality_benchmarks.writing_problems import (
 )
 
 # --- Tool calling problems and check functions ---
-# Tool calling problems stay in this file for now (milestone 2 will split them out)
+# New structured tool calling problems from tool_calling_problems.py
+from mtb.quality_benchmarks.tool_calling_problems import (
+    ARGUMENT_ACCURACY_PROBLEMS,
+    TOOL_CALLING_NEW_PROBLEMS,
+    TOOL_SELECTION_PROBLEMS,
+    _check_aa_all_required_args,
+    _check_aa_boolean_natural_lang,
+    _check_aa_date_iso_format,
+    _check_aa_email_extraction,
+    _check_aa_enum_values,
+    _check_aa_nested_objects,
+    _check_aa_numeric_coercion,
+    _check_aa_preserve_exact_strings,
+    _check_ts_ambiguous_request,
+    _check_ts_correct_tool,
+    _check_ts_multiple_valid,
+    _check_ts_nested_descriptions,
+    _check_ts_none_selection,
+    _check_ts_parameter_based,
+    _check_ts_similar_names,
+    _check_ts_specialized_vs_general,
+)
+
+# Legacy tool calling check functions (kept for backward compatibility)
 from mtb.quality_benchmarks.utils import _contains_any as __contains_any
 from mtb.quality_benchmarks.utils import _strip_thinking as __strip_thinking
 
@@ -242,7 +265,7 @@ EXPERT_EVAL_PROBLEMS: List[EvalProblem] = (
     + WRITING_EXPERT_PROBLEMS
 )
 
-TOOL_CALLING_PROBLEMS: List[EvalProblem] = [
+_LEGACY_TOOL_CALLING_PROBLEMS: List[EvalProblem] = [
     EvalProblem(
         category="tool_calling",
         name="simple_tool_call",
@@ -322,3 +345,7 @@ TOOL_CALLING_PROBLEMS: List[EvalProblem] = [
         max_tokens=512,
     ),
 ]
+
+TOOL_CALLING_PROBLEMS: List[EvalProblem] = (
+    _LEGACY_TOOL_CALLING_PROBLEMS + TOOL_CALLING_NEW_PROBLEMS
+)

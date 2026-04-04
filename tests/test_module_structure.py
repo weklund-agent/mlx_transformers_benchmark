@@ -71,7 +71,7 @@ class TestEvalProblemsBackwardCompat:
         assert len(EVAL_PROBLEMS) == 15
         assert len(HARD_EVAL_PROBLEMS) == 10
         assert len(EXPERT_EVAL_PROBLEMS) == 16
-        assert len(TOOL_CALLING_PROBLEMS) == 5
+        assert len(TOOL_CALLING_PROBLEMS) == 21
 
     def test_import_check_functions(self):
         """All _check_* functions must be importable from eval_problems."""
@@ -377,7 +377,7 @@ class TestProblemIntegrity:
             + len(EXPERT_EVAL_PROBLEMS)
             + len(TOOL_CALLING_PROBLEMS)
         )
-        assert total == 46
+        assert total == 62
 
     def test_no_duplicate_names_across_all_lists(self):
         """No duplicate problem names across all four problem lists."""

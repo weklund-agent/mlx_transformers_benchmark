@@ -63,6 +63,7 @@ from mtb.quality_benchmarks.eval_problems import (
 # _strip_thinking
 # ---------------------------------------------------------------------------
 
+
 class TestStripThinking:
     def test_strips_closed_think_block(self):
         response = "<think>Let me reason about this.</think>The answer is 42."
@@ -165,6 +166,7 @@ class TestStripThinking:
 # _contains_any
 # ---------------------------------------------------------------------------
 
+
 class TestContainsAny:
     def test_matches_present_target(self):
         assert _contains_any("hello world", ["hello"]) is True
@@ -190,6 +192,7 @@ class TestContainsAny:
 # Check functions – passing responses
 # ---------------------------------------------------------------------------
 
+
 class TestCheckFunctionsPass:
     """Each check function should return True for a realistic correct response."""
 
@@ -208,8 +211,7 @@ class TestCheckFunctionsPass:
 
     def test_reverse_string_pass(self):
         response = (
-            "Approach 1: return s[::-1]\n"
-            "Approach 2: return ''.join(reversed(s))"
+            "Approach 1: return s[::-1]\n" "Approach 2: return ''.join(reversed(s))"
         )
         assert _check_reverse_string(response) is True
 
@@ -300,6 +302,7 @@ class TestCheckFunctionsPass:
 # Check functions – failing responses
 # ---------------------------------------------------------------------------
 
+
 class TestCheckFunctionsFail:
     """Each check function should return False for a clearly wrong response."""
 
@@ -377,6 +380,7 @@ class TestCheckFunctionsFail:
 # Check functions – think block stripping
 # ---------------------------------------------------------------------------
 
+
 class TestCheckFunctionsWithThinkBlocks:
     """Verify that check functions strip <think> blocks before evaluation."""
 
@@ -408,22 +412,20 @@ class TestCheckFunctionsWithThinkBlocks:
 
     def test_json_output_with_think_block(self):
         response = (
-            '<think>I need to produce valid JSON.</think>\n'
+            "<think>I need to produce valid JSON.</think>\n"
             '{"name": "Bob", "age": 25, "hobbies": ["hiking"]}'
         )
         assert _check_json_output(response) is True
 
     def test_no_thinking_with_think_block(self):
-        response = (
-            "<think>The user wants the capital of France.</think>"
-            "Paris"
-        )
+        response = "<think>The user wants the capital of France.</think>" "Paris"
         assert _check_no_thinking(response) is True
 
 
 # ---------------------------------------------------------------------------
 # Check functions – Qwen-style "Thinking Process:" preamble
 # ---------------------------------------------------------------------------
+
 
 class TestCheckFunctionsWithThinkingPreamble:
     """Qwen 3.5 and similar models emit a freeform 'Thinking Process:' preamble.
@@ -475,6 +477,7 @@ class TestCheckFunctionsWithThinkingPreamble:
 # EvalProblem dataclass and EVAL_PROBLEMS list
 # ---------------------------------------------------------------------------
 
+
 class TestEvalProblems:
     def test_eval_problems_count(self):
         assert len(EVAL_PROBLEMS) == 15
@@ -521,6 +524,7 @@ class TestEvalProblems:
 # ---------------------------------------------------------------------------
 # Additional edge cases for specific check functions
 # ---------------------------------------------------------------------------
+
 
 class TestCheckFunctionEdgeCases:
     def test_fizzbuzz_passes_with_mod_and_15(self):
@@ -574,8 +578,13 @@ class TestCheckFunctionEdgeCases:
         assert _check_fibonacci(response) is True
 
     def test_word_constraint_various_phrasings(self):
-        assert _check_word_constraint("ML uses algorithms to find patterns in data.") is True
-        assert _check_word_constraint("It is a subset of artificial intelligence.") is True
+        assert (
+            _check_word_constraint("ML uses algorithms to find patterns in data.")
+            is True
+        )
+        assert (
+            _check_word_constraint("It is a subset of artificial intelligence.") is True
+        )
 
     def test_sequence_bold_markdown(self):
         assert _check_sequence_problem("The answer is **42**.") is True
@@ -584,6 +593,7 @@ class TestCheckFunctionEdgeCases:
 # ---------------------------------------------------------------------------
 # Hard problem structure validation
 # ---------------------------------------------------------------------------
+
 
 class TestHardEvalProblems:
     def test_hard_eval_problems_count(self):
@@ -619,6 +629,7 @@ class TestHardEvalProblems:
 # ---------------------------------------------------------------------------
 # Hard check functions - passing cases
 # ---------------------------------------------------------------------------
+
 
 class TestHardCheckFunctionsPass:
     def test_lru_cache_pass(self):
@@ -762,6 +773,7 @@ class TestHardCheckFunctionsPass:
 # Hard check functions - failing cases
 # ---------------------------------------------------------------------------
 
+
 class TestHardCheckFunctionsFail:
     def test_lru_cache_fail(self):
         assert _check_lru_cache("Here's a simple dictionary cache.") is False
@@ -770,7 +782,10 @@ class TestHardCheckFunctionsFail:
         assert _check_flatten_nested("Just use a for loop to iterate.") is False
 
     def test_longest_palindrome_substring_fail(self):
-        assert _check_longest_palindrome_substring("Check if a string is a palindrome.") is False
+        assert (
+            _check_longest_palindrome_substring("Check if a string is a palindrome.")
+            is False
+        )
 
     def test_calculator_fail(self):
         assert _check_calculator("Use eval() to evaluate the expression.") is False
@@ -801,6 +816,7 @@ class TestHardCheckFunctionsFail:
 # ---------------------------------------------------------------------------
 # Hard check functions - with think blocks
 # ---------------------------------------------------------------------------
+
 
 class TestHardCheckFunctionsWithThinkBlocks:
     def test_lru_cache_with_think_block(self):
@@ -835,6 +851,7 @@ class TestHardCheckFunctionsWithThinkBlocks:
 # ===========================================================================
 # Expert problem structure validation
 # ===========================================================================
+
 
 class TestExpertEvalProblems:
     def test_expert_eval_problems_count(self):
@@ -879,6 +896,7 @@ class TestExpertEvalProblems:
 # ===========================================================================
 # Expert check functions - passing cases
 # ===========================================================================
+
 
 class TestExpertCheckFunctionsPass:
     # --- Math ---
@@ -1030,7 +1048,7 @@ class TestExpertCheckFunctionsPass:
 
     def test_library_schema_pass(self):
         response = (
-            '{\n'
+            "{\n"
             '  "$schema": "https://json-schema.org/draft/2020-12/schema",\n'
             '  "definitions": {\n'
             '    "Book": {\n'
@@ -1039,29 +1057,29 @@ class TestExpertCheckFunctionsPass:
             '        "id": {"type": "string"},\n'
             '        "title": {"type": "string"},\n'
             '        "author_id": {"type": "string"}\n'
-            '      },\n'
+            "      },\n"
             '      "required": ["id", "title", "author_id"]\n'
-            '    },\n'
+            "    },\n"
             '    "Author": {\n'
             '      "type": "object",\n'
             '      "properties": {\n'
             '        "id": {"type": "string"},\n'
             '        "name": {"type": "string"},\n'
             '        "book_ids": {"type": "array"}\n'
-            '      },\n'
+            "      },\n"
             '      "required": ["id", "name"]\n'
-            '    },\n'
+            "    },\n"
             '    "Loan": {\n'
             '      "type": "object",\n'
             '      "properties": {\n'
             '        "id": {"type": "string"},\n'
             '        "book_id": {"type": "string"},\n'
             '        "returned": {"type": "boolean"}\n'
-            '      },\n'
+            "      },\n"
             '      "required": ["id", "book_id"]\n'
-            '    }\n'
-            '  }\n'
-            '}\n'
+            "    }\n"
+            "  }\n"
+            "}\n"
         )
         assert _check_library_schema(response) is True
 
@@ -1132,6 +1150,7 @@ class TestExpertCheckFunctionsPass:
 # ===========================================================================
 # Expert check functions - failing cases
 # ===========================================================================
+
 
 class TestExpertCheckFunctionsFail:
     # --- Math ---
@@ -1238,6 +1257,7 @@ class TestExpertCheckFunctionsFail:
 # Expert check functions - with think blocks
 # ===========================================================================
 
+
 class TestExpertCheckFunctionsWithThinkBlocks:
     def test_inclusion_exclusion_with_think_block(self):
         response = (
@@ -1304,9 +1324,10 @@ class TestExpertCheckFunctionsWithThinkBlocks:
 # Tool calling problem structure validation
 # ===========================================================================
 
+
 class TestToolCallingEvalProblems:
     def test_tool_calling_problems_count(self):
-        assert len(TOOL_CALLING_PROBLEMS) == 5
+        assert len(TOOL_CALLING_PROBLEMS) == 21
 
     def test_all_category_is_tool_calling(self):
         for p in TOOL_CALLING_PROBLEMS:
@@ -1333,44 +1354,36 @@ class TestToolCallingEvalProblems:
 # Tool calling check functions - passing cases
 # ===========================================================================
 
+
 class TestToolCallingCheckFunctionsPass:
     def test_weather_structured_json(self):
-        response = (
-            '{"name": "get_weather", "arguments": {"location": "San Francisco"}}'
-        )
+        response = '{"name": "get_weather", "arguments": {"location": "San Francisco"}}'
         assert _check_tool_call_weather(response) is True
 
     def test_weather_natural_language(self):
         response = (
             "I'll call the get_weather function with the location "
-            "parameter set to \"San Francisco\"."
+            'parameter set to "San Francisco".'
         )
         assert _check_tool_call_weather(response) is True
 
     def test_weather_tool_use_format(self):
         response = (
-            "<tool_use>\n"
-            "get_weather(location=\"San Francisco\")\n"
-            "</tool_use>"
+            "<tool_use>\n" 'get_weather(location="San Francisco")\n' "</tool_use>"
         )
         assert _check_tool_call_weather(response) is True
 
     def test_calculator_structured_json(self):
-        response = (
-            '{"name": "calculate", "arguments": {"expression": "347 * 823"}}'
-        )
+        response = '{"name": "calculate", "arguments": {"expression": "347 * 823"}}'
         assert _check_tool_call_calculator(response) is True
 
     def test_calculator_with_result(self):
-        response = (
-            "function_call: calculate(expression=\"347*823\")\n"
-            "Result: 285481"
-        )
+        response = 'function_call: calculate(expression="347*823")\n' "Result: 285481"
         assert _check_tool_call_calculator(response) is True
 
     def test_multi_step_plan(self):
         response = (
-            "Step 1: Call search_web(query=\"AI regulation news 2026\")\n"
+            'Step 1: Call search_web(query="AI regulation news 2026")\n'
             "Step 2: Call summarize_text(text=<results from step 1>)"
         )
         assert _check_tool_call_multi_step(response) is True
@@ -1399,8 +1412,8 @@ class TestToolCallingCheckFunctionsPass:
     def test_selection_picks_send_email(self):
         response = (
             "I should use send_email because the user wants to send a message.\n"
-            "send_email(recipient=\"alice\", subject=\"Project Deadline\", "
-            "body=\"The project deadline is tomorrow.\")"
+            'send_email(recipient="alice", subject="Project Deadline", '
+            'body="The project deadline is tomorrow.")'
         )
         assert _check_tool_call_selection(response) is True
 
@@ -1416,6 +1429,7 @@ class TestToolCallingCheckFunctionsPass:
 # Tool calling check functions - failing cases
 # ===========================================================================
 
+
 class TestToolCallingCheckFunctionsFail:
     def test_weather_no_location(self):
         response = "I'll call get_weather to check the conditions."
@@ -1426,7 +1440,7 @@ class TestToolCallingCheckFunctionsFail:
         assert _check_tool_call_weather(response) is False
 
     def test_calculator_wrong_expression(self):
-        response = "function_call: calculate(input=\"2 + 2\")"
+        response = 'function_call: calculate(input="2 + 2")'
         assert _check_tool_call_calculator(response) is False
 
     def test_calculator_no_tool_ref(self):
@@ -1434,7 +1448,7 @@ class TestToolCallingCheckFunctionsFail:
         assert _check_tool_call_calculator(response) is False
 
     def test_multi_step_only_search(self):
-        response = "I would call search_web(query=\"AI regulation\") to find articles."
+        response = 'I would call search_web(query="AI regulation") to find articles.'
         assert _check_tool_call_multi_step(response) is False
 
     def test_multi_step_only_summarize(self):
@@ -1453,13 +1467,14 @@ class TestToolCallingCheckFunctionsFail:
         assert _check_tool_call_selection(response) is False
 
     def test_selection_picks_reminder(self):
-        response = "set_reminder(message=\"Tell Alice about deadline\", time=\"tomorrow\")"
+        response = 'set_reminder(message="Tell Alice about deadline", time="tomorrow")'
         assert _check_tool_call_selection(response) is False
 
 
 # ===========================================================================
 # Tool calling check functions - with think blocks
 # ===========================================================================
+
 
 class TestToolCallingCheckFunctionsWithThinkBlocks:
     def test_weather_with_think_block(self):
@@ -1495,7 +1510,7 @@ class TestToolCallingCheckFunctionsWithThinkBlocks:
     def test_multi_step_with_think_block(self):
         response = (
             "<think>First search for AI regulation news, then summarize.</think>\n"
-            "1. search_web(query=\"AI regulation 2026\")\n"
+            '1. search_web(query="AI regulation 2026")\n'
             "2. summarize_text(text=search_results)"
         )
         assert _check_tool_call_multi_step(response) is True
