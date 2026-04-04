@@ -216,6 +216,40 @@ Results can be found at
 <!-- END BENCHMARK TABLE -->
 
 
+## Quality Benchmarks
+
+Quality scores measure how well each model handles agentic coding tasks. The suite includes **81 problems** across coding, reasoning, math, instruction following, writing, and tool calling.
+
+**Methodology:**
+- **Code execution:** 18 coding problems use real test cases executed in a sandbox — no keyword matching
+- **Tool calling:** 40 structured tests across 5 categories (Tool Selection, Argument Accuracy, Multi-Tool, Edge Cases, Format Compliance)
+- **Weighted scoring:** Easy (1×), Hard (2×), Expert (3×), Tool Calling (3×) — harder problems count more
+- **Contamination resistance:** 12 problems support parameterized variants (`--use_variants` flag) to reduce memorization effects
+- **Pluggable problem source:** `ProblemSource` interface supports future integration with LiveCodeBench for fresh problems
+
+**Running quality benchmarks:**
+```bash
+# All difficulties, single model
+uv run python scripts/run_quality_benchmarks.py \
+    --difficulty all \
+    --run_only_benchmarks '["model-name"]' \
+    --dtypes '["int4"]' \
+    --num_runs 3
+
+# With parameterized variants for contamination resistance
+uv run python scripts/run_quality_benchmarks.py \
+    --difficulty all --use_variants \
+    --run_only_benchmarks '["model-name"]' \
+    --dtypes '["int4"]' \
+    --num_runs 3
+```
+
+**Integration tests** (requires ~3.5 GiB for Gemma 4 E2B-it int4):
+```bash
+uv run pytest tests/ -m integration
+```
+
+
 ## Installation
 
 Before you start, you will need:
