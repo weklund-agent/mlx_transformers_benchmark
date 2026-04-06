@@ -1,22 +1,8 @@
-# Benchmarking transformer operators on Apple silicon
+# MLX LLM Benchmarks for Agentic Coding on Apple Silicon
 
 [![tests-Mac](https://github.com/weklund-agent/mlx_transformers_benchmark/actions/workflows/tests-mac.yaml/badge.svg)](https://github.com/weklund-agent/mlx_transformers_benchmark/actions/workflows/tests-mac.yaml)
 
-Let's say you're interested in performing LLM inference on Apple hardware. You care about speed, but don't know which model or framework to pick.
-
-Do you:
-- use [PyTorch with the Metal Performance Shaders backend](https://pytorch.org/docs/stable/notes/mps.html),
-- use Apple's [MLX, built directly for Metal](https://github.com/ml-explore/mlx),
-- use `LM Studio` and its `llama.cpp` engine for Metal, 
-- use `Ollama`,
-- or use `llama.cpp` directly?
-
-We aim to help you make this choice, by benchmarking inference for a few common models and operators. 
-Results can be found at 
-[https://weklund-agent.github.io/mlx_transformers_benchmark/](https://weklund-agent.github.io/mlx_transformers_benchmark/).
-
-
-## Agentic Coding Model Benchmarks (MLX on Apple Silicon)
+Which local LLM runs best for coding on your Mac? Speed and quality benchmarks for MLX models, tested on real Apple hardware.
 
 <!-- BEGIN BENCHMARK TABLE -->
 
@@ -215,186 +201,44 @@ Results can be found at
 
 <!-- END BENCHMARK TABLE -->
 
-### How Quality Scores Are Calculated
+## Reading the Table
 
-The **Quality** column shows a weighted score that emphasizes harder problems. Each problem belongs to a difficulty tier with a multiplier:
+**Speed** is measured as generation tokens/sec at int4 quantization with a 1024-token prompt. **Bold** tok/s values are within 70% of the fastest model on that hardware.
 
-| Tier | Problems | Weight | What it tests |
-|---|---:|---:|---|
-| Easy | 15 | 1x | Basic coding, simple reasoning, writing |
-| Hard | 10 | 2x | Multi-step coding, harder math and reasoning |
-| Expert | 16 | 3x | Complex algorithms, advanced reasoning, edge cases |
-| Tool Calling | 40 | 3x | Structured tool selection, argument accuracy, multi-tool |
+**Quality** is a weighted score across 81 problems designed for agentic coding. Harder problems count more: Easy (1x), Hard (2x), Expert (3x), Tool Calling (3x). When you see `67.5% (raw 73.0%)`, the first number is the weighted score and the parenthetical is the flat pass rate. Each problem runs 3 times with majority vote. **Coding**, **Tool Calling**, and **Reasoning** columns show raw pass counts for those categories.
 
-**Weighted score** = sum(weight x passed per tier) / sum(weight x total per tier)
+**Min HW** is the minimum RAM needed to run the model at int4 without swapping.
 
-For example, a model that passes all Easy problems but fails all Expert and Tool Calling problems scores ~11%, not 19% — because the harder tiers carry 3x weight. This reflects agentic coding use cases where tool calling and complex reasoning matter most.
-
-When a raw pass rate is shown in parentheses (e.g. `67.5% (raw 73.0%)`), the first number is the weighted score and the parenthetical is the unweighted pass rate across all problems. Each problem is run 3 times with majority vote to reduce noise.
-
-Problems span 6 categories: coding (sandbox-executed with real test cases), reasoning, math, instruction following, writing, and tool calling (parsed for structured tool call correctness). When `--use_variants` is enabled, 12 parameterized problems generate fresh variants with different concrete values to resist benchmark contamination.
-
-For full methodology details, see [Quality Benchmark Methodology](QUALITY_METHODOLOGY.md).
+For full scoring methodology, see [QUALITY_METHODOLOGY.md](QUALITY_METHODOLOGY.md).
 
 
-## Quality Benchmarks
+## Quick Start
 
-Quality scores measure how well each model handles agentic coding tasks. The suite includes **81 problems** across 6 categories (coding, reasoning, math, instruction following, writing, tool calling), evaluated through code execution, structured tool call parsing, and pattern matching. Scores are weighted by difficulty — Easy (1x), Hard (2x), Expert (3x), Tool Calling (3x) — so harder problems count more. For detailed methodology, see [Quality Benchmark Methodology](QUALITY_METHODOLOGY.md).
-
-**Running quality benchmarks:**
 ```bash
-# All difficulties, single model
+git clone git@github.com:weklund-agent/mlx_transformers_benchmark.git
+cd mlx_transformers_benchmark
+make setup
+
+# Run speed benchmarks
+uv run python scripts/run_llm_benchmarks.py \
+    --run_only_benchmarks '["gemma-4-e2b-it"]' \
+    --dtypes '["int4"]' --num_iterations 3
+
+# Run quality benchmarks
 uv run python scripts/run_quality_benchmarks.py \
     --difficulty all \
-    --run_only_benchmarks '["model-name"]' \
-    --dtypes '["int4"]' \
-    --num_runs 3
+    --run_only_benchmarks '["gemma-4-e2b-it"]' \
+    --dtypes '["int4"]' --num_runs 3
 
-# With parameterized variants for contamination resistance
-uv run python scripts/run_quality_benchmarks.py \
-    --difficulty all --use_variants \
-    --run_only_benchmarks '["model-name"]' \
-    --dtypes '["int4"]' \
-    --num_runs 3
+# Update the README table
+uv run python scripts/update_readme_table.py
 ```
 
-**Integration tests** (requires ~3.5 GiB for Gemma 4 E2B-it int4):
-```bash
-uv run pytest tests/ -m integration
-```
+See [CONTRIBUTING.md](CONTRIBUTING.md) for full setup instructions and how to submit results.
 
 
-## Installation
+## Related
 
-Before you start, you will need:
- - [`uv`](https://github.com/astral-sh/uv) to manage dependencies, available as [homebrew](https://formulae.brew.sh/formula/uv)
-
- To (optionally) benchmark `Metal+llama.cpp` models in common interfaces, you may also need:
- - [`LM Studio`](https://lmstudio.ai/)
- - [`Ollama`](https://ollama.com/)
-
-To get started:
-
-1. Clone the repo:
-   ```
-   git clone git@github.com:weklund-agent/mlx_transformers_benchmark.git
-   cd mlx_transformers_benchmark
-   ```
-
-2. Set up a python3.11 virtual environment using 
-   [`uv`](https://github.com/astral-sh/uv):
-   ```
-   make setup
-   ```
-
-3. For good measure, run the tests. This also tells you whether we can use the GPU.
-   ```
-   make test
-   ```
-
-3. Run benchmarking, here for the 0.5B parameter `Qwen2.5` model:
-   ```
-   uv run python scripts/run_llm_benchmarks.py \
-      --run_only_benchmarks qwen-2.5-0.5b-it \
-      --dtypes \["int4","int8"\] \
-      --num_iterations 3 
-   ```
-   This creates a new result in the `measurements` folder.
-
-   Optionally, to run a full benchmark for `bfloat16`, `int8`, `int4` datatypes, you can use:
-   ``` 
-   make run-llm-benchmarks
-   ```
-   This will take a longer time however, so make sure you aren't busy!
-
-4. To create a HTML report of all available measurements and open the index page:
-   ```
-   make show-llm
-   ```
-   This should open a page similar to 
-   [https://weklund-agent.github.io/mlx_transformers_benchmark/](https://weklund-agent.github.io/mlx_transformers_benchmark/).
-
-
-## Relationship to mlx-stack
-
-This benchmark suite is the **data source** for [mlx-stack](https://github.com/weklund/mlx-stack), a tool that runs multiple LLMs simultaneously on Apple Silicon behind a single OpenAI-compatible endpoint.
-
-### How the two repos work together
-
-```
-mlx_transformers_benchmark          mlx-stack
-┌─────────────────────────┐         ┌──────────────────────────┐
-│  Speed benchmarks       │         │  Model catalog           │
-│  (generation_tps,       │  JSON   │  (catalog/*.yaml)        │
-│   prompt_tps, memory)   │───────▶ │                          │
-│                         │         │  Recommendation engine   │
-│  Quality benchmarks     │         │  (scoring.py)            │
-│  (pass rates by         │         │                          │
-│   category + difficulty)│         │  Hardware-aware model    │
-│                         │         │  selection for init/setup │
-└─────────────────────────┘         └──────────────────────────┘
-```
-
-1. **Benchmark** models here using `make run-llm-benchmarks` and `make run-quality-benchmarks`
-2. **Export** aggregated results with `python scripts/export_for_mlx_stack.py`
-3. **Import** into mlx-stack's catalog, where the recommendation engine uses generation speed, memory usage, and quality pass rates to decide which models to assign to each tier
-
-### Export script
-
-```bash
-# Generate benchmark_data.json from all measurements
-python scripts/export_for_mlx_stack.py
-
-# Generate and copy directly into the mlx-stack data directory
-python scripts/export_for_mlx_stack.py --copy-to ../mlx-stack/src/mlx_stack/data/
-```
-
-The export produces a single JSON keyed by HuggingFace repo ID (e.g. `mlx-community/Qwen3.5-9B-4bit`) containing speed metrics per hardware profile and quality pass rates per category.
-
-
-## Contributing
-
-If you have an Apple device, additional measurements are always welcome! 
-The easiest way to contribute is to 
-[fork the repo](https://github.com/weklund-agent/mlx_transformers_benchmark/fork), 
-and run benchmarks for common LLMs and/or operators. 
-
-See [CONTRIBUTING.md](./CONTRIBUTING.md) for more info.
-
-
-### On reproducibility
-
-As Apple machines share memory with other background processes, these benchmarks are not exact, certainly not for Macbooks. 
-Still, the numbers should give a decent idea of the performance to expect. 
-
-Although the default parameters do not result in thermal throttling for a Macbook M4 Pro, older
-machines may have trouble with the heavier models and operators. We do try to skip large models,
-but you may still have too little RAM and fall back on swap space. If you see huge memory pressure 
-or outlier measurements, do take a closer look!
-
-> [!NOTE] 
-> For a large number of iterations, the GPU will certainly heat up. If needed, you can 
-increase the cooldown period using the `cooldown_time_fraction` argument. Monitoring GPU 
-temperature programatically requires admin privileges, but you can use third-party apps like 
-[stats](https://github.com/exelban/stats), also available as 
-[homebrew](https://formulae.brew.sh/cask/stats).
-
-
-### Notes
-
-Apple silicon is fairly cost-effective for LLM inference due to its unified memory architecture.
-As LLM inference is mostly memory-bound for low batch sizes, devices with high memory bandwidth 
-typically obtain 
-[high tokens/sec in inference benchmarks](https://github.com/ggml-org/llama.cpp/discussions/4167).
-
-This benchmark focuses on the inference time of easy-to-run LLMs and unquantized transformer ops, primarily 
-useful when running inference locally, or when finetuning custom models for (or on!) Apple devices. 
-
-You may also be interested in:
-
-- Tristan Bilot's comprehensive benchmark for fundamental operators for `mlx`, 
-  `torch+mps`, and `torch+cuda` ([link](https://github.com/TristanBilot/mlx-benchmark)). Placing both `mlx` 
-  and `torch` functions in a single benchmark class makes it easy to see the differences between the 
-  two, and we adopt the same strategy here.
-
-- [The work of Feng et al.](https://arxiv.org/pdf/2501.14925) comparing training on Nvidia cards vs Apple Silicon. 
+- **[mlx-stack](https://github.com/weklund/mlx-stack)** -- runs multiple MLX models behind a single OpenAI-compatible endpoint. This benchmark suite feeds its model catalog.
+- **[QUALITY_METHODOLOGY.md](QUALITY_METHODOLOGY.md)** -- detailed breakdown of the quality benchmark suite, scoring formula, and problem categories.
+- **[CONTRIBUTING.md](CONTRIBUTING.md)** -- how to add models, run benchmarks, and submit measurements.
