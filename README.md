@@ -12,9 +12,9 @@ Which local LLM runs best for coding on your Mac? Speed and quality benchmarks f
 
 ### Best Models by Hardware
 
-| Hardware | Best Overall | Best Fast | Best Coder |
+| Hardware | Best Quality | Best Balance | Best Speed |
 |---|---|---|---|
-| **M4 Pro 64GB** | Gemma 4 31B-it (13 tok/s, 72.2%) | Gemma 4 E2B-it (121 tok/s, 65.3%) | Qwen 3.5-27B (12 tok/s, 68.6%) |
+| **M4 Pro 64GB** | Gemma 4 31B-it (13 tok/s, 72.2%) | LFM2-24B-A2B (117 tok/s, 67.3%) | Gemma 4 E2B-it (121 tok/s, 65.3%) |
 | **M5 Max 128GB** | Qwen 3.5-27B (25 tok/s, 100.0%) | Gemma 4 E2B-it (205 tok/s, 96.4%) | Gemma 4 E2B-it (205 tok/s, 96.4%) |
 
 ### M4 Pro 64GB
@@ -96,6 +96,8 @@ Which local LLM runs best for coding on your Mac? Speed and quality benchmarks f
 </details>
 
 ### M5 Max 128GB
+
+> **Note:** Quality scores on this hardware use the older 46-problem suite and are not directly comparable to M4 Pro scores. A re-run with the full 81-problem suite is planned.
 
 | Model | RAM | Quality | Gen tok/s |
 |---|---:|---:|---:|

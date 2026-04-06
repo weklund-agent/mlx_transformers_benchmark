@@ -504,16 +504,30 @@ def _get_combined_for_hardware(
     return combined
 
 
+def _format_pick(name: str, tps: float, qual_pct=None) -> str:
+    """Format a model pick for the summary table."""
+    display = format_model_name(name)
+    if qual_pct is not None and pd.notna(qual_pct):
+        return f"{display} ({tps:.0f} tok/s, {qual_pct}%)"
+    return f"{display} ({tps:.0f} tok/s)"
+
+
 def generate_cross_hardware_summary(
     speed_df: pd.DataFrame,
     quality_df: pd.DataFrame,
     hardware_profiles: List[str],
 ) -> str:
-    """Generate a cross-hardware Best Models summary table."""
+    """Generate a cross-hardware Best Models summary table.
+
+    Categories:
+    - Best Quality: highest weighted score
+    - Best Balance: highest quality with >= 50 tok/s (agentic-usable)
+    - Best Speed: fastest with quality >= 60%
+    """
     lines = []
     lines.append("### Best Models by Hardware")
     lines.append("")
-    lines.append("| Hardware | Best Overall | Best Fast | Best Coder |")
+    lines.append("| Hardware | Best Quality | Best Balance | Best Speed |")
     lines.append("|---|---|---|---|")
 
     for hw in hardware_profiles:
@@ -522,7 +536,6 @@ def generate_cross_hardware_summary(
         if combined.empty:
             continue
 
-        # Use weighted_pct as primary quality metric, fall back to quality_pct
         qual_col = (
             "weighted_pct"
             if "weighted_pct" in combined.columns
@@ -531,63 +544,50 @@ def generate_cross_hardware_summary(
         )
         has_quality = qual_col in combined.columns and combined[qual_col].notna().any()
 
-        # Best overall: highest quality then fastest (or just fastest if no quality)
-        if has_quality:
-            with_quality = combined[combined[qual_col].notna()]
-            if not with_quality.empty:
-                best = with_quality.sort_values(
-                    [qual_col, "generation_tps"], ascending=[False, False]
-                ).iloc[0]
-                best_str = f"{format_model_name(best['name'])} ({best['generation_tps']:.0f} tok/s, {best[qual_col]}%)"
-            else:
-                best = combined.iloc[0]
-                best_str = f"{format_model_name(best['name'])} ({best['generation_tps']:.0f} tok/s)"
-        else:
-            best = combined.iloc[0]
-            best_str = f"{format_model_name(best['name'])} ({best['generation_tps']:.0f} tok/s)"
+        if not has_quality:
+            fastest = combined.sort_values("generation_tps", ascending=False).iloc[0]
+            f = _format_pick(fastest["name"], fastest["generation_tps"])
+            lines.append(f"| **{hw_display}** | -- | -- | {f} |")
+            continue
 
-        # Best fast: fastest model with quality data, preferring >= 60%
-        # Must be different from best overall
-        if has_quality:
-            fast_candidates = combined[combined[qual_col] >= 60.0]
-            if fast_candidates.empty:
-                fast_candidates = combined[combined[qual_col].notna()]
-            if fast_candidates.empty:
-                fast_candidates = combined
-        else:
-            fast_candidates = combined
-        fastest = fast_candidates.sort_values("generation_tps", ascending=False).iloc[0]
-        # Try to pick a different model than best overall
-        if fastest["name"] == best["name"] and len(fast_candidates) > 1:
-            fastest = fast_candidates.sort_values(
-                "generation_tps", ascending=False
-            ).iloc[1]
-        if has_quality and pd.notna(fastest.get(qual_col)):
-            fast_str = f"{format_model_name(fastest['name'])} ({fastest['generation_tps']:.0f} tok/s, {fastest[qual_col]}%)"
-        else:
-            fast_str = f"{format_model_name(fastest['name'])} ({fastest['generation_tps']:.0f} tok/s)"
+        with_quality = combined[combined[qual_col].notna()]
 
-        # Best coder: highest quality with perfect coding, then fastest
-        if (
-            has_quality
-            and "coding" in combined.columns
-            and combined["coding"].notna().any()
-        ):
-            with_quality = combined[combined[qual_col].notna()]
-            coders = with_quality.sort_values(
+        # Best Quality: highest score
+        best_q = with_quality.sort_values(
+            [qual_col, "generation_tps"], ascending=[False, False]
+        ).iloc[0]
+        quality_str = _format_pick(
+            best_q["name"], best_q["generation_tps"], best_q[qual_col]
+        )
+
+        # Best Balance: highest quality with >= 50 tok/s (agentic-usable)
+        balance_candidates = with_quality[with_quality["generation_tps"] >= 50.0]
+        if balance_candidates.empty:
+            balance_candidates = with_quality[with_quality["generation_tps"] >= 30.0]
+        if not balance_candidates.empty:
+            best_b = balance_candidates.sort_values(
                 [qual_col, "generation_tps"], ascending=[False, False]
+            ).iloc[0]
+            balance_str = _format_pick(
+                best_b["name"], best_b["generation_tps"], best_b[qual_col]
             )
-            # Pick first one not already used as best overall
-            coder = coders.iloc[0]
-            for _, c in coders.iterrows():
-                if c["name"] != best["name"]:
-                    coder = c
-                    break
-            coder_str = f"{format_model_name(coder['name'])} ({coder['generation_tps']:.0f} tok/s, {coder[qual_col]}%)"
         else:
-            coder_str = "--"
+            balance_str = "--"
 
-        lines.append(f"| **{hw_display}** | {best_str} | {fast_str} | {coder_str} |")
+        # Best Speed: fastest with quality >= 60%
+        speed_candidates = with_quality[with_quality[qual_col] >= 60.0]
+        if speed_candidates.empty:
+            speed_candidates = with_quality
+        best_s = speed_candidates.sort_values(
+            "generation_tps", ascending=False
+        ).iloc[0]
+        speed_str = _format_pick(
+            best_s["name"], best_s["generation_tps"], best_s[qual_col]
+        )
+
+        lines.append(
+            f"| **{hw_display}** | {quality_str} | {balance_str} | {speed_str} |"
+        )
 
     return "\n".join(lines)
 
@@ -647,6 +647,9 @@ def generate_tables(
         lines.append(generate_cross_hardware_summary(speed_df, quality_df, primary_hw))
         lines.append("")
 
+    # Hardware profiles that still use the older (smaller) quality suite
+    OLD_QUALITY_SUITE_HW = {"Apple_M5_Max_XP+XE+40GPU_128GB"}
+
     # Per-hardware detailed tables
     for hw in hardware_profiles:
         hw_display = HARDWARE_DISPLAY.get(hw, hw)
@@ -659,6 +662,13 @@ def generate_tables(
         else:
             lines.append(f"### {hw_display}")
             lines.append("")
+            if hw in OLD_QUALITY_SUITE_HW:
+                lines.append(
+                    "> **Note:** Quality scores on this hardware use the older "
+                    "46-problem suite and are not directly comparable to M4 Pro "
+                    "scores. A re-run with the full 81-problem suite is planned."
+                )
+                lines.append("")
 
         table = generate_hardware_table(speed_df, quality_df, hw)
         if table:
