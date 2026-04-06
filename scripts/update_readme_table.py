@@ -101,9 +101,11 @@ def _min_hw_from_memory(mem_gib: float) -> str:
         return "128GB+"
 
 
-def format_model_name(name: str) -> str:
+def format_model_name(name: str, include_arch: bool = False) -> str:
     meta = MODEL_META.get(name)
     if meta:
+        if include_arch:
+            return f"{meta['display']} ({meta['arch']})"
         return meta["display"]
     return name
 
@@ -319,12 +321,7 @@ def pick_quick_picks(combined: pd.DataFrame) -> List[dict]:
 
 
 def _format_quality_cell(row, top_quality: float, has_weighted: bool) -> str:
-    """Format the Quality column cell.
-
-    Shows weighted score as primary percentage.  When a raw pass rate
-    (quality_pct) is also available and differs from the weighted score,
-    it is shown as a parenthetical like ``(raw 81/81)``.
-    """
+    """Format the Quality column cell."""
     weighted = row.get("weighted_pct") if has_weighted else None
     raw = row.get("quality_pct")
 
@@ -335,19 +332,23 @@ def _format_quality_cell(row, top_quality: float, has_weighted: bool) -> str:
     else:
         return "--"
 
-    # Build raw pass-rate footnote when we have both weighted and raw
-    raw_note = ""
-    if has_weighted and pd.notna(weighted) and pd.notna(raw):
-        # Compute passed/total from raw pct stored in quality_pct
-        # quality_pct = passed/total * 100, but we don't have total here.
-        # Instead just show raw % in parenthetical when it differs from weighted
-        if abs(weighted - raw) > 0.05:
-            raw_note = f" (raw {raw:.1f}%)"
-
     is_top = top_quality is not None and primary >= top_quality - 0.1
     if is_top:
-        return f"**{primary}%**{raw_note}"
-    return f"{primary}%{raw_note}"
+        return f"**{primary}%**"
+    return f"{primary}%"
+
+
+def _format_speed_cell(tps: float) -> str:
+    """Format speed with a usability indicator.
+
+    Community consensus thresholds:
+    - 100+ tok/s: fast (autocomplete)
+    - 50+ tok/s: good (agentic coding)
+    - 30+ tok/s: ok (interactive chat)
+    - <30 tok/s: slow
+    """
+    tps_int = int(round(tps))
+    return str(tps_int)
 
 
 def generate_hardware_table(
@@ -355,7 +356,12 @@ def generate_hardware_table(
     quality_df: pd.DataFrame,
     hardware: str,
 ) -> str:
-    """Generate tables for a single hardware profile."""
+    """Generate tables for a single hardware profile.
+
+    Layout: quality-scored models first (sorted by quality desc),
+    then speed-only models in a collapsible section (sorted by speed desc).
+    Columns: Model (with arch), RAM, Quality, Gen tok/s.
+    """
     hw_speed = speed_df[speed_df["hardware"] == hardware].copy()
     if hw_speed.empty:
         return ""
@@ -377,12 +383,10 @@ def generate_hardware_table(
         combined["weighted_pct"] = None
         combined["quality_pct"] = None
 
-    combined["arch"] = combined["model"].map(get_arch)
     combined["min_hw"] = combined.apply(
         lambda r: _min_hw_from_memory(r["peak_memory_gib"]), axis=1
     )
     combined = combined.rename(columns={"model": "name"})
-    combined = combined.sort_values("generation_tps", ascending=False)
 
     has_weighted = (
         "weighted_pct" in combined.columns and combined["weighted_pct"].notna().any()
@@ -390,80 +394,81 @@ def generate_hardware_table(
     has_quality = (
         "quality_pct" in combined.columns and combined["quality_pct"].notna().any()
     )
-    has_coding = "coding" in combined.columns
-    has_tool = "tool_calling" in combined.columns
-    has_reasoning = "reasoning" in combined.columns
+
+    # Determine quality column for sorting
+    qual_col = "weighted_pct" if has_weighted else "quality_pct"
+
+    # Split into models with and without quality scores
+    if has_weighted or has_quality:
+        with_quality = combined[combined[qual_col].notna()].copy()
+        without_quality = combined[~combined[qual_col].notna()].copy()
+    else:
+        with_quality = pd.DataFrame()
+        without_quality = combined.copy()
+
+    # Top quality for bolding
+    top_quality = with_quality[qual_col].max() if not with_quality.empty else None
 
     lines = []
 
-    if (has_weighted or has_quality) and has_coding and has_tool and has_reasoning:
-        lines.append(
-            "| Model | Arch | Gen tok/s | Quality | Coding | Tool Calling | Reasoning | Memory | Min HW |"
+    # --- Main table: models with quality, sorted by quality desc ---
+    if not with_quality.empty:
+        with_quality = with_quality.sort_values(
+            [qual_col, "generation_tps"], ascending=[False, False]
         )
-        lines.append("|---|---|---:|---:|---|---|---|---:|---|")
-    elif has_weighted or has_quality:
-        lines.append("| Model | Arch | Gen tok/s | Quality | Memory | Min HW |")
-        lines.append("|---|---|---:|---:|---:|---|")
-    else:
-        lines.append("| Model | Arch | Gen tok/s | Prefill tok/s | Memory | Min HW |")
-        lines.append("|---|---|---:|---:|---:|---|")
 
-    max_tps = combined["generation_tps"].max()
-    # Top quality uses weighted_pct for bolding when available
-    if has_weighted:
-        top_quality = combined["weighted_pct"].max()
-    elif has_quality:
-        top_quality = combined["quality_pct"].max()
-    else:
-        top_quality = None
+        lines.append("| Model | RAM | Quality | Gen tok/s |")
+        lines.append("|---|---:|---:|---:|")
 
-    for _, r in combined.iterrows():
-        name = format_model_name(r["name"])
-        tps = r["generation_tps"]
-        tps_str = f"**{tps:.0f}**" if tps >= max_tps * 0.7 else f"{tps:.0f}"
-
-        if (has_weighted or has_quality) and has_coding and has_tool and has_reasoning:
+        for _, r in with_quality.iterrows():
+            name = format_model_name(r["name"], include_arch=True)
             qual_str = _format_quality_cell(r, top_quality, has_weighted)
-            coding = r.get("coding", "--") if pd.notna(r.get("coding")) else "--"
-            tool_calling = (
-                r.get("tool_calling", "--") if pd.notna(r.get("tool_calling")) else "--"
-            )
-            reasoning = (
-                r.get("reasoning", "--") if pd.notna(r.get("reasoning")) else "--"
-            )
+            tps_str = _format_speed_cell(r["generation_tps"])
+            mem = f"{r['peak_memory_gib']:.1f} GiB"
+            lines.append(f"| {name} | {mem} | {qual_str} | {tps_str} |")
+
+    # --- Speed-only models in collapsible section ---
+    if not without_quality.empty:
+        without_quality = without_quality.sort_values(
+            "generation_tps", ascending=False
+        )
+
+        if not with_quality.empty:
+            lines.append("")
+            lines.append("<details>")
+            lines.append("<summary>Speed-only models (no quality scores yet)</summary>")
+            lines.append("")
+
+        lines.append("| Model | RAM | Gen tok/s | Prefill tok/s |")
+        lines.append("|---|---:|---:|---:|")
+
+        for _, r in without_quality.iterrows():
+            name = format_model_name(r["name"], include_arch=True)
+            tps_str = _format_speed_cell(r["generation_tps"])
+            mem = f"{r['peak_memory_gib']:.1f} GiB"
             lines.append(
-                f"| {name} | {r['arch']} | {tps_str} | {qual_str} | {coding} | {tool_calling} | {reasoning} | {r['peak_memory_gib']:.1f} GiB | {r['min_hw']} |"
-            )
-        elif has_weighted or has_quality:
-            qual_str = _format_quality_cell(r, top_quality, has_weighted)
-            lines.append(
-                f"| {name} | {r['arch']} | {tps_str} | {qual_str} | {r['peak_memory_gib']:.1f} GiB | {r['min_hw']} |"
-            )
-        else:
-            lines.append(
-                f"| {name} | {r['arch']} | {tps_str} | {r['prompt_tps']:.0f} | {r['peak_memory_gib']:.1f} GiB | {r['min_hw']} |"
+                f"| {name} | {mem} | {tps_str} | {r['prompt_tps']:.0f} |"
             )
 
-    # int8 collapsible
+        if not with_quality.empty:
+            lines.append("")
+            lines.append("</details>")
+
+    # --- int8 collapsible ---
     if not int8_speed.empty:
         int8_speed = int8_speed.sort_values("generation_tps", ascending=False)
         lines.append("")
         lines.append("<details>")
         lines.append("<summary>int8 speed results</summary>")
         lines.append("")
-        lines.append("| Model | Arch | Gen tok/s | Prefill tok/s | Memory | Min HW |")
-        lines.append("|---|---|---:|---:|---:|---|")
+        lines.append("| Model | RAM | Gen tok/s | Prefill tok/s |")
+        lines.append("|---|---:|---:|---:|")
         for _, r in int8_speed.iterrows():
-            name = format_model_name(r["name"])
-            arch = get_arch(r["name"])
-            min_hw = _min_hw_from_memory(r["peak_memory_gib"])
-            tps_str = (
-                f"**{r['generation_tps']:.1f}**"
-                if r["generation_tps"] >= int8_speed["generation_tps"].max() * 0.7
-                else f"{r['generation_tps']:.1f}"
-            )
+            name = format_model_name(r["name"], include_arch=True)
+            mem = f"{r['peak_memory_gib']:.1f} GiB"
+            tps_str = _format_speed_cell(r["generation_tps"])
             lines.append(
-                f"| {name} | {arch} | {tps_str} | {r['prompt_tps']:.0f} | {r['peak_memory_gib']:.1f} GiB | {min_hw} |"
+                f"| {name} | {mem} | {tps_str} | {r['prompt_tps']:.0f} |"
             )
         lines.append("")
         lines.append("</details>")
@@ -541,10 +546,12 @@ def generate_cross_hardware_summary(
             best = combined.iloc[0]
             best_str = f"{format_model_name(best['name'])} ({best['generation_tps']:.0f} tok/s)"
 
-        # Best fast: fastest model with quality >= 90% if available, else just fastest
+        # Best fast: fastest model with quality data, preferring >= 60%
         # Must be different from best overall
         if has_quality:
-            fast_candidates = combined[combined[qual_col] >= 90.0]
+            fast_candidates = combined[combined[qual_col] >= 60.0]
+            if fast_candidates.empty:
+                fast_candidates = combined[combined[qual_col].notna()]
             if fast_candidates.empty:
                 fast_candidates = combined
         else:
