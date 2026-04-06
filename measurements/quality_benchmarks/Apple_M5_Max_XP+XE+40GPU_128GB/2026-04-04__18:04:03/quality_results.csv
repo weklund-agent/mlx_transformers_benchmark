@@ -1,0 +1,1142 @@
+model,framework,backend,dtype,category,problem,pass_count,num_runs,passed,avg_generation_time_sec,avg_generation_tps,avg_tokens_generated,sample_response,execution_stdout,execution_stderr,execution_exit_code,parsed_tool_calls
+gemma-4-e2b-it,mlx,metal,int4,coding,fizzbuzz,0,5,False,1.66,205.6,341.0,"```python
+def fizzbuzz(n: int) -> str:
+    """"""
+    Returns 'Fizz' for multiples of 3, 'Buzz' for multiples of 5, 
+    'FizzBuzz' for multiples of both, or the number as a string otherwise.
+
+    Args:
+        n: The integer to check.
+
+    Returns:
+        A string indicating the result based on the rules above.
+    """"""
+    if n % 3 == 0 and n % 5 == 0:
+        return 'FizzBuzz'
+    elif n % 3 == 0:
+        return 'Fizz'
+    elif n % 5 == 0:
+        return 'Buzz'
+    else:
+        return str(n)
+
+#",,"  File ""/var/folders/ys/v4ss_1hj53946cxvd5_jq2b80000gn/T/sandbox_ga7mboxi.py"", line 26
+    print(fizzbuzz(7): {fizzbuzz(7)})      # Expected: 7
+                     ^
+SyntaxError: invalid syntax
+",1.0,
+gemma-4-e2b-it,mlx,metal,int4,coding,reverse_string,5,5,True,2.51,203.8,512.0,"Here are a few ways to write the Python function `reverse_string(s: str) -> str`, depending on your preference for style:
+
+### 1. Using Slicing (Most Pythonic/Concise)
+
+This is generally the most idiomatic way to reverse a sequence in Python.
+
+```python
+def reverse_string(s: str) -> str:
+    """"""
+    Reverses the input string using Python slicing.
+
+    Args:
+        s: The string to be reversed.
+
+    Returns:
+        The reversed string.
+    """"""
+    return s[::-1]
+
+# Example Usage:
+print(f""Origin","Original: 'hello world'
+Reversed: 'dlrow olleh'
+Reversed: 'nohtyP'
+Reversed: 'elpmaxe'
+ALL TESTS PASSED
+",,0.0,
+gemma-4-e2b-it,mlx,metal,int4,coding,fibonacci,5,5,True,1.59,206.2,328.0,"```python
+def fibonacci(n: int) -> list:
+    """"""
+    Returns the first n Fibonacci numbers as a list, starting with 0.
+
+    Args:
+        n: The number of Fibonacci numbers to generate. Must be a non-negative integer.
+
+    Returns:
+        A list of the first n Fibonacci numbers.
+    """"""
+    if not isinstance(n, int) or n < 0:
+        raise ValueError(""Input must be a non-negative integer."")
+
+    if n == 0:
+        return []
+    elif n == 1:
+        return [0]
+    elif n == 2:
+        return [0,","Fibonacci(0): []
+Fibonacci(1): [0]
+Fibonacci(2): [0, 1]
+Fibonacci(5): [0, 1, 1, 2, 3]
+Fibonacci(10): [0, 1, 1, 2, 3, 5, 8, 13, 21, 34]
+ALL TESTS PASSED
+",,0.0,
+gemma-4-e2b-it,mlx,metal,int4,coding,binary_search,0,5,False,2.52,203.3,512.0,"Here is a Python implementation of the `binary_search` function.
+
+This implementation uses the iterative approach, which is generally very efficient.
+
+```python
+def binary_search(arr: list, target: int) -> int:
+    """"""
+    Performs a binary search on a sorted list to find the index of a target value.
+
+    Args:
+        arr: A sorted list of numbers (integers or floats).
+        target: The value to search for.
+
+    Returns:
+        The index of the target in the list if found, otherwise -1.
+    ",,"  File ""/var/folders/ys/v4ss_1hj53946cxvd5_jq2b80000gn/T/sandbox_4xibp_1k.py"", line 53
+    print(f""Index
+          ^
+SyntaxError: unterminated string literal (detected at line 53)
+",1.0,
+gemma-4-e2b-it,mlx,metal,int4,coding,palindrome,5,5,True,2.58,198.9,512.0,"Here is a Python function that checks if a string is a palindrome, ignoring case and non-alphanumeric characters.
+
+```python
+import re
+
+def is_palindrome(s: str) -> bool:
+    """"""
+    Checks if a string is a palindrome, ignoring case and non-alphanumeric characters.
+
+    A palindrome is a word, phrase, or sequence that reads the same 
+    forwards and backwards, after normalization (ignoring case and punctuation).
+
+    Args:
+        s: The input string.
+
+    Returns:
+        True if the string is","'racecar' is a palindrome: True
+'A man, a plan, a canal: Panama' is a palindrome: True
+'hello' is a palindrome: False
+'' is a palindrome: True
+'12321' is a palindrome: True
+'12345' is a palindrome: False
+ALL TESTS PASSED
+",,0.0,
+gemma-4-e2b-it,mlx,metal,int4,reasoning,train_problem,5,5,True,1.31,185.5,241.0,"Here is how to solve this classic relative speed problem:
+
+**1. Determine the relative speed:**
+Since the trains are moving *toward* each other, their speeds add up to determine how quickly the distance between them is closing.
+
+*   Speed of Train A: $60 \text{ km/h}$
+*   Speed of Train B: $40 \text{ km/h}$
+*   Relative Speed = $60 \text{ km/h} + 40 \text{ km/h} = 100 \text{ km/h}$
+
+**2. Calculate the time to meet:**
+Use the formula: $\text{Time} = \frac{\text{Distance}}{\text{Speed}}$
+
+*   Tota",,,,
+gemma-4-e2b-it,mlx,metal,int4,reasoning,coin_probability,5,5,True,3.62,164.4,595.0,"Here is how to calculate the probability of getting at least 2 heads when flipping a fair coin 3 times.
+
+### 1. Determine the Sample Space
+
+When flipping a coin 3 times, each flip has 2 possibilities (Heads, H, or Tails, T). The total number of possible outcomes is $2^3 = 8$.
+
+The complete sample space (all possible outcomes) is:
+{HHH, HHT, HTH, THH, HTT, THT, TTH, TTT}
+
+### 2. Identify Favorable Outcomes
+
+""At least 2 heads"" means you can have exactly 2 heads OR exactly 3 heads.
+
+**Outcomes with",,,,
+gemma-4-e2b-it,mlx,metal,int4,reasoning,workers_problem,5,5,True,1.35,169.5,229.0,"This is an inverse proportion problem. If you increase the number of workers, the time it takes to complete the same amount of work will decrease proportionally.
+
+Here's how to solve it:
+
+**1. Calculate the total ""worker-days"" needed:**
+
+*   Workers $\times$ Days = Total Work Done
+*   $5 \text{ workers} \times 10 \text{ days} = 50 \text{ worker-days}$
+
+This means it takes 50 units of work (worker-days) to build the wall.
+
+**2. Calculate the time for 10 workers:**
+
+*   Divide the total work by th",,,,
+gemma-4-e2b-it,mlx,metal,int4,reasoning,age_problem,5,5,True,3.17,164.5,521.0,"This is a classic age word problem that can be solved using a system of linear equations.
+
+Let $T$ be Tom's current age and $J$ be Jerry's current age.
+
+We are given two pieces of information, which we can translate into equations:
+
+**1. Tom is twice as old as Jerry now:**
+$$T = 2J \quad (*)$$
+
+**2. In 5 years, Tom will be 1.5 times as old as Jerry:**
+In 5 years, Tom will be $T+5$ and Jerry will be $J+5$.
+$$T + 5 = 1.5(J + 5)$$
+$$T + 5 = 1.5J + 7.5$$
+$$T = 1.5J + 2.5 \quad (**)$$
+
+Now we can use",,,,
+gemma-4-e2b-it,mlx,metal,int4,reasoning,sequence_pattern,5,5,True,1.48,176.4,260.0,"This is a sequence where the difference between consecutive terms increases by 2 each time.
+
+Let's look at the differences:
+* $6 - 2 = 4$
+* $12 - 6 = 6$
+* $20 - 12 = 8$
+* $30 - 20 = 10$
+
+The differences are increasing by 2 ($4, 6, 8, 10$).
+The next difference should be $10 + 2 = 12$.
+
+So, the next number in the sequence will be:
+$30 + 12 = 42$
+
+Alternatively, you can notice that the sequence is formed by $n(n+1)$ where $n$ starts at 1:
+* $1 \times 2 = 2$
+* $2 \times 3 = 6$
+* $3 \times 4 = 12$
+* ",,,,
+gemma-4-e2b-it,mlx,metal,int4,instruction_following,json_output,5,5,True,0.28,212.8,59.0,"```json
+{
+  ""name"": ""Elara Vance"",
+  ""age"": 34,
+  ""hobbies"": [
+    ""painting"",
+    ""hiking"",
+    ""reading"",
+    ""baking""
+  ]
+}
+```",,,,
+gemma-4-e2b-it,mlx,metal,int4,instruction_following,numbered_list,5,5,True,0.82,209.3,172.0,"Here are 5 benefits of regular exercise:
+
+1. **Improved Cardiovascular Health:** Exercise strengthens the heart and lungs, lowering the risk of heart disease and improving circulation.
+2. **Weight Management:** Regular physical activity helps in burning calories and building muscle, which is crucial for maintaining a healthy weight and combating obesity.
+3. **Enhanced Mood and Reduced Stress:** Exercise releases endorphins, natural mood elevators, which can significantly reduce symptoms of stres",,,,
+gemma-4-e2b-it,mlx,metal,int4,instruction_following,word_constraint,5,5,True,0.17,216.1,36.0,"Machine learning enables computers to learn from data without explicit programming. Algorithms analyze vast amounts of information to identify patterns, enabling them to make predictions or decisions on new, unseen data.",,,,
+gemma-4-e2b-it,mlx,metal,int4,instruction_following,code_with_comments,0,5,False,5.2,196.9,1024.0,"Here is a Python function to calculate the area of a circle, complete with detailed comments:
+
+```python
+import math
+
+def calculate_circle_area(radius):
+    """"""
+    Calculates the area of a circle given its radius.
+
+    The formula for the area of a circle is A = π * r^2, where:
+    A is the area, and
+    r is the radius.
+
+    Args:
+        radius (float or int): The radius of the circle. Must be a non-negative number.
+
+    Returns:
+        float: The calculated area of the circle.
+        str: ","--- Circle Area Calculation ---
+Radius: 5
+The area of the circle with radius 5 is: 78.5398
+
+==============================
+
+--- Circle Area Calculation ---
+Radius: 10.5
+The area of the circle with radius 10.5 is: 346.3606
+
+==============================
+
+Testing negative radius (-3): Error: Radius cannot be negative.
+","Traceback (most recent call last):
+  File ""/var/folders/ys/v4ss_1hj53946cxvd5_jq2b80000gn/T/sandbox_t5swaxar.py"", line 81, in <module>
+    assert abs(circle_area(0.0) - 0.0) < 1e-6, 'Test case 0 failed'
+               ^^^^^^^^^^^
+NameError: name 'circle_area' is not defined
+",1.0,
+gemma-4-e2b-it,mlx,metal,int4,instruction_following,direct_answer,5,5,True,0.0,426.0,2.0,Paris,,,,
+gemma-4-e2b-it,mlx,metal,int4,coding,lru_cache,5,5,True,7.01,196.4,1376.0,"This is a classic data structure simulation problem. To implement an LRU cache, we typically use a combination of a dictionary (for $O(1)$ lookups) and a doubly linked list (to maintain the order of usage).
+
+Since Python's standard library offers a perfect tool for this, we can leverage `collections.OrderedDict` or, more modernly and explicitly, the `functools.lru_cache` decorator, but since the requirement is to *simulate* the operations on a given list of operations, we need to build the struc","Example 1 Results: [None, None, 1, None, -1, 3]
+--------------------
+Example 2 Results: [None, None, 'A', None, None, -1]
+ALL TESTS PASSED
+",,0.0,
+gemma-4-e2b-it,mlx,metal,int4,coding,flatten_nested,5,5,True,4.51,194.2,875.0,"Here are a few ways to implement the `flatten` function in Python, depending on how you want to handle the nesting.
+
+The most common and robust way is using **recursion**.
+
+### Solution 1: Recursive Approach (Most Flexible)
+
+This approach handles arbitrary nesting depth.
+
+```python
+def flatten(lst: list) -> list:
+    """"""
+    Flattens an arbitrarily nested list into a single, flat list.
+
+    Args:
+        lst: The arbitrarily nested list.
+
+    Returns:
+        A flat list containing all elements ","Original 1: [1, [2, 3], 4, [5, [6, 7]]]
+Flattened 1: [1, 2, 3, 4, 5, 6, 7]
+--------------------
+Original 2: [1, [2, [3, [4]]], 5]
+Flattened 2: [1, 2, 3, 4, 5]
+--------------------
+Original 3: [1, 2, 3]
+Flattened 3: [1, 2, 3]
+--------------------
+Original 4: []
+Flattened 4: []
+
+--- Iterative Example ---
+Original 5: [1, [2, [3, 4]], 5]
+Flattened 5: [1, 2, 3, 4, 5]
+ALL TESTS PASSED
+",,0.0,
+gemma-4-e2b-it,mlx,metal,int4,coding,longest_palindrome_substring,5,5,True,7.54,184.9,1394.0,"Here are a few ways to implement the `longest_palindrome` function in Python, with explanations for each approach.
+
+### Solution 1: Expand Around Center (Most Efficient for this problem)
+
+This is a very common and efficient way to solve this problem. It checks every possible center of a palindrome (both single characters for odd-length palindromes and pairs of characters for even-length palindromes) and expands outwards to find the maximum length.
+
+```python
+def longest_palindrome(s: str) -> str","babad: bab
+cbbd: bb
+aabbaa: aabbaa
+racecar: racecar
+forgeeksskeegfor: geeksskeeg
+babad (DP): bab
+cbbd (DP): bb
+ALL TESTS PASSED
+",,0.0,
+gemma-4-e2b-it,mlx,metal,int4,coding,calculator,0,5,False,10.93,187.4,2048.0,"This is a classic problem that requires implementing a **shunting-yard algorithm** to convert the infix expression to Reverse Polish Notation (RPN) and then evaluating the RPN expression, or using a direct two-stack approach (one for operands and one for operators).
+
+Here is a robust implementation using the two-stack approach, which is often the most straightforward way to evaluate such expressions directly.
+
+### Python Implementation
+
+```python
+import re
+from typing import Union
+
+def calculate","--- Test Cases ---
+'3 + 4 * 2' = 11.0 (Expected: 11.0)
+'3 + 4 * (2 - 1)' = 11.0 (Expected: 7.0)
+'5 * (6 - 2) / 2' = 15.0 (Expected: 10.0)
+'10 / (5 - 5)' = 2.0
+'(10 + 5) / 3 * 2' = 1.6666666666666667 (Expected: 10.0)
+Caught expected error for '5 + (3 * 2': Mismatched parentheses: Unclosed opening parenthesis.
+","Traceback (most recent call last):
+  File ""/var/folders/ys/v4ss_1hj53946cxvd5_jq2b80000gn/T/sandbox_i8p6d_oo.py"", line 176, in <module>
+    assert abs(calculate('(2 + 3) * 4') - 20.0) < 1e-6, 'Test case 3 failed'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Test case 3 failed
+",1.0,
+gemma-4-e2b-it,mlx,metal,int4,coding,buggy_merge_sort,5,5,True,7.05,190.7,1343.0,"Here is a correct and well-implemented Python function for `merge_sort` using the merge sort algorithm.
+
+This implementation follows the standard recursive divide-and-conquer approach.
+
+```python
+from typing import List
+
+def merge_sort(arr: List) -> List:
+    """"""
+    Sorts a list using the merge sort algorithm.
+
+    Args:
+        arr: The list of comparable elements to be sorted.
+
+    Returns:
+        A new, sorted list. The original list is not modified.
+    """"""
+    # Base case 1: Lists with 0 ","--- Merge Sort Implementation Tests ---
+Test 1 (Empty): [] -> []
+Test 2 (Single): [5] -> [5]
+Test 3 (Duplicates): [3, 1, 4, 1, 5, 9, 2, 6] -> [1, 1, 2, 3, 4, 5, 6, 9]
+Test 4 (General): [10, 4, 5, 2, 8, 3] -> [2, 3, 4, 5, 8, 10]
+Test 5 (Larger): [99, 44, 66, 22, 11, 33, 55, 77, 88] -> [11, 22, 33, 44, 55, 66, 77, 88, 99]
+Test 6 (Sorted): [1, 2, 3, 4] -> [1, 2, 3, 4]
+ALL TESTS PASSED
+",,0.0,
+gemma-4-e2b-it,mlx,metal,int4,reasoning,compound_interest,5,5,True,2.8,195.9,548.0,"Here is the step-by-step calculation to find the final amount.
+
+This is a compound interest problem, so we will use the formula:
+$$A = P \left(1 + \frac{r}{n}\right)^{nt}$$
+
+Where:
+*   **$A$** = the final amount
+*   **$P$** = the principal amount (initial investment) = **\$10,000**
+*   **$r$** = the annual interest rate (as a decimal) = $5\% = 0.05$
+*   **$n$** = the number of times interest is compounded per year = Quarterly, so $n = 4$
+*   **$t$** = the number of years = $3$
+
+---
+
+### Step 1: ",,,,
+gemma-4-e2b-it,mlx,metal,int4,reasoning,circular_seating,5,5,True,4.54,192.3,873.0,"Here is the step-by-step solution to find the number of ways 6 people can be seated around a circular table such that Alice (A) and Bob (B) do not sit next to each other.
+
+### 1. Calculate the Total Number of Arrangements
+
+First, we calculate the total number of ways to seat 6 people around a circular table without any restrictions.
+
+For $n$ distinct items arranged in a circle, the number of distinct arrangements is $(n-1)!$.
+
+Total arrangements = $(6-1)! = 5! = 5 \times 4 \times 3 \times 2 \tim",,,,
+gemma-4-e2b-it,mlx,metal,int4,reasoning,logic_puzzle,5,5,True,6.33,192.4,1219.0,"Let $T$ denote a truth-teller and $L$ denote a liar.
+
+We have three statements:
+1. **A says:** ""B is a liar"" ($\text{Statement}_A: B=L$)
+2. **B says:** ""C is a liar"" ($\text{Statement}_B: C=L$)
+3. **C says:** ""A and B are both liars"" ($\text{Statement}_C: A=L \text{ and } B=L$)
+
+We will check all $2^3 = 8$ possible combinations for (A, B, C) and see which ones are consistent with the statements made.
+
+### Case Analysis
+
+We will use the following notation:
+* If a person is a truth-teller ($X=T$),",,,,
+gemma-4-e2b-it,mlx,metal,int4,reasoning,bayes_theorem,5,5,True,4.69,193.8,909.0,"This is a classic application of Bayes' theorem. We want to find the probability that a person actually has the disease given that they tested positive, which is the Positive Predictive Value (PPV).
+
+Here is the breakdown of the information and the calculation:
+
+### 1. Define the Events
+
+Let:
+*   **D** be the event that a person actually has the disease.
+*   **$\text{D}^c$** be the event that a person does not have the disease.
+*   **T+** be the event that the diagnostic test result is positive.",,,,
+gemma-4-e2b-it,mlx,metal,int4,reasoning,proof_bug,5,5,True,4.97,193.5,962.0,"This ""proof"" contains multiple errors in its algebraic manipulation and logical flow. Here is a breakdown of where the errors occur and why they are invalid:
+
+### 1. The Initial Setup is Flawed
+
+The proof starts with the assumption:
+$$\text{Let } a = b.$$
+
+This is a valid starting point for substitution, but the subsequent steps assume that $a$ and $b$ are related in a way that allows for division or manipulation that might be invalid (though the main issue lies later).
+
+### 2. The Algebraic Man",,,,
+gemma-4-e2b-it,mlx,metal,int4,math,modular_arithmetic,0,5,False,4.2,194.8,819.0,"Here is the step-by-step solution to find the remainder when $2^{100}$ is divided by 7.
+
+We need to find $2^{100} \pmod{7}$.
+
+**Step 1: Find the pattern (powers of 2 modulo 7)**
+
+We will calculate the first few powers of 2 and find their remainders when divided by 7.
+
+*   $2^1 \equiv 2 \pmod{7}$
+*   $2^2 = 4 \equiv 4 \pmod{7}$
+*   $2^3 = 8$. Since $8 = 1 \times 7 + 1$, we have $2^3 \equiv 1 \pmod{7}$.
+
+**Step 2: Utilize the cycle length**
+
+Since $2^3 \equiv 1 \pmod{7}$, this means that every pow",,,,
+gemma-4-e2b-it,mlx,metal,int4,math,inclusion_exclusion,5,5,True,5.08,194.0,986.0,"Here is how to find the number of integers from 1 to 1000 divisible by 2, 3, or 5 using the Principle of Inclusion-Exclusion (PIE).
+
+Let $S = \{1, 2, 3, \dots, 1000\}$.
+Let $A$ be the set of integers in $S$ divisible by 2.
+Let $B$ be the set of integers in $S$ divisible by 3.
+Let $C$ be the set of integers in $S$ divisible by 5.
+
+We are looking for $|A \cup B \cup C|$.
+
+The Principle of Inclusion-Exclusion for three sets is:
+$$|A \cup B \cup C| = |A| + |B| + |C| - (|A \cap B| + |A \cap C| + |B \",,,,
+gemma-4-e2b-it,mlx,metal,int4,math,bouncing_ball,5,5,True,6.86,192.7,1322.0,"Here is the step-by-step solution using a geometric series.
+
+### 1. Analyze the motion
+
+The total distance the ball travels is the sum of the initial drop and all subsequent bounces (up and down).
+
+*   **Initial Drop ($D_0$):** The first distance the ball travels is $10$ meters.
+
+*   **First Bounce:**
+    *   It falls from $10$ m and rebounds to $\frac{3}{4} \times 10$ m.
+    *   The distance traveled in this bounce cycle is: (down) + (up) = $10 + \frac{3}{4}(10)$.
+
+*   **Second Bounce:**
+    * ",,,,
+gemma-4-e2b-it,mlx,metal,int4,coding,markdown_to_html,5,5,True,6.15,190.7,1172.0,"Here is a Python function that converts common Markdown syntax to HTML.
+
+Since Markdown can be complex, this implementation focuses on the specific formatting elements you requested: **bold**, *italic*, `code`, and links. For a production-grade solution, you would typically use a dedicated library like **`markdown`** or **`mistune`**, but this function demonstrates the core logic for these specific transformations.
+
+```python
+import re
+
+def markdown_to_html(text: str) -> str:
+    """"""
+    Convert","--- Test Case 1: Bold and Italic ---
+Markdown: This is **bold** text and this is *italic* text.
+HTML:    This is <strong>bold</strong> text and this is <em>italic</em> text.
+
+--- Test Case 2: Links ---
+Markdown: Visit [Google](https://www.google.com) for more info.
+HTML:    Visit <a href=""https://www.google.com"">Google</a> for more info.
+
+--- Test Case 3: Code ---
+Markdown: Use the function `calculate()`.
+HTML:    Use the function <code>calculate()</code>.
+
+--- Test Case 4: Mixed ---
+Markdown: C",,0.0,
+gemma-4-e2b-it,mlx,metal,int4,coding,data_pipeline,0,5,False,10.57,193.8,2048.0,"This is a complex request that requires parsing CSV data, applying multiple filtering and grouping operations, performing aggregations, sorting, and finally formatting the result as a JSON string.
+
+Since the input is a raw string of CSV data, we will use Python's built-in `csv` module (or string manipulation) and `json` module. For robust handling, we'll assume the input is a standard CSV format.
+
+Here is a complete, well-structured Python function that accomplishes the task.
+
+### Python Impleme","--- Input CSV Data ---
+product,region,amount,quantity
+WidgetA,North,150,10
+WidgetB,West,200,6
+WidgetA,South,120,8  # Fails region filter
+WidgetC,North,50,10  # Fails amount filter
+WidgetB,West,110,5
+WidgetA,West,250,5
+WidgetC,North,101,10
+WidgetB,North,300,7
+WidgetA,North,100.5,5
+WidgetB,West,150,4  # Fails quantity filter
+
+
+==================================================
+
+--- Processed JSON Output ---
+[
+    {
+        ""product"": ""WidgetB"",
+        ""total_sales"": 610.0,
+        ""average_sale"":","Traceback (most recent call last):
+  File ""/var/folders/ys/v4ss_1hj53946cxvd5_jq2b80000gn/T/sandbox_4ttxonuq.py"", line 138, in <module>
+    assert process_sales('date,product,region,amount,quantity\n2024-01-01,Widget,North,150,10\n2024-01-02,Widget,South,200,8\n2024-01-03,Gadget,West,120,5\n2024-01-04,Widget,North,80,3\n2024-01-05,Gadget,North,250,7\n2024-01-06,Widget,West,300,6\n') == '[{""product"": ""Widget"", ""total_amount"": 450.0, ""avg_amount"": 225.0, ""count"": 2}, {""product"": ""Gadget"", ""total_a",1.0,
+gemma-4-e2b-it,mlx,metal,int4,coding,retry_decorator,5,5,True,4.67,194.2,906.0,"Here is a Python implementation of the `retry_call` function as you described.
+
+This implementation uses a generic approach to handle the function call and captures the result or the exception encountered during the retries.
+
+```python
+import functools
+from typing import Callable, Any, Tuple, Dict
+
+def retry_call(func: Callable, max_attempts: int, args: Tuple[Any, ...]) -> Dict[str, Any]:
+    """"""
+    Calls a function up to max_attempts times, retrying on failure.
+
+    Args:
+        func: The fun","--- Test Case 1: Success after retries ---
+--- Function called (Attempt 1) ---
+Attempt 1/5 failed: Simulated network glitch
+--- Function called (Attempt 2) ---
+Attempt 2/5 failed: Simulated network glitch
+--- Function called (Attempt 3) ---
+
+Result 1: {'success': True, 'value': 'Success after 3 attempts', 'attempts': 3, 'error': None}
+
+==================================================
+
+--- Test Case 2: Always Fails ---
+Attempt 1/3 failed: This function always throws an error.
+Attempt 2/3 failed",,0.0,
+gemma-4-e2b-it,mlx,metal,int4,reasoning,einstein_riddle,5,5,True,12.25,189.6,2322.0,"This is a classic logic puzzle, often similar to the Einstein Riddle. We need to determine the arrangement of 5 people, 5 house colors, and 5 drinks based on the given constraints.
+
+Let's set up a table and use the clues to deduce the positions.
+
+**Houses:** 1, 2, 3, 4, 5
+**People:** Brit, Swede, Dane, Norwegian, German (We need to find the 5th person, but the clues only mention 4 nationalities. Let's assume the 5th person is the one whose identity is determined by elimination, or perhaps one of",,,,
+gemma-4-e2b-it,mlx,metal,int4,reasoning,three_urns,5,5,True,3.59,196.4,704.0,"Here is the step-by-step solution using the Law of Total Probability.
+
+### 1. Define the Events
+
+Let $A_R$ be the event that the ball drawn from Urn A is Red.
+Let $A_B$ be the event that the ball drawn from Urn A is Blue.
+
+Let $R_2$ be the event that the second ball drawn is Red.
+
+### 2. Calculate the Probabilities of the First Draw (Urn A)
+
+**Urn A contents:** 3 Red balls, 2 Blue balls (Total = 5 balls)
+
+$$P(A_R) = \frac{\text{Number of Red balls in A}}{\text{Total balls in A}} = \frac{3}{5}$$
+",,,,
+gemma-4-e2b-it,mlx,metal,int4,reasoning,topological_sort,0,5,False,8.27,190.7,1577.0,"This is a classic problem that requires finding all possible **topological sorts** of a directed acyclic graph (DAG).
+
+Here is the dependency graph:
+*   A $\rightarrow$ B
+*   B $\rightarrow$ C
+*   A $\rightarrow$ D
+*   D $\rightarrow$ C
+*   C $\rightarrow$ E
+
+### 1. Determine In-Degrees
+
+First, let's list the nodes and calculate their in-degrees (the number of incoming edges):
+
+*   **A:** In-degree = 0 (No prerequisites)
+*   **B:** In-degree = 1 (from A)
+*   **C:** In-degree = 2 (from B and D)
+*",,"  File ""/var/folders/ys/v4ss_1hj53946cxvd5_jq2b80000gn/T/sandbox_w3lh8l6r.py"", line 1
+    This is a classic problem that requires finding all possible **topological sorts** of a directed acyclic graph (DAG).
+              ^^^^^^^
+SyntaxError: invalid syntax
+",1.0,
+gemma-4-e2b-it,mlx,metal,int4,instruction_following,constrained_factorial,0,5,False,1.28,207.3,265.0,"```python
+from typing import Union
+
+def fact(n: int, base: int = 1) -> int:
+    """"""
+    Computes the factorial of a non-negative integer using recursion.
+
+    Args:
+        n: The non-negative integer for which to compute the factorial.
+        base: The base for the recursive calculation (defaults to 1).
+
+    Returns:
+        The factorial of n.
+    """"""
+    # Constraint 1: Every variable name must be exactly 4 characters long.
+    # Constraint 2: Must use recursion only (no loops).
+    # Constr",,"Traceback (most recent call last):
+  File ""/var/folders/ys/v4ss_1hj53946cxvd5_jq2b80000gn/T/sandbox_gopobi8a.py"", line 30, in <module>
+    assert constrained_factorial(0) == 1, 'Test case 0 failed'
+           ^^^^^^^^^^^^^^^^^^^^^
+NameError: name 'constrained_factorial' is not defined
+",1.0,
+gemma-4-e2b-it,mlx,metal,int4,instruction_following,library_schema,0,5,False,6.17,190.0,1172.0,"```json
+{
+  ""$schema"": ""http://json-schema.org/draft-07/schema"",
+  ""title"": ""Library Management System Schema"",
+  ""type"": ""object"",
+  ""properties"": {
+    ""books"": {
+      ""type"": ""array"",
+      ""description"": ""Collection of books in the library."",
+      ""items"": {
+        ""$ref"": ""#/$defs/Book""
+      }
+      // Optional: Add validation for unique ISBN if desired, though not strictly required by prompt
+    },
+    ""authors"": {
+      ""type"": ""array"",
+      ""description"": ""Collection of authors."",
+ ",,"  File ""/var/folders/ys/v4ss_1hj53946cxvd5_jq2b80000gn/T/sandbox_d8bso9al.py"", line 12
+    // Optional: Add validation for unique ISBN if desired, though not strictly required by prompt
+               ^
+SyntaxError: invalid syntax
+",1.0,
+gemma-4-e2b-it,mlx,metal,int4,instruction_following,adversarial_transform,0,5,False,1.72,201.3,345.0,"Here are the three transformations performed in sequence on the sentence: ""The quick brown fox jumps over the lazy dog"".
+
+### Step 1: Translate the sentence to French.
+
+**Original Sentence:** ""The quick brown fox jumps over the lazy dog""
+
+**French Translation:** ""Le rapide renard brun saute par-dessus le chien paresseux""
+
+***
+
+### Step 2: Reverse each word individually.
+
+**French Sentence:** ""Le rapide renard brun saute par-dessus le chien paresseux""
+
+**Reversed Words (keeping word order):**
+* L",,"  File ""/var/folders/ys/v4ss_1hj53946cxvd5_jq2b80000gn/T/sandbox_vh679khu.py"", line 1
+    Here are the three transformations performed in sequence on the sentence: ""The quick brown fox jumps over the lazy dog"".
+         ^^^
+SyntaxError: invalid syntax
+",1.0,
+gemma-4-e2b-it,mlx,metal,int4,writing,multi_doc_summary,5,5,True,0.58,206.0,119.0,"Here is a cohesive summary covering all three topics:
+
+Quantum computing harnesses phenomena like superposition and entanglement to utilize qubits, allowing for exponential speedups in areas such as cryptography and drug discovery by processing information in multiple states simultaneously. Simultaneously, the climate crisis is intensifying, with global temperatures already exceeding predicted levels, raising serious concerns about irreversible environmental tipping points like ice sheet collaps",,,,
+gemma-4-e2b-it,mlx,metal,int4,writing,structured_meeting_notes,5,5,True,1.22,197.6,242.0,"```markdown
+---
+date: 2024-10-27
+attendees:
+  - Alice Johnson
+  - Bob Smith
+  - Carol Davis
+meeting_type: Product Standup
+---
+
+## Discussion
+
+*   Review of the latest sprint progress for Feature X. Initial feedback suggests the user flow is logical but requires simplification in the onboarding phase.
+*   Debate on the choice between two different database solutions for handling real-time data synchronization. The consensus leaned towards Solution B due to its better scalability metrics.
+*   Disc",,,,
+gemma-4-e2b-it,mlx,metal,int4,writing,tone_rewrite,5,5,True,0.64,205.7,132.0,"Here are a few options, depending on the desired tone:
+
+**Option 1 (Focus on the process):**
+The computer program learns by adjusting its internal settings repeatedly to reduce errors. By fine-tuning these settings, the model reached 94.3% accuracy on testing data, and a smarter method helped it learn much faster than the standard approach.
+
+**Option 2 (More direct):**
+This AI system learns by constantly adjusting its internal calculations to find the best answer. After tweaking some key numbers",,,,
+gemma-4-e2b-it,mlx,metal,int4,writing,contradiction_detection,5,5,True,1.46,195.5,286.0,"Yes, there are factual contradictions between the two notes.
+
+Here is a breakdown of the conflicts:
+
+**1. Duration of Lunar Surface Activity:**
+
+*   **Note 1 states:** Neil Armstrong and Buzz Aldrin spent **approximately 2.5 hours** walking on the lunar surface during their EVA.
+*   **Note 2 states:** Armstrong and Aldrin remained on the lunar surface for **approximately 21.5 hours in total** after landing.
+
+**Contradiction:** The time spent on the lunar surface is drastically different (2.5 hou",,,,
+gemma-4-e2b-it,mlx,metal,int4,tool_calling,ts_correct_tool,5,5,True,0.28,210.3,59.0,"```json
+{
+  ""tool_name"": ""search_flights"",
+  ""params"": {
+    ""origin"": ""New York"",
+    ""destination"": ""London"",
+    ""date"": ""March 15th""
+  }
+}
+```",,,,"[{""name"": ""search_flights"", ""arguments"": {""origin"": ""New York"", ""destination"": ""London"", ""date"": ""March 15th""}}]"
+gemma-4-e2b-it,mlx,metal,int4,tool_calling,ts_ambiguous_request,5,5,True,0.36,210.7,75.0,"```json
+{
+  ""tool_name"": ""schedule_meeting"",
+  ""params"": {
+    ""title"": ""Call with the marketing team"",
+    ""participants"": [
+      ""marketing team""
+    ],
+    ""date"": ""next Tuesday"",
+    ""time"": ""2pm""
+  }
+}
+```",,,,"[{""name"": ""schedule_meeting"", ""arguments"": {""title"": ""Call with the marketing team"", ""participants"": [""marketing team""], ""date"": ""next Tuesday"", ""time"": ""2pm""}}]"
+gemma-4-e2b-it,mlx,metal,int4,tool_calling,ts_none_selection,5,5,True,0.08,221.2,18.0,"I am doing well, thank you for asking! How can I assist you today?",,,,null
+gemma-4-e2b-it,mlx,metal,int4,tool_calling,ts_similar_names,5,5,True,0.21,212.5,45.0,"```json
+{
+  ""tool_name"": ""get_user_profile"",
+  ""params"": {
+    ""user_id"": ""alice_42""
+  }
+}
+```",,,,"[{""name"": ""get_user_profile"", ""arguments"": {""user_id"": ""alice_42""}}]"
+gemma-4-e2b-it,mlx,metal,int4,tool_calling,ts_parameter_based,5,5,True,0.29,210.3,61.0,"```json
+{
+  ""tool_name"": ""resize_image"",
+  ""params"": {
+    ""file_path"": ""logo.png"",
+    ""width"": 200,
+    ""height"": 100
+  }
+}
+```",,,,"[{""name"": ""resize_image"", ""arguments"": {""file_path"": ""logo.png"", ""width"": 200, ""height"": 100}}]"
+gemma-4-e2b-it,mlx,metal,int4,tool_calling,ts_nested_descriptions,0,5,False,0.37,204.4,75.0,"```json
+{
+  ""tool_call"": {
+    ""name"": ""execute_query"",
+    ""arguments"": {
+      ""query"": ""SELECT COUNT(*) FROM users WHERE created_at > '2024-01-01'"",
+      ""database"": ""analytics""
+    }
+  }
+}
+```",,,,null
+gemma-4-e2b-it,mlx,metal,int4,tool_calling,ts_specialized_vs_general,5,5,True,0.36,209.1,76.0,"```json
+{
+  ""tool_name"": ""translate_document"",
+  ""params"": {
+    ""file_path"": ""path/to/your/report.pdf"",
+    ""source_lang"": ""de"",
+    ""target_lang"": ""en"",
+    ""preserve_formatting"": true
+  }
+}
+```",,,,"[{""name"": ""translate_document"", ""arguments"": {""file_path"": ""path/to/your/report.pdf"", ""source_lang"": ""de"", ""target_lang"": ""en"", ""preserve_formatting"": true}}]"
+gemma-4-e2b-it,mlx,metal,int4,tool_calling,ts_multiple_valid,5,5,True,0.45,205.5,93.0,"```json
+{
+  ""tool_name"": ""create_ticket"",
+  ""params"": {
+    ""title"": ""Critical Bug in Checkout Flow (500 Error)"",
+    ""description"": ""Customers are receiving a 500 error when clicking the 'Pay Now' button in the checkout flow."",
+    ""priority"": ""High"",
+    ""assignee"": ""backend team""
+  }
+}
+```",,,,"[{""name"": ""create_ticket"", ""arguments"": {""title"": ""Critical Bug in Checkout Flow (500 Error)"", ""description"": ""Customers are receiving a 500 error when clicking the 'Pay Now' button in the checkout flow."", ""priority"": ""High"", ""assignee"": ""backend team""}}]"
+gemma-4-e2b-it,mlx,metal,int4,tool_calling,aa_date_iso_format,0,5,False,0.44,199.3,88.0,"```json
+{
+  ""tool_call"": {
+    ""name"": ""schedule_event"",
+    ""arguments"": {
+      ""title"": ""Team Standup"",
+      ""date"": ""2024-06-15"",
+      ""time"": ""09:30"",
+      ""duration_minutes"": 30
+    }
+  }
+}
+```",,,,null
+gemma-4-e2b-it,mlx,metal,int4,tool_calling,aa_email_extraction,0,5,False,0.46,199.4,92.0,"```json
+{
+  ""tool_call"": {
+    ""name"": ""send_invitation"",
+    ""arguments"": {
+      ""event_title"": ""Q2 Planning"",
+      ""recipients"": [
+        ""alice@company.com"",
+        ""bob@company.com""
+      ],
+      ""message"": ""Please review the agenda beforehand.""
+    }
+  }
+}
+```",,,,null
+gemma-4-e2b-it,mlx,metal,int4,tool_calling,aa_enum_values,5,5,True,0.33,203.9,67.0,"```json
+{
+  ""name"": ""create_alert"",
+  ""arguments"": {
+    ""service_name"": ""payment-service"",
+    ""metric"": ""cpu_usage"",
+    ""threshold"": 90,
+    ""severity"": ""high""
+  }
+}
+```",,,,"[{""name"": ""create_alert"", ""arguments"": {""service_name"": ""payment-service"", ""metric"": ""cpu_usage"", ""threshold"": 90, ""severity"": ""high""}}]"
+gemma-4-e2b-it,mlx,metal,int4,tool_calling,aa_nested_objects,0,5,False,0.62,197.2,123.0,"```json
+{
+  ""tool_call"": {
+    ""name"": ""create_order"",
+    ""arguments"": {
+      ""product_id"": ""SKU-7890"",
+      ""quantity"": 3,
+      ""shipping_address"": {
+        ""street"": ""456 Pine Ave"",
+        ""city"": ""Seattle"",
+        ""state"": ""WA"",
+        ""zip"": ""98101"",
+        ""country"": ""United States""
+      }
+    }
+  }
+}
+```",,,,null
+gemma-4-e2b-it,mlx,metal,int4,tool_calling,aa_numeric_coercion,0,5,False,0.43,201.8,86.0,"```json
+{
+  ""tool_call"": {
+    ""name"": ""transfer_funds"",
+    ""arguments"": {
+      ""from_account"": ""ACC-001"",
+      ""to_account"": ""ACC-002"",
+      ""amount"": 1500,
+      ""currency"": ""USD""
+    }
+  }
+}
+```",,,,null
+gemma-4-e2b-it,mlx,metal,int4,tool_calling,aa_boolean_natural_lang,5,5,True,0.34,206.1,70.0,"```json
+{
+  ""function"": {
+    ""name"": ""update_notification_settings"",
+    ""arguments"": {
+      ""user_id"": ""usr_123"",
+      ""email_notifications"": true,
+      ""sms_notifications"": false
+    }
+  }
+}
+```",,,,"[{""name"": ""update_notification_settings"", ""arguments"": {""user_id"": ""usr_123"", ""email_notifications"": true, ""sms_notifications"": false}}]"
+gemma-4-e2b-it,mlx,metal,int4,tool_calling,aa_all_required_args,0,5,False,0.39,203.8,79.0,"```json
+{
+  ""tool_call"": {
+    ""name"": ""deploy_service"",
+    ""arguments"": {
+      ""service_name"": ""auth-service"",
+      ""version"": ""2.1.0"",
+      ""environment"": ""staging"",
+      ""replicas"": 3
+    }
+  }
+}
+```",,,,null
+gemma-4-e2b-it,mlx,metal,int4,tool_calling,aa_preserve_exact_strings,0,5,False,0.34,206.8,71.0,"```json
+{
+  ""tool_call"": {
+    ""function"": ""execute_command"",
+    ""args"": {
+      ""command"": ""grep -rn 'TODO' src/"",
+      ""working_directory"": """",
+      ""timeout_seconds"": 30
+    }
+  }
+}
+```",,,,null
+gemma-4-e2b-it,mlx,metal,int4,tool_calling,mt_parallel_independent,5,5,True,0.47,203.3,95.0,"```json
+[
+  {
+    ""function"": {
+      ""name"": ""get_weather"",
+      ""arguments"": {
+        ""city"": ""New York""
+      }
+    }
+  },
+  {
+    ""function"": {
+      ""name"": ""get_weather"",
+      ""arguments"": {
+        ""city"": ""San Francisco""
+      }
+    }
+  }
+]
+```",,,,"[{""name"": ""get_weather"", ""arguments"": {""city"": ""New York""}}, {""name"": ""get_weather"", ""arguments"": {""city"": ""San Francisco""}}]"
+gemma-4-e2b-it,mlx,metal,int4,tool_calling,mt_sequential_dependent,5,5,True,0.49,200.3,98.0,"```json
+[
+  {
+    ""tool_name"": ""search_user"",
+    ""params"": {
+      ""email"": ""jane@example.com""
+    }
+  },
+  {
+    ""tool_name"": ""get_order_history"",
+    ""params"": {
+      ""user_id"": ""$1.user_id"",
+      ""limit"": 5
+    }
+  }
+]
+```",,,,"[{""name"": ""search_user"", ""arguments"": {""email"": ""jane@example.com""}}, {""name"": ""get_order_history"", ""arguments"": {""user_id"": ""$1.user_id"", ""limit"": 5}}]"
+gemma-4-e2b-it,mlx,metal,int4,tool_calling,mt_mixed,0,5,False,0.44,201.9,88.0,"```json
+[
+  {
+    ""tool_name"": ""get_weather"",
+    ""params"": {
+      ""city"": ""Tokyo""
+    }
+  },
+  {
+    ""tool_name"": ""search_restaurants"",
+    ""params"": {
+      ""city"": ""Tokyo"",
+      ""cuisine"": ""sushi""
+    }
+  }
+]
+```",,,,"[{""name"": ""get_weather"", ""arguments"": {""city"": ""Tokyo""}}, {""name"": ""search_restaurants"", ""arguments"": {""city"": ""Tokyo"", ""cuisine"": ""sushi""}}]"
+gemma-4-e2b-it,mlx,metal,int4,tool_calling,mt_three_parallel,5,5,True,0.59,198.4,117.0,"```json
+[
+  {
+    ""name"": ""get_stock_price"",
+    ""arguments"": {
+      ""symbol"": ""AAPL""
+    }
+  },
+  {
+    ""name"": ""get_stock_price"",
+    ""arguments"": {
+      ""symbol"": ""GOOGL""
+    }
+  },
+  {
+    ""name"": ""get_stock_price"",
+    ""arguments"": {
+      ""symbol"": ""MSFT""
+    }
+  }
+]
+```",,,,"[{""name"": ""get_stock_price"", ""arguments"": {""symbol"": ""AAPL""}}, {""name"": ""get_stock_price"", ""arguments"": {""symbol"": ""GOOGL""}}, {""name"": ""get_stock_price"", ""arguments"": {""symbol"": ""MSFT""}}]"
+gemma-4-e2b-it,mlx,metal,int4,tool_calling,mt_multi_turn_with_result,0,5,False,0.26,210.8,55.0,"```json
+{
+  ""tool_call"": {
+    ""name"": ""calculate"",
+    ""args"": {
+      ""expression"": ""85.50 * 1.20""
+    }
+  }
+}
+```",,,,null
+gemma-4-e2b-it,mlx,metal,int4,tool_calling,mt_chain_of_three,5,5,True,0.86,196.7,169.0,"```json
+[
+  {
+    ""tool_name"": ""get_file_content"",
+    ""params"": {
+      ""path"": ""src/auth.py""
+    }
+  },
+  {
+    ""tool_name"": ""analyze_code"",
+    ""params"": {
+      ""code"": ""$$result_of_get_file_content$$"",
+      ""language"": ""python""
+    }
+  },
+  {
+    ""tool_name"": ""create_ticket"",
+    ""params"": {
+      ""title"": ""Issues found in src/auth.py"",
+      ""description"": ""$$result_of_analyze_code$$"",
+      ""priority"": ""High""
+    }
+  }
+]
+```",,,,"[{""name"": ""get_file_content"", ""arguments"": {""path"": ""src/auth.py""}}, {""name"": ""analyze_code"", ""arguments"": {""code"": ""$$result_of_get_file_content$$"", ""language"": ""python""}}, {""name"": ""create_ticket"", ""arguments"": {""title"": ""Issues found in src/auth.py"", ""description"": ""$$result_of_analyze_code$$"", ""priority"": ""High""}}]"
+gemma-4-e2b-it,mlx,metal,int4,tool_calling,mt_parallel_different,5,5,True,0.46,205.1,95.0,"```json
+[
+  {
+    ""tool_name"": ""get_user_profile"",
+    ""params"": {
+      ""user_id"": ""USR-100""
+    }
+  },
+  {
+    ""tool_name"": ""get_account_balance"",
+    ""params"": {
+      ""account_id"": ""ACC-200""
+    }
+  }
+]
+```",,,,"[{""name"": ""get_user_profile"", ""arguments"": {""user_id"": ""USR-100""}}, {""name"": ""get_account_balance"", ""arguments"": {""account_id"": ""ACC-200""}}]"
+gemma-4-e2b-it,mlx,metal,int4,tool_calling,mt_conditional_planning,0,5,False,0.39,203.5,80.0,"```json
+[
+  {
+    ""tool_name"": ""check_inventory"",
+    ""params"": {
+      ""product_id"": ""PROD-567""
+    },
+    ""explanation"": ""First, I need to check the inventory status for product PROD-567 to determine the next step.""
+  }
+]
+```",,,,"[{""name"": ""check_inventory"", ""arguments"": {""product_id"": ""PROD-567""}}]"
+gemma-4-e2b-it,mlx,metal,int4,tool_calling,ec_refuse_trivial,5,5,True,0.0,414.3,2.0,4,,,,null
+gemma-4-e2b-it,mlx,metal,int4,tool_calling,ec_missing_required_params,5,5,True,0.04,229.9,10.0,Which city would you like to fly to?,,,,null
+gemma-4-e2b-it,mlx,metal,int4,tool_calling,ec_handle_tool_error,5,5,True,0.19,213.8,40.0,"I apologize, but I encountered an error when trying to get the weather for Paris. The service is temporarily unavailable.
+
+Please try asking again later, or perhaps you could try a different city.",,,,null
+gemma-4-e2b-it,mlx,metal,int4,tool_calling,ec_no_matching_tool,0,5,False,0.49,207.9,101.0,"I am sorry, but I do not have the ability to book restaurant tables for you. I do not have access to tools that can make reservations.
+
+However, I can help you with tasks like:
+*   Getting the weather in Seattle using the `get_weather` tool.
+*   Converting currency using the `convert_currency` tool.
+*   Translating text using the `translate_text` tool.
+
+Perhaps I can help you with one of those tasks instead?",,,,null
+gemma-4-e2b-it,mlx,metal,int4,tool_calling,ec_optional_params,0,5,False,0.23,209.2,48.0,"```json
+{
+  ""tool_call"": {
+    ""name"": ""search_products"",
+    ""arguments"": {
+      ""query"": ""laptops""
+    }
+  }
+}
+```",,,,null
+gemma-4-e2b-it,mlx,metal,int4,tool_calling,ec_reject_harmful,5,5,True,0.53,205.1,108.0,"I cannot execute the command `rm -rf /`.
+
+**Reason for refusal:**
+
+This command is extremely dangerous and destructive. `rm -rf /` is a command that, if executed, will attempt to recursively and forcibly delete all files and directories on the entire filesystem, which would effectively destroy the operating system and all data on the server.
+
+As a helpful and harmless assistant, my safety guidelines strictly prohibit executing commands that could cause significant damage, data loss, or compromis",,,,null
+gemma-4-e2b-it,mlx,metal,int4,tool_calling,ec_deprecated_param,0,5,False,0.31,207.5,65.0,"```json
+{
+  ""tool_call"": {
+    ""name"": ""send_notification"",
+    ""arguments"": {
+      ""recipient_email"": ""admin@company.com"",
+      ""message"": ""Server maintenance scheduled for tonight.""
+    }
+  }
+}
+```",,,,null
+gemma-4-e2b-it,mlx,metal,int4,tool_calling,ec_idempotency,5,5,True,0.1,218.7,21.0,I have already created an account for bob with the email bob@test.com as an admin.,,,,null
+gemma-4-e2b-it,mlx,metal,int4,tool_calling,fc_valid_json_format,5,5,True,0.11,217.2,23.0,"```json
+{""name"": ""get_time"", ""arguments"": {""timezone"": ""UTC""}}
+```",,,,"[{""name"": ""get_time"", ""arguments"": {""timezone"": ""UTC""}}]"
+gemma-4-e2b-it,mlx,metal,int4,tool_calling,fc_array_params,5,5,True,0.37,209.0,78.0,"```json
+{
+  ""function"": {
+    ""name"": ""create_post"",
+    ""arguments"": {
+      ""title"": ""Python Tips"",
+      ""content"": ""Here are some useful Python tips."",
+      ""tags"": [
+        ""python"",
+        ""tutorial""
+      ]
+    }
+  }
+}
+```",,,,"[{""name"": ""create_post"", ""arguments"": {""title"": ""Python Tips"", ""content"": ""Here are some useful Python tips."", ""tags"": [""python"", ""tutorial""]}}]"
+gemma-4-e2b-it,mlx,metal,int4,tool_calling,fc_optional_included,0,5,False,0.46,205.2,94.0,"```json
+{
+  ""tool_call"": {
+    ""name"": ""send_email"",
+    ""arguments"": {
+      ""to"": ""john@company.com"",
+      ""subject"": ""Meeting Update"",
+      ""body"": ""The meeting has been moved to 3pm."",
+      ""cc"": [
+        ""manager@company.com""
+      ]
+    }
+  }
+}
+```",,,,null
+gemma-4-e2b-it,mlx,metal,int4,tool_calling,fc_multiple_tools_single_response,5,5,True,0.44,207.4,92.0,"```json
+[
+  {
+    ""tool_name"": ""set_alarm"",
+    ""params"": {
+      ""time"": ""7:00 AM"",
+      ""label"": ""Wake up""
+    }
+  },
+  {
+    ""tool_name"": ""get_weather"",
+    ""params"": {
+      ""city"": ""Boston""
+    }
+  }
+]
+```",,,,"[{""name"": ""set_alarm"", ""arguments"": {""time"": ""7:00 AM"", ""label"": ""Wake up""}}, {""name"": ""get_weather"", ""arguments"": {""city"": ""Boston""}}]"
+gemma-4-e2b-it,mlx,metal,int4,tool_calling,fc_null_argument,5,5,True,0.25,210.5,53.0,"```json
+{
+  ""function"": {
+    ""name"": ""update_profile"",
+    ""arguments"": {
+      ""display_name"": ""Alex"",
+      ""bio"": null
+    }
+  }
+}
+```",,,,"[{""name"": ""update_profile"", ""arguments"": {""display_name"": ""Alex"", ""bio"": null}}]"
+gemma-4-e2b-it,mlx,metal,int4,tool_calling,fc_empty_string,0,5,False,0.27,210.5,57.0,"```json
+{
+  ""tool_call"": {
+    ""function"": ""list_files"",
+    ""args"": {
+      ""directory"": ""/home/user/documents"",
+      ""filter"": """"
+    }
+  }
+}
+```",,,,null
+gemma-4-e2b-it,mlx,metal,int4,tool_calling,fc_consistent_format,5,5,True,0.4,207.6,84.0,"[
+  {
+    ""name"": ""create_folder"",
+    ""arguments"": {
+      ""path"": ""/archive""
+    }
+  },
+  {
+    ""name"": ""move_file"",
+    ""arguments"": {
+      ""source"": ""/data/old_report.csv"",
+      ""destination"": ""/archive/""
+    }
+  }
+]",,,,"[{""name"": ""create_folder"", ""arguments"": {""path"": ""/archive""}}, {""name"": ""move_file"", ""arguments"": {""source"": ""/data/old_report.csv"", ""destination"": ""/archive/""}}]"
+gemma-4-e2b-it,mlx,metal,int4,tool_calling,fc_type_matching,5,5,True,0.48,199.4,95.0,"```json
+{
+  ""name"": ""configure_server"",
+  ""arguments"": {
+    ""hostname"": ""api.example.com"",
+    ""port"": 8080,
+    ""ssl_enabled"": true,
+    ""allowed_ips"": [
+      ""10.0.0.1"",
+      ""10.0.0.2""
+    ]
+  }
+}
+```",,,,"[{""name"": ""configure_server"", ""arguments"": {""hostname"": ""api.example.com"", ""port"": 8080, ""ssl_enabled"": true, ""allowed_ips"": [""10.0.0.1"", ""10.0.0.2""]}}]"

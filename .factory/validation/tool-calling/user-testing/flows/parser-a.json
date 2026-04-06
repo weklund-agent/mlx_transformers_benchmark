@@ -1,0 +1,153 @@
+{
+  "groupId": "parser-a",
+  "testedAt": "2026-04-04T19:51:05.912918+00:00",
+  "isolation": {
+    "surface": "shell-pytest",
+    "repoRoot": "/Users/weae1504/Projects/mlx_transformers_benchmark",
+    "missionDir": "/Users/weae1504/.factory/missions/7a98117d-95dc-4445-8b4e-9c6c1c89f9a0",
+    "evidenceDir": "/Users/weae1504/.factory/missions/7a98117d-95dc-4445-8b4e-9c6c1c89f9a0/evidence/tool-calling/parser-a",
+    "requirements": {
+      "useUvRun": true,
+      "pytestNoCacheProvider": true,
+      "editedSourceOrTests": false
+    }
+  },
+  "toolsUsed": [
+    "shell",
+    "pytest",
+    "uv run"
+  ],
+  "commandsRun": [
+    {
+      "command": "uv run pytest -p no:cacheprovider tests/test_tool_call_parser.py::TestHermesSingle -v --tb=short",
+      "exitCode": 0,
+      "outputArtifact": "tool-calling/parser-a/VAL-PARSER-001.txt"
+    },
+    {
+      "command": "uv run pytest -p no:cacheprovider tests/test_tool_call_parser.py::TestHermesMultiple -v --tb=short",
+      "exitCode": 0,
+      "outputArtifact": "tool-calling/parser-a/VAL-PARSER-002.txt"
+    },
+    {
+      "command": "uv run pytest -p no:cacheprovider tests/test_tool_call_parser.py::TestHermesWhitespace -v --tb=short",
+      "exitCode": 0,
+      "outputArtifact": "tool-calling/parser-a/VAL-PARSER-003.txt"
+    },
+    {
+      "command": "uv run pytest -p no:cacheprovider tests/test_tool_call_parser.py::TestJsonBlockSingle -v --tb=short",
+      "exitCode": 0,
+      "outputArtifact": "tool-calling/parser-a/VAL-PARSER-004.txt"
+    },
+    {
+      "command": "uv run pytest -p no:cacheprovider tests/test_tool_call_parser.py::TestJsonBlockSurroundingText -v --tb=short",
+      "exitCode": 0,
+      "outputArtifact": "tool-calling/parser-a/VAL-PARSER-005.txt"
+    },
+    {
+      "command": "uv run pytest -p no:cacheprovider tests/test_tool_call_parser.py::TestJsonBlockMultiple -v --tb=short",
+      "exitCode": 0,
+      "outputArtifact": "tool-calling/parser-a/VAL-PARSER-006.txt"
+    }
+  ],
+  "assertions": [
+    {
+      "id": "VAL-PARSER-001",
+      "title": "Hermes format \u2014 single tool call",
+      "status": "pass",
+      "steps": [
+        {
+          "action": "Run TestHermesSingle pytest class",
+          "expected": "Hermes single-call parsing tests pass",
+          "observed": "2 passed in 0.11s"
+        }
+      ],
+      "evidence": {
+        "commandOutput": "tool-calling/parser-a/VAL-PARSER-001.txt"
+      },
+      "issues": null
+    },
+    {
+      "id": "VAL-PARSER-002",
+      "title": "Hermes format \u2014 multiple tool calls",
+      "status": "pass",
+      "steps": [
+        {
+          "action": "Run TestHermesMultiple pytest class",
+          "expected": "Hermes multi-call parsing test passes",
+          "observed": "1 passed in 0.11s"
+        }
+      ],
+      "evidence": {
+        "commandOutput": "tool-calling/parser-a/VAL-PARSER-002.txt"
+      },
+      "issues": null
+    },
+    {
+      "id": "VAL-PARSER-003",
+      "title": "Hermes format \u2014 with whitespace/newlines inside tags",
+      "status": "pass",
+      "steps": [
+        {
+          "action": "Run TestHermesWhitespace pytest class",
+          "expected": "Whitespace/newline Hermes parsing tests pass",
+          "observed": "2 passed in 0.12s"
+        }
+      ],
+      "evidence": {
+        "commandOutput": "tool-calling/parser-a/VAL-PARSER-003.txt"
+      },
+      "issues": null
+    },
+    {
+      "id": "VAL-PARSER-004",
+      "title": "JSON code block \u2014 single tool call",
+      "status": "pass",
+      "steps": [
+        {
+          "action": "Run TestJsonBlockSingle pytest class",
+          "expected": "Single JSON code-block parsing tests pass",
+          "observed": "2 passed in 0.12s"
+        }
+      ],
+      "evidence": {
+        "commandOutput": "tool-calling/parser-a/VAL-PARSER-004.txt"
+      },
+      "issues": null
+    },
+    {
+      "id": "VAL-PARSER-005",
+      "title": "JSON code block \u2014 tool call with surrounding text",
+      "status": "pass",
+      "steps": [
+        {
+          "action": "Run TestJsonBlockSurroundingText pytest class",
+          "expected": "Embedded JSON code-block parsing test passes",
+          "observed": "1 passed in 0.12s"
+        }
+      ],
+      "evidence": {
+        "commandOutput": "tool-calling/parser-a/VAL-PARSER-005.txt"
+      },
+      "issues": null
+    },
+    {
+      "id": "VAL-PARSER-006",
+      "title": "JSON code block \u2014 multiple code blocks",
+      "status": "pass",
+      "steps": [
+        {
+          "action": "Run TestJsonBlockMultiple pytest class",
+          "expected": "Multiple JSON code-block parsing test passes",
+          "observed": "1 passed in 0.12s"
+        }
+      ],
+      "evidence": {
+        "commandOutput": "tool-calling/parser-a/VAL-PARSER-006.txt"
+      },
+      "issues": null
+    }
+  ],
+  "frictions": [],
+  "blockers": [],
+  "summary": "Tested 6 assigned parser assertions (VAL-PARSER-001..006): all 6 passed using targeted uv run pytest commands with -p no:cacheprovider."
+}

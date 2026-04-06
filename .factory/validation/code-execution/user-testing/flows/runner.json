@@ -1,0 +1,192 @@
+{
+  "groupId": "runner",
+  "surface": "shell-pytest",
+  "testedAt": "2026-04-04T18:44:18Z",
+  "toolsUsed": [
+    "shell",
+    "pytest"
+  ],
+  "assertions": [
+    {
+      "id": "VAL-RUNNER-001",
+      "status": "pass",
+      "reason": "Pattern-match evaluation path and majority-vote behavior passed in runner integration tests.",
+      "evidence": {
+        "pytestTests": [
+          "tests/test_runner_integration.py::TestEvaluationDispatch::test_pattern_match_problem_uses_check",
+          "tests/test_runner_integration.py::TestMajorityVote::test_majority_3_runs_2_pass",
+          "tests/test_runner_integration.py::TestMajorityVote::test_majority_3_runs_1_pass"
+        ],
+        "artifacts": [
+          "code-execution/runner/pytest_runner_integration.txt"
+        ]
+      }
+    },
+    {
+      "id": "VAL-RUNNER-002",
+      "status": "pass",
+      "reason": "Code-execution problems with test cases were evaluated via sandbox and produced expected pass/fail outcomes without runner crashes.",
+      "evidence": {
+        "pytestTests": [
+          "tests/test_runner_integration.py::TestEvaluationDispatch::test_code_execution_problem_uses_sandbox",
+          "tests/test_runner_integration.py::TestEvaluationDispatch::test_code_execution_failing_code"
+        ],
+        "artifacts": [
+          "code-execution/runner/pytest_runner_integration.txt"
+        ]
+      }
+    },
+    {
+      "id": "VAL-RUNNER-004",
+      "status": "pass",
+      "reason": "Runner integration tests confirmed required CSV columns are present and execution columns are populated for code execution rows.",
+      "evidence": {
+        "pytestTests": [
+          "tests/test_runner_integration.py::TestCSVOutputColumns::test_pattern_match_columns_present",
+          "tests/test_runner_integration.py::TestCSVOutputColumns::test_code_execution_columns_populated"
+        ],
+        "artifacts": [
+          "code-execution/runner/pytest_runner_integration.txt"
+        ]
+      }
+    },
+    {
+      "id": "VAL-RUNNER-005",
+      "status": "pass",
+      "reason": "CLI flag preservation was validated by test coverage against the run_quality_benchmarks main() signature; all expected flags were present.",
+      "evidence": {
+        "pytestTests": [
+          "tests/test_runner_integration.py::TestCLIFlags::test_main_function_has_all_flags"
+        ],
+        "artifacts": [
+          "code-execution/runner/pytest_runner_integration.txt",
+          "code-execution/runner/run_quality_benchmarks_help.txt"
+        ],
+        "note": "Direct --help invocation fails due known fire/IPython compatibility issue; assertion validated through function signature check."
+      }
+    },
+    {
+      "id": "VAL-RUNNER-009",
+      "status": "pass",
+      "reason": "Timeout path produced a failure row and execution metadata while the runner completed normally.",
+      "evidence": {
+        "pytestTests": [
+          "tests/test_runner_integration.py::TestSandboxTimeout::test_timeout_produces_failure_not_crash"
+        ],
+        "artifacts": [
+          "code-execution/runner/pytest_runner_integration.txt"
+        ]
+      }
+    },
+    {
+      "id": "VAL-RUNNER-010",
+      "status": "pass",
+      "reason": "Strict-majority voting behavior for even/odd run counts was verified across edge cases.",
+      "evidence": {
+        "pytestTests": [
+          "tests/test_runner_integration.py::TestMajorityVote::test_majority_3_runs_2_pass",
+          "tests/test_runner_integration.py::TestMajorityVote::test_majority_3_runs_1_pass",
+          "tests/test_runner_integration.py::TestMajorityVote::test_majority_4_runs_2_pass_is_false",
+          "tests/test_runner_integration.py::TestMajorityVote::test_majority_5_runs_3_pass"
+        ],
+        "artifacts": [
+          "code-execution/runner/pytest_runner_integration.txt"
+        ]
+      }
+    },
+    {
+      "id": "VAL-RUNNER-011",
+      "status": "pass",
+      "reason": "Evaluation dispatch correctly routed non-test_cases problems to check() and test_cases problems to sandbox execution.",
+      "evidence": {
+        "pytestTests": [
+          "tests/test_runner_integration.py::TestEvaluationDispatch::test_pattern_match_problem_uses_check",
+          "tests/test_runner_integration.py::TestEvaluationDispatch::test_code_execution_problem_uses_sandbox"
+        ],
+        "artifacts": [
+          "code-execution/runner/pytest_runner_integration.txt"
+        ]
+      }
+    },
+    {
+      "id": "VAL-RUNNER-012",
+      "status": "pass",
+      "reason": "Non-coding pattern-match categories continued to pass via check() and the full quality benchmark test suite remained green.",
+      "evidence": {
+        "pytestTests": [
+          "tests/test_runner_integration.py::TestPatternMatchUnaffected::test_non_coding_categories_use_check[reasoning]",
+          "tests/test_runner_integration.py::TestPatternMatchUnaffected::test_non_coding_categories_use_check[math]",
+          "tests/test_runner_integration.py::TestPatternMatchUnaffected::test_non_coding_categories_use_check[writing]",
+          "tests/test_runner_integration.py::TestPatternMatchUnaffected::test_non_coding_categories_use_check[instruction_following]"
+        ],
+        "artifacts": [
+          "code-execution/runner/pytest_runner_integration.txt",
+          "code-execution/runner/pytest_quality_benchmarks.txt"
+        ],
+        "suiteResult": "tests/test_quality_benchmarks.py: 184 passed"
+      }
+    },
+    {
+      "id": "VAL-CROSS-001",
+      "status": "pass",
+      "reason": "End-to-end mocked flow including coding execution and CSV persistence passed in integration tests.",
+      "evidence": {
+        "pytestTests": [
+          "tests/test_runner_integration.py::TestCompleteFlowMocked::test_full_flow_with_mock",
+          "tests/test_runner_integration.py::TestCompleteFlowMocked::test_code_execution_majority_vote"
+        ],
+        "artifacts": [
+          "code-execution/runner/pytest_runner_integration.txt"
+        ]
+      }
+    },
+    {
+      "id": "VAL-CROSS-007",
+      "status": "pass",
+      "reason": "Mixed evaluation strategies were validated in one run and global problem inventory showed all categories included for difficulty=all.",
+      "evidence": {
+        "pytestTests": [
+          "tests/test_runner_integration.py::TestMixedProblemTypes::test_mixed_problems_single_run"
+        ],
+        "artifacts": [
+          "code-execution/runner/pytest_runner_integration.txt",
+          "code-execution/runner/problem_categories.txt"
+        ],
+        "categorySummary": "['coding', 'instruction_following', 'math', 'reasoning', 'tool_calling', 'writing'] total=46"
+      }
+    }
+  ],
+  "commandsRun": [
+    {
+      "command": "uv run pytest tests/test_runner_integration.py -v --tb=short -p no:cacheprovider",
+      "exitCode": 0,
+      "observation": "19 passed in 16.50s."
+    },
+    {
+      "command": "uv run pytest tests/test_quality_benchmarks.py -v --tb=short -p no:cacheprovider",
+      "exitCode": 0,
+      "observation": "184 passed in 0.15s."
+    },
+    {
+      "command": "uv run python -c \"from mtb.quality_benchmarks import EVAL_PROBLEMS,HARD_EVAL_PROBLEMS,EXPERT_EVAL_PROBLEMS,TOOL_CALLING_PROBLEMS; allp=EVAL_PROBLEMS+HARD_EVAL_PROBLEMS+EXPERT_EVAL_PROBLEMS+TOOL_CALLING_PROBLEMS; print(sorted({p.category for p in allp}), len(allp))\"",
+      "exitCode": 0,
+      "observation": "Printed 6 categories and total problem count 46."
+    },
+    {
+      "command": "uv run python scripts/run_quality_benchmarks.py --help",
+      "exitCode": 1,
+      "observation": "Help invocation failed with fire/IPython Inspector theme_name TypeError (known pre-existing issue)."
+    }
+  ],
+  "frictions": [
+    {
+      "description": "CLI --help path is currently broken by upstream fire/IPython compatibility (Inspector theme_name argument).",
+      "resolved": true,
+      "resolution": "Used existing runner integration test that validates main() signature contains all expected flags.",
+      "affectedAssertions": [
+        "VAL-RUNNER-005"
+      ]
+    }
+  ],
+  "blockers": []
+}

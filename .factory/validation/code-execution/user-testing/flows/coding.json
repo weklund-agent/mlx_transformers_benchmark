@@ -1,0 +1,133 @@
+{
+  "groupId": "coding",
+  "testedAt": "2026-04-04T18:41:56.332433+00:00",
+  "surface": "shell+pytest",
+  "isolation": {
+    "surface": "shell + pytest only",
+    "runFrom": "/Users/weae1504/Projects/mlx_transformers_benchmark",
+    "pytestFlag": "-p no:cacheprovider"
+  },
+  "toolsUsed": [
+    "shell",
+    "pytest"
+  ],
+  "assertions": [
+    {
+      "id": "VAL-CODING-001",
+      "status": "pass",
+      "reason": "Function signature presence test passed for all coding problems.",
+      "evidence": [
+        "code-execution/coding/pytest-test_coding_problems.txt",
+        "code-execution/coding/pytest-test_coding_problems-snippets.txt"
+      ]
+    },
+    {
+      "id": "VAL-CODING-002",
+      "status": "pass",
+      "reason": "5-10 test-case count validation passed across coding problems.",
+      "evidence": [
+        "code-execution/coding/pytest-test_coding_problems.txt",
+        "code-execution/coding/pytest-test_coding_problems-snippets.txt"
+      ]
+    },
+    {
+      "id": "VAL-CODING-003",
+      "status": "pass",
+      "reason": "All test cases validated with non-None input and expected_output fields.",
+      "evidence": [
+        "code-execution/coding/pytest-test_coding_problems.txt",
+        "code-execution/coding/pytest-test_coding_problems-snippets.txt"
+      ]
+    },
+    {
+      "id": "VAL-CODING-004",
+      "status": "pass",
+      "reason": "Difficulty tier membership tests for easy/hard/expert all passed.",
+      "evidence": [
+        "code-execution/coding/pytest-test_coding_problems.txt"
+      ]
+    },
+    {
+      "id": "VAL-CODING-005",
+      "status": "pass",
+      "reason": "Duplicate-name check passed.",
+      "evidence": [
+        "code-execution/coding/pytest-test_coding_problems.txt"
+      ]
+    },
+    {
+      "id": "VAL-CODING-006",
+      "status": "pass",
+      "reason": "Total count and expected-name registry checks passed for all 18 coding problems.",
+      "evidence": [
+        "code-execution/coding/pytest-test_coding_problems.txt"
+      ]
+    },
+    {
+      "id": "VAL-CODING-043",
+      "status": "pass",
+      "reason": "Determinism parametrized test passed across all 18 problems.",
+      "evidence": [
+        "code-execution/coding/pytest-test_coding_problems.txt"
+      ]
+    },
+    {
+      "id": "VAL-CODING-044",
+      "status": "pass",
+      "reason": "Float comparison tolerance check passed (no direct float-equality assertion path).",
+      "evidence": [
+        "code-execution/coding/pytest-test_coding_problems.txt"
+      ]
+    },
+    {
+      "id": "VAL-CODING-045",
+      "status": "pass",
+      "reason": "Correct implementation sandbox executions passed for all 18 coding problems.",
+      "evidence": [
+        "code-execution/coding/pytest-test_coding_problems.txt",
+        "code-execution/coding/pytest-test_coding_problems-snippets.txt"
+      ]
+    },
+    {
+      "id": "VAL-CODING-046",
+      "status": "pass",
+      "reason": "Incorrect implementation sandbox executions failed as expected for all 18 coding problems.",
+      "evidence": [
+        "code-execution/coding/pytest-test_coding_problems.txt",
+        "code-execution/coding/pytest-test_coding_problems-snippets.txt"
+      ]
+    },
+    {
+      "id": "VAL-CODING-047",
+      "status": "pass",
+      "reason": "Markdown-fenced code extraction with surrounding explanatory text passed in sandbox test_mixed_fences_and_text.",
+      "evidence": [
+        "code-execution/coding/pytest-sandbox-mixed-fences.txt",
+        "code-execution/coding/pytest-sandbox-mixed-fences-snippet.txt"
+      ]
+    },
+    {
+      "id": "VAL-CODING-050",
+      "status": "pass",
+      "reason": "Boundary/edge-case coverage tests passed for required coding problems.",
+      "evidence": [
+        "code-execution/coding/pytest-test_coding_problems.txt"
+      ]
+    }
+  ],
+  "commandsRun": [
+    {
+      "command": "uv run pytest tests/test_coding_problems.py -v --tb=short -p no:cacheprovider",
+      "exitCode": 0,
+      "observation": "Collected 76 tests; all passed in 0.88s."
+    },
+    {
+      "command": "uv run pytest tests/test_sandbox.py::TestMarkdownFenceStripping::test_mixed_fences_and_text -v --tb=short -p no:cacheprovider",
+      "exitCode": 0,
+      "observation": "Collected 1 test; passed in 0.13s. Verified fenced code extraction with surrounding text."
+    }
+  ],
+  "frictions": [],
+  "blockers": [],
+  "summary": "Validated 12 assigned coding assertions: 12 passed, 0 failed, 0 blocked."
+}

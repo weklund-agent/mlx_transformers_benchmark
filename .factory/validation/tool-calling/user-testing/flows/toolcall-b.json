@@ -1,0 +1,204 @@
+{
+  "groupId": "toolcall-b",
+  "testedAt": "2026-04-04T19:51:59.169168+00:00",
+  "isolation": {
+    "surface": "shell-pytest",
+    "repoRoot": "/Users/weae1504/Projects/mlx_transformers_benchmark",
+    "useUvRun": true,
+    "pytestFlag": "-p no:cacheprovider",
+    "artifactsRoot": "/Users/weae1504/.factory/missions/7a98117d-95dc-4445-8b4e-9c6c1c89f9a0/evidence/tool-calling/toolcall-b"
+  },
+  "toolsUsed": [
+    "shell",
+    "pytest"
+  ],
+  "commandsRun": [
+    {
+      "assertionId": "VAL-TOOLCALL-010",
+      "command": "uv run pytest -p no:cacheprovider tests/test_tool_calling_problems.py::TestToolSelectionWithThinkBlocks tests/test_tool_calling_problems.py::TestArgumentAccuracyWithThinkBlocks tests/test_tool_calling_problems.py::TestMultiToolWithThinkBlocks tests/test_tool_calling_problems.py::TestEdgeCasesWithThinkBlocks tests/test_tool_calling_problems.py::TestFormatComplianceWithThinkBlocks -v",
+      "exitCode": 0,
+      "outputArtifact": "tool-calling/toolcall-b/VAL-TOOLCALL-010-pytest.txt",
+      "observed": "30 passed in 0.12s"
+    },
+    {
+      "assertionId": "VAL-TOOLCALL-100",
+      "command": "uv run pytest -p no:cacheprovider tests/test_tool_calling_problems.py::TestToolSelectionPass -v",
+      "exitCode": 0,
+      "outputArtifact": "tool-calling/toolcall-b/VAL-TOOLCALL-100-pytest.txt",
+      "observed": "9 passed in 0.12s"
+    },
+    {
+      "assertionId": "VAL-TOOLCALL-108",
+      "command": "uv run pytest -p no:cacheprovider tests/test_tool_calling_problems.py::TestToolSelectionFail -v",
+      "exitCode": 0,
+      "outputArtifact": "tool-calling/toolcall-b/VAL-TOOLCALL-108-pytest.txt",
+      "observed": "11 passed in 0.13s"
+    },
+    {
+      "assertionId": "VAL-TOOLCALL-200",
+      "command": "uv run pytest -p no:cacheprovider tests/test_tool_calling_problems.py::TestArgumentAccuracyPass -v",
+      "exitCode": 0,
+      "outputArtifact": "tool-calling/toolcall-b/VAL-TOOLCALL-200-pytest.txt",
+      "observed": "10 passed in 0.12s"
+    },
+    {
+      "assertionId": "VAL-TOOLCALL-208",
+      "command": "uv run pytest -p no:cacheprovider tests/test_tool_calling_problems.py::TestArgumentAccuracyFail -v",
+      "exitCode": 0,
+      "outputArtifact": "tool-calling/toolcall-b/VAL-TOOLCALL-208-pytest.txt",
+      "observed": "19 passed in 0.12s"
+    },
+    {
+      "assertionId": "VAL-TOOLCALL-300",
+      "command": "uv run pytest -p no:cacheprovider tests/test_tool_calling_problems.py::TestMultiToolPass -v",
+      "exitCode": 0,
+      "outputArtifact": "tool-calling/toolcall-b/VAL-TOOLCALL-300-pytest.txt",
+      "observed": "8 passed in 0.12s"
+    },
+    {
+      "assertionId": "VAL-TOOLCALL-308",
+      "command": "uv run pytest -p no:cacheprovider tests/test_tool_calling_problems.py::TestMultiToolFail -v",
+      "exitCode": 0,
+      "outputArtifact": "tool-calling/toolcall-b/VAL-TOOLCALL-308-pytest.txt",
+      "observed": "9 passed in 0.12s"
+    }
+  ],
+  "assertions": [
+    {
+      "id": "VAL-TOOLCALL-010",
+      "title": "Each check function handles _strip_thinking",
+      "status": "pass",
+      "steps": [
+        {
+          "action": "Run think-block test classes across tool-calling subcategories",
+          "expected": "Think-wrapped valid responses continue to pass check functions",
+          "observed": "30 think-block tests passed"
+        }
+      ],
+      "evidence": {
+        "textArtifacts": [
+          "tool-calling/toolcall-b/VAL-TOOLCALL-010-pytest.txt"
+        ],
+        "result": "PASS"
+      },
+      "issues": null
+    },
+    {
+      "id": "VAL-TOOLCALL-100",
+      "title": "Tool selection \u2014 correct tool selected",
+      "status": "pass",
+      "steps": [
+        {
+          "action": "Run TestToolSelectionPass",
+          "expected": "Correct tool selections pass",
+          "observed": "9 pass-case tests passed"
+        }
+      ],
+      "evidence": {
+        "textArtifacts": [
+          "tool-calling/toolcall-b/VAL-TOOLCALL-100-pytest.txt"
+        ],
+        "result": "PASS"
+      },
+      "issues": null
+    },
+    {
+      "id": "VAL-TOOLCALL-108",
+      "title": "Tool selection \u2014 wrong tool fails",
+      "status": "pass",
+      "steps": [
+        {
+          "action": "Run TestToolSelectionFail",
+          "expected": "Wrong tool selections fail checks",
+          "observed": "11 fail-case tests passed (checks correctly returned False)"
+        }
+      ],
+      "evidence": {
+        "textArtifacts": [
+          "tool-calling/toolcall-b/VAL-TOOLCALL-108-pytest.txt"
+        ],
+        "result": "PASS"
+      },
+      "issues": null
+    },
+    {
+      "id": "VAL-TOOLCALL-200",
+      "title": "Argument accuracy \u2014 correct arguments extracted",
+      "status": "pass",
+      "steps": [
+        {
+          "action": "Run TestArgumentAccuracyPass",
+          "expected": "Valid argument formatting and values pass checks",
+          "observed": "10 pass-case tests passed"
+        }
+      ],
+      "evidence": {
+        "textArtifacts": [
+          "tool-calling/toolcall-b/VAL-TOOLCALL-200-pytest.txt"
+        ],
+        "result": "PASS"
+      },
+      "issues": null
+    },
+    {
+      "id": "VAL-TOOLCALL-208",
+      "title": "Argument accuracy \u2014 wrong arguments fail",
+      "status": "pass",
+      "steps": [
+        {
+          "action": "Run TestArgumentAccuracyFail",
+          "expected": "Wrong argument values/types/missing keys fail checks",
+          "observed": "19 fail-case tests passed (checks correctly returned False)"
+        }
+      ],
+      "evidence": {
+        "textArtifacts": [
+          "tool-calling/toolcall-b/VAL-TOOLCALL-208-pytest.txt"
+        ],
+        "result": "PASS"
+      },
+      "issues": null
+    },
+    {
+      "id": "VAL-TOOLCALL-300",
+      "title": "Multi-tool \u2014 parallel independent calls",
+      "status": "pass",
+      "steps": [
+        {
+          "action": "Run TestMultiToolPass",
+          "expected": "Required multi-tool positive scenarios pass checks",
+          "observed": "8 pass-case tests passed"
+        }
+      ],
+      "evidence": {
+        "textArtifacts": [
+          "tool-calling/toolcall-b/VAL-TOOLCALL-300-pytest.txt"
+        ],
+        "result": "PASS"
+      },
+      "issues": null
+    },
+    {
+      "id": "VAL-TOOLCALL-308",
+      "title": "Multi-tool \u2014 incomplete responses fail",
+      "status": "pass",
+      "steps": [
+        {
+          "action": "Run TestMultiToolFail",
+          "expected": "Incomplete or wrong multi-tool responses fail checks",
+          "observed": "9 fail-case tests passed (checks correctly returned False)"
+        }
+      ],
+      "evidence": {
+        "textArtifacts": [
+          "tool-calling/toolcall-b/VAL-TOOLCALL-308-pytest.txt"
+        ],
+        "result": "PASS"
+      },
+      "issues": null
+    }
+  ],
+  "frictions": [],
+  "blockers": [],
+  "summary": "Tested 7 assertions; all 7 passed with concrete pytest evidence logs saved under the assigned evidence directory."
+}

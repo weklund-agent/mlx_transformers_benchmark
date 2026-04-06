@@ -1,0 +1,205 @@
+{
+  "groupId": "toolcall-c",
+  "testedAt": "2026-04-04T19:54:22Z",
+  "isolation": {
+    "surface": "shell-pytest",
+    "repoRoot": "/Users/weae1504/Projects/mlx_transformers_benchmark",
+    "useUvRun": true,
+    "pytestFlag": "-p no:cacheprovider",
+    "artifactsRoot": "/Users/weae1504/.factory/missions/7a98117d-95dc-4445-8b4e-9c6c1c89f9a0/evidence/tool-calling/toolcall-c"
+  },
+  "toolsUsed": [
+    "shell",
+    "pytest",
+    "uv run python"
+  ],
+  "commandsRun": [
+    {
+      "assertionId": "VAL-TOOLCALL-400",
+      "command": "uv run pytest -p no:cacheprovider /Users/weae1504/Projects/mlx_transformers_benchmark/tests/test_tool_calling_problems.py::TestEdgeCasesPass -v --tb=short",
+      "exitCode": 0,
+      "outputArtifact": "tool-calling/toolcall-c/VAL-TOOLCALL-400.txt",
+      "observed": "10 passed in 0.12s"
+    },
+    {
+      "assertionId": "VAL-TOOLCALL-408",
+      "command": "uv run pytest -p no:cacheprovider /Users/weae1504/Projects/mlx_transformers_benchmark/tests/test_tool_calling_problems.py::TestEdgeCasesFail -v --tb=short",
+      "exitCode": 0,
+      "outputArtifact": "tool-calling/toolcall-c/VAL-TOOLCALL-408.txt",
+      "observed": "8 passed in 0.12s"
+    },
+    {
+      "assertionId": "VAL-TOOLCALL-500",
+      "command": "uv run pytest -p no:cacheprovider /Users/weae1504/Projects/mlx_transformers_benchmark/tests/test_tool_calling_problems.py::TestFormatCompliancePass -v --tb=short",
+      "exitCode": 0,
+      "outputArtifact": "tool-calling/toolcall-c/VAL-TOOLCALL-500.txt",
+      "observed": "11 passed in 0.12s"
+    },
+    {
+      "assertionId": "VAL-TOOLCALL-508",
+      "command": "uv run pytest -p no:cacheprovider /Users/weae1504/Projects/mlx_transformers_benchmark/tests/test_tool_calling_problems.py::TestFormatComplianceFail -v --tb=short",
+      "exitCode": 0,
+      "outputArtifact": "tool-calling/toolcall-c/VAL-TOOLCALL-508.txt",
+      "observed": "12 passed in 0.12s"
+    },
+    {
+      "assertionId": "VAL-TOOLCALL-901",
+      "command": "uv run python inspection script for parser integration across _check_* functions in mtb/quality_benchmarks/tool_calling_problems.py",
+      "exitCode": 0,
+      "outputArtifact": "tool-calling/toolcall-c/VAL-TOOLCALL-901.txt",
+      "observed": "parser_integrated_check_functions=39"
+    },
+    {
+      "assertionId": "VAL-TOOLCALL-902",
+      "command": "uv run python validation script checking 5 legacy tool-calling problems and equivalent coverage in TOOL_CALLING_PROBLEMS",
+      "exitCode": 0,
+      "outputArtifact": "tool-calling/toolcall-c/VAL-TOOLCALL-902.txt",
+      "observed": "All 5 legacy names present in _LEGACY_TOOL_CALLING_PROBLEMS and mapped to equivalents in the 40-problem set"
+    },
+    {
+      "assertionId": "VAL-TOOLCALL-904",
+      "command": "uv run pytest -p no:cacheprovider /Users/weae1504/Projects/mlx_transformers_benchmark/tests/test_runner_integration.py::TestReadmeToolCallingAnnotation -v --tb=short",
+      "exitCode": 0,
+      "outputArtifact": "tool-calling/toolcall-c/VAL-TOOLCALL-904.txt",
+      "observed": "2 passed in 0.18s"
+    }
+  ],
+  "assertions": [
+    {
+      "id": "VAL-TOOLCALL-400",
+      "title": "Edge cases — refuse tool use when directly answerable",
+      "status": "pass",
+      "steps": [
+        {
+          "action": "Run TestEdgeCasesPass pytest class",
+          "expected": "Edge-case pass scenarios succeed, including direct answer without tool call for trivial question",
+          "observed": "10 pass-case tests passed"
+        }
+      ],
+      "evidence": {
+        "textArtifacts": [
+          "tool-calling/toolcall-c/VAL-TOOLCALL-400.txt"
+        ],
+        "result": "PASS"
+      },
+      "issues": null
+    },
+    {
+      "id": "VAL-TOOLCALL-408",
+      "title": "Edge cases — violations fail",
+      "status": "pass",
+      "steps": [
+        {
+          "action": "Run TestEdgeCasesFail pytest class",
+          "expected": "Violating edge-case responses are rejected by checks",
+          "observed": "8 fail-case tests passed (checks returned False as intended)"
+        }
+      ],
+      "evidence": {
+        "textArtifacts": [
+          "tool-calling/toolcall-c/VAL-TOOLCALL-408.txt"
+        ],
+        "result": "PASS"
+      },
+      "issues": null
+    },
+    {
+      "id": "VAL-TOOLCALL-500",
+      "title": "Format compliance — valid JSON tool call format",
+      "status": "pass",
+      "steps": [
+        {
+          "action": "Run TestFormatCompliancePass pytest class",
+          "expected": "Valid structured tool-call formats pass",
+          "observed": "11 format-compliance pass tests passed"
+        }
+      ],
+      "evidence": {
+        "textArtifacts": [
+          "tool-calling/toolcall-c/VAL-TOOLCALL-500.txt"
+        ],
+        "result": "PASS"
+      },
+      "issues": null
+    },
+    {
+      "id": "VAL-TOOLCALL-508",
+      "title": "Format compliance — violations fail",
+      "status": "pass",
+      "steps": [
+        {
+          "action": "Run TestFormatComplianceFail pytest class",
+          "expected": "Broken/prose/wrong-type tool-call outputs fail checks",
+          "observed": "12 fail-case tests passed (checks returned False as intended)"
+        }
+      ],
+      "evidence": {
+        "textArtifacts": [
+          "tool-calling/toolcall-c/VAL-TOOLCALL-508.txt"
+        ],
+        "result": "PASS"
+      },
+      "issues": null
+    },
+    {
+      "id": "VAL-TOOLCALL-901",
+      "title": "Parser integrates with check functions",
+      "status": "pass",
+      "steps": [
+        {
+          "action": "Run Python source-inspection script against _check_* functions in tool_calling_problems.py",
+          "expected": "At least one check function uses parse_tool_calls integration",
+          "observed": "39 check functions reference parse_tool_calls or helper that calls it"
+        }
+      ],
+      "evidence": {
+        "textArtifacts": [
+          "tool-calling/toolcall-c/VAL-TOOLCALL-901.txt"
+        ],
+        "result": "PASS"
+      },
+      "issues": null
+    },
+    {
+      "id": "VAL-TOOLCALL-902",
+      "title": "Backward compatibility — existing 5 problems preserved",
+      "status": "pass",
+      "steps": [
+        {
+          "action": "Run Python validation script comparing legacy tool-calling names and equivalent replacements",
+          "expected": "Original 5 problems are preserved or coverage is subsumed by the new 40-problem set",
+          "observed": "All 5 legacy names present in _LEGACY_TOOL_CALLING_PROBLEMS and each maps to at least one equivalent new problem"
+        }
+      ],
+      "evidence": {
+        "textArtifacts": [
+          "tool-calling/toolcall-c/VAL-TOOLCALL-902.txt"
+        ],
+        "result": "PASS"
+      },
+      "issues": null
+    },
+    {
+      "id": "VAL-TOOLCALL-904",
+      "title": "README table update includes tool calling",
+      "status": "pass",
+      "steps": [
+        {
+          "action": "Run TestReadmeToolCallingAnnotation pytest class",
+          "expected": "update_readme_table output/source includes tool-calling benchmark representation",
+          "observed": "2 tests passed: annotation shows updated problem count and source includes 'Tool Calling' header"
+        }
+      ],
+      "evidence": {
+        "textArtifacts": [
+          "tool-calling/toolcall-c/VAL-TOOLCALL-904.txt"
+        ],
+        "result": "PASS"
+      },
+      "issues": null
+    }
+  ],
+  "frictions": [],
+  "blockers": [],
+  "summary": "Tested 7 assigned assertions for tool-calling/toolcall-c; all 7 passed with concrete pytest/shell evidence artifacts."
+}

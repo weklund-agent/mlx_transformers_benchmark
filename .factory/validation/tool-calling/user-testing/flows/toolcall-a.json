@@ -1,0 +1,203 @@
+{
+  "groupId": "toolcall-a",
+  "testedAt": "2026-04-04T19:50:47Z",
+  "isolation": {
+    "surface": "shell-pytest",
+    "repoRoot": "/Users/weae1504/Projects/mlx_transformers_benchmark",
+    "constraints": [
+      "Do not edit source/test files",
+      "Use uv run commands",
+      "Use -p no:cacheprovider on pytest commands"
+    ],
+    "evidenceDir": "/Users/weae1504/.factory/missions/7a98117d-95dc-4445-8b4e-9c6c1c89f9a0/evidence/tool-calling/toolcall-a"
+  },
+  "toolsUsed": [
+    "shell",
+    "uv",
+    "pytest"
+  ],
+  "commandsRun": [
+    "cd /Users/weae1504/Projects/mlx_transformers_benchmark && uv run pytest -p no:cacheprovider -v --tb=short tests/test_tool_calling_problems.py::TestToolCallingProblemsStructure::test_tool_calling_problems_is_40 tests/test_tool_calling_problems.py::TestToolCallingProblemsStructure::test_all_category_is_tool_calling tests/test_tool_calling_problems.py::TestToolCallingProblemsStructure::test_all_names_unique tests/test_tool_calling_problems.py::TestToolCallingProblemsStructure::test_all_checks_are_callable tests/test_tool_calling_problems.py::TestToolCallingProblemsStructure::test_subcategory_distribution tests/test_tool_calling_problems.py::TestToolCallingProblemsStructure::test_all_max_tokens_at_least_256 tests/test_tool_calling_problems.py::TestToolCallingProblemsStructure::test_all_prompts_contain_tool_definitions",
+    "cd /Users/weae1504/Projects/mlx_transformers_benchmark && uv run python - <<'PY' ... structural summary script over TOOL_CALLING_PROBLEMS"
+  ],
+  "assertions": [
+    {
+      "id": "VAL-TOOLCALL-001",
+      "title": "Total problem count is 40",
+      "status": "pass",
+      "steps": [
+        {
+          "action": "Run targeted pytest structural test for tool-calling total count",
+          "expected": "TOOL_CALLING_PROBLEMS has exactly 40 entries",
+          "observed": "test_tool_calling_problems_is_40 PASSED"
+        },
+        {
+          "action": "Run Python structural summary script",
+          "expected": "Printed total should be 40",
+          "observed": "total=40"
+        }
+      ],
+      "evidence": {
+        "artifacts": [
+          "tool-calling/toolcall-a/pytest-assertions-001-009.txt",
+          "tool-calling/toolcall-a/python-structural-summary.txt"
+        ],
+        "pytest": "tests/test_tool_calling_problems.py::TestToolCallingProblemsStructure::test_tool_calling_problems_is_40"
+      },
+      "issues": null
+    },
+    {
+      "id": "VAL-TOOLCALL-002",
+      "title": "All problems have category tool_calling",
+      "status": "pass",
+      "steps": [
+        {
+          "action": "Run pytest category structural test",
+          "expected": "All 40 problem categories equal 'tool_calling'",
+          "observed": "test_all_category_is_tool_calling PASSED"
+        },
+        {
+          "action": "Run Python structural summary script",
+          "expected": "Boolean check should be true",
+          "observed": "all_category_tool_calling=True"
+        }
+      ],
+      "evidence": {
+        "artifacts": [
+          "tool-calling/toolcall-a/pytest-assertions-001-009.txt",
+          "tool-calling/toolcall-a/python-structural-summary.txt"
+        ],
+        "pytest": "tests/test_tool_calling_problems.py::TestToolCallingProblemsStructure::test_all_category_is_tool_calling"
+      },
+      "issues": null
+    },
+    {
+      "id": "VAL-TOOLCALL-003",
+      "title": "All problem names are unique",
+      "status": "pass",
+      "steps": [
+        {
+          "action": "Run pytest uniqueness test",
+          "expected": "No duplicate names in tool-calling problems",
+          "observed": "test_all_names_unique PASSED"
+        },
+        {
+          "action": "Run Python structural summary script",
+          "expected": "Unique names check should be true",
+          "observed": "unique_names=True"
+        }
+      ],
+      "evidence": {
+        "artifacts": [
+          "tool-calling/toolcall-a/pytest-assertions-001-009.txt",
+          "tool-calling/toolcall-a/python-structural-summary.txt"
+        ],
+        "pytest": "tests/test_tool_calling_problems.py::TestToolCallingProblemsStructure::test_all_names_unique"
+      },
+      "issues": null
+    },
+    {
+      "id": "VAL-TOOLCALL-005",
+      "title": "All checks are callable",
+      "status": "pass",
+      "steps": [
+        {
+          "action": "Run pytest callable-check test",
+          "expected": "Every problem has callable check function",
+          "observed": "test_all_checks_are_callable PASSED"
+        },
+        {
+          "action": "Run Python structural summary script",
+          "expected": "Callable check should be true",
+          "observed": "all_checks_callable=True"
+        }
+      ],
+      "evidence": {
+        "artifacts": [
+          "tool-calling/toolcall-a/pytest-assertions-001-009.txt",
+          "tool-calling/toolcall-a/python-structural-summary.txt"
+        ],
+        "pytest": "tests/test_tool_calling_problems.py::TestToolCallingProblemsStructure::test_all_checks_are_callable"
+      },
+      "issues": null
+    },
+    {
+      "id": "VAL-TOOLCALL-007",
+      "title": "Subcategory distribution is 8 per category",
+      "status": "pass",
+      "steps": [
+        {
+          "action": "Run pytest subcategory distribution test",
+          "expected": "5 subcategories each with 8 problems",
+          "observed": "test_subcategory_distribution PASSED"
+        },
+        {
+          "action": "Run Python structural summary script",
+          "expected": "Counter should show 8 for each subcategory",
+          "observed": "subcategory_counts={'tool_selection': 8, 'argument_accuracy': 8, 'multi_tool': 8, 'edge_cases': 8, 'format_compliance': 8}"
+        }
+      ],
+      "evidence": {
+        "artifacts": [
+          "tool-calling/toolcall-a/pytest-assertions-001-009.txt",
+          "tool-calling/toolcall-a/python-structural-summary.txt"
+        ],
+        "pytest": "tests/test_tool_calling_problems.py::TestToolCallingProblemsStructure::test_subcategory_distribution"
+      },
+      "issues": null
+    },
+    {
+      "id": "VAL-TOOLCALL-008",
+      "title": "All problems have max_tokens >= 256",
+      "status": "pass",
+      "steps": [
+        {
+          "action": "Run pytest max_tokens threshold test",
+          "expected": "Every tool-calling problem has max_tokens >= 256",
+          "observed": "test_all_max_tokens_at_least_256 PASSED"
+        },
+        {
+          "action": "Run Python structural summary script",
+          "expected": "Threshold check should be true",
+          "observed": "all_max_tokens_ge_256=True"
+        }
+      ],
+      "evidence": {
+        "artifacts": [
+          "tool-calling/toolcall-a/pytest-assertions-001-009.txt",
+          "tool-calling/toolcall-a/python-structural-summary.txt"
+        ],
+        "pytest": "tests/test_tool_calling_problems.py::TestToolCallingProblemsStructure::test_all_max_tokens_at_least_256"
+      },
+      "issues": null
+    },
+    {
+      "id": "VAL-TOOLCALL-009",
+      "title": "Each prompt contains tool definitions",
+      "status": "pass",
+      "steps": [
+        {
+          "action": "Run pytest prompt tool-definition test",
+          "expected": "All prompts include tool definition keywords/schema",
+          "observed": "test_all_prompts_contain_tool_definitions PASSED"
+        },
+        {
+          "action": "Run Python structural summary script",
+          "expected": "No prompts missing tool definitions",
+          "observed": "missing_tool_definition_prompts=[]"
+        }
+      ],
+      "evidence": {
+        "artifacts": [
+          "tool-calling/toolcall-a/pytest-assertions-001-009.txt",
+          "tool-calling/toolcall-a/python-structural-summary.txt"
+        ],
+        "pytest": "tests/test_tool_calling_problems.py::TestToolCallingProblemsStructure::test_all_prompts_contain_tool_definitions"
+      },
+      "issues": null
+    }
+  ],
+  "frictions": [],
+  "blockers": [],
+  "summary": "Tested 7 assigned assertions; all 7 passed using targeted pytest structural tests plus a verification Python summary command."
+}

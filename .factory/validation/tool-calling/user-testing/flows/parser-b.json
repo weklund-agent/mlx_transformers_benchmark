@@ -1,0 +1,132 @@
+{
+  "groupId": "parser-b",
+  "testedAt": "2026-04-04T19:50:59Z",
+  "isolation": {
+    "surface": "shell-pytest",
+    "repoRoot": "/Users/weae1504/Projects/mlx_transformers_benchmark",
+    "missionDir": "/Users/weae1504/.factory/missions/7a98117d-95dc-4445-8b4e-9c6c1c89f9a0",
+    "pytestCache": "disabled via -p no:cacheprovider"
+  },
+  "toolsUsed": ["shell", "pytest"],
+  "commandsRun": [
+    "uv run pytest -p no:cacheprovider -v --tb=short /Users/weae1504/Projects/mlx_transformers_benchmark/tests/test_tool_call_parser.py::TestJsonBlockArray::test_array_of_tool_calls > /Users/weae1504/.factory/missions/7a98117d-95dc-4445-8b4e-9c6c1c89f9a0/evidence/tool-calling/parser-b/VAL-PARSER-007.txt 2>&1",
+    "uv run pytest -p no:cacheprovider -v --tb=short /Users/weae1504/Projects/mlx_transformers_benchmark/tests/test_tool_call_parser.py::TestRawJsonSingle::test_raw_json_single > /Users/weae1504/.factory/missions/7a98117d-95dc-4445-8b4e-9c6c1c89f9a0/evidence/tool-calling/parser-b/VAL-PARSER-008.txt 2>&1",
+    "uv run pytest -p no:cacheprovider -v --tb=short /Users/weae1504/Projects/mlx_transformers_benchmark/tests/test_tool_call_parser.py::TestRawJsonInProse::test_raw_json_in_prose > /Users/weae1504/.factory/missions/7a98117d-95dc-4445-8b4e-9c6c1c89f9a0/evidence/tool-calling/parser-b/VAL-PARSER-009.txt 2>&1",
+    "uv run pytest -p no:cacheprovider -v --tb=short /Users/weae1504/Projects/mlx_transformers_benchmark/tests/test_tool_call_parser.py::TestRawJsonNonToolCall::test_non_tool_call_json_ignored /Users/weae1504/Projects/mlx_transformers_benchmark/tests/test_tool_call_parser.py::TestRawJsonNonToolCall::test_json_without_function_structure > /Users/weae1504/.factory/missions/7a98117d-95dc-4445-8b4e-9c6c1c89f9a0/evidence/tool-calling/parser-b/VAL-PARSER-010.txt 2>&1",
+    "uv run pytest -p no:cacheprovider -v --tb=short /Users/weae1504/Projects/mlx_transformers_benchmark/tests/test_tool_call_parser.py::TestThinkBlockStripping > /Users/weae1504/.factory/missions/7a98117d-95dc-4445-8b4e-9c6c1c89f9a0/evidence/tool-calling/parser-b/VAL-PARSER-011.txt 2>&1",
+    "uv run pytest -p no:cacheprovider -v --tb=short /Users/weae1504/Projects/mlx_transformers_benchmark/tests/test_tool_call_parser.py::TestNoToolCalls > /Users/weae1504/.factory/missions/7a98117d-95dc-4445-8b4e-9c6c1c89f9a0/evidence/tool-calling/parser-b/VAL-PARSER-014.txt 2>&1"
+  ],
+  "assertions": [
+    {
+      "id": "VAL-PARSER-007",
+      "title": "JSON code block — array of tool calls",
+      "status": "pass",
+      "steps": [
+        {
+          "action": "Run TestJsonBlockArray::test_array_of_tool_calls",
+          "expected": "Parser returns 2 tool calls from one JSON array code block",
+          "observed": "pytest passed (1 passed)"
+        }
+      ],
+      "evidence": {
+        "terminalSnapshots": [
+          "tool-calling/parser-b/VAL-PARSER-007.txt"
+        ]
+      },
+      "issues": null
+    },
+    {
+      "id": "VAL-PARSER-008",
+      "title": "Raw JSON — single object with \"name\" key",
+      "status": "pass",
+      "steps": [
+        {
+          "action": "Run TestRawJsonSingle::test_raw_json_single",
+          "expected": "Parser extracts one tool call from raw JSON",
+          "observed": "pytest passed (1 passed)"
+        }
+      ],
+      "evidence": {
+        "terminalSnapshots": [
+          "tool-calling/parser-b/VAL-PARSER-008.txt"
+        ]
+      },
+      "issues": null
+    },
+    {
+      "id": "VAL-PARSER-009",
+      "title": "Raw JSON — embedded in prose",
+      "status": "pass",
+      "steps": [
+        {
+          "action": "Run TestRawJsonInProse::test_raw_json_in_prose",
+          "expected": "Parser extracts tool call from prose-embedded raw JSON",
+          "observed": "pytest passed (1 passed)"
+        }
+      ],
+      "evidence": {
+        "terminalSnapshots": [
+          "tool-calling/parser-b/VAL-PARSER-009.txt"
+        ]
+      },
+      "issues": null
+    },
+    {
+      "id": "VAL-PARSER-010",
+      "title": "Raw JSON — ignores non-tool-call JSON",
+      "status": "pass",
+      "steps": [
+        {
+          "action": "Run non-tool-call JSON tests: test_non_tool_call_json_ignored + test_json_without_function_structure",
+          "expected": "Parser returns None/empty for JSON without tool-call structure",
+          "observed": "pytest passed (2 passed)"
+        }
+      ],
+      "evidence": {
+        "terminalSnapshots": [
+          "tool-calling/parser-b/VAL-PARSER-010.txt"
+        ]
+      },
+      "issues": null
+    },
+    {
+      "id": "VAL-PARSER-011",
+      "title": "Think block stripping — all variants",
+      "status": "pass",
+      "steps": [
+        {
+          "action": "Run TestThinkBlockStripping test class",
+          "expected": "Parser strips think blocks and handles unclosed think tags without crashing",
+          "observed": "pytest passed (4 passed)"
+        }
+      ],
+      "evidence": {
+        "terminalSnapshots": [
+          "tool-calling/parser-b/VAL-PARSER-011.txt"
+        ]
+      },
+      "issues": null
+    },
+    {
+      "id": "VAL-PARSER-014",
+      "title": "No tool calls — pure text response",
+      "status": "pass",
+      "steps": [
+        {
+          "action": "Run TestNoToolCalls test class",
+          "expected": "Parser returns None/empty for pure text, empty string, and whitespace",
+          "observed": "pytest passed (3 passed)"
+        }
+      ],
+      "evidence": {
+        "terminalSnapshots": [
+          "tool-calling/parser-b/VAL-PARSER-014.txt"
+        ]
+      },
+      "issues": null
+    }
+  ],
+  "frictions": [],
+  "blockers": [],
+  "summary": "Tested 6 assigned parser assertions (VAL-PARSER-007/008/009/010/011/014); all passed with targeted pytest evidence logs."
+}

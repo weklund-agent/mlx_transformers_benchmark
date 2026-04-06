@@ -1,0 +1,126 @@
+{
+  "groupId": "runner-module-cross",
+  "testedAt": "2026-04-04T19:53:36Z",
+  "isolation": {
+    "surface": "shell-pytest",
+    "repoRoot": "/Users/weae1504/Projects/mlx_transformers_benchmark",
+    "useUvRun": true,
+    "pytestFlag": "-p no:cacheprovider",
+    "artifactsRoot": "/Users/weae1504/.factory/missions/7a98117d-95dc-4445-8b4e-9c6c1c89f9a0/evidence/tool-calling/runner-module-cross/"
+  },
+  "toolsUsed": [
+    "shell",
+    "pytest"
+  ],
+  "commandsRun": [
+    {
+      "assertionId": "VAL-MODULE-003",
+      "command": "uv run pytest -p no:cacheprovider /Users/weae1504/Projects/mlx_transformers_benchmark/tests/test_module_structure.py::TestCategoryModules -v --tb=short",
+      "exitCode": 0,
+      "outputArtifact": "tool-calling/runner-module-cross/VAL-MODULE-003-pytest.txt",
+      "observed": "6 passed in 0.11s"
+    },
+    {
+      "assertionId": "VAL-MODULE-005",
+      "command": "uv run pytest -p no:cacheprovider /Users/weae1504/Projects/mlx_transformers_benchmark/tests/test_runner_integration.py::TestTotalProblemCount -v --tb=short",
+      "exitCode": 0,
+      "outputArtifact": "tool-calling/runner-module-cross/VAL-MODULE-005-pytest.txt",
+      "observed": "3 passed in 0.12s"
+    },
+    {
+      "assertionId": "VAL-RUNNER-003",
+      "command": "uv run pytest -p no:cacheprovider /Users/weae1504/Projects/mlx_transformers_benchmark/tests/test_runner_integration.py::TestToolCallingEvaluation -v --tb=short",
+      "exitCode": 0,
+      "outputArtifact": "tool-calling/runner-module-cross/VAL-RUNNER-003-pytest.txt",
+      "observed": "6 passed in 1.40s"
+    },
+    {
+      "assertionId": "VAL-CROSS-002",
+      "command": "uv run pytest -p no:cacheprovider /Users/weae1504/Projects/mlx_transformers_benchmark/tests/test_runner_integration.py::TestToolCallingEndToEnd -v --tb=short",
+      "exitCode": 0,
+      "outputArtifact": "tool-calling/runner-module-cross/VAL-CROSS-002-pytest.txt",
+      "observed": "2 passed in 1.44s"
+    }
+  ],
+  "assertions": [
+    {
+      "id": "VAL-RUNNER-003",
+      "title": "Tool-call problems use structured tool-call parser",
+      "status": "pass",
+      "steps": [
+        {
+          "action": "Run TestToolCallingEvaluation in tests/test_runner_integration.py",
+          "expected": "Tool-calling responses are parsed/logged and evaluation uses tool-calling flow without crashes",
+          "observed": "6 tests passed, including parsed_tool_calls logging, null behavior when no calls, and check exception handling"
+        }
+      ],
+      "evidence": {
+        "textArtifacts": [
+          "tool-calling/runner-module-cross/VAL-RUNNER-003-pytest.txt"
+        ],
+        "result": "PASS"
+      },
+      "issues": null
+    },
+    {
+      "id": "VAL-MODULE-003",
+      "title": "Category-specific module files exist and export problems",
+      "status": "pass",
+      "steps": [
+        {
+          "action": "Run TestCategoryModules in tests/test_module_structure.py",
+          "expected": "Category modules import successfully and expose EvalProblem lists",
+          "observed": "6 tests passed covering coding, reasoning, instruction, math, and writing modules plus EvalProblem instance checks"
+        }
+      ],
+      "evidence": {
+        "textArtifacts": [
+          "tool-calling/runner-module-cross/VAL-MODULE-003-pytest.txt"
+        ],
+        "result": "PASS"
+      },
+      "issues": null
+    },
+    {
+      "id": "VAL-MODULE-005",
+      "title": "Total problem count is approximately 85",
+      "status": "pass",
+      "steps": [
+        {
+          "action": "Run TestTotalProblemCount in tests/test_runner_integration.py",
+          "expected": "Total count remains in [75,95] and tool_calling tier size is correct",
+          "observed": "3 tests passed; exact total asserted as 81 with 40 tool-calling problems"
+        }
+      ],
+      "evidence": {
+        "textArtifacts": [
+          "tool-calling/runner-module-cross/VAL-MODULE-005-pytest.txt"
+        ],
+        "result": "PASS"
+      },
+      "issues": null
+    },
+    {
+      "id": "VAL-CROSS-002",
+      "title": "Tool-calling problem → parser → check → CSV end-to-end",
+      "status": "pass",
+      "steps": [
+        {
+          "action": "Run TestToolCallingEndToEnd in tests/test_runner_integration.py",
+          "expected": "Mock tool-calling response is parsed, checked, and persisted to CSV with parsed_tool_calls",
+          "observed": "2 end-to-end tests passed for success and wrong-tool failure scenarios with CSV verification"
+        }
+      ],
+      "evidence": {
+        "textArtifacts": [
+          "tool-calling/runner-module-cross/VAL-CROSS-002-pytest.txt"
+        ],
+        "result": "PASS"
+      },
+      "issues": null
+    }
+  ],
+  "frictions": [],
+  "blockers": [],
+  "summary": "Tested 4 assigned assertions (VAL-RUNNER-003, VAL-MODULE-003, VAL-MODULE-005, VAL-CROSS-002); all passed with concrete pytest evidence artifacts."
+}
