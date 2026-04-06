@@ -1,0 +1,207 @@
+{
+  "groupId": "sandbox",
+  "surface": "shell+pytest",
+  "testedAt": "2026-04-04T18:41:14.513675+00:00",
+  "assertions": [
+    {
+      "id": "VAL-SANDBOX-001",
+      "status": "pass",
+      "reason": "Valid execution tests passed, including exact hello-world stdout capture.",
+      "evidence": {
+        "rawOutput": "code-execution/sandbox/pytest-tests-test_sandbox.txt",
+        "pytestTests": [
+          "TestValidExecution::test_hello_world",
+          "TestValidExecution::test_multiline_output",
+          "TestValidExecution::test_computation_result"
+        ]
+      }
+    },
+    {
+      "id": "VAL-SANDBOX-004",
+      "status": "pass",
+      "reason": "Default timeout test for sleep(30) passed with timeout behavior asserted.",
+      "evidence": {
+        "rawOutput": "code-execution/sandbox/pytest-tests-test_sandbox.txt",
+        "pytestTests": [
+          "TestTimeoutDefault::test_default_timeout_kills_long_sleep"
+        ]
+      }
+    },
+    {
+      "id": "VAL-SANDBOX-005",
+      "status": "pass",
+      "reason": "Custom timeout tests (3s and 1s) passed, confirming timeout parameter enforcement.",
+      "evidence": {
+        "rawOutput": "code-execution/sandbox/pytest-tests-test_sandbox.txt",
+        "pytestTests": [
+          "TestTimeoutCustom::test_custom_timeout_3s",
+          "TestTimeoutCustom::test_custom_timeout_1s"
+        ]
+      }
+    },
+    {
+      "id": "VAL-SANDBOX-006",
+      "status": "pass",
+      "reason": "Infinite loop timeout test passed.",
+      "evidence": {
+        "rawOutput": "code-execution/sandbox/pytest-tests-test_sandbox.txt",
+        "pytestTests": [
+          "TestInfiniteLoop::test_while_true_killed"
+        ]
+      }
+    },
+    {
+      "id": "VAL-SANDBOX-008",
+      "status": "pass",
+      "reason": "Syntax error handling tests passed with syntax_error classification.",
+      "evidence": {
+        "rawOutput": "code-execution/sandbox/pytest-tests-test_sandbox.txt",
+        "pytestTests": [
+          "TestSyntaxError::test_syntax_error_reported",
+          "TestSyntaxError::test_syntax_error_no_sandbox_traceback"
+        ]
+      }
+    },
+    {
+      "id": "VAL-SANDBOX-009",
+      "status": "pass",
+      "reason": "Runtime error parametrized tests passed for NameError, TypeError, ZeroDivisionError, and ImportError/ModuleNotFoundError case.",
+      "evidence": {
+        "rawOutput": "code-execution/sandbox/pytest-tests-test_sandbox.txt",
+        "pytestTests": [
+          "TestRuntimeErrors::test_runtime_error_reported[NameError]",
+          "TestRuntimeErrors::test_runtime_error_reported[TypeError]",
+          "TestRuntimeErrors::test_runtime_error_reported[ZeroDivisionError]",
+          "TestRuntimeErrors::test_runtime_error_reported[ImportError]"
+        ]
+      }
+    },
+    {
+      "id": "VAL-SANDBOX-014",
+      "status": "pass",
+      "reason": "Temp-file cleanup tests passed after success, timeout, and crash scenarios.",
+      "evidence": {
+        "rawOutput": "code-execution/sandbox/pytest-tests-test_sandbox.txt",
+        "pytestTests": [
+          "TestTempFileCleanup::test_cleanup_after_success",
+          "TestTempFileCleanup::test_cleanup_after_timeout",
+          "TestTempFileCleanup::test_cleanup_after_crash"
+        ]
+      }
+    },
+    {
+      "id": "VAL-SANDBOX-017",
+      "status": "pass",
+      "reason": "Empty/blank input handling tests passed without crashes.",
+      "evidence": {
+        "rawOutput": "code-execution/sandbox/pytest-tests-test_sandbox.txt",
+        "pytestTests": [
+          "TestEmptyCode::test_empty_string",
+          "TestEmptyCode::test_none_like_empty"
+        ]
+      }
+    },
+    {
+      "id": "VAL-SANDBOX-018",
+      "status": "pass",
+      "reason": "Whitespace-only code tests passed with successful empty stdout behavior.",
+      "evidence": {
+        "rawOutput": "code-execution/sandbox/pytest-tests-test_sandbox.txt",
+        "pytestTests": [
+          "TestWhitespaceCode::test_spaces_only",
+          "TestWhitespaceCode::test_newlines_only",
+          "TestWhitespaceCode::test_mixed_whitespace"
+        ]
+      }
+    },
+    {
+      "id": "VAL-SANDBOX-020",
+      "status": "pass",
+      "reason": "Stdout/stderr separation tests passed.",
+      "evidence": {
+        "rawOutput": "code-execution/sandbox/pytest-tests-test_sandbox.txt",
+        "pytestTests": [
+          "TestStderrSeparation::test_stdout_and_stderr_separate",
+          "TestStderrSeparation::test_only_stderr"
+        ]
+      }
+    },
+    {
+      "id": "VAL-SANDBOX-023",
+      "status": "pass",
+      "reason": "Passing-assertion code execution tests passed.",
+      "evidence": {
+        "rawOutput": "code-execution/sandbox/pytest-tests-test_sandbox.txt",
+        "pytestTests": [
+          "TestAssertionPass::test_all_assertions_pass",
+          "TestAssertionPass::test_assertion_with_message"
+        ]
+      }
+    },
+    {
+      "id": "VAL-SANDBOX-024",
+      "status": "pass",
+      "reason": "Failing-assertion behavior tests passed with failure/AssertionError expectations.",
+      "evidence": {
+        "rawOutput": "code-execution/sandbox/pytest-tests-test_sandbox.txt",
+        "pytestTests": [
+          "TestAssertionFail::test_failing_assertion",
+          "TestAssertionFail::test_assertion_error_in_stderr"
+        ]
+      }
+    },
+    {
+      "id": "VAL-SANDBOX-027",
+      "status": "pass",
+      "reason": "Markdown-fence stripping tests passed across fenced and mixed-text cases.",
+      "evidence": {
+        "rawOutput": "code-execution/sandbox/pytest-tests-test_sandbox.txt",
+        "pytestTests": [
+          "TestMarkdownFenceStripping::test_python_fences_stripped",
+          "TestMarkdownFenceStripping::test_plain_fences_stripped",
+          "TestMarkdownFenceStripping::test_mixed_fences_and_text",
+          "TestMarkdownFenceStripping::test_multiple_fence_blocks"
+        ]
+      }
+    },
+    {
+      "id": "VAL-SANDBOX-029",
+      "status": "pass",
+      "reason": "SandboxResult required-fields and type-contract tests passed for success and failure cases.",
+      "evidence": {
+        "rawOutput": "code-execution/sandbox/pytest-tests-test_sandbox.txt",
+        "pytestTests": [
+          "TestSandboxResultDataclass::test_required_fields_present",
+          "TestSandboxResultDataclass::test_field_types_on_success",
+          "TestSandboxResultDataclass::test_field_types_on_failure"
+        ]
+      }
+    },
+    {
+      "id": "VAL-SANDBOX-030",
+      "status": "pass",
+      "reason": "Concurrent execution isolation tests passed for parallel and mixed success/failure scenarios.",
+      "evidence": {
+        "rawOutput": "code-execution/sandbox/pytest-tests-test_sandbox.txt",
+        "pytestTests": [
+          "TestConcurrentCalls::test_parallel_executions_isolated",
+          "TestConcurrentCalls::test_many_parallel_executions",
+          "TestConcurrentCalls::test_concurrent_with_failure"
+        ]
+      }
+    }
+  ],
+  "commandsRun": [
+    {
+      "command": "uv run pytest tests/test_sandbox.py -v --tb=short -p no:cacheprovider",
+      "exitCode": 0,
+      "observation": "Collected 40 tests; all passed in 17.57s."
+    }
+  ],
+  "frictions": [],
+  "blockers": [],
+  "toolsUsed": [
+    "shell",
+    "pytest"
+  ]
+}

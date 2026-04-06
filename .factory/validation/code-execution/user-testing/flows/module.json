@@ -1,0 +1,122 @@
+{
+  "groupId": "module",
+  "surface": "shell+pytest",
+  "testedAt": "2026-04-04T18:44:26.584084+00:00",
+  "assertions": [
+    {
+      "id": "VAL-MODULE-001",
+      "status": "pass",
+      "reason": "`tests/test_module_structure.py` init export tests passed; direct import probe also reports true.",
+      "evidence": [
+        "code-execution/module/pytest_test_module_structure.txt",
+        "code-execution/module/module_assertions_probe_summary.txt"
+      ]
+    },
+    {
+      "id": "VAL-MODULE-002",
+      "status": "pass",
+      "reason": "Backward-compatible imports from `mtb.quality_benchmarks.eval_problems` succeeded in module structure tests.",
+      "evidence": [
+        "code-execution/module/pytest_test_module_structure.txt"
+      ]
+    },
+    {
+      "id": "VAL-MODULE-003",
+      "status": "fail",
+      "reason": "`mtb.quality_benchmarks.tool_calling_problems` module import failed with `ModuleNotFoundError`.",
+      "evidence": [
+        "code-execution/module/module_assertions_probe.txt",
+        "code-execution/module/module_assertions_probe_summary.txt"
+      ]
+    },
+    {
+      "id": "VAL-MODULE-004",
+      "status": "fail",
+      "reason": "`sandbox` imports, but `tool_call_parser` and `scoring` modules are missing (`ModuleNotFoundError`).",
+      "evidence": [
+        "code-execution/module/module_assertions_probe_summary.txt"
+      ]
+    },
+    {
+      "id": "VAL-MODULE-005",
+      "status": "fail",
+      "reason": "Combined problem count is 46, outside required [75, 95] range.",
+      "evidence": [
+        "code-execution/module/module_assertions_probe_summary.txt",
+        "code-execution/module/pytest_test_module_structure.txt"
+      ]
+    },
+    {
+      "id": "VAL-MODULE-006",
+      "status": "pass",
+      "reason": "Required fields and global uniqueness checks passed in pytest and probe script.",
+      "evidence": [
+        "code-execution/module/pytest_test_module_structure.txt",
+        "code-execution/module/module_assertions_probe_summary.txt"
+      ]
+    },
+    {
+      "id": "VAL-MODULE-008",
+      "status": "pass",
+      "reason": "`_strip_thinking` is importable and strips think block to `Real answer`.",
+      "evidence": [
+        "code-execution/module/module_assertions_probe_summary.txt",
+        "code-execution/module/pytest_test_quality_benchmarks.txt"
+      ]
+    },
+    {
+      "id": "VAL-MODULE-009",
+      "status": "pass",
+      "reason": "Existing suite `tests/test_quality_benchmarks.py` executed successfully with zero failures (184 passed).",
+      "evidence": [
+        "code-execution/module/pytest_test_quality_benchmarks.txt"
+      ]
+    },
+    {
+      "id": "VAL-MODULE-010",
+      "status": "pass",
+      "reason": "Private check/helper imports from `eval_problems` remained backward-compatible and callable.",
+      "evidence": [
+        "code-execution/module/pytest_test_module_structure.txt",
+        "code-execution/module/module_assertions_probe_summary.txt"
+      ]
+    },
+    {
+      "id": "VAL-MODULE-011",
+      "status": "pass",
+      "reason": "Old-style `EvalProblem` construction works and new fields default to `None`.",
+      "evidence": [
+        "code-execution/module/pytest_test_module_structure.txt",
+        "code-execution/module/module_assertions_probe_summary.txt"
+      ]
+    }
+  ],
+  "commandsRun": [
+    {
+      "command": "uv run pytest tests/test_module_structure.py -v --tb=short -p no:cacheprovider",
+      "exitCode": 0,
+      "observation": "25 passed in 0.11s."
+    },
+    {
+      "command": "uv run pytest tests/test_quality_benchmarks.py -v --tb=short -p no:cacheprovider",
+      "exitCode": 0,
+      "observation": "184 passed in 0.15s."
+    },
+    {
+      "command": "uv run python (module assertions probe with direct imports)",
+      "exitCode": 1,
+      "observation": "Failed when importing `mtb.quality_benchmarks.tool_calling_problems` (ModuleNotFoundError)."
+    },
+    {
+      "command": "uv run python (module assertions probe summary with per-check try/except)",
+      "exitCode": 0,
+      "observation": "Confirmed missing modules: tool_calling_problems, tool_call_parser, scoring; confirmed total count 46 and other backward-compat checks."
+    }
+  ],
+  "frictions": [],
+  "blockers": [],
+  "toolsUsed": [
+    "shell",
+    "pytest"
+  ]
+}

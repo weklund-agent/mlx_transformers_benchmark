@@ -1,0 +1,107 @@
+{
+  "groupId": "parser-c",
+  "testedAt": "2026-04-04T19:51:32.683467+00:00",
+  "surface": "shell+pytest",
+  "isolation": {
+    "surface": "shell-pytest",
+    "repoRoot": "/Users/weae1504/Projects/mlx_transformers_benchmark",
+    "missionDir": "/Users/weae1504/.factory/missions/7a98117d-95dc-4445-8b4e-9c6c1c89f9a0",
+    "pytestFlag": "-p no:cacheprovider",
+    "artifactDir": "/Users/weae1504/.factory/missions/7a98117d-95dc-4445-8b4e-9c6c1c89f9a0/evidence/tool-calling/parser-c"
+  },
+  "toolsUsed": [
+    "shell",
+    "pytest"
+  ],
+  "assertions": [
+    {
+      "id": "VAL-PARSER-016",
+      "title": "Malformed JSON \u2014 graceful handling",
+      "status": "pass",
+      "reason": "Ran TestMalformedJson (9 variants); all passed, confirming no exceptions and graceful handling across malformed inputs.",
+      "evidence": [
+        "tool-calling/parser-c/VAL-PARSER-016.txt"
+      ]
+    },
+    {
+      "id": "VAL-PARSER-020",
+      "title": "Mixed text + tool call response",
+      "status": "pass",
+      "reason": "Targeted mixed text/tool-call test passed with correct extraction behavior.",
+      "evidence": [
+        "tool-calling/parser-c/VAL-PARSER-020.txt"
+      ]
+    },
+    {
+      "id": "VAL-PARSER-023",
+      "title": "Nested arguments \u2014 deeply nested dict",
+      "status": "pass",
+      "reason": "Deeply nested arguments test passed; nested city/zip/name fields were preserved.",
+      "evidence": [
+        "tool-calling/parser-c/VAL-PARSER-023.txt"
+      ]
+    },
+    {
+      "id": "VAL-PARSER-024",
+      "title": "Arguments with array values",
+      "status": "pass",
+      "reason": "Array-valued arguments test passed; recipients remained a list with length 2.",
+      "evidence": [
+        "tool-calling/parser-c/VAL-PARSER-024.txt"
+      ]
+    },
+    {
+      "id": "VAL-PARSER-025",
+      "title": "Empty arguments object",
+      "status": "pass",
+      "reason": "Empty arguments object test passed; parser returned ToolCall with name get_time and arguments == {}.",
+      "evidence": [
+        "tool-calling/parser-c/VAL-PARSER-025.txt"
+      ]
+    },
+    {
+      "id": "VAL-PARSER-026",
+      "title": "Return type contract",
+      "status": "pass",
+      "reason": "Parametrized return-type contract test passed across 10 diverse inputs with no exceptions.",
+      "evidence": [
+        "tool-calling/parser-c/VAL-PARSER-026.txt"
+      ]
+    }
+  ],
+  "commandsRun": [
+    {
+      "command": "uv run pytest tests/test_tool_call_parser.py::TestMalformedJson -v --tb=short -p no:cacheprovider",
+      "exitCode": 0,
+      "observation": "9 passed in 0.12s."
+    },
+    {
+      "command": "uv run pytest tests/test_tool_call_parser.py::TestMixedTextToolCall::test_text_then_tool_call_then_text -v --tb=short -p no:cacheprovider",
+      "exitCode": 0,
+      "observation": "1 passed in 0.12s."
+    },
+    {
+      "command": "uv run pytest tests/test_tool_call_parser.py::TestNestedArguments::test_deeply_nested_dict -v --tb=short -p no:cacheprovider",
+      "exitCode": 0,
+      "observation": "1 passed in 0.12s."
+    },
+    {
+      "command": "uv run pytest tests/test_tool_call_parser.py::TestArrayArguments::test_array_in_arguments -v --tb=short -p no:cacheprovider",
+      "exitCode": 0,
+      "observation": "1 passed in 0.12s."
+    },
+    {
+      "command": "uv run pytest tests/test_tool_call_parser.py::TestEmptyArguments::test_empty_arguments -v --tb=short -p no:cacheprovider",
+      "exitCode": 0,
+      "observation": "1 passed in 0.12s."
+    },
+    {
+      "command": "uv run pytest tests/test_tool_call_parser.py::TestReturnTypeContract::test_never_raises -v --tb=short -p no:cacheprovider",
+      "exitCode": 0,
+      "observation": "10 passed in 0.12s."
+    }
+  ],
+  "frictions": [],
+  "blockers": [],
+  "summary": "Validated 6 assigned parser assertions: 6 passed, 0 failed, 0 blocked."
+}
