@@ -648,7 +648,7 @@ def generate_tables(
         lines.append("")
 
     # Hardware profiles that still use the older (smaller) quality suite
-    OLD_QUALITY_SUITE_HW = {"Apple_M5_Max_XP+XE+40GPU_128GB"}
+    OLD_QUALITY_SUITE_HW = set()
 
     # Per-hardware detailed tables
     for hw in hardware_profiles:
