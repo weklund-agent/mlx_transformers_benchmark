@@ -1,0 +1,54 @@
+{
+  "datetime": "2026-04-04__19:18:54",
+  "contributor": "",
+  "git_commit": "abeada988184882459cb2a43a203f3eb43198eaa",
+  "benchmark_settings": {
+    "difficulty": "all",
+    "num_runs": 3,
+    "dtypes": [
+      "int4"
+    ],
+    "run_only_benchmarks": [
+      "qwen-3.5-0.8b",
+      "qwen-3.5-2b",
+      "gemma-4-e2b-it",
+      "qwen-2.5-coder-3b-it",
+      "qwen-2.5-3b-it",
+      "nemotron-3-nano-4b",
+      "gemma-3-4b-it",
+      "gemma-3-4b-it-qat",
+      "gemma-4-e4b-it",
+      "qwen-3.5-4b",
+      "lfm2-24b-a2b",
+      "qwen3-coder-30b-a3b",
+      "gemma-4-26b-a4b-it",
+      "glm-4.7-flash",
+      "qwen-3.5-35b-a3b",
+      "Deepseek-R1-0528_Qwen3-8B",
+      "nemotron-nano-9b-v2",
+      "qwen-3.5-9b",
+      "qwen-3.5-27b-claude-opus-distilled",
+      "gemma-4-31b-it",
+      "qwen-3.5-27b"
+    ]
+  },
+  "hardware_info": {
+    "processor": "arm",
+    "model_name": "Mac mini",
+    "chip": "Apple M4 Pro",
+    "memory": "64",
+    "total_cores": "14",
+    "performance_cores": "10",
+    "efficiency_cores": "4",
+    "gpu_cores": "20",
+    "hardware_string": "Apple_M4_Pro_10P+4E+20GPU_64GB"
+  },
+  "software_info": {
+    "platform": "macOS-26.2-arm64-arm-64bit",
+    "python_version": "3.11.11",
+    "torch_version": "2.6.0",
+    "mlx_version": "0.31.0",
+    "mlx_lm_version": "0.31.2",
+    "ollama_version": "not running"
+  }
+}
