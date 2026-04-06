@@ -173,12 +173,19 @@ def load_quality_data(
     if models:
         all_df = all_df[all_df["model"].isin(models)]
 
-    # Keep latest per model/dtype/hardware/problem
-    all_df = (
+    # Keep only data from the latest run per model/dtype/hardware.
+    # This avoids merging stale problem names from older runs that used
+    # a different problem set (e.g. 46-problem suite vs 81-problem suite).
+    latest_source = (
         all_df.sort_values("_source_dir")
-        .groupby(["hardware", "model", "dtype", "category", "problem"])
+        .groupby(["hardware", "model", "dtype"])["_source_dir"]
         .last()
         .reset_index()
+        .rename(columns={"_source_dir": "_latest_dir"})
+    )
+    all_df = all_df.merge(latest_source, on=["hardware", "model", "dtype"])
+    all_df = all_df[all_df["_source_dir"] == all_df["_latest_dir"]].drop(
+        columns=["_latest_dir"]
     )
 
     return all_df
@@ -208,6 +215,7 @@ def compute_quality_summary(
     from mtb.quality_benchmarks.scoring import (
         compute_weighted_score,
         _build_problem_tier_map,
+        _resolve_variant_name,
     )
 
     tier_map = _build_problem_tier_map()
@@ -220,7 +228,10 @@ def compute_quality_summary(
         }
 
         # Count how many CSV problems are recognized by the tier mapping
-        recognized = sum(1 for name in results if name in tier_map)
+        # (resolving variant names like fizzbuzz_variant_1 -> fizzbuzz)
+        recognized = sum(
+            1 for name in results if _resolve_variant_name(name) in tier_map
+        )
         total_in_csv = len(results)
 
         # If fewer than half the problems are recognized, the weighted score
@@ -331,7 +342,7 @@ def _format_quality_cell(row, top_quality: float, has_weighted: bool) -> str:
         # quality_pct = passed/total * 100, but we don't have total here.
         # Instead just show raw % in parenthetical when it differs from weighted
         if abs(weighted - raw) > 0.05:
-            raw_note = f" (raw {raw}%)"
+            raw_note = f" (raw {raw:.1f}%)"
 
     is_top = top_quality is not None and primary >= top_quality - 0.1
     if is_top:
@@ -597,11 +608,28 @@ def generate_tables(
             hardware_profiles.append(h)
 
     today = datetime.now().strftime("%B %Y")
+
+    # Problem count from the canonical suite (variants replace base problems,
+    # so the suite size is always the base count).
+    from mtb.quality_benchmarks import (
+        EVAL_PROBLEMS,
+        EXPERT_EVAL_PROBLEMS,
+        HARD_EVAL_PROBLEMS,
+        TOOL_CALLING_PROBLEMS,
+    )
+
+    num_problems = (
+        len(EVAL_PROBLEMS)
+        + len(HARD_EVAL_PROBLEMS)
+        + len(EXPERT_EVAL_PROBLEMS)
+        + len(TOOL_CALLING_PROBLEMS)
+    )
+
     lines = []
     lines.append(f"> MLX Metal | int4 quantization | {today}")
     lines.append("> Speed: 1024 prompt tokens, 100 generated tokens")
     lines.append(
-        "> Quality: 81 problems across coding, reasoning, tool calling, math, writing (3 runs each, majority vote)"
+        f"> Quality: {num_problems} problems across coding, reasoning, tool calling, math, writing (3 runs each, majority vote)"
     )
     lines.append("")
 

@@ -114,6 +114,19 @@ TIER_WEIGHTS: Dict[str, int] = {
 }
 
 
+def _resolve_variant_name(name: str) -> str:
+    """Strip ``_variant_N`` suffix to recover the base problem name.
+
+    When ``--use_variants`` is enabled, parameterized problems are stored as
+    e.g. ``fizzbuzz_variant_1``.  This helper maps them back to the canonical
+    name (``fizzbuzz``) so tier lookups still work.
+    """
+    import re
+
+    m = re.match(r"^(.+)_variant_\d+$", name)
+    return m.group(1) if m else name
+
+
 def _build_problem_tier_map() -> Dict[str, str]:
     """Build a mapping from problem name to its difficulty tier.
 
@@ -192,12 +205,14 @@ def compute_weighted_score(results: Dict[str, bool]) -> Dict:
         name_to_category[p.name] = p.category
 
     for problem_name, passed in results.items():
-        tier = tier_map.get(problem_name)
+        # Resolve variant names (e.g. fizzbuzz_variant_1 -> fizzbuzz)
+        base_name = _resolve_variant_name(problem_name)
+        tier = tier_map.get(base_name)
         if tier is None:
             # Unknown problem — skip
             continue
 
-        category = name_to_category[problem_name]
+        category = name_to_category[base_name]
 
         # Update tier totals
         tier_total[tier] = tier_total.get(tier, 0) + 1
