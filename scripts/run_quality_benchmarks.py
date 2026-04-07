@@ -44,6 +44,7 @@ def main(
     run_only_benchmarks: Optional[Iterable[str]] = None,
     run_mlx_metal: bool = True,
     run_ollama_metal: bool = False,
+    run_anthropic_api: bool = False,
     use_variants: bool = False,
     num_variants: int = 3,
 ):
@@ -59,6 +60,7 @@ def main(
         run_only_benchmarks: Optional list of model names to run.
         run_mlx_metal: Whether to run MLX with Metal backend.
         run_ollama_metal: Whether to run Ollama with Metal backend.
+        run_anthropic_api: Whether to run Anthropic API models (requires ANTHROPIC_API_KEY).
         use_variants: Replace problems that have generate_variant() with
             freshly generated variants. Helps resist benchmark contamination
             by changing concrete values (numbers, names, constraints) while
@@ -131,6 +133,7 @@ def main(
         run_lmstudio_metal=False,
         run_lmstudio_mlx=False,
         run_ollama_metal=run_ollama_metal,
+        run_anthropic_api=run_anthropic_api,
     )
 
     output_dir = create_benchmark_output_dir(

@@ -6,6 +6,7 @@ from typing import Dict, List, Tuple, Union
 import pandas as pd
 from tqdm import tqdm
 
+from mtb.llm_benchmarks.anthropic_llm_benchmark import AnthropicLlmBenchmark
 from mtb.llm_benchmarks.base_llm_benchmark import BaseLLMBenchmark
 from mtb.llm_benchmarks.lmstudio_llm_benchmark import LMStudioLlmBenchmark
 from mtb.llm_benchmarks.mlx_llm_benchmark import MlxLlmBenchmark
@@ -121,6 +122,8 @@ def create_benchmark(
         benchmark_class = LMStudioLlmBenchmark
     elif framework == "ollama":
         benchmark_class = OllamaLlmBenchmark
+    elif framework == "anthropic":
+        benchmark_class = AnthropicLlmBenchmark
     else:
         raise NotImplementedError(f"Framework not supported: {framework}. ")
 

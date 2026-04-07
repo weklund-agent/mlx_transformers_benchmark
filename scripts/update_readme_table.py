@@ -638,6 +638,9 @@ def generate_tables(
     lines.append(
         f"> Quality: {num_problems} problems across coding, reasoning, tool calling, math, writing (3 runs each, majority vote)"
     )
+    lines.append(
+        "> **API baseline:** Claude Opus 4.6 scores 86.7% on the same quality benchmark (via Anthropic API, not local)"
+    )
     lines.append("")
 
     # Cross-hardware summary at top

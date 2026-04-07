@@ -46,16 +46,27 @@ def _strip_markdown_fences(code: str) -> str:
     Handles:
     - ```python ... ``` blocks
     - ``` ... ``` blocks (no language tag)
-    - Multiple fenced blocks (content concatenated)
+    - Multiple fenced blocks: prefers the first block containing a function/class
+      definition, falls back to joining all blocks
     - Code with surrounding prose (only fenced content extracted)
     - Code without any fences (returned as-is)
     """
     # Pattern matches ```<optional-lang>\n...\n```
     fence_pattern = re.compile(r"```(?:\w*)\s*\n(.*?)```", re.DOTALL)
     matches = fence_pattern.findall(code)
-    if matches:
-        return "\n".join(matches)
-    return code
+    if not matches:
+        return code
+
+    if len(matches) == 1:
+        return matches[0]
+
+    # Multiple code blocks: prefer the first one containing a function/class def
+    # This avoids concatenating example usage blocks (e.g. >>> doctests)
+    for match in matches:
+        if re.search(r"^\s*(?:def |class )", match, re.MULTILINE):
+            return match
+
+    return "\n".join(matches)
 
 
 def _classify_error(stderr: str) -> str:

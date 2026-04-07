@@ -317,7 +317,7 @@ def _dict_to_tool_call(d: dict) -> Optional[ToolCall]:
             return ToolCall(name=name, arguments=arguments)
 
     # Pattern 1: Standard name + arguments
-    name = d.get("name") or d.get("tool_name")
+    name = d.get("name") or d.get("tool_name") or d.get("tool")
     if name and isinstance(name, str):
         arguments = d.get("arguments") or d.get("parameters") or d.get("params") or {}
         if isinstance(arguments, str):
