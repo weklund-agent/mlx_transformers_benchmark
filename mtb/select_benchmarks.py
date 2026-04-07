@@ -90,6 +90,7 @@ def filter_llm_benchmarks(
     run_lmstudio_metal: bool = False,
     run_lmstudio_mlx: bool = False,
     run_ollama_metal: bool = False,
+    run_anthropic_api: bool = False,
     verbose: bool = True,
 ) -> List[Dict]:
     """Determine which LLM benchmarks to run based on boolean flags."""
@@ -115,6 +116,7 @@ def filter_llm_benchmarks(
         (run_lmstudio_metal, dict(framework="lmstudio", backend="metal+llama.cpp")),
         (run_lmstudio_mlx, dict(framework="lmstudio_mlx", backend="mlx")),
         (run_ollama_metal, dict(framework="ollama", backend="metal+llama.cpp")),
+        (run_anthropic_api, dict(framework="anthropic", backend="api")),
     ]
 
     available_memory = get_available_ram_gib()
@@ -125,11 +127,17 @@ def filter_llm_benchmarks(
         print_or_not(f"  Model {model_spec.name}:")
 
         for dtype in dtypes:
-            # Check if we can run the model for the given dtype
-            memory_needed_gib = estimate_model_size(
-                num_params=model_spec.num_params,
-                dtype=dtype,
-            )
+            # Skip memory check for API models (num_params=0 or unknown dtype)
+            if model_spec.num_params > 0 and dtype in (
+                "float32", "bfloat16", "float16", "int8", "int6", "int4", "int3",
+            ):
+                memory_needed_gib = estimate_model_size(
+                    num_params=model_spec.num_params,
+                    dtype=dtype,
+                )
+            else:
+                memory_needed_gib = 0
+
             if memory_needed_gib > available_memory:
                 # model too large to load (probably)
                 print_or_not(

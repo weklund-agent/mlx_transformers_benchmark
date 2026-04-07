@@ -9,6 +9,7 @@ Which local LLM runs best for coding on your Mac? Speed and quality benchmarks f
 > MLX Metal | int4 quantization | April 2026
 > Speed: 1024 prompt tokens, 100 generated tokens
 > Quality: 81 problems across coding, reasoning, tool calling, math, writing (3 runs each, majority vote)
+> **API baseline:** Claude Opus 4.6 scores 86.7% on the same quality benchmark (via Anthropic API, not local)
 
 ### Best Models by Hardware
 

@@ -43,6 +43,9 @@ from mtb.llm_benchmarks.models.qwen import (
 from mtb.llm_benchmarks.models.qwen3_coder import (
     Qwen3_Coder_30B_A3B,
 )
+from mtb.llm_benchmarks.models.claude import (
+    Claude_Opus_4_6,
+)
 from mtb.llm_benchmarks.models.qwen35 import (
     Qwen3p5_0p8B,
     Qwen3p5_2B,
@@ -97,4 +100,6 @@ MODEL_SPECS = [
     Gemma3_27B_it,
     Qwen3_32B_it,
     Llama3p3_70B_it,
+    # --- API models ---
+    Claude_Opus_4_6,
 ]
